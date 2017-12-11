@@ -17,6 +17,7 @@
 		DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */; };
 		DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */; };
+		DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */; };
 		DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		DE0E04AC1FD16E1200AE0D7F /* domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = domain.swift; sourceTree = "<group>"; };
 		DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerViewController.swift; sourceTree = "<group>"; };
 		DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterSemana.swift; sourceTree = "<group>"; };
 		DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSTimeSummary.swift; sourceTree = "<group>"; };
 		DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreTimeSummary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +111,8 @@
 		DE0E047A1FD0B16D00AE0D7F /* tsummary */ = {
 			isa = PBXGroup;
 			children = (
+				DE7D25851FDEC0F2003B0F4C /* Views */,
+				DE7D25821FDEC068003B0F4C /* Presenters */,
 				DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */,
 				DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */,
 				DE0E047F1FD0B16D00AE0D7F /* Main.storyboard */,
@@ -146,6 +150,21 @@
 			);
 			name = tsummary.domain;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		DE7D25821FDEC068003B0F4C /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		DE7D25851FDEC0F2003B0F4C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		DEF3B6001FD57CAC00437BD7 /* tsummary.data */ = {
@@ -296,6 +315,7 @@
 				DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */,
 				DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */,
 				DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */,
+				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
 			);

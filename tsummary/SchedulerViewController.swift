@@ -8,8 +8,7 @@
 
 import UIKit
  //UICollectionViewDelegate,
-class SchedulerViewController: UIViewController, UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout
+class SchedulerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
 
 
@@ -63,8 +62,10 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource,
     }
     
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
-        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
         
+        
+        /*
+        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             switch action.style{
             case .default:
@@ -79,5 +80,6 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource,
                 
             }}))
         self.present(alert, animated: true, completion: nil)
+        */
     }
 }
