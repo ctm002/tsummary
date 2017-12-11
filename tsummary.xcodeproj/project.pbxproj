@@ -15,6 +15,8 @@
 		DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */; };
 		DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */; };
 		DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
+		DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */; };
+		DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */; };
 		DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */; };
 		DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +53,8 @@
 		DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tsummaryUITests.swift; sourceTree = "<group>"; };
 		DE0E049D1FD0B16E00AE0D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE0E04AC1FD16E1200AE0D7F /* domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = domain.swift; sourceTree = "<group>"; };
+		DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerViewController.swift; sourceTree = "<group>"; };
+		DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSTimeSummary.swift; sourceTree = "<group>"; };
 		DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreTimeSummary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +115,8 @@
 				DE0E04821FD0B16D00AE0D7F /* Assets.xcassets */,
 				DE0E04841FD0B16D00AE0D7F /* LaunchScreen.storyboard */,
 				DE0E04871FD0B16D00AE0D7F /* Info.plist */,
+				DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */,
+				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -285,8 +291,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */,
 				DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */,
 				DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */,
+				DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */,
 				DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
