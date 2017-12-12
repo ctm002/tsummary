@@ -64,7 +64,6 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
-        /*
         let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             switch action.style{
@@ -80,7 +79,6 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource, UIC
                 
             }}))
         self.present(alert, animated: true, completion: nil)
-        */
     }
     
     func setSemana(semana: [Dia]) {
