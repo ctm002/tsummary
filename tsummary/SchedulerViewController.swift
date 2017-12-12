@@ -13,7 +13,7 @@ class SchedulerViewController:
     UITableViewDelegate, UITableViewDataSource,
     IListViewSemana, IViewHora {
     
-    @IBOutlet weak var TVHoras: UITableView!
+    @IBOutlet weak var mTVHoras: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     //let dias = ["", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom", ""]
@@ -21,6 +21,7 @@ class SchedulerViewController:
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
     var presenterSemana: PresenterSemana!
+    var presenterHora: PresenterHora!
     var semana : [Dia]!
     var horas : [Horas]!
     
@@ -31,7 +32,13 @@ class SchedulerViewController:
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return nil
+        let cell = mTVHoras.dequeueReusableCell(withIdentifier: "TVCHora", for:indexPath) as! TVCDetalleHora
+        if let hrs = horas {
+            cell.lblClienteProyecto.text = hrs[indexPath.row].tim_asunto
+            cell.lblDetalleHora.text = "\(hrs[indexPath.row].tim_horas):\(hrs[indexPath.row].tim_minutos)"
+            return cell
+        }
+        return cell
     }
     
     
@@ -68,6 +75,8 @@ class SchedulerViewController:
         let now = Date()
         presenterSemana.setDate(fecha: now)
         presenterSemana.mostrarSemana()
+        
+        self.presenterHora = PresenterHora(view:self)
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
@@ -83,9 +92,7 @@ class SchedulerViewController:
         cell.lblNro.isUserInteractionEnabled = true
         cell.lblNro.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
         
-        
         cell.backgroundColor = UIColor.white
-        //cell.layer.borderColor = UIColor.red.cgColor
         cell.layer.borderWidth = 0.1
         cell.frame.size.width = (screenWidth/cantDias)
         cell.frame.size.height = (screenWidth/cantDias)
@@ -97,14 +104,12 @@ class SchedulerViewController:
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             switch action.style{
             case .default:
-                print("default")
-                
+                self.presenterHora.loadHorasByFecha(fecha: Date())
             case .cancel:
                 print("cancel")
                 
             case .destructive:
                 print("destructive")
-                
                 
             }}))
         self.present(alert, animated: true, completion: nil)

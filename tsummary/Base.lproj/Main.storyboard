@@ -200,7 +200,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="305"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="OyG-jr-XYy" userLabel="TVCHora" customClass="DetalleHoraViewCell" customModule="tsummary" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TVCHora" id="OyG-jr-XYy" userLabel="TVCHora" customClass="DetalleHoraViewCell" customModule="tsummary" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OyG-jr-XYy" id="UD6-pC-0p0">
@@ -258,8 +258,8 @@
                         <viewLayoutGuide key="safeArea" id="Ult-Gj-cGu"/>
                     </view>
                     <connections>
-                        <outlet property="TVHoras" destination="zWP-m3-d3N" id="ktV-iA-YNe"/>
                         <outlet property="collectionView" destination="E84-iB-Lcs" id="IWE-cK-RM8"/>
+                        <outlet property="mTVHoras" destination="zWP-m3-d3N" id="ktV-iA-YNe"/>
                     </connections>
                 </viewController>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j46-au-S9a" userLabel="View1.9">
