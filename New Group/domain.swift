@@ -125,3 +125,17 @@ public class Horas {
     var OffLine: Bool { get { return self.mOffLine} set {self.mOffLine = newValue} }
 
 }
+
+public class Dia {
+    
+    init() {
+        self.mNombre = ""
+        self.mNro = 0
+    }
+    
+    private var mNombre:String
+    var nombre:String { get { return self.mNombre } set { self.mNombre = newValue}}
+    
+    private var mNro:Int
+    var nro: Int {get {return self.mNro} set {self.mNro = newValue}}
+}

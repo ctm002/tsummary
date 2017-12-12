@@ -8,17 +8,15 @@
 
 import UIKit
  //UICollectionViewDelegate,
-class SchedulerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-{
-
-
+class SchedulerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, IListViewSemana{
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let dias = ["", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom", ""]
-    
+    //let dias = ["", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom", ""]
     var screenSize: CGRect!
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
+    var presenterSemana: PresenterSemana!
+    var semana : [Dia]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,19 +33,23 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource, UIC
         layout.itemSize = CGSize(width: screenWidth/10, height: screenWidth/10)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        //collectionView!.backgroundColor = UIColor.green
         collectionView!.collectionViewLayout = layout
+        
+        presenterSemana = PresenterSemana(view: self)
+        let now = Date()
+        presenterSemana.setDate(fecha: now)
+        presenterSemana.mostrarSemana()
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        return dias.count
+        return semana.count
     }
  
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! CustomCell
-        cell.lblDia.text = dias[indexPath.row]
-        cell.lblNro.text = "1"
+        cell.lblDia.text = self.semana[indexPath.row].nombre
+        cell.lblNro.text = String(self.semana[indexPath.row].nro)
         
         cell.lblNro.isUserInteractionEnabled = true
         cell.lblNro.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
@@ -56,14 +58,12 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource, UIC
         cell.backgroundColor = UIColor.white
         //cell.layer.borderColor = UIColor.red.cgColor
         cell.layer.borderWidth = 0.1
-        cell.frame.size.width = screenWidth / 10
-        cell.frame.size.height = screenWidth / 10
+        cell.frame.size.width = screenWidth / 7
+        cell.frame.size.height = screenWidth / 7
         return cell
     }
     
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
-        
-        
         /*
         let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -81,5 +81,9 @@ class SchedulerViewController: UIViewController, UICollectionViewDataSource, UIC
             }}))
         self.present(alert, animated: true, completion: nil)
         */
+    }
+    
+    func setSemana(semana: [Dia]) {
+        self.semana = semana
     }
 }
