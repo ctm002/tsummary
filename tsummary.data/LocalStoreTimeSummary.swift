@@ -629,6 +629,86 @@ class LocalStoreTimeSummary
     }
     
     
+    
+    func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [Horas]?
+    {
+        do {
+            try openDB()
+            let query : String = "select tim_correl, pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine, tim_fecha_ing from Horas h where abo_id=? AND tim_fecha_ing=?"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(dataBase, query, -1, &statement, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                print("error preparing get list horas: \(errmsg)")
+            }
+            
+            if sqlite3_bind_text(statement, 1, codigo, -1, SQLITE_TRANSIENT) != SQLITE_OK{
+                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                print("failure binding abo_id: \(errmsg)")
+            }
+            
+            if sqlite3_bind_text(statement, 2, fecha, -1, SQLITE_TRANSIENT) != SQLITE_OK{
+                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                print("failure binding abo_id: \(errmsg)")
+            }
+            
+            
+            
+            if sqlite3_step(statement) != SQLITE_DONE{
+                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                print("fallo get list horas: \(errmsg)")
+            }
+            
+            var horas = [Horas]()
+            while sqlite3_step(statement) == SQLITE_ROW {
+                var hora = Horas()
+                
+                let id : Int32 = sqlite3_column_int(statement, 0)
+                hora.tim_correl = id
+                
+                let prodId : Int32 = sqlite3_column_int(statement, 1)
+                hora.pro_id = prodId
+                
+                if let csString = sqlite3_column_text(statement,2)
+                {
+                    let asunto : String = String(cString: csString)
+                    hora.tim_asunto = asunto
+                }
+                
+                let cantHoras : Int32 = sqlite3_column_int(statement,3)
+                hora.tim_horas = cantHoras
+                
+                let minutos : Int32 = sqlite3_column_int(statement,4)
+                hora.tim_minutos = minutos
+                
+                let aboId : Int32 = sqlite3_column_int(statement, 5)
+                hora.abo_id = aboId
+                
+                let modificable : Int32 = sqlite3_column_int(statement, 6)
+                hora.Modificable = modificable == 1 ? true: false
+                
+                let offline : Int32 = sqlite3_column_int(statement, 7)
+                hora.OffLine = offline == 1 ? true: false
+                
+                if let csString = sqlite3_column_text(statement, 8)
+                {
+                    //let formatter = DateFormatter()
+                    //formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let fechaInsert : Date? = DateFormatter().date(from:String(cString: csString))
+                    hora.tim_fecha_ing = fechaInsert
+                }
+                horas.append(hora)
+                
+            }
+            closeDB()
+            return horas
+            
+        } catch  {
+            
+        }
+        return nil
+    }
+    
+    
     /*
     public bool DeleteHoras(IEnumerable<Horas> horas)
 {

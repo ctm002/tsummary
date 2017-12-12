@@ -65,7 +65,7 @@ class PresenterSemana{
                 semana.append(dia)
                 fechaInicial = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaInicial!, wrappingComponents: true)
             }
-            self.mView.setSemana(semana: semana)
+            self.mView.setList(semana: semana)
         }
         
     }

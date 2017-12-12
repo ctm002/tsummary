@@ -9,5 +9,14 @@
 import Foundation
 
 protocol IListViewSemana {
-    func setSemana(semana: [Dia])
+    func setList(semana: [Dia])
+}
+
+protocol IViewHora {
+    
+    func setList(horas: [Horas])
+    
+    func getIdAbogado() -> Int
+    
+    func getFechaActual() -> Date
 }

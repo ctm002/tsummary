@@ -195,8 +195,48 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iC-Yt-Pfz" userLabel="View2">
                                 <rect key="frame" x="10" y="362" width="355" height="305"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zWP-m3-d3N" userLabel="TVHoras">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="305"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="OyG-jr-XYy" userLabel="TVCHora" customClass="DetalleHoraViewCell" customModule="tsummary" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="355" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OyG-jr-XYy" id="UD6-pC-0p0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BO5-s1-VNq" userLabel="LblClienteProyecto">
+                                                            <rect key="frame" x="15" y="0.0" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmc-0t-7gQ" userLabel="LblHoras">
+                                                            <rect key="frame" x="15" y="22" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="lblClienteProyecto" destination="BO5-s1-VNq" id="5ff-Fk-CUf"/>
+                                                    <outlet property="lblDetalleHora" destination="Kmc-0t-7gQ" id="1mH-cw-f0N"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="zWP-m3-d3N" firstAttribute="top" secondItem="9iC-Yt-Pfz" secondAttribute="top" id="4dl-n5-7tR"/>
+                                    <constraint firstItem="zWP-m3-d3N" firstAttribute="leading" secondItem="9iC-Yt-Pfz" secondAttribute="leading" id="IdP-bK-ZXX"/>
+                                    <constraint firstAttribute="bottom" secondItem="zWP-m3-d3N" secondAttribute="bottom" id="LzT-wF-Cwh"/>
+                                    <constraint firstAttribute="trailing" secondItem="zWP-m3-d3N" secondAttribute="trailing" id="YNw-r1-Ddy"/>
                                     <constraint firstAttribute="width" constant="355" id="hQ3-d6-9c2"/>
                                 </constraints>
                             </view>
@@ -218,6 +258,7 @@
                         <viewLayoutGuide key="safeArea" id="Ult-Gj-cGu"/>
                     </view>
                     <connections>
+                        <outlet property="TVHoras" destination="zWP-m3-d3N" id="ktV-iA-YNe"/>
                         <outlet property="collectionView" destination="E84-iB-Lcs" id="IWE-cK-RM8"/>
                     </connections>
                 </viewController>
