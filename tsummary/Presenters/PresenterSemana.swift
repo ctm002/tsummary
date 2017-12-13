@@ -45,23 +45,29 @@ class PresenterSemana{
     
     public func mostrarSemana()
     {
+        let locale = Locale(identifier: "es_CL")
+        let tz = TimeZone(abbreviation: "UTC")!
         var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        calendar.locale = Locale(identifier: "es_CL")
-        calendar.timeZone =  TimeZone(abbreviation: "UTC")!
+        calendar.locale = locale
+        calendar.timeZone = tz
         var nroSemana = calendar.component(Calendar.Component.weekOfYear, from:  self.mFecha)
         let año = calendar.component(Calendar.Component.year, from:  self.mFecha)
         var semana:[Dia] = [Dia]()
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.locale = locale
+        dateFormatter.timeZone = tz
         var fechaInicial = firstDateOfWeek(year: año, weekOfYear: nroSemana, calendar: calendar)
         
         if let f = fechaInicial
         {
             for i in 0..<7 {
                 var dia = Dia()
+                dateFormatter.dateFormat = "EEEE"
                 dia.nombre = dateFormatter.string(from: fechaInicial!)
                 dia.nro = calendar.component(Calendar.Component.day, from: fechaInicial!)
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dia.Fecha = dateFormatter.string(from: fechaInicial!)
                 semana.append(dia)
                 fechaInicial = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaInicial!, wrappingComponents: true)
             }

@@ -200,28 +200,34 @@
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="305"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TVCHora" id="OyG-jr-XYy" userLabel="TVCHora" customClass="DetalleHoraViewCell" customModule="tsummary" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TVCHora" id="OyG-jr-XYy" userLabel="TVCHora" customClass="TVCDetalleHora" customModule="tsummary" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OyG-jr-XYy" id="UD6-pC-0p0">
                                                     <rect key="frame" x="0.0" y="0.0" width="355" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BO5-s1-VNq" userLabel="LblClienteProyecto">
-                                                            <rect key="frame" x="15" y="0.0" width="42" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BO5-s1-VNq" userLabel="LblClienteProyecto">
+                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmc-0t-7gQ" userLabel="LblHoras">
-                                                            <rect key="frame" x="15" y="22" width="42" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmc-0t-7gQ" userLabel="LblHoras">
+                                                            <rect key="frame" x="0.0" y="22" width="355" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="BO5-s1-VNq" secondAttribute="trailing" id="Bp0-kR-2t8"/>
+                                                        <constraint firstItem="Kmc-0t-7gQ" firstAttribute="leading" secondItem="UD6-pC-0p0" secondAttribute="leading" id="Dgw-Wk-FWa"/>
+                                                        <constraint firstItem="BO5-s1-VNq" firstAttribute="leading" secondItem="UD6-pC-0p0" secondAttribute="leading" id="Oww-dk-49N"/>
+                                                        <constraint firstItem="BO5-s1-VNq" firstAttribute="top" secondItem="UD6-pC-0p0" secondAttribute="top" id="Tud-58-Mlv"/>
+                                                        <constraint firstItem="Kmc-0t-7gQ" firstAttribute="top" secondItem="BO5-s1-VNq" secondAttribute="bottom" constant="1" id="igg-Zy-R20"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Kmc-0t-7gQ" secondAttribute="trailing" id="mXP-bK-mSb"/>
+                                                    </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="lblClienteProyecto" destination="BO5-s1-VNq" id="5ff-Fk-CUf"/>
@@ -262,11 +268,6 @@
                         <outlet property="mTVHoras" destination="zWP-m3-d3N" id="ktV-iA-YNe"/>
                     </connections>
                 </viewController>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j46-au-S9a" userLabel="View1.9">
-                    <rect key="frame" x="0.0" y="0.0" width="334" height="134"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <viewLayoutGuide key="safeArea" id="cUI-4M-bRc"/>
-                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="596" y="-953.97301349325346"/>

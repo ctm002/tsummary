@@ -136,7 +136,10 @@ class WSTimeSummary: NSObject
                         hora.Modificable = d["Modificable"]  as! Int == 1 ? true : false;
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
                         hora.abo_id = d["abo_id"] as! Int32
-                        hora.tim_fecha_ing = DateFormatter().date(from: (d["tim_fecha_ing"] as! String))
+                        
+                        var dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd-MM-yyyy H:mm:ss"
+                        hora.tim_fecha_ing = dateFormatter.date(from: (d["tim_fecha_ing"] as! String))
                         horas.append(hora)
                     }
                     callback(horas)

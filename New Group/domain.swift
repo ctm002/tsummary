@@ -131,6 +131,7 @@ public class Dia {
     init() {
         self.mNombre = ""
         self.mNro = 0
+        self.mFecha = ""
     }
     
     private var mNombre:String
@@ -138,4 +139,7 @@ public class Dia {
     
     private var mNro:Int
     var nro: Int {get {return self.mNro} set {self.mNro = newValue}}
+
+    private var mFecha: String
+    var Fecha: String { get{return self.mFecha} set{ self.mFecha=newValue}}
 }

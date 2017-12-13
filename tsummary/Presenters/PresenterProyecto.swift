@@ -16,11 +16,14 @@ public class PresenterHora{
         self.mView = view
     }
     
-    func loadHorasByFecha(fecha: Date){
-        var dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy H:mm:ss"
-        let horas = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: "20", fecha:dateFormatter.string(from: fecha))
+    func buscar(){
+
+        let fecha : String = self.mView.getFechaActual()
+        let codigo : Int = self.mView.getIdAbogado()
         
-        self.mView.setList(horas: horas!)
+        if let hrs = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
+        {
+            self.mView.setList(horas: hrs)
+        }
     }
 }

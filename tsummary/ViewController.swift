@@ -29,8 +29,8 @@ class ViewController: UIViewController {
     @IBAction func Registrar(_ sender: Any) {
         //let ws: WSTimeSummary = WSTimeSummary()
         //ws.registrar(imei: "863166032574597", userName: txtLoginName.text, password:txtPassword.text, callback: buscarUsuario)
-         WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: "20", callback: loadHoras)
-    
+        //WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: "20", callback: loadHoras)
+        sincronizar(codigo: Int("20")!)
     }
     
     func buscarUsuario(u: Usuario?)
@@ -47,15 +47,12 @@ class ViewController: UIViewController {
             catch
             {
                 print("Error:\(error)")
-                
             }
         }
    }
     
-    func loadHoras(horas:[Horas]?)
+    func sincronizar(codigo:Int)
     {
-        let data = horas
-
+        ControladorProyecto.Instance.sincronizarHoras(codigo: codigo)
     }
 }
-

@@ -28,12 +28,16 @@ class SchedulerViewController:
     let cantDias: CGFloat = 7
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return horas.count
+        if (horas != nil)
+        {
+            return horas.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mTVHoras.dequeueReusableCell(withIdentifier: "TVCHora", for:indexPath) as! TVCDetalleHora
-        if let hrs = horas {
+        if let hrs = self.horas {
             cell.lblClienteProyecto.text = hrs[indexPath.row].tim_asunto
             cell.lblDetalleHora.text = "\(hrs[indexPath.row].tim_horas):\(hrs[indexPath.row].tim_minutos)"
             return cell
@@ -43,15 +47,21 @@ class SchedulerViewController:
     
     
     func setList(horas: [Horas]) {
+        self.horas = horas
         
+        DispatchQueue.main.async {
+            self.mTVHoras.reloadData()
+        }
     }
     
+    var mIdAbo: Int=20
     func getIdAbogado()->Int {
-        return 20
+        return mIdAbo
     }
     
-    func getFechaActual() -> Date{
-        return Date()
+    var mFechaActual: String = "2017-12-11"
+    func getFechaActual() -> String{
+        return mFechaActual
     }
     
     override func viewDidLoad() {
@@ -59,6 +69,10 @@ class SchedulerViewController:
     
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        mTVHoras.dataSource = self
+        mTVHoras.delegate = self
+        
         
         screenSize = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -100,19 +114,14 @@ class SchedulerViewController:
     }
     
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
-        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                self.presenterHora.loadHorasByFecha(fecha: Date())
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
-                
-            }}))
-        self.present(alert, animated: true, completion: nil)
+        if let theLabel = gestureRecognizer.view as? UILabel {
+            if let nro = theLabel.text
+            {
+                let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
+                self.mFechaActual = dias[0].Fecha
+                self.presenterHora.buscar()
+            }
+        }
     }
 
     func setList(semana: [Dia]) {

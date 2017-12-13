@@ -18,5 +18,5 @@ protocol IViewHora {
     
     func getIdAbogado() -> Int
     
-    func getFechaActual() -> Date
+    func getFechaActual() -> String
 }
