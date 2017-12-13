@@ -141,41 +141,61 @@ class LocalStoreTimeSummary
         }
     }
 
-    
-    /*
-     public bool SaveProyectos(IEnumerable<ClienteProyecto> clientes)
-{
-    try
-{
-    var db = _DBLocal;
-    db.InsertAll(clientes);
-    return true;
-    }
-    catch (Exception ex)
+    func save(proyectos: [ClienteProyecto] ) -> Bool
     {
-    throw ex;
+        do {
+            try openDB()
+            var statement: OpaquePointer?
+            
+            for p in proyectos {
+                
+                if sqlite3_prepare_v2(dataBase, """
+                insert into ClienteProyecto (pro_id, pro_nombre, cli_nom, pro_idioma)
+                values (?, ?, ?, ?)
+                """
+                    , -1, &statement, nil) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("error preparing insert: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 3, p.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("failure binding pro_nombre: \(errmsg)")
+                }
+                
+                
+                if sqlite3_bind_int(statement, 1, Int32(p.pro_id)) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("failure binding pro_id: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 2, p.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("failure binding cli_nom: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 4, p.pro_idioma, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("failure binding pro_idioma: \(errmsg)")
+                }
+                
+                if sqlite3_step(statement) != SQLITE_DONE{
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("fallo al insertar en la tabla clienteproyecto: \(errmsg)")
+                }
+                
+                if sqlite3_finalize(statement) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("error finalizing prepared statement: \(errmsg)")
+                }
+            }
+            return true
+        }
+        catch {
+            print("Error:\(error)")
+        }
+        return false
     }
-    return false;
-    }
-    
-    public bool SaveHoras(IEnumerable<Horas> horas)
-{
-    try
-{
-    var db = _DBLocal;
-    foreach (var data in horas)
-    {
-    int returnValue = db.Insert(data);
-    }
-    return true;
-    }
-    catch (Exception ex)
-    {
-    throw ex;
-    }
-    return false;
-    }
-    */
     
     func save(usuario: Usuario) -> Bool
     {
@@ -591,7 +611,10 @@ class LocalStoreTimeSummary
         do
         {
             try openDB()
-            let query : String = "select p.pro_id, p.pro_nombre, p.cli_nom from ClienteProyecto p where p.abo_id=?"
+            let query : String = """
+                select p.pro_id, p.pro_nombre, p.cli_nom
+                from ClienteProyecto p where p.abo_id=?
+            """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(dataBase, query, -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
@@ -723,9 +746,10 @@ class LocalStoreTimeSummary
             try openDB()
             let query : String = """
                 select
-                    tim_correl, pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine, tim_fecha_ing
+                    tim_correl, h.pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine, tim_fecha_ing,
+                    p.pro_nombre, p.cli_nom
                 from
-                    Horas h
+                    Horas h inner joinClienteProyecto p ON h.pro_id = p.pro_id
                 where
                     abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
             """
@@ -746,11 +770,6 @@ class LocalStoreTimeSummary
                 let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
                 print("failure binding fecha: \(errmsg)")
             }
-            
-            /*if sqlite3_step(statement) != SQLITE_DONE{
-                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
-                print("fallo get list horas: \(errmsg)")
-            }*/
             
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -790,8 +809,17 @@ class LocalStoreTimeSummary
                     let fechaInsert : Date? = formatter.date(from:String(cString: csString))
                     hora.tim_fecha_ing = fechaInsert
                 }
-                horas.append(hora)
                 
+                if let csString = sqlite3_column_text(statement, 9)
+                {
+                    hora.NombreProyecto = String(cString: csString)
+                }
+                
+                if let csString = sqlite3_column_text(statement, 10)
+                {
+                    hora.NombreCliente = String(cString: csString)
+                }
+                horas.append(hora)
             }
             closeDB()
             return horas

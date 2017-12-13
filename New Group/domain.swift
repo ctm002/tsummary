@@ -95,6 +95,8 @@ public class Horas {
         self.mModificable = false
         self.mOffLine = false
         self.mtim_fecha_ing = nil
+        self.mNombreCliente = ""
+        self.mNombreProyecto = ""
     }
     
     private var mtim_correl:Int32
@@ -123,7 +125,13 @@ public class Horas {
     
     private var mOffLine: Bool
     var OffLine: Bool { get { return self.mOffLine} set {self.mOffLine = newValue} }
-
+    
+    private var mNombreProyecto: String
+    var NombreProyecto: String { get{return self.mNombreProyecto} set {self.mNombreProyecto = newValue}}
+    
+    private var mNombreCliente: String
+    var NombreCliente: String { get{return self.mNombreCliente} set {self.mNombreCliente = newValue}}
+    
 }
 
 public class Dia {

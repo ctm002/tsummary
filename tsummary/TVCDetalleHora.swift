@@ -11,6 +11,7 @@ import UIKit
 class TVCDetalleHora: UITableViewCell {
     @IBOutlet weak var lblDetalleHora: UILabel!
     @IBOutlet weak var lblClienteProyecto: UILabel!
+    @IBOutlet weak var lblAsunto: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
