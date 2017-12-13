@@ -9,6 +9,16 @@
 import Foundation
 public class  Usuario {
     
+    init() {
+        self.mId=0
+        self.mNombre=""
+        self.mGrupo = ""
+        self.mLoginName = ""
+        self.mPassword=""
+        self.mIMEI=""
+        self.mDefault=0
+    }
+    
     private var mId : Int32
     var Id:Int32  { get{ return self.mId } set{ self.mId=newValue }}
     
@@ -29,16 +39,6 @@ public class  Usuario {
     
     private var mDefault:Int?
     var Default:Int?  { return self.mDefault }
-    
-    init() {
-        self.mId=0
-        self.mNombre=""
-        self.mGrupo = ""
-        self.mLoginName = ""
-        self.mPassword=""
-        self.mIMEI=""
-        self.mDefault=0
-    }
 }
 
 public  class Cliente {

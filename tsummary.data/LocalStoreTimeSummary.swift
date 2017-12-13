@@ -158,20 +158,19 @@ class LocalStoreTimeSummary
                     print("error preparing insert: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 3, p.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
-                    print("failure binding pro_nombre: \(errmsg)")
-                }
-                
-                
                 if sqlite3_bind_int(statement, 1, Int32(p.pro_id)) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 2, p.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 2, p.pro_nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
                     print("failure binding cli_nom: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 3, p.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
+                    print("failure binding pro_nombre: \(errmsg)")
                 }
                 
                 if sqlite3_bind_text(statement, 4, p.pro_idioma, -1, SQLITE_TRANSIENT) != SQLITE_OK {
@@ -189,6 +188,7 @@ class LocalStoreTimeSummary
                     print("error finalizing prepared statement: \(errmsg)")
                 }
             }
+            closeDB()
             return true
         }
         catch {
@@ -666,7 +666,7 @@ class LocalStoreTimeSummary
         return nil
     }
     
-    func getListDetalleHorasByCodAbogado(codigo: Int) -> [Horas]?
+    func getListDetalleHorasByCodAbogado(codigo: String) -> [Horas]?
     {
        do {
             try openDB()
@@ -674,6 +674,7 @@ class LocalStoreTimeSummary
                 select tim_correl, pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine,tim_fecha_ing
                 from
                     Horas
+                where abo_id=?
             """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(dataBase, query, -1, &statement, nil) != SQLITE_OK {
@@ -681,15 +682,12 @@ class LocalStoreTimeSummary
                 print("error preparing get list horas: \(errmsg)")
             }
             
-            /*if sqlite3_bind_int(statement, 1, Int32(codigo)) != SQLITE_OK{
+            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK{
                 let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
                 print("failure binding abo_id: \(errmsg)")
-            }*/
-            
-            /*if sqlite3_step(statement) != SQLITE_DONE{
-                let errmsg = String(cString: sqlite3_errmsg(dataBase)!)
-                print("fallo get list horas: \(errmsg)")
-            }*/
+            }
+        
+
             
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -746,10 +744,10 @@ class LocalStoreTimeSummary
             try openDB()
             let query : String = """
                 select
-                    tim_correl, h.pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine, tim_fecha_ing,
+                    h.tim_correl, h.pro_id, h.tim_asunto, h.tim_horas, h.tim_minutos, h.abo_id, h.Modificable, h.OffLine, h.tim_fecha_ing,
                     p.pro_nombre, p.cli_nom
                 from
-                    Horas h inner joinClienteProyecto p ON h.pro_id = p.pro_id
+                    Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
                 where
                     abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
             """

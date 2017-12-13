@@ -14,10 +14,19 @@ public class ControladorProyecto
     
     init() {}
     
-    func sincronizarHoras(codigo: Int) -> Bool
+    
+    func sincronizar(codigo: String) -> Bool
     {
-        WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: String(codigo), callback:{(horasRemotas)->Void in
-            if let hrsLocales = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo:codigo)
+        //sincronizarProyectos(codigo: codigo)
+        //sincronizarHoras(codigo:codigo)
+        return true
+    }
+    
+    
+    private func sincronizarHoras(codigo: String) -> Bool
+    {
+        WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(horasRemotas)->Void in
+            if let hrsLocales = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: codigo)
             {
                 let nuevos: [Horas] = self.minus(arreglo1: horasRemotas!, arreglo2: hrsLocales)
                 let eliminadas : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: horasRemotas!)
@@ -67,5 +76,16 @@ public class ControladorProyecto
             exists = false
         }
         return resultado
+    }
+    
+    
+    private func sincronizarProyectos(codigo: String) -> Bool
+    {
+        var resp : Bool = false
+        WSTimeSummary.Instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
+            LocalStoreTimeSummary.Instance.save(proyectos: proyectos!)
+            resp = true
+        })
+        return resp
     }
 }

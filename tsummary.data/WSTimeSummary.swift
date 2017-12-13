@@ -152,8 +152,63 @@ class WSTimeSummary: NSObject
         })
         task.resume()
     }
+    
+    func getListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
+    {
+        
+        var conn: URLSession = {
+            let config = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            return session
+        }()
+        
+        let urlString = _urlWebService + "ObtenerClienteProyectoPorAbogado"
+        let url = URL(string: urlString)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        request.httpMethod = "POST"
+        
+        
+        var postData: String = ""
+        postData.append("piAbo=" + codigo + "&")
+        postData.append("piCantidad=20")
+        request.httpBody = postData.data(using: String.Encoding.utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if(error != nil)
+            {
+                print(error)
+                callback(nil)
+                return
+            }
+            
+            //print(response)
+            
+            if (data != nil)
+            {
+                do{
+                    var proyectos = [ClienteProyecto]()
+                    let datos =  try JSONSerialization.jsonObject(with: data!, options: []) as! [AnyObject]
+                    for d  in datos
+                    {
+                        var proyecto = ClienteProyecto()
+                        proyecto.pro_id = d["pro_id"] as! Int32
+                        proyecto.cli_nom = d["cli_nom"] as! String
+                        proyecto.pro_nombre = d["pro_nombre"] as! String
+                        proyecto.pro_idioma = d["Idioma"] as! String
+                        proyectos.append(proyecto)
+                    }
+                    callback(proyectos)
+                }
+                catch
+                {
+                    print("Error:\(error)")
+                }
+            }
+        })
+        task.resume()
+    }
 }
-
 
 extension WSTimeSummary: URLSessionDelegate
 {

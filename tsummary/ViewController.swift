@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         BtnRegistrar?.titleLabel?.textColor = UIColor.black
-        print("test de pruebas")
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,7 +29,7 @@ class ViewController: UIViewController {
         //let ws: WSTimeSummary = WSTimeSummary()
         //ws.registrar(imei: "863166032574597", userName: txtLoginName.text, password:txtPassword.text, callback: buscarUsuario)
         //WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: "20", callback: loadHoras)
-        sincronizar(codigo: Int("20")!)
+        sincronizar(codigo: "20")
     }
     
     func buscarUsuario(u: Usuario?)
@@ -51,8 +50,8 @@ class ViewController: UIViewController {
         }
    }
     
-    func sincronizar(codigo:Int)
+    func sincronizar(codigo:String)
     {
-        ControladorProyecto.Instance.sincronizarHoras(codigo: codigo)
+        ControladorProyecto.Instance.sincronizar(codigo: codigo)
     }
 }
