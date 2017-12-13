@@ -63,7 +63,7 @@ class PresenterSemana{
         {
             for i in 0..<7 {
                 var dia = Dia()
-                dateFormatter.dateFormat = "EEEE"
+                dateFormatter.dateFormat = "EE"
                 dia.nombre = dateFormatter.string(from: fechaInicial!)
                 dia.nro = calendar.component(Calendar.Component.day, from: fechaInicial!)
                 dateFormatter.dateFormat = "yyyy-MM-dd"

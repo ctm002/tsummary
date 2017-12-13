@@ -38,7 +38,8 @@ class SchedulerViewController:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mTVHoras.dequeueReusableCell(withIdentifier: "TVCHora", for:indexPath) as! TVCDetalleHora
         if let hrs = self.horas {
-            cell.lblClienteProyecto.text = "\(hrs[indexPath.row].NombreCliente)\(hrs[indexPath.row].NombreProyecto)"
+            cell.lblCliente.text = hrs[indexPath.row].NombreCliente
+            cell.lblProyecto.text = hrs[indexPath.row].NombreProyecto
             cell.lblDetalleHora.text = "\(hrs[indexPath.row].tim_horas):\(hrs[indexPath.row].tim_minutos)"
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
             return cell
