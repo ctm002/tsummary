@@ -38,8 +38,9 @@ class SchedulerViewController:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mTVHoras.dequeueReusableCell(withIdentifier: "TVCHora", for:indexPath) as! TVCDetalleHora
         if let hrs = self.horas {
-            cell.lblClienteProyecto.text = hrs[indexPath.row].tim_asunto
+            cell.lblClienteProyecto.text = "\(hrs[indexPath.row].NombreCliente)\(hrs[indexPath.row].NombreProyecto)"
             cell.lblDetalleHora.text = "\(hrs[indexPath.row].tim_horas):\(hrs[indexPath.row].tim_minutos)"
+            cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
             return cell
         }
         return cell
@@ -102,7 +103,6 @@ class SchedulerViewController:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! CustomCell
         cell.lblDia.text = self.semana[indexPath.row].nombre
         cell.lblNro.text = String(self.semana[indexPath.row].nro)
-        
         cell.lblNro.isUserInteractionEnabled = true
         cell.lblNro.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
         
