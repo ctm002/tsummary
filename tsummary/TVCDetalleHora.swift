@@ -9,19 +9,59 @@
 import UIKit
 
 class TVCDetalleHora: UITableViewCell {
-    @IBOutlet weak var lblDetalleHora: UILabel!
-    @IBOutlet weak var lblAsunto: UILabel!
-
-    @IBOutlet weak var lblProyecto: UILabel!
-    @IBOutlet weak var lblCliente: UILabel!
+    
+    var lblCliente: UILabel =
+    {
+        let lbl = UILabel()
+        lbl.backgroundColor = UIColor.yellow
+        return lbl
+    }()
+    
+    var lblProyecto: UILabel =
+    {
+            let lbl = UILabel()
+            return lbl
+    }()
     
     
+    var lblDetalleHora: UILabel = {
+        let lbl = UILabel()
+        return lbl
+    }()
+    
+    
+    var lblAsunto: UILabel =
+    {
+        let lbl = UILabel()
+        return lbl
+    }()
+    
+    /*
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        // Initialization code
+    }*/
+    
+    
+    
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupLayout()
     }
-
+    
+    func setupLayout()
+    {
+        contentView.backgroundColor = UIColor.green
+        contentView.addSubview(lblCliente)
+        contentView.addSubview(lblProyecto)
+        contentView.addSubview(lblDetalleHora)
+        contentView.addSubview(lblAsunto)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

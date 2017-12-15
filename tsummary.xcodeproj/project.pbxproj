@@ -22,6 +22,7 @@
 		DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */; };
 		DE7D258F1FE02F60003B0F4C /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterProyecto.swift */; };
 		DE7D25921FE0639E003B0F4C /* ControladorProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* ControladorProyecto.swift */; };
+		DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */; };
 		DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */; };
 		DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCDetalleHora.swift; sourceTree = "<group>"; };
 		DE7D258E1FE02F60003B0F4C /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		DE7D25911FE0639E003B0F4C /* ControladorProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorProyecto.swift; sourceTree = "<group>"; };
+		DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSTimeSummary.swift; sourceTree = "<group>"; };
 		DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreTimeSummary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 				DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */,
 				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 				DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */,
+				DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
 				DE7D25921FE0639E003B0F4C /* ControladorProyecto.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
+				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
 				DE7D258F1FE02F60003B0F4C /* PresenterProyecto.swift in Sources */,
 			);

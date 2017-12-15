@@ -7,16 +7,26 @@
 //
 
 import UIKit
- //UICollectionViewDelegate,
-class SchedulerViewController:
-    UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-    UITableViewDelegate, UITableViewDataSource,
+
+
+class SchedulerViewController: UIViewController,
+    UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+    UITableViewDataSource,UITableViewDelegate,
     IListViewSemana, IViewHora {
     
-    @IBOutlet weak var mTVHoras: UITableView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    /*
+    var mTVHoras: UITableView = {
+        let tv = UITableView()
+        return tv
+    }()
+    */
     
-    //let dias = ["", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom", ""]
+    @IBOutlet weak var mTVHoras2: UITableView!
+    var mTVHoras: UITableView!
+    
+    
+    var mCVDias: UICollectionView!
+    
     var screenSize: CGRect!
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
@@ -26,35 +36,8 @@ class SchedulerViewController:
     var horas : [Horas]!
     
     let cantDias: CGFloat = 7
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (horas != nil)
-        {
-            return horas.count
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = mTVHoras.dequeueReusableCell(withIdentifier: "TVCHora", for:indexPath) as! TVCDetalleHora
-        if let hrs = self.horas {
-            cell.lblCliente.text = hrs[indexPath.row].NombreCliente
-            cell.lblProyecto.text = hrs[indexPath.row].NombreProyecto
-            cell.lblDetalleHora.text = "\(hrs[indexPath.row].tim_horas):\(hrs[indexPath.row].tim_minutos)"
-            cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
-            return cell
-        }
-        return cell
-    }
-    
-    
-    func setList(horas: [Horas]) {
-        self.horas = horas
-        
-        DispatchQueue.main.async {
-            self.mTVHoras.reloadData()
-        }
-    }
+    let cellId1 = "cellId1"
+    let cellId2 = "cellId2"
     
     var mIdAbo: Int=20
     func getIdAbogado()->Int {
@@ -68,13 +51,8 @@ class SchedulerViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        mTVHoras.dataSource = self
-        mTVHoras.delegate = self
-        
+        navigationItem.title = "SCHEDULER"
+        navigationController?.navigationBar.isTranslucent = false
         
         screenSize = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -85,35 +63,100 @@ class SchedulerViewController:
         layout.itemSize = CGSize(width: (screenWidth/cantDias), height: (screenWidth/cantDias))
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        collectionView!.collectionViewLayout = layout
+        
+        if (mCVDias == nil)
+        {
+            mCVDias = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        }
+        
+        mCVDias.dataSource = self
+        mCVDias.delegate = self
+        mCVDias.register(CustomCell.self, forCellWithReuseIdentifier:cellId1)
+        self.view.addSubview(mCVDias)
+        
+
+        if mTVHoras == nil
+        {
+            mTVHoras = UITableView()
+        }
+        
+        //mTVHoras.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+        mTVHoras.dataSource = self
+        mTVHoras.delegate = self
+
+        mTVHoras.register(TVCDetalleHora.self, forCellReuseIdentifier:cellId2)
+        self.view.addSubview(mTVHoras)
         
         presenterSemana = PresenterSemana(view: self)
         let now = Date()
         presenterSemana.setDate(fecha: now)
         presenterSemana.mostrarSemana()
-        
         self.presenterHora = PresenterHora(view:self)
     }
 
+    
+    func setList(horas: [Horas]) {
+        self.horas = horas
+        
+        DispatchQueue.main.async {
+            self.mTVHoras.reloadData()
+        }
+    }
+    
+    //TableCell
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let hrs = self.horas
+        {
+            return  hrs.count
+        }
+        else
+        {
+            return 0
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = mTVHoras.dequeueReusableCell(withIdentifier: cellId2, for:indexPath) as! TVCDetalleHora
+        if let hrs = self.horas {
+            cell.lblCliente.text = hrs[indexPath.row].NombreCliente
+            cell.lblProyecto.text = hrs[indexPath.row].NombreProyecto
+            cell.lblDetalleHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
+            cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
+            return cell
+        }
+        return cell
+    }
+    
+    
+    //collectionView
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return semana.count
     }
  
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! CustomCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
         cell.lblDia.text = self.semana[indexPath.row].nombre
+        
         cell.lblNro.text = String(self.semana[indexPath.row].nro)
         cell.lblNro.isUserInteractionEnabled = true
-        cell.lblNro.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
+        cell.lblNro.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
         
         cell.backgroundColor = UIColor.white
         cell.layer.borderWidth = 0.1
-        cell.frame.size.width = (screenWidth/cantDias)
-        cell.frame.size.height = (screenWidth/cantDias)
         return cell
     }
+ 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width/cantDias, height: 50)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+
     @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
         if let theLabel = gestureRecognizer.view as? UILabel {
             if let nro = theLabel.text

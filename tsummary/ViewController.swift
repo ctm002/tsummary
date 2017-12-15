@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtIMEI: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        BtnRegistrar?.titleLabel?.textColor = UIColor.black
+        //BtnRegistrar?.titleLabel?.textColor = UIColor.black
+        navigationItem.title = "LogIn"
+        navigationController?.navigationBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
