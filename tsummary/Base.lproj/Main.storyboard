@@ -152,7 +152,44 @@
                     <view key="view" contentMode="scaleToFill" id="1qO-hA-AGD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proyecto" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJm-r4-vFW">
+                                <rect key="frame" x="0.0" y="20" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="12i-z1-i35"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dHR-ET-v8N">
+                                <rect key="frame" x="0.0" y="50" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="a0e-aN-MVb"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFR-BW-eVq">
+                                <rect key="frame" x="10" y="60" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MJm-r4-vFW" firstAttribute="centerX" secondItem="1qO-hA-AGD" secondAttribute="centerX" id="5YG-MM-jE8"/>
+                            <constraint firstItem="Ult-Gj-cGu" firstAttribute="trailing" secondItem="dHR-ET-v8N" secondAttribute="trailing" id="66Y-i8-Eat"/>
+                            <constraint firstItem="dHR-ET-v8N" firstAttribute="leading" secondItem="Ult-Gj-cGu" secondAttribute="leading" id="7PP-3q-mUb"/>
+                            <constraint firstItem="Ult-Gj-cGu" firstAttribute="trailing" secondItem="MJm-r4-vFW" secondAttribute="trailing" id="TF3-03-wXt"/>
+                            <constraint firstItem="MJm-r4-vFW" firstAttribute="top" secondItem="Ult-Gj-cGu" secondAttribute="top" id="agX-C1-knu"/>
+                            <constraint firstItem="MJm-r4-vFW" firstAttribute="leading" secondItem="Ult-Gj-cGu" secondAttribute="leading" id="dhI-hq-Bai"/>
+                            <constraint firstItem="dHR-ET-v8N" firstAttribute="centerX" secondItem="1qO-hA-AGD" secondAttribute="centerX" id="fqS-Ww-yb8"/>
+                            <constraint firstItem="dHR-ET-v8N" firstAttribute="top" secondItem="MJm-r4-vFW" secondAttribute="bottom" id="s0K-sX-dlI"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Ult-Gj-cGu"/>
                     </view>
                 </viewController>

@@ -70,7 +70,7 @@ class SchedulerViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "SCHEDULER"
+        navigationItem.title = "TimeSummary"
         navigationController?.navigationBar.isTranslucent = false
         
         screenSize = UIScreen.main.bounds
