@@ -82,8 +82,7 @@ class TVCDetalleHora: UITableViewCell {
         lblAsunto.numberOfLines = 0
         lblAsunto.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         lblAsunto.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        lblAsunto.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
+        //lblAsunto.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         contentView.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblDetalleHora, attribute: .height, multiplier: 1, constant: 0))
         
@@ -92,7 +91,7 @@ class TVCDetalleHora: UITableViewCell {
         contentView.addConstraint(NSLayoutConstraint(item: lblProyecto, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal,
             toItem: lblCliente, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0))
         
-        contentView.addConstraint(NSLayoutConstraint(item: lblAsunto, attribute: .top, relatedBy: .equal, toItem: lblProyecto, attribute: .bottom, multiplier: 1, constant: 10))
+        contentView.addConstraint(NSLayoutConstraint(item: lblAsunto, attribute: .top, relatedBy: .equal, toItem: lblProyecto, attribute: .bottom, multiplier: 1, constant: 0))
     }
     
     required init?(coder aDecoder: NSCoder) {

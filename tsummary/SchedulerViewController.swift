@@ -77,7 +77,6 @@ class SchedulerViewController:
         
         if (mCVDias == nil)
         {
-            //mCVDias = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
             mCVDias = UICollectionView(frame: vCalendario.frame, collectionViewLayout: layout)
         }
         
@@ -130,16 +129,9 @@ class SchedulerViewController:
             cell.lblProyecto.text = hrs[indexPath.row].NombreProyecto
             cell.lblDetalleHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
-            cell.backgroundColor = UIColor.white
         }
         return cell
     }
-    
-    /*
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return  100
-    }
-    */
     
     //collectionView
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
