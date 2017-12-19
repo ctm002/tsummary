@@ -43,7 +43,7 @@ class PresenterSemana{
         return calendar.date(byAdding: Calendar.Component.day, value: weekOfYearTemp*7, to: firstWeekDay!)
     }
     
-    public func mostrarSemana()
+    public func mostrarSemana(cantidad: Int)
     {
         let locale = Locale(identifier: "es_CL")
         let tz = TimeZone(abbreviation: "UTC")!
@@ -61,7 +61,7 @@ class PresenterSemana{
         
         if let f = fechaInicial
         {
-            for i in 0..<7 {
+            for i in 0..<cantidad {
                 var dia = Dia()
                 dateFormatter.dateFormat = "EE"
                 dia.nombre = dateFormatter.string(from: fechaInicial!)
@@ -69,7 +69,7 @@ class PresenterSemana{
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 dia.Fecha = dateFormatter.string(from: fechaInicial!)
                 semana.append(dia)
-                fechaInicial = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaInicial!, wrappingComponents: true)
+                fechaInicial = calendar.date(byAdding: Calendar.Component.day, value: -1, to: fechaInicial!, wrappingComponents: true)
             }
             self.mView.setList(semana: semana)
         }

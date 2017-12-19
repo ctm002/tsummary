@@ -13,11 +13,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtLoginName: UITextField!
     @IBOutlet weak var txtIMEI: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //BtnRegistrar?.titleLabel?.textColor = UIColor.black
-        navigationItem.title = "LogIn"
-        navigationController?.navigationBar.isHidden = true
+        //navigationItem.title = "LogIn"
+        //navigationController?.navigationBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +45,8 @@ class ViewController: UIViewController {
                 //try LocalStoreTimeSummary.Instance.createTables()
                 //LocalStoreTimeSummary.Instance.deleteTables()
                 //LocalStoreTimeSummary.Instance.save(usuario: u!)
-                var usuario: Usuario? = LocalStoreTimeSummary.Instance.getUsuarioByIMEI(imei: "863166032574597")
+                //var usuario: Usuario? = LocalStoreTimeSummary.Instance.getUsuarioByIMEI(imei: "863166032574597")
+                sincronizar(codigo: "20")
             }
             catch
             {
@@ -55,5 +58,14 @@ class ViewController: UIViewController {
     func sincronizar(codigo:String)
     {
         ControladorProyecto.Instance.sincronizar(codigo: codigo)
+        
+        //let scheduler = self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+        //self.navigationController?.pushViewController(scheduler, animated: true)
+        
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+
+        //self.presentedViewController(vc,animated: true, completion:nil)
     }
 }

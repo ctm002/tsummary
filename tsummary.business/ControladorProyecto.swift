@@ -18,7 +18,7 @@ public class ControladorProyecto
     func sincronizar(codigo: String) -> Bool
     {
         //sincronizarProyectos(codigo: codigo)
-        //sincronizarHoras(codigo:codigo)
+        sincronizarHoras(codigo:codigo)
         return true
     }
     

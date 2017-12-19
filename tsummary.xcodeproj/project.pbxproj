@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C5D6D1FE864930054B95A /* HoraViewController.swift */; };
 		DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */; };
 		DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E047F1FD0B16D00AE0D7F /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F7C5D6D1FE864930054B95A /* HoraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
 		DE0E04781FD0B16D00AE0D7F /* tsummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tsummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 				DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */,
 				DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */,
+				2F7C5D6D1FE864930054B95A /* HoraViewController.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */,
 				DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */,

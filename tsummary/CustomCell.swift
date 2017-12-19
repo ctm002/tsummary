@@ -11,15 +11,16 @@ import UIKit
 class CustomCell: UICollectionViewCell {
 
     let lblNro : UILabel = {
-            let lbl = UILabel(frame: .zero)
-            lbl.backgroundColor = UIColor.yellow
-            return lbl
-        
+        let lbl = UILabel(frame: .zero)
+        lbl.textColor = UIColor.white
+        lbl.font = UIFont.boldSystemFont(ofSize: 12.0)
+        return lbl
     }()
     
     let lblDia : UILabel = {
         let lbl = UILabel(frame:.zero)
-        lbl.backgroundColor = UIColor.blue
+        lbl.textColor = UIColor.white
+        lbl.font = UIFont.boldSystemFont(ofSize: 12.0)
         return lbl
     }()
     
@@ -30,21 +31,22 @@ class CustomCell: UICollectionViewCell {
     
     func setupLayout()
     {
-        contentView.addSubview(lblDia)
         contentView.addSubview(lblNro)
+        contentView.addSubview(lblDia)
         
         lblNro.translatesAutoresizingMaskIntoConstraints = false
         lblNro.textAlignment = .center
-        lblNro.widthAnchor.constraint(equalToConstant: 50)
-        lblNro.heightAnchor.constraint(equalToConstant: 50)
+        lblNro.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        lblNro.heightAnchor.constraint(equalToConstant: 20).isActive = false
         
         lblDia.translatesAutoresizingMaskIntoConstraints = false
         lblDia.textAlignment = .center
-        lblDia.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        lblDia.centerYAnchor.constraint(equalTo:  contentView.centerYAnchor).isActive = true
-        lblDia.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        lblDia.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        lblDia.topAnchor.constraint(equalTo:  contentView.topAnchor, constant: 0).isActive = true
+        
+        lblDia.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        lblDia.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        contentView.addConstraint(NSLayoutConstraint(item: lblDia, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal,
+                                                     toItem: lblNro, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0))
         
     }
     
