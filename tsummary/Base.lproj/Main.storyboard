@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="84" width="375" height="300"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yfm-lt-nns">
-                                        <rect key="frame" x="8" y="-8608" width="359" height="151.5"/>
+                                        <rect key="frame" x="8" y="8" width="359" height="151.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre de Usuario" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fp7-PF-PEr">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="20.5"/>
@@ -152,49 +152,7 @@
                     <view key="view" contentMode="scaleToFill" id="1qO-hA-AGD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAc-of-EEt" userLabel="View1">
-                                <rect key="frame" x="0.0" y="20" width="375" height="120"/>
-                                <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="E84-iB-Lcs" userLabel="CollectionView">
-                                        <rect key="frame" x="8" y="8" width="359" height="104"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UJw-6q-twc">
-                                            <size key="itemSize" width="50" height="34"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells/>
-                                    </collectionView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottomMargin" secondItem="E84-iB-Lcs" secondAttribute="bottom" id="0w6-Is-vg5"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="E84-iB-Lcs" secondAttribute="trailing" id="EJp-m7-uAC"/>
-                                    <constraint firstItem="E84-iB-Lcs" firstAttribute="leading" secondItem="WAc-of-EEt" secondAttribute="leadingMargin" id="Ram-e6-wRs"/>
-                                    <constraint firstAttribute="height" constant="120" id="RjC-ZN-tkl"/>
-                                    <constraint firstItem="E84-iB-Lcs" firstAttribute="top" secondItem="WAc-of-EEt" secondAttribute="topMargin" id="l7O-SJ-8aX"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iC-Yt-Pfz" userLabel="View2">
-                                <rect key="frame" x="0.0" y="140" width="375" height="527"/>
-                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="top" secondItem="Ult-Gj-cGu" secondAttribute="top" id="1Ra-P8-11I"/>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="top" secondItem="Ult-Gj-cGu" secondAttribute="top" id="DAJ-YD-VYK"/>
-                            <constraint firstItem="9iC-Yt-Pfz" firstAttribute="trailing" secondItem="Ult-Gj-cGu" secondAttribute="trailing" id="Gxd-qF-dcN"/>
-                            <constraint firstItem="9iC-Yt-Pfz" firstAttribute="bottom" secondItem="Ult-Gj-cGu" secondAttribute="bottom" id="HTc-G5-nTt"/>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="trailing" secondItem="Ult-Gj-cGu" secondAttribute="trailing" id="LhH-lA-Zbg"/>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="trailing" secondItem="Ult-Gj-cGu" secondAttribute="trailing" id="Ti8-9u-A3D"/>
-                            <constraint firstItem="9iC-Yt-Pfz" firstAttribute="leading" secondItem="Ult-Gj-cGu" secondAttribute="leading" id="f3f-iF-41o"/>
-                            <constraint firstItem="9iC-Yt-Pfz" firstAttribute="top" secondItem="WAc-of-EEt" secondAttribute="bottom" id="j28-Lr-0Vi"/>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="leading" secondItem="Ult-Gj-cGu" secondAttribute="leading" id="niu-0l-eFp"/>
-                            <constraint firstItem="WAc-of-EEt" firstAttribute="leading" secondItem="Ult-Gj-cGu" secondAttribute="leading" id="zNh-Lg-kdp"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Ult-Gj-cGu"/>
                     </view>
                 </viewController>

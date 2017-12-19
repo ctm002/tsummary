@@ -13,7 +13,7 @@ class CustomCell: UICollectionViewCell {
     let lblNro : UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = UIColor.white
-        lbl.font = UIFont.boldSystemFont(ofSize: 12.0)
+        lbl.font = UIFont.boldSystemFont(ofSize: 14.0)
         return lbl
     }()
     

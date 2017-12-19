@@ -61,15 +61,17 @@ class PresenterSemana{
         
         if let f = fechaInicial
         {
+            var diaInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -cantidad, to: fechaInicial!, wrappingComponents: true)
+            
             for i in 0..<cantidad {
                 var dia = Dia()
                 dateFormatter.dateFormat = "EE"
-                dia.nombre = dateFormatter.string(from: fechaInicial!)
-                dia.nro = calendar.component(Calendar.Component.day, from: fechaInicial!)
+                dia.nombre = dateFormatter.string(from: diaInicio!)
+                dia.nro = calendar.component(Calendar.Component.day, from: diaInicio!)
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                dia.Fecha = dateFormatter.string(from: fechaInicial!)
+                dia.Fecha = dateFormatter.string(from: diaInicio!)
                 semana.append(dia)
-                fechaInicial = calendar.date(byAdding: Calendar.Component.day, value: -1, to: fechaInicial!, wrappingComponents: true)
+                diaInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: diaInicio!, wrappingComponents: true)
             }
             self.mView.setList(semana: semana)
         }
