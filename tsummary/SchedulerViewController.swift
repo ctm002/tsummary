@@ -71,7 +71,11 @@ class SchedulerViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        
         navigationController?.navigationBar.isTranslucent = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Nuevo", style: .plain, target: self,
+                                                            action: #selector(addHora))
         
         screenSize = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -242,5 +246,12 @@ class SchedulerViewController:
         dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .full
         return dateFormatter.string(from: date!)
+    }
+    
+    @objc func addHora()
+    {
+        
+        let vc =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
