@@ -72,10 +72,8 @@ class SchedulerViewController:
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Nuevo", style: .plain, target: self,
-                                                            action: #selector(addHora))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Nuevo", style: .plain, target: self, action: #selector(self.addHora))
         
         screenSize = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -144,7 +142,7 @@ class SchedulerViewController:
         mTVHoras.topAnchor.constraint(equalTo: vHoras.topAnchor).isActive = true
         mTVHoras.leadingAnchor.constraint(equalTo: vHoras.leadingAnchor, constant:0).isActive = true
         mTVHoras.trailingAnchor.constraint(equalTo: vHoras.trailingAnchor, constant:-0).isActive = true
-        mTVHoras.bottomAnchor.constraint(equalTo: vHoras.bottomAnchor, constant: -10).isActive = true
+        mTVHoras.bottomAnchor.constraint(equalTo: vHoras.bottomAnchor, constant: 0).isActive = true
         
         
         mTVHoras.register(TVCDetalleHora.self, forCellReuseIdentifier:cellId2)
@@ -250,7 +248,6 @@ class SchedulerViewController:
     
     @objc func addHora()
     {
-        
         let vc =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }

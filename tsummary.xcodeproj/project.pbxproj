@@ -21,7 +21,7 @@
 		DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
 		DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */; };
-		DE7D258F1FE02F60003B0F4C /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterProyecto.swift */; };
+		DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */; };
 		DE7D25921FE0639E003B0F4C /* ControladorProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* ControladorProyecto.swift */; };
 		DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */; };
 		DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */; };
@@ -66,7 +66,7 @@
 		DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterSemana.swift; sourceTree = "<group>"; };
 		DE7D25861FDEDFC5003B0F4C /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCDetalleHora.swift; sourceTree = "<group>"; };
-		DE7D258E1FE02F60003B0F4C /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
+		DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterHora.swift; sourceTree = "<group>"; };
 		DE7D25911FE0639E003B0F4C /* ControladorProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorProyecto.swift; sourceTree = "<group>"; };
 		DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		DEF3B6011FD57D1C00437BD7 /* WSTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSTimeSummary.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */,
-				DE7D258E1FE02F60003B0F4C /* PresenterProyecto.swift */,
+				DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -349,7 +349,7 @@
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
-				DE7D258F1FE02F60003B0F4C /* PresenterProyecto.swift in Sources */,
+				DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

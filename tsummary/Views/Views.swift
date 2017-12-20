@@ -20,3 +20,9 @@ protocol IViewHora {
     
     func getFechaActual() -> String
 }
+
+
+protocol IListViewProyecto {
+    
+    func setList(proyectos: [ClienteProyecto])
+}
