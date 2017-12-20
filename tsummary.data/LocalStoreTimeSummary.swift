@@ -589,6 +589,7 @@ class LocalStoreTimeSummary
             let query : String = """
                 select p.pro_id, p.pro_nombre, p.cli_nom
                 from  ClienteProyecto p
+                order by p.cli_nom asc
             """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
@@ -793,6 +794,7 @@ class LocalStoreTimeSummary
                     Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
                 where
                     abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
+                order by h.tim_fecha_ing asc 
             """
             
             var statement: OpaquePointer?

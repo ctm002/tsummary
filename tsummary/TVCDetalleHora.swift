@@ -45,7 +45,7 @@ class TVCDetalleHora: UITableViewCell {
     
     var lblFechaIngreso: UILabel = {
         let lbl = UILabel(frame:.zero)
-        lbl.textColor = UIColor(red:0.46, green:0.46, blue:0.46, alpha:1.0)
+        lbl.textColor = UIColor(red:0.91, green:0.44, blue:0.05, alpha:1.0)
         lbl.font = UIFont.boldSystemFont(ofSize: 13)
         return lbl
     }()
