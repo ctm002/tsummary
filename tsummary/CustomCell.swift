@@ -10,6 +10,9 @@ import UIKit
 
 class CustomCell: UICollectionViewCell {
 
+    
+    var indexPath: Int = -1
+    
     let lblNro : UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = UIColor.white
@@ -46,7 +49,9 @@ class CustomCell: UICollectionViewCell {
         lblDia.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         contentView.addConstraint(NSLayoutConstraint(item: lblDia, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal,
-                                                     toItem: lblNro, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0))
+                                                     toItem: lblNro, attribute: NSLayoutAttribute.bottom, multiplier: 1,
+                                                     constant: 0))
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

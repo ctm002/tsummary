@@ -18,10 +18,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
+        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        
+        
+        txtPassword.isSecureTextEntry = true
+        
         //BtnRegistrar?.titleLabel?.textColor = UIColor.black
         //navigationItem.title = "LogIn"
         //navigationController?.navigationBar.isHidden = true
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,14 +67,8 @@ class ViewController: UIViewController {
     func sincronizar(codigo:String)
     {
         ControladorProyecto.Instance.sincronizar(codigo: codigo)
-        
-        //let scheduler = self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-        //self.navigationController?.pushViewController(scheduler, animated: true)
-        
-        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
         self.navigationController?.pushViewController(vc, animated: true)
-
         //self.presentedViewController(vc,animated: true, completion:nil)
     }
 }

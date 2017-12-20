@@ -32,6 +32,7 @@ class SchedulerViewController:
         return lbl
     }()
     
+    var cellPrevious: CustomCell!
     var screenSize: CGRect!
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
@@ -73,7 +74,15 @@ class SchedulerViewController:
         navigationItem.title = "TimeSummary"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Nuevo", style: .plain, target: self, action: #selector(self.addHora))
+        
+        
+        
+        let btn: UIButton = UIButton.init(type: .custom)
+        btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
+        btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpInside)
+        let barBtn = UIBarButtonItem(customView: btn)
+        navigationItem.rightBarButtonItem = barBtn //UIBarButtonItem(title: "Nuevo", style: .plain, target: self, action: #selector(self.addHora))
+        
         
         screenSize = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -204,34 +213,59 @@ class SchedulerViewController:
  
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
-        print(self.semana[indexPath.row].nombre)
-        
         cell.lblDia.text = self.semana[indexPath.row].nombre
         cell.lblNro.text = String(self.semana[indexPath.row].nro)
-        cell.lblNro.isUserInteractionEnabled = true
-        cell.lblNro.addGestureRecognizer(
-            UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
+        //cell.lblNro.isUserInteractionEnabled = true
+        //cell.lblNro.addGestureRecognizer(
+        //    UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
+        
+        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap2))
+        gesture.numberOfTapsRequired = 1
+        gesture.numberOfTouchesRequired = 1
+        cell.isUserInteractionEnabled = true
+        cell.indexPath = indexPath.row
+        cell.addGestureRecognizer(gesture)
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
-    @objc func handleTap(gestureRecognizer: UIGestureRecognizer) {
-        if let theLabel = gestureRecognizer.view as? UILabel {
-            if let nro = theLabel.text
+    
+   
+    
+    @objc func handleTap2(gestureRecognizer: UITapGestureRecognizer) {
+        if let cell = gestureRecognizer.view as? CustomCell {
+            if cellPrevious == nil
+            {
+                cellPrevious = cell
+            }
+            else
+            {
+                if (cellPrevious.indexPath != cell.indexPath)
+                {
+                    cellPrevious.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
+                    cellPrevious = cell
+                }
+            }
+            
+            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+            
+            if let nro = cell.lblNro.text
             {
                 let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
                 self.mFechaActual = dias[0].Fecha
                 DispatchQueue.main.async {
                     self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
+                    
                 }
                 self.presenterHora.buscar()
             }
+            
         }
     }
-
+    
     func setList(semana: [Dia]) {
         self.semana = semana
     }
