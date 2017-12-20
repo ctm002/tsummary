@@ -215,17 +215,13 @@ class SchedulerViewController:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
         cell.lblDia.text = self.semana[indexPath.row].nombre
         cell.lblNro.text = String(self.semana[indexPath.row].nro)
-        //cell.lblNro.isUserInteractionEnabled = true
-        //cell.lblNro.addGestureRecognizer(
-        //    UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
-        
-        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap2))
+
+        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         gesture.numberOfTapsRequired = 1
         gesture.numberOfTouchesRequired = 1
         cell.isUserInteractionEnabled = true
         cell.indexPath = indexPath.row
         cell.addGestureRecognizer(gesture)
-        
         return cell
     }
     
@@ -233,9 +229,7 @@ class SchedulerViewController:
         return 0
     }
     
-   
-    
-    @objc func handleTap2(gestureRecognizer: UITapGestureRecognizer) {
+    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
         if let cell = gestureRecognizer.view as? CustomCell {
             if cellPrevious == nil
             {
