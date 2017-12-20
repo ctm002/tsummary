@@ -185,6 +185,14 @@ class SchedulerViewController:
             cell.lblProyecto.text = hrs[indexPath.row].NombreProyecto
             cell.lblDetalleHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "es_CL")
+            dateFormatter.dateFormat = "HH:mm"
+            if let dt = hrs[indexPath.row].tim_fecha_ing
+            {
+                cell.lblFechaIngreso.text = dateFormatter.string(from:dt)
+            }
         }
         return cell
     }
@@ -203,16 +211,9 @@ class SchedulerViewController:
         cell.lblNro.isUserInteractionEnabled = true
         cell.lblNro.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(SchedulerViewController.handleTap)))
-        //cell.backgroundColor = UIColor.blue
         return cell
     }
     
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width/7, height: 50)
-    }
-    */
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

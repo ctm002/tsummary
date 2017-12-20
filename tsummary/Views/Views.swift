@@ -25,4 +25,7 @@ protocol IViewHora {
 protocol IListViewProyecto {
     
     func setList(proyectos: [ClienteProyecto])
+    
+    func getIdAbogado() -> Int
+    
 }
