@@ -11,12 +11,24 @@ import Foundation
 class PresenterSemana{
     
     
-    private var mView : IListViewSemana
-    private var mFecha: Date
+    private var mView : IListViewSemana!
+    private var mFecha: Date!
+    private var mCantidadDias: Int = 0
     
-    init(view: IListViewSemana) {
+    private let calendar : Calendar = {
+        let locale = Locale(identifier: "es_CL")
+        let tz = TimeZone(abbreviation: "UTC")!
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        calendar.locale = locale
+        calendar.timeZone = tz
+        return calendar
+    }()
+    
+
+    init(view: IListViewSemana, rangoDeDias cantidad: Int) {
         self.mView = view
         self.mFecha = Date()
+        self.mCantidadDias = cantidad
     }
     
     
@@ -25,54 +37,48 @@ class PresenterSemana{
         self.mFecha = fecha
     }
     
-    private func firstDateOfWeek(year: Int, weekOfYear: Int, calendar: Calendar) -> Date?
+    private func firstDateOfWeek(year: Int, weekOfYear: Int) -> Date?
     {
         var dtComponents = DateComponents()
         dtComponents.day = 1
         dtComponents.month = 1
         dtComponents.year = year
         
-        var newDate = calendar.date(from:dtComponents)
+        let newDate = self.calendar.date(from:dtComponents)
+        let offset =  self.calendar.firstWeekday - self.calendar.component(Calendar.Component.weekday, from: newDate!)
         
-        let offset =  calendar.firstWeekday - calendar.component(Calendar.Component.weekday, from: newDate!)
-        
-        let firstWeekDay  = calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
+        let firstWeekDay  = self.calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
        
-        let firstWeek = calendar.component(Calendar.Component.weekOfYear, from: newDate!)
-        var weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ?  weekOfYear - 2 : weekOfYear
-        return calendar.date(byAdding: Calendar.Component.day, value: weekOfYearTemp*7, to: firstWeekDay!)
+        let firstWeek = self.calendar.component(Calendar.Component.weekOfYear, from: newDate!)
+        let weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ?  weekOfYear - 2 : weekOfYear
+        return self.calendar.date(byAdding: Calendar.Component.day, value: ((weekOfYearTemp*7)+7), to: firstWeekDay!)
     }
     
-    public func mostrarSemana(cantidad: Int)
+    public func calcularSemana()
     {
-        let locale = Locale(identifier: "es_CL")
-        let tz = TimeZone(abbreviation: "UTC")!
-        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        calendar.locale = locale
-        calendar.timeZone = tz
-        var nroSemana = calendar.component(Calendar.Component.weekOfYear, from:  self.mFecha)
-        let año = calendar.component(Calendar.Component.year, from:  self.mFecha)
+        let año = self.calendar.component(Calendar.Component.year, from:  self.mFecha)
+        let nroSemana = self.calendar.component(Calendar.Component.weekOfYear, from:  self.mFecha)
         var semana:[Dia] = [Dia]()
         
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = locale
-        dateFormatter.timeZone = tz
-        var fechaInicial = firstDateOfWeek(year: año, weekOfYear: nroSemana, calendar: calendar)
+        dateFormatter.locale = calendar.locale
+        dateFormatter.timeZone = calendar.timeZone
         
-        if let f = fechaInicial
+        let diaTermino = firstDateOfWeek(year: año, weekOfYear: nroSemana)
+        if let fechaDeTermino = diaTermino
         {
-            var diaInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -cantidad, to: fechaInicial!, wrappingComponents: true)
-            
-            for i in 0..<cantidad {
-                var dia = Dia()
+            var fechaDeInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -self.mCantidadDias, to: fechaDeTermino, wrappingComponents: true)
+            for i in 0..<self.mCantidadDias {
+                let dia = Dia()
                 dateFormatter.dateFormat = "EE"
-                dia.nombre = dateFormatter.string(from: diaInicio!)
-                dia.nro = calendar.component(Calendar.Component.day, from: diaInicio!)
+                dia.nombre = dateFormatter.string(from: fechaDeInicio!)
+                dia.nro = calendar.component(Calendar.Component.day, from: fechaDeInicio!)
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                dia.Fecha = dateFormatter.string(from: diaInicio!)
+                dia.Fecha = dateFormatter.string(from: fechaDeInicio!)
                 semana.append(dia)
-                diaInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: diaInicio!, wrappingComponents: true)
+                fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!, wrappingComponents: true)
             }
+            
             self.mView.setList(semana: semana)
         }
         

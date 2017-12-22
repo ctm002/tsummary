@@ -75,8 +75,6 @@ class SchedulerViewController:
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.isTranslucent = false
         
-        
-        
         let btn: UIButton = UIButton.init(type: .custom)
         btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
         btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpInside)
@@ -84,9 +82,9 @@ class SchedulerViewController:
         navigationItem.rightBarButtonItem = barBtn //UIBarButtonItem(title: "Nuevo", style: .plain, target: self, action: #selector(self.addHora))
         
         
-        screenSize = UIScreen.main.bounds
-        screenWidth = screenSize.width
-        screenHeight = screenSize.height
+        //screenSize = UIScreen.main.bounds
+        //screenWidth = screenSize.width
+        //screenHeight = screenSize.height
         
         
         let vCalendario = UIView()
@@ -159,16 +157,19 @@ class SchedulerViewController:
         mTVHoras.dataSource = self
         mTVHoras.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
         
-        presenterSemana = PresenterSemana(view: self)
+        presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         let now = Date()
         presenterSemana.setDate(fecha: now)
-        presenterSemana.mostrarSemana(cantidad: self.cantDias)
+        presenterSemana.calcularSemana()
+
+
         self.presenterHora = PresenterHora(view:self)
         self.presenterHora.buscar()
+        
+        self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
     }
 
     func setList(horas: [Horas]) {
-        print(horas)
         self.horas = horas
         DispatchQueue.main.async {
             self.mTVHoras.reloadData()
@@ -222,6 +223,12 @@ class SchedulerViewController:
         cell.isUserInteractionEnabled = true
         cell.indexPath = indexPath.row
         cell.addGestureRecognizer(gesture)
+        
+        if  self.mFechaActual == self.semana[indexPath.row].Fecha
+        {
+            cellPrevious = cell
+            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+        }
         return cell
     }
     
@@ -250,11 +257,11 @@ class SchedulerViewController:
             {
                 let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
                 self.mFechaActual = dias[0].Fecha
+                self.presenterHora.buscar()
+                
                 DispatchQueue.main.async {
                     self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
-                    
                 }
-                self.presenterHora.buscar()
             }
             
         }

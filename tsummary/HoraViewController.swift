@@ -16,13 +16,61 @@ class HoraViewController: UIViewController,
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var txtHoras: UITextField!
     @IBOutlet weak var txtMinutos: UITextField!
+    @IBOutlet weak var txtHoraInicio: UILabel!
     
+    var horaInicial: Int = 0
+    
+    var minutosTotales: Int
+    {
+        get {
+            var minutos : Int = 0
+            minutos = Int(txtHoras.text!)!*60 + Int(txtMinutos.text!)!
+            return minutos
+        }
+    }
+
     @IBAction func stepper1(_ sender: UIStepper) {
         txtHoras.text = String(format:"%02d", Int(sender.value))
+        
+        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
+        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
     }
     
     @IBAction func stepper2(_ sender: UIStepper) {
         txtMinutos.text = String(format:"%02d", Int(sender.value))
+        
+        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
+        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
+        
+    }
+    
+    @IBAction func slider(_ sender: UISlider) {
+        self.horaInicial = Int(sender.value)
+        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
+        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
+    }
+    
+    func setTextHoras(horaDeInicio inicio: Int, horaDeTermino termino: inout Int)
+    {
+        var horaTerminoTemp: Int = 0
+        var minutoTerminoTemp: Int = 0
+        if (termino > 0)
+        {
+            horaTerminoTemp = (termino/60) > 23 ? 23 : (termino/60)
+            minutoTerminoTemp = (termino%60)
+        }else
+        {
+            horaTerminoTemp = (termino/60)
+            minutoTerminoTemp = 0
+        }
+        
+        let horasInicialText = String(format:"%02d", inicio)
+        let horasTerminoText = String(format:"%02d", horaTerminoTemp) + ":" + String(format:"%02d", minutoTerminoTemp)
+        
+        let text : String =  "Desde las " + horasInicialText + ":00 hrs. Hasta las " + horasTerminoText + " hrs."
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black])
+        
+        txtHoraInicio.attributedText = attributedText
     }
     
     var mProyectos = [ClienteProyecto]()
@@ -47,6 +95,8 @@ class HoraViewController: UIViewController,
         self.presenter = PresenterProyecto(view: self)
         txtHoras.text = "00"
         txtMinutos.text = "00"
+        txtHoraInicio.text = "00:00"
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

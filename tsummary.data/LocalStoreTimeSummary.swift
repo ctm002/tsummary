@@ -100,22 +100,52 @@ class LocalStoreTimeSummary
     func createTables() throws
     {
 
-        if sqlite3_exec(db, "create table if not exists Cliente(cli_cod integer primary key, cli_nom text, pro_id int)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, """
+                create table if not exists Cliente(
+                cli_cod integer primary key,
+                cli_nom text,
+                pro_id int)
+            """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")
         }
 
-        if sqlite3_exec(db, "create table if not exists ClienteProyecto(pro_id integer primary key, cli_nom text, pro_nombre text, pro_idioma text)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, """
+                create table if not exists ClienteProyecto(
+                pro_id integer primary key,
+                cli_nom text,
+                pro_nombre text,
+                pro_idioma text)
+            """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")
         }
         
-        if sqlite3_exec(db, "create table if not exists Usuario(Id integer primary key, Nombre text, Grupo text, LoginName text, Password text, IMEI text, [Default] integer)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, """
+                create table if not exists Usuario(
+                Id integer primary key,
+                Nombre text, Grupo text,
+                LoginName text,
+                Password text,
+                IMEI text,
+                [Default] integer)
+            """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")
         }
 
-        if sqlite3_exec(db, "create table if not exists Horas(tim_correl integer primary key, pro_id integer, tim_asunto text, tim_horas text, tim_minutos text, abo_id integer, Modificable integer, OffLine integer, tim_fecha_ing datetime)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, """
+                    create table if not exists Horas(
+                    hora_id integer primary key,
+                    tim_correl integer,
+                    pro_id integer, tim_asunto text,
+                    tim_horas text,
+                    tim_minutos text,
+                    abo_id integer,
+                    Modificable integer,
+                    OffLine integer,
+                    tim_fecha_ing datetime)
+            """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")
         }
@@ -229,7 +259,7 @@ class LocalStoreTimeSummary
             
             if sqlite3_step(statement) != SQLITE_DONE{
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("fallo al insertar en la tabla cliente: \(errmsg)")
+                print("fallo al insertar en la tabla usuario: \(errmsg)")
             }
             
             if sqlite3_finalize(statement) != SQLITE_OK {
