@@ -16,7 +16,7 @@ protocol IViewHora {
     
     func setList(horas: [Horas])
     
-    func getIdAbogado() -> Int
+    var IdAbogado : Int { get set }
     
     func getFechaActual() -> String
 }
@@ -26,6 +26,13 @@ protocol IListViewProyecto {
     
     func setList(proyectos: [ClienteProyecto])
     
-    func getIdAbogado() -> Int
+    var IdAbogado : Int { get set }
     
+}
+
+protocol IEditViewHora {
+    var IdHora : Int { get set }
+    var ProyectoId : Int { get set }
+    var FechaIngreso : Date { get set }
+    var IdAbogado : Int { get set }
 }

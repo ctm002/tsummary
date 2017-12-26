@@ -10,15 +10,19 @@ import UIKit
 
 class HoraViewController: UIViewController,
     UIPickerViewDataSource, UIPickerViewDelegate,
-    IListViewProyecto
+    IListViewProyecto, IEditViewHora{
     
-{
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var txtHoras: UITextField!
     @IBOutlet weak var txtMinutos: UITextField!
     @IBOutlet weak var txtHoraInicio: UILabel!
+    @IBOutlet weak var txtAsunto: UITextView!
     
+    var mProyectos = [ClienteProyecto]()
+    var presenterProyecto : PresenterProyecto?
+    var presenterHora : PresenterHora?
     var horaInicial: Int = 0
+    var mIdAbo : Int = 0
     
     var minutosTotales: Int
     {
@@ -73,14 +77,6 @@ class HoraViewController: UIViewController,
         txtHoraInicio.attributedText = attributedText
     }
     
-    var mProyectos = [ClienteProyecto]()
-    var mCodAbogado: Int = 20
-    var presenter : PresenterProyecto?
-    
-    func getIdAbogado() -> Int {
-        return self.mCodAbogado
-    }
-    
     func setList(proyectos: [ClienteProyecto]) {
         self.mProyectos = proyectos
     }
@@ -88,19 +84,21 @@ class HoraViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
+        self.presenterProyecto = PresenterProyecto(self)
+        self.presenterHora = PresenterHora(self)
+        
         
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerTextField.inputView = pickerView
-        self.presenter = PresenterProyecto(view: self)
+        
         txtHoras.text = "00"
         txtMinutos.text = "00"
         txtHoraInicio.text = "00:00"
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.presenter!.getListProyectos()
+        self.presenterProyecto!.getListProyectos()
     }
 
     override func didReceiveMemoryWarning() {
@@ -157,4 +155,29 @@ class HoraViewController: UIViewController,
         lbl?.attributedText = attributedText
         return lbl!
     }
+    
+    @IBAction func btnGuardar(_ sender: UIButton) {
+        presenterHora!.save()
+    }
+    
+    
+    private var mIdHora: Int = 0
+    var IdHora : Int { get { return self.mIdHora }  set { self.mIdHora = newValue }}
+    
+    private var mProyectoId: Int = 0
+    var ProyectoId : Int { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
+    
+    private var mFechaIngreso: Date = {
+        return Date()
+    }()
+    
+    var FechaIngreso : Date { get { return mFechaIngreso } set { self.mFechaIngreso = newValue }}
+    
+    var Horas : String { get { return self.txtHoras.text! } set { self.txtHoras.text = newValue }}
+    
+    var Minutos : String { get { return self.txtMinutos.text! } set { self.txtMinutos.text = newValue }}
+    
+    var Asunto : String { get { return self.txtAsunto.text! } set { self.txtAsunto.text = newValue }}
+    
+    var IdAbogado : Int { get { return self.mIdAbo } set { self.mIdAbo = newValue }}
 }

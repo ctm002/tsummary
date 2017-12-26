@@ -185,7 +185,7 @@
                                 <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Fd-AJ-IlT">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Fd-AJ-IlT" userLabel="TextViewAsunto">
                                 <rect key="frame" x="0.0" y="118" width="375" height="150"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <rect key="contentStretch" x="0.10000000000000001" y="0.0" width="1" height="1"/>
@@ -361,6 +361,7 @@
                     </view>
                     <connections>
                         <outlet property="pickerTextField" destination="dHR-ET-v8N" id="MKh-E0-LzZ"/>
+                        <outlet property="txtAsunto" destination="9Fd-AJ-IlT" id="Hq4-8Y-rr2"/>
                         <outlet property="txtHoraInicio" destination="fSB-4i-haf" id="T6X-Ua-Pmt"/>
                         <outlet property="txtHoras" destination="5PG-P9-3Vs" id="c9w-qM-Q7g"/>
                         <outlet property="txtMinutos" destination="qVj-x5-1KP" id="OxW-rS-dxx"/>

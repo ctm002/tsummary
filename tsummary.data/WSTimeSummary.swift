@@ -19,7 +19,7 @@ class WSTimeSummary: NSObject
     private var  password: String
     private var credential: URLCredential!
     
-    static let Instance : WSTimeSummary = WSTimeSummary(username:"carlos_tapia", password:"Car.2711")
+    static let Instance : WSTimeSummary = WSTimeSummary(username:"carlos_tapia", password:"CXXX")
     
     init(username:String, password: String) {
         

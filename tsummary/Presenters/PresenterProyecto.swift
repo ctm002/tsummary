@@ -1,11 +1,9 @@
 import UIKit
 
 class PresenterProyecto {
-
+    var mView: IListViewProyecto?
     
-    var mView: IListViewProyecto
-    
-    init(view: IListViewProyecto) {
+    init(_ view : IListViewProyecto) {
         self.mView = view
     }
     
@@ -13,7 +11,7 @@ class PresenterProyecto {
     {
         if let proyectos = LocalStoreTimeSummary.Instance.getListProyectos()
         {
-            self.mView.setList(proyectos: proyectos)
+            self.mView!.setList(proyectos: proyectos)
         }
     }
 }

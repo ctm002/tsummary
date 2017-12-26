@@ -13,15 +13,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtLoginName: UITextField!
     @IBOutlet weak var txtIMEI: UITextField!
+     @IBOutlet weak var BtnRegistrar: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
-        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        
-        
         txtPassword.isSecureTextEntry = true
         
         //BtnRegistrar?.titleLabel?.textColor = UIColor.black
@@ -36,7 +34,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBOutlet weak var BtnRegistrar: UIButton!
+   
     
     @IBAction func Registrar(_ sender: Any) {
         //let ws: WSTimeSummary = WSTimeSummary()
@@ -70,6 +68,7 @@ class ViewController: UIViewController {
         if (resp)
         {
             let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+            vc.IdAbogado = Int(codigo)!
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

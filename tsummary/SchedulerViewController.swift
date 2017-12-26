@@ -9,9 +9,7 @@
 import UIKit
 
 
-class SchedulerViewController:
-    
-    UIViewController,
+ class SchedulerViewController: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
     UITableViewDataSource,UITableViewDelegate,
     IListViewSemana, IViewHora {
@@ -48,9 +46,14 @@ class SchedulerViewController:
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
     
-    var mIdAbo: Int=20
-    func getIdAbogado()->Int {
-        return mIdAbo
+    var mIdAbo : Int = 0
+    var IdAbogado : Int {
+        get {
+            return self.mIdAbo
+        }
+        set {
+            self.mIdAbo = newValue
+        }
     }
     
     var mFechaActual: String = {
@@ -163,7 +166,7 @@ class SchedulerViewController:
         presenterSemana.calcularSemana()
 
 
-        self.presenterHora = PresenterHora(view:self)
+        self.presenterHora = PresenterHora(self)
         self.presenterHora.buscar()
         
         self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)

@@ -10,20 +10,36 @@ import Foundation
 
 public class PresenterHora{
     
-    private var mView: IViewHora
+    private var mView: IViewHora?
+    private var mEditViewHora:IEditViewHora?
     
-    init(view: IViewHora) {
+    init(_ view: IViewHora) {
         self.mView = view
+        self.mEditViewHora = nil
     }
+    
+    init(_ view: IEditViewHora)
+    {
+        self.mView = nil
+        self.mEditViewHora = view
+    }
+    
     
     func buscar(){
 
-        let fecha : String =  self.mView.getFechaActual()
-        let codigo : Int = self.mView.getIdAbogado()
+        let fecha : String =  self.mView!.getFechaActual()
+        let codigo : Int = self.mView!.IdAbogado
         
         if let hrs = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
-            self.mView.setList(horas: hrs)
+            self.mView?.setList(horas: hrs)
         }
+    }
+    
+    func save()
+    {
+        //let id  = self.mEditViewHora!.getIdHora()
+        //let proyectoId = self.mEditViewHora!.getproyectoId()
+        //let fechaIngreso = self.mEditViewHora!.getFechaIngreso()
     }
 }
