@@ -66,9 +66,11 @@ class ViewController: UIViewController {
     
     func sincronizar(codigo:String)
     {
-        ControladorProyecto.Instance.sincronizar(codigo: codigo)
-        let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-        self.navigationController?.pushViewController(vc, animated: true)
-        //self.presentedViewController(vc,animated: true, completion:nil)
+        let resp: Bool = ControladorProyecto.Instance.sincronizar(codigo: codigo)
+        if (resp)
+        {
+            let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

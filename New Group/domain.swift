@@ -83,6 +83,13 @@ public class ClienteProyecto {
     public var pro_idioma: String { get{return self.mpro_idioma}  set{  self.mpro_idioma=newValue} }
 }
 
+enum Estados: Int
+{
+    case nuevo
+    case actualizado
+    case eliminado
+}
+
 public class Horas {
     
     init() {
@@ -97,16 +104,24 @@ public class Horas {
         self.mtim_fecha_ing = nil
         self.mNombreCliente = ""
         self.mNombreProyecto = ""
+        self.mIdHora = 0
+        self.mEstado = .nuevo
     }
+    
+    private var mEstado: Estados
+    var Estado: Estados {get{ return self.mEstado} set{ self.mEstado = newValue}}
+    
+    private var mIdHora: Int32
+    var IdHora: Int32 {get{ return self.mIdHora} set{ self.mIdHora = newValue}}
     
     private var mtim_correl:Int32
     var tim_correl: Int32 { get { return self.mtim_correl} set { self.mtim_correl = newValue} }
     
     private var mpro_id:Int32
-    var  pro_id: Int32 { get {return self.mpro_id} set {self.mpro_id = newValue} }
+    var pro_id: Int32 { get {return self.mpro_id} set {self.mpro_id = newValue} }
     
     private var mtim_fecha_ing: Date?
-    var  tim_fecha_ing: Date? { get{ return self.mtim_fecha_ing} set{ self.mtim_fecha_ing = newValue} }
+    var tim_fecha_ing: Date? { get{ return self.mtim_fecha_ing} set{ self.mtim_fecha_ing = newValue} }
     
     private var mtim_asunto: String
     var tim_asunto: String { get {return self.mtim_asunto} set{ self.mtim_asunto = newValue} }

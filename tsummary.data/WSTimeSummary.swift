@@ -92,7 +92,6 @@ class WSTimeSummary: NSObject
     
     func getListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void)
     {
-
         var conn: URLSession = {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
@@ -117,8 +116,6 @@ class WSTimeSummary: NSObject
                 callback(nil)
                 return
             }
-        
-            //print(response)
             
             if (data != nil)
             {
@@ -149,6 +146,39 @@ class WSTimeSummary: NSObject
                     print("Error:\(error)")
                 }
             }
+        })
+        task.resume()
+    }
+    
+    
+    func sincronizar(codigo: String, horas:String)
+    {
+        var conn: URLSession = {
+            let config = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            return session
+        }()
+        
+        let urlString = _urlWebService + "SincronizacionData"
+        let url = URL(string: urlString)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        request.httpMethod = "POST"
+        
+        
+        var postData: String = ""
+        postData.append("abo_id=" + codigo + "&")
+        postData.append("Horas=" + horas)
+        request.httpBody = postData.data(using: String.Encoding.utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if(error != nil)
+            {
+                print(error)
+                //callback(nil)
+                return
+            }
+            
         })
         task.resume()
     }

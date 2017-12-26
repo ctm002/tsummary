@@ -67,7 +67,7 @@ class PresenterSemana{
         let diaTermino = firstDateOfWeek(year: año, weekOfYear: nroSemana)
         if let fechaDeTermino = diaTermino
         {
-            var fechaDeInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -self.mCantidadDias, to: fechaDeTermino, wrappingComponents: true)
+            var fechaDeInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -self.mCantidadDias, to: fechaDeTermino)
             for i in 0..<self.mCantidadDias {
                 let dia = Dia()
                 dateFormatter.dateFormat = "EE"
@@ -76,7 +76,7 @@ class PresenterSemana{
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 dia.Fecha = dateFormatter.string(from: fechaDeInicio!)
                 semana.append(dia)
-                fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!, wrappingComponents: true)
+                fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!)
             }
             
             self.mView.setList(semana: semana)
