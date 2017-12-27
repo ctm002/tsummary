@@ -13,8 +13,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtLoginName: UITextField!
     @IBOutlet weak var txtIMEI: UITextField!
-     @IBOutlet weak var BtnRegistrar: UIButton!
+    @IBOutlet weak var BtnRegistrar: UIButton!
+    var codigo: Int = 0
     
+    @IBOutlet weak var activity: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +24,7 @@ class ViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         txtPassword.isSecureTextEntry = true
         
-        //BtnRegistrar?.titleLabel?.textColor = UIColor.black
-        //navigationItem.title = "LogIn"
-        //navigationController?.navigationBar.isHidden = true
-        
+        self.activity.center = self.view.center
         
     }
 
@@ -33,27 +32,31 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-   
-    
     @IBAction func Registrar(_ sender: Any) {
-        //let ws: WSTimeSummary = WSTimeSummary()
-        //ws.registrar(imei: "863166032574597", userName: txtLoginName.text, password:txtPassword.text, callback: buscarUsuario)
-        //WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: "20", callback: loadHoras)
-        sincronizar(codigo: "20")
+        BtnRegistrar.isEnabled = false
+        self.activity.startAnimating()
+        WSTimeSummary.instance.registrar(imei: "863166032574597", userName: self.txtLoginName.text, password: self.txtPassword.text, callback: self.getUsuario)
+        
+       
     }
     
-    func buscarUsuario(u: Usuario?)
+    func getUsuario(u: Usuario?)
     {
         if (u != nil)
         {
             do
             {
-                //try LocalStoreTimeSummary.Instance.createTables()
-                //LocalStoreTimeSummary.Instance.deleteTables()
-                //LocalStoreTimeSummary.Instance.save(usuario: u!)
-                //var usuario: Usuario? = LocalStoreTimeSummary.Instance.getUsuarioByIMEI(imei: "863166032574597")
-                sincronizar(codigo: "20")
+                self.codigo =  Int(u!.Id)
+                sincronizar(String(self.codigo))
+                
+                DispatchQueue.main.async {
+                   self.BtnRegistrar.isEnabled = true
+                    self.activity.stopAnimating()
+                    let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+                    vc.IdAbogado =  self.codigo
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
             }
             catch
             {
@@ -62,14 +65,8 @@ class ViewController: UIViewController {
         }
    }
     
-    func sincronizar(codigo:String)
+    func sincronizar(_ codigo:String)
     {
-        let resp: Bool = ControladorProyecto.instance.sincronizar(codigo: codigo)
-        if (resp)
-        {
-            let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-            vc.IdAbogado = Int(codigo)!
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        ControladorProyecto.instance.sincronizar(codigo)
     }
 }

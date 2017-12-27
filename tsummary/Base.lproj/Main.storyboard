@@ -90,6 +90,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="A2C-ZI-umr">
+                                        <rect key="frame" x="169" y="283" width="37" height="37"/>
+                                        <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -100,6 +104,7 @@
                                     <constraint firstItem="nHI-5K-U8m" firstAttribute="top" secondItem="tWp-L7-hha" secondAttribute="bottom" constant="50" id="JEB-nQ-ch8"/>
                                     <constraint firstAttribute="trailing" secondItem="tWp-L7-hha" secondAttribute="trailing" id="RVL-zJ-M14"/>
                                     <constraint firstItem="tWp-L7-hha" firstAttribute="top" secondItem="MGL-MI-TIQ" secondAttribute="bottom" id="RpD-zM-gXS"/>
+                                    <constraint firstItem="A2C-ZI-umr" firstAttribute="centerY" secondItem="Vzk-EO-pzs" secondAttribute="centerY" id="TxR-LR-jiZ"/>
                                     <constraint firstItem="tWp-L7-hha" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="YFJ-xs-N9A"/>
                                     <constraint firstAttribute="trailing" secondItem="zfH-ik-7kJ" secondAttribute="trailing" id="Zwf-UH-ebB"/>
                                     <constraint firstItem="MGL-MI-TIQ" firstAttribute="top" secondItem="9Ra-NN-cdP" secondAttribute="bottom" id="dUM-oK-Tow"/>
@@ -108,6 +113,7 @@
                                     <constraint firstItem="9Ra-NN-cdP" firstAttribute="top" secondItem="vze-uz-Bka" secondAttribute="bottom" id="hs3-Ws-kH7"/>
                                     <constraint firstItem="vze-uz-Bka" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="iyO-dO-HwO"/>
                                     <constraint firstAttribute="trailing" secondItem="MGL-MI-TIQ" secondAttribute="trailing" id="m2r-UI-bf5"/>
+                                    <constraint firstItem="A2C-ZI-umr" firstAttribute="centerX" secondItem="Vzk-EO-pzs" secondAttribute="centerX" id="mGc-Es-pY0"/>
                                     <constraint firstItem="zfH-ik-7kJ" firstAttribute="top" secondItem="Fp7-PF-PEr" secondAttribute="bottom" id="tAg-uq-jDF"/>
                                     <constraint firstItem="9Ra-NN-cdP" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="vJd-sy-XwT"/>
                                     <constraint firstItem="nHI-5K-U8m" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="wMx-h2-o9x"/>
@@ -129,6 +135,7 @@
                     <navigationItem key="navigationItem" id="G2O-1D-cT8"/>
                     <connections>
                         <outlet property="BtnRegistrar" destination="nHI-5K-U8m" id="oYl-0a-LmM"/>
+                        <outlet property="activity" destination="A2C-ZI-umr" id="yNH-xF-G8V"/>
                         <outlet property="txtIMEI" destination="tWp-L7-hha" id="u2U-G3-f89"/>
                         <outlet property="txtLoginName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
                         <outlet property="txtPassword" destination="9Ra-NN-cdP" id="nFk-WF-UMA"/>

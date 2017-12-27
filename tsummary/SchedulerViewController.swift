@@ -1,20 +1,12 @@
-//
-//  SchedulerViewController.swift
-//  tsummary
-//
-//  Created by Soporte on 07-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import UIKit
 
-
- class SchedulerViewController: UIViewController,
+class SchedulerViewController: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
     UITableViewDataSource,UITableViewDelegate,
     IListViewSemana, IViewHora {
     
     var mCVDias : UICollectionView!
+    
     
     var mTVHoras: UITableView = {
         let tv = UITableView()
@@ -82,13 +74,7 @@ import UIKit
         btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
         btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpInside)
         let barBtn = UIBarButtonItem(customView: btn)
-        navigationItem.rightBarButtonItem = barBtn //UIBarButtonItem(title: "Nuevo", style: .plain, target: self, action: #selector(self.addHora))
-        
-        
-        //screenSize = UIScreen.main.bounds
-        //screenWidth = screenSize.width
-        //screenHeight = screenSize.height
-        
+        navigationItem.rightBarButtonItem = barBtn
         
         let vCalendario = UIView()
         self.view.addSubview(vCalendario)
@@ -170,6 +156,7 @@ import UIKit
         self.presenterHora.buscar()
         
         self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
+        
     }
 
     func setList(horas: [Horas]) {

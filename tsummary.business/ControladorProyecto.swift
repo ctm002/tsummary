@@ -15,7 +15,7 @@ public class ControladorProyecto
     init() {}
     
     
-    func sincronizar(codigo: String) -> Bool
+    func sincronizar(_ codigo: String) -> Bool
     {
         //sincronizarProyectos(codigo: codigo)
         //sincronizarHoras(codigo:codigo)
