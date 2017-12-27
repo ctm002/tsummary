@@ -38,7 +38,7 @@ class SchedulerViewController: UIViewController,
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
     
-    var mIdAbo : Int = 0
+    private var mIdAbo : Int = 0
     var IdAbogado : Int {
         get {
             return self.mIdAbo
@@ -83,7 +83,6 @@ class SchedulerViewController: UIViewController,
         vCalendario.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         vCalendario.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         vCalendario.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        //vCalendario.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
         vCalendario.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         vCalendario.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
         
@@ -275,7 +274,8 @@ class SchedulerViewController: UIViewController,
     
     @objc func addHora()
     {
-        let vc =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+        let horaViewController =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
+        horaViewController.IdAbogado = self.IdAbogado
+        self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }

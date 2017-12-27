@@ -395,32 +395,37 @@ class LocalStoreTimeSummary
                 print("failure binding pro_id: \(errmsg)")
             }
             
+            if sqlite3_bind_text(statement, 3, hora.tim_asunto, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding tim_asunto: \(errmsg)")
+            }
+            
             let horas : Int = hora.tim_horas
-            if sqlite3_bind_int(statement, 3, Int32(horas)) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 4, Int32(horas)) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding tim_horas: \(errmsg)")
             }
     
             let minutos : Int = hora.tim_minutos
-            if sqlite3_bind_int(statement, 4, Int32(minutos))  != SQLITE_OK {
+            if sqlite3_bind_int(statement, 5, Int32(minutos))  != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding tim_minutos: \(errmsg)")
             }
             
             let aboId : Int = hora.abo_id
-            if sqlite3_bind_int(statement, 5,  Int32(aboId)) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding abo_id: \(errmsg)")
             }
             
             let modificable : Int32 = hora.Modificable ? 1 : 0
-            if sqlite3_bind_int(statement, 6, modificable) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding modificable: \(errmsg)")
             }
             
             let offline : Int32 = hora.OffLine ? 1 : 0
-            if sqlite3_bind_int(statement, 7, offline) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding offline: \(errmsg)")
             }
@@ -428,7 +433,7 @@ class LocalStoreTimeSummary
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let fechaInsert : String = formatter.string(from:hora.tim_fecha_ing!)
-            if sqlite3_bind_text(statement, 8, fechaInsert, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 9, fechaInsert, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding fecha_insert: \(errmsg)")
             }
@@ -833,11 +838,15 @@ class LocalStoreTimeSummary
             while sqlite3_step(statement) == SQLITE_ROW {
                 let hora = getHoraFromRecord(record: &statement)
                 horas.append(hora)
-                
             }
+        
+            if sqlite3_finalize(statement) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+        
             closeDB()
             return horas
-        
         } catch  {
             
         }
@@ -970,7 +979,7 @@ class LocalStoreTimeSummary
             
             if sqlite3_step(statement) == SQLITE_ROW{
                 
-                var hora = Horas()
+                let hora = Horas()
                 
                 let tim_correl : Int32 = sqlite3_column_int(statement, 0)
                 hora.tim_correl = tim_correl

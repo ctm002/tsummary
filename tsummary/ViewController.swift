@@ -21,8 +21,8 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func Registrar(_ sender: Any) {
         btnRegistrar.isEnabled = false
         self.activity.startAnimating()
@@ -46,9 +46,9 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                    self.btnRegistrar.isEnabled = true
                     self.activity.stopAnimating()
-                    let vc =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-                    vc.IdAbogado =  self.codigo
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    let scheduler =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+                    scheduler.IdAbogado = self.codigo
+                    self.navigationController?.pushViewController(scheduler, animated: true)
                 }
             }
             catch

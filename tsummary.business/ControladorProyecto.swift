@@ -1,11 +1,3 @@
-//
-//  ControladorProyecto.swift
-//  tsummary
-//
-//  Created by Soporte on 12-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import Foundation
 
 public class ControladorProyecto
@@ -13,7 +5,6 @@ public class ControladorProyecto
     static let  instance = ControladorProyecto()
     
     init() {}
-    
     
     func sincronizar(_ codigo: String) -> Bool
     {
@@ -58,10 +49,8 @@ public class ControladorProyecto
                 }
             }
          })
-        
         return true
     }
-    
     
     func minus(arreglo1:[Horas], arreglo2:[Horas]) -> [Horas]
     {
@@ -90,9 +79,6 @@ public class ControladorProyecto
     {
         var resp : Bool = false
         WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
-            
-            let temp = LocalStoreTimeSummary.instance.getListProyectos()
-            
             LocalStoreTimeSummary.instance.save(proyectos: proyectos!)
             resp = true
         })
@@ -107,5 +93,10 @@ public class ControladorProyecto
     public func getById(_ id: Int32)-> Horas?
     {
         return LocalStoreTimeSummary.instance.getById(id)
+    }
+    
+    public func getListHorasByCodAbogado(_ codigo: String) -> [Horas]?
+    {
+        return LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo)
     }
 }

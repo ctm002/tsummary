@@ -39,6 +39,7 @@ public class PresenterHora{
     func save()
     {
         do {
+            
             let id: Int32  = self.mEditViewHora!.IdHora
             
             var objHora : Horas
@@ -68,10 +69,10 @@ public class PresenterHora{
             objHora.tim_horas = Int(horas)
             objHora.tim_minutos = Int(minutos)
             
-            
             objHora.OffLine = true
             let result : Bool = ControladorProyecto.instance.save(objHora)
             if (result == true){ print("operacion exitosa") }
+ 
         } catch let error {
             print(error)
         }

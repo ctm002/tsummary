@@ -135,6 +135,8 @@ class HoraViewController: UIViewController,
         attributedText.append(NSAttributedString(string: ",\(self.mProyectos[row].pro_nombre)", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.gray]))
         
         pickerTextField.attributedText =  attributedText
+        
+        self.ProyectoId = self.mProyectos[row].pro_id
     }
     
     
