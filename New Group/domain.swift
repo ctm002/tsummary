@@ -126,14 +126,14 @@ public class Horas {
     private var mtim_asunto: String
     var tim_asunto: String { get {return self.mtim_asunto} set{ self.mtim_asunto = newValue} }
     
-    private var mtim_horas: Int32
-    var tim_horas:Int32 { get {return self.mtim_horas} set {self.mtim_horas=newValue} }
+    private var mtim_horas:Int
+    var tim_horas:Int { get {return self.mtim_horas} set {self.mtim_horas=newValue} }
     
-    private var mtim_minutos: Int32
-    var tim_minutos: Int32 { get{return self.mtim_minutos} set {self.mtim_minutos = newValue} }
+    private var mtim_minutos:Int
+    var tim_minutos: Int { get{return self.mtim_minutos} set {self.mtim_minutos = newValue} }
     
-    private var mabo_id:Int32
-    var  abo_id: Int32 { get {return self.mabo_id} set {self.mabo_id = newValue} }
+    private var mabo_id:Int
+    var  abo_id: Int { get {return self.mabo_id} set {self.mabo_id = newValue} }
     
     private var mModificable: Bool
     var  Modificable: Bool { get { return self.mModificable} set {self.mModificable = newValue} }

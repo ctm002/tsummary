@@ -22,7 +22,16 @@ class HoraViewController: UIViewController,
     var presenterProyecto : PresenterProyecto?
     var presenterHora : PresenterHora?
     var horaInicial: Int = 0
+    
     var mIdAbo : Int = 0
+    
+    private var mIdHora: Int32 = 0
+    private var mProyectoId: Int32 = 0
+    private var mTimCorrel: Int32 = 0
+    
+    private var mFechaIngreso: Date = {
+        return Date()
+    }()
     
     var minutosTotales: Int
     {
@@ -160,24 +169,19 @@ class HoraViewController: UIViewController,
         presenterHora!.save()
     }
     
+    var IdHora : Int32 { get { return self.mIdHora }  set { self.mIdHora = newValue }}
     
-    private var mIdHora: Int = 0
-    var IdHora : Int { get { return self.mIdHora }  set { self.mIdHora = newValue }}
-    
-    private var mProyectoId: Int = 0
-    var ProyectoId : Int { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
-    
-    private var mFechaIngreso: Date = {
-        return Date()
-    }()
+    var ProyectoId : Int32 { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
     
     var FechaIngreso : Date { get { return mFechaIngreso } set { self.mFechaIngreso = newValue }}
     
-    var Horas : String { get { return self.txtHoras.text! } set { self.txtHoras.text = newValue }}
+    var Horas : Int { get { return Int(self.txtHoras.text!)! } set { self.txtHoras.text = String(newValue) }}
     
-    var Minutos : String { get { return self.txtMinutos.text! } set { self.txtMinutos.text = newValue }}
+    var Minutos : Int { get { return Int(self.txtMinutos.text!)! } set { self.txtMinutos.text = String(newValue) }}
     
     var Asunto : String { get { return self.txtAsunto.text! } set { self.txtAsunto.text = newValue }}
     
     var IdAbogado : Int { get { return self.mIdAbo } set { self.mIdAbo = newValue }}
+    
+    var TimCorrel: Int32 {get{ return self.mTimCorrel} set {self.mTimCorrel = newValue }}
 }

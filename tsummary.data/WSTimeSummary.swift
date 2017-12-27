@@ -12,14 +12,12 @@ import Foundation
 class WSTimeSummary: NSObject
 {
     private var  _urlWebService : String = "http://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";//
-    //private var  _urlWebService : String = "http://10.1.11.42/WebApiCariola/ws/api.asmx/";
-    private var _urlHost: String  = "http://timesummary.cariola.cl";
-   
+
     private var  username: String
     private var  password: String
     private var credential: URLCredential!
     
-    static let Instance : WSTimeSummary = WSTimeSummary(username:"carlos_tapia", password:"CXXX")
+    static let instance : WSTimeSummary = WSTimeSummary(username:"carlos_tapia", password:"Car.2711")
     
     init(username:String, password: String) {
         
@@ -29,7 +27,7 @@ class WSTimeSummary: NSObject
     
     func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (Usuario?) -> Void)
     {
-        var conn: URLSession =
+        let conn: URLSession =
         {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
@@ -127,12 +125,12 @@ class WSTimeSummary: NSObject
                         var hora = Horas()
                         hora.pro_id =  d["pro_id"] as! Int32
                         hora.tim_correl  = d["tim_correl"] as! Int32
-                        hora.tim_horas =  d["tim_horas"] as! Int32
-                        hora.tim_minutos = d["tim_minutos"] as! Int32
+                        hora.tim_horas =  d["tim_horas"] as! Int
+                        hora.tim_minutos = d["tim_minutos"] as! Int
                         hora.tim_asunto = d["tim_asunto"] as! String
                         hora.Modificable = d["Modificable"]  as! Int == 1 ? true : false;
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
-                        hora.abo_id = d["abo_id"] as! Int32
+                        hora.abo_id = d["abo_id"] as! Int
                         
                         var dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "dd-MM-yyyy H:mm:ss"

@@ -10,7 +10,7 @@ import Foundation
 
 public class ControladorProyecto
 {
-    static let  Instance = ControladorProyecto()
+    static let  instance = ControladorProyecto()
     
     init() {}
     
@@ -30,13 +30,13 @@ public class ControladorProyecto
         
         //let hrsLocales = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogadoOffline(codigo: codigo)
         //let resp = WSTimeSummary.Instance.sincronizar(codigo: codigo, horas:"¨[{},{},{}]")
-        WSTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            if let hrsLocales = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogado(codigo: codigo)
+        WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
+            if let hrsLocales = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
                 if (nuevos.count > 0)
                 {
-                    LocalStoreTimeSummary.Instance.save(horas: nuevos)
+                    LocalStoreTimeSummary.instance.save(horas: nuevos)
                 }
                 
                 /*
@@ -53,7 +53,7 @@ public class ControladorProyecto
                 {
                     if (hrs.count > 0)
                     {
-                        LocalStoreTimeSummary.Instance.save(horas: hrs)
+                        LocalStoreTimeSummary.instance.save(horas: hrs)
                     }
                 }
             }
@@ -89,13 +89,23 @@ public class ControladorProyecto
     private func sincronizarProyectos(codigo: String) -> Bool
     {
         var resp : Bool = false
-        WSTimeSummary.Instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
+        WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
             
-            let temp = LocalStoreTimeSummary.Instance.getListProyectos()
+            let temp = LocalStoreTimeSummary.instance.getListProyectos()
             
-            LocalStoreTimeSummary.Instance.save(proyectos: proyectos!)
+            LocalStoreTimeSummary.instance.save(proyectos: proyectos!)
             resp = true
         })
         return resp
+    }
+    
+    public func save(_ hora: Horas)-> Bool
+    {
+        return LocalStoreTimeSummary.instance.save(hora: hora)
+    }
+    
+    public func getById(_ id: Int32)-> Horas?
+    {
+        return LocalStoreTimeSummary.instance.getById(id)
     }
 }
