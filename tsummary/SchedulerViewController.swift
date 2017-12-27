@@ -196,6 +196,7 @@ class SchedulerViewController: UIViewController,
         }
         return cell
     }
+    //Fin de TableCell
     
     //collectionView
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
