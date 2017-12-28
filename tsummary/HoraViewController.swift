@@ -22,7 +22,6 @@ class HoraViewController: UIViewController,
     var presenterProyecto : PresenterProyecto?
     var presenterHora : PresenterHora?
     var horaInicial: Int = 0
-    
     var mIdAbo : Int = 0
     
     private var mIdHora: Int32 = 0
@@ -169,6 +168,7 @@ class HoraViewController: UIViewController,
     
     @IBAction func btnGuardar(_ sender: UIButton) {
         presenterHora!.save()
+        self.navigationController?.popViewController(animated: true)
     }
     
     var IdHora : Int32 { get { return self.mIdHora }  set { self.mIdHora = newValue }}
