@@ -123,7 +123,7 @@ class WSTimeSummary: NSObject
                     for d  in datos
                     {
                         var hora = Horas()
-                        hora.pro_id =  d["pro_id"] as! Int32
+                        hora.proyecto.pro_id =  d["pro_id"] as! Int32
                         hora.tim_correl  = d["tim_correl"] as! Int32
                         hora.tim_horas =  d["tim_horas"] as! Int
                         hora.tim_minutos = d["tim_minutos"] as! Int
@@ -131,10 +131,7 @@ class WSTimeSummary: NSObject
                         hora.Modificable = d["Modificable"]  as! Int == 1 ? true : false;
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
                         hora.abo_id = d["abo_id"] as! Int
-                        
-                        var dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd-MM-yyyy H:mm:ss"
-                        hora.tim_fecha_ing = dateFormatter.date(from: (d["tim_fecha_ing"] as! String))
+                        hora.tim_fecha_ing = d["tim_fecha_ing"] as! String
                         horas.append(hora)
                     }
                     callback(horas)

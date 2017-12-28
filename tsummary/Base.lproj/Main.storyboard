@@ -370,6 +370,7 @@
                         <viewLayoutGuide key="safeArea" id="1sE-wr-GYz"/>
                     </view>
                     <connections>
+                        <outlet property="btnEliminar" destination="XZ2-oc-w8h" id="F6N-Cl-ewl"/>
                         <outlet property="pickerTextField" destination="dHR-ET-v8N" id="MKh-E0-LzZ"/>
                         <outlet property="txtAsunto" destination="9Fd-AJ-IlT" id="Hq4-8Y-rr2"/>
                         <outlet property="txtHoraInicio" destination="fSB-4i-haf" id="T6X-Ua-Pmt"/>

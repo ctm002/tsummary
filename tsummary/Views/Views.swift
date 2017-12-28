@@ -33,10 +33,11 @@ protocol IListViewProyecto {
 protocol IEditViewHora {
     var IdHora : Int32 { get set }
     var ProyectoId : Int32 { get set }
-    var FechaIngreso : Date { get set }
+    var FechaIngreso : String { get set }
     var IdAbogado : Int { get set }
     var Horas : Int { get set }
     var Minutos : Int { get set }
     var Asunto : String { get set }
     var TimCorrel: Int32 {get set }
+    func setNombreProyecto(_ proyecto : ClienteProyecto)
 }

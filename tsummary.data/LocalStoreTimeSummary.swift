@@ -1,11 +1,3 @@
-//
-//  LocalStoreTimeSummary.swift
-//  tsummary
-//
-//  Created by Soporte on 04-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import SQLite3
 import Foundation
 
@@ -389,7 +381,7 @@ class LocalStoreTimeSummary
                 print("failure binding tim_correl: \(errmsg)")
             }
     
-            let prodId : Int32 = Int32(hora.pro_id)
+            let prodId : Int32 = Int32(hora.proyecto.pro_id)
             if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding pro_id: \(errmsg)")
@@ -430,10 +422,7 @@ class LocalStoreTimeSummary
                 print("failure binding offline: \(errmsg)")
             }
             
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let fechaInsert : String = formatter.string(from:hora.tim_fecha_ing!)
-            if sqlite3_bind_text(statement, 9, fechaInsert, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding fecha_insert: \(errmsg)")
             }
@@ -481,7 +470,7 @@ class LocalStoreTimeSummary
                     print("failure binding tim_correl: \(errmsg)")
                 }
                 
-                let prodId : Int32 = Int32(hora.pro_id)
+                let prodId : Int32 = Int32(hora.proyecto.pro_id)
                 if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
@@ -523,10 +512,7 @@ class LocalStoreTimeSummary
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                let fechaInsert : String = formatter.string(from:hora.tim_fecha_ing!)
-                if sqlite3_bind_text(statement, 9, fechaInsert, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
                 }
@@ -606,7 +592,7 @@ class LocalStoreTimeSummary
                     print("error preparing update: \(errmsg)")
                 }
                 
-                let prodId : Int32 = Int32(hora.pro_id)
+                let prodId : Int32 = Int32(hora.proyecto.pro_id)
                 if sqlite3_bind_int(statement, 1,  prodId) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
@@ -648,10 +634,7 @@ class LocalStoreTimeSummary
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                let fechaInsert : String = formatter.string(from:hora.tim_fecha_ing!)
-                if sqlite3_bind_text(statement, 8, fechaInsert, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 8, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
                 }
@@ -686,8 +669,10 @@ class LocalStoreTimeSummary
         {
             try openDB()
             let query : String = """
-                select p.pro_id, p.pro_nombre, p.cli_nom
-                from  ClienteProyecto p
+                select
+                    p.pro_id, p.pro_nombre, p.cli_nom
+                from
+                    ClienteProyecto p
                 order by p.cli_nom asc
             """
             var statement: OpaquePointer?
@@ -737,10 +722,13 @@ class LocalStoreTimeSummary
         do {
             try openDB()
             let query : String = """
-                select tim_correl, pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine,tim_fecha_ing, hora_id
+                select
+                    h.tim_correl, h.pro_id, h.tim_asunto, h.tim_horas, h.tim_minutos, h.abo_id, h.Modificable, h.OffLine, h.tim_fecha_ing,
+                    p.pro_nombre, p.cli_nom, h.hora_id
                 from
-                    Horas
-                where abo_id=? AND OffLine = 0
+                    Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
+                where
+                    h.abo_id=? AND OffLine = 0
             """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
@@ -755,7 +743,7 @@ class LocalStoreTimeSummary
             
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW {
-                let hora = getHoraFromRecord(record: &statement)
+                let hora = getHoraFromRecord(&statement)
                 horas.append(hora)
             }
             closeDB()
@@ -767,14 +755,14 @@ class LocalStoreTimeSummary
         return nil
     }
     
-    private func getHoraFromRecord(record: inout OpaquePointer?) -> Horas {
+    private func getHoraFromRecord(_ record: inout OpaquePointer?) -> Horas {
         let hora = Horas()
         
         let tim_correl : Int32 = sqlite3_column_int(record, 0)
         hora.tim_correl = tim_correl
         
         let prodId : Int32 = sqlite3_column_int(record, 1)
-        hora.pro_id = prodId
+        hora.proyecto.pro_id = prodId
         
         if let csString = sqlite3_column_text(record,2)
         {
@@ -799,12 +787,20 @@ class LocalStoreTimeSummary
         
         if let csString = sqlite3_column_text(record, 8)
         {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            hora.tim_fecha_ing = formatter.date(from:String(cString: csString))
+            hora.tim_fecha_ing = String(cString: csString)
         }
         
-        let id : Int32 = sqlite3_column_int(record, 9)
+        if let csString = sqlite3_column_text(record, 9)
+        {
+            hora.proyecto.pro_nombre = String(cString: csString)
+        }
+        
+        if let csString = sqlite3_column_text(record, 10)
+        {
+            hora.proyecto.cli_nom = String(cString: csString)
+        }
+        
+        let id : Int32 = sqlite3_column_int(record, 11)
         hora.IdHora = id
         
         return hora
@@ -817,10 +813,13 @@ class LocalStoreTimeSummary
             try openDB()
         
             let query : String = """
-                select tim_correl, pro_id, tim_asunto, tim_horas, tim_minutos, abo_id, Modificable, OffLine,tim_fecha_ing, hora_id
+                select
+                    h.tim_correl, h.pro_id, h.tim_asunto, h.tim_horas, h.tim_minutos, h.abo_id, h.Modificable, h.OffLine, h.tim_fecha_ing,
+                    p.pro_nombre, p.cli_nom, h.hora_id
                 from
-                    Horas
-                where abo_id=?
+                    Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
+                where
+                    h.abo_id=?
             """
 
             var statement: OpaquePointer?
@@ -836,7 +835,7 @@ class LocalStoreTimeSummary
         
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW {
-                let hora = getHoraFromRecord(record: &statement)
+                let hora = getHoraFromRecord(&statement)
                 horas.append(hora)
             }
         
@@ -887,57 +886,7 @@ class LocalStoreTimeSummary
             
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW {
-                
-                var hora = Horas()
-                
-                let tim_correl : Int32 = sqlite3_column_int(statement, 0)
-                hora.tim_correl = tim_correl
-                
-                let prodId : Int32 = sqlite3_column_int(statement, 1)
-                hora.pro_id = prodId
-                
-                if let csString = sqlite3_column_text(statement,2)
-                {
-                    let asunto : String = String(cString: csString)
-                    hora.tim_asunto = asunto
-                }
-                
-                let cantHoras : Int32 = sqlite3_column_int(statement,3)
-                hora.tim_horas = Int(cantHoras)
-                
-                let minutos : Int32 = sqlite3_column_int(statement,4)
-                hora.tim_minutos = Int(minutos)
-                
-                let aboId : Int32 = sqlite3_column_int(statement, 5)
-                hora.abo_id = Int(aboId)
-                
-                let modificable : Int32 = sqlite3_column_int(statement, 6)
-                hora.Modificable = modificable == 1 ? true: false
-                
-                let offline : Int32 = sqlite3_column_int(statement, 7)
-                hora.OffLine = offline == 1 ? true: false
-                
-                if let csString = sqlite3_column_text(statement, 8)
-                {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let fechaInsert : Date? = formatter.date(from:String(cString: csString))
-                    hora.tim_fecha_ing = fechaInsert
-                }
-                
-                if let csString = sqlite3_column_text(statement, 9)
-                {
-                    hora.NombreProyecto = String(cString: csString)
-                }
-                
-                if let csString = sqlite3_column_text(statement, 10)
-                {
-                    hora.NombreCliente = String(cString: csString)
-                }
-
-                let id : Int32 = sqlite3_column_int(statement, 11)
-                hora.IdHora = id
-                
+                let hora = getHoraFromRecord(&statement)
                 horas.append(hora)
             }
             closeDB()
@@ -979,55 +928,7 @@ class LocalStoreTimeSummary
             
             if sqlite3_step(statement) == SQLITE_ROW{
                 
-                let hora = Horas()
-                
-                let tim_correl : Int32 = sqlite3_column_int(statement, 0)
-                hora.tim_correl = tim_correl
-                
-                let prodId : Int32 = sqlite3_column_int(statement, 1)
-                hora.pro_id = prodId
-                
-                if let csString = sqlite3_column_text(statement,2)
-                {
-                    let asunto : String = String(cString: csString)
-                    hora.tim_asunto = asunto
-                }
-                
-                let cantHoras : Int32 = sqlite3_column_int(statement,3)
-                hora.tim_horas = Int(cantHoras)
-                
-                let minutos : Int32 = sqlite3_column_int(statement,4)
-                hora.tim_minutos = Int(minutos)
-                
-                let aboId : Int32 = sqlite3_column_int(statement, 5)
-                hora.abo_id = Int(aboId)
-                
-                let modificable : Int32 = sqlite3_column_int(statement, 6)
-                hora.Modificable = modificable == 1 ? true: false
-                
-                let offline : Int32 = sqlite3_column_int(statement, 7)
-                hora.OffLine = offline == 1 ? true: false
-                
-                if let csString = sqlite3_column_text(statement, 8)
-                {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let fechaInsert : Date? = formatter.date(from:String(cString: csString))
-                    hora.tim_fecha_ing = fechaInsert
-                }
-                
-                if let csString = sqlite3_column_text(statement, 9)
-                {
-                    hora.NombreProyecto = String(cString: csString)
-                }
-                
-                if let csString = sqlite3_column_text(statement, 10)
-                {
-                    hora.NombreCliente = String(cString: csString)
-                }
-                
-                let id : Int32 = sqlite3_column_int(statement, 11)
-                hora.IdHora = id
+                let hora = getHoraFromRecord(&statement)
                 return hora
             }
             closeDB()

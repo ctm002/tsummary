@@ -11,7 +11,7 @@ import Foundation
 public class PresenterHora{
     
     private var mView: IViewHora?
-    private var mEditViewHora:IEditViewHora?
+    private var mEditViewHora:IEditViewHora!
     
     init(_ view: IViewHora) {
         self.mView = view
@@ -25,7 +25,7 @@ public class PresenterHora{
     }
     
     
-    func buscar(){
+    func buscarHoras(){
 
         let fecha : String =  self.mView!.getFechaActual()
         let codigo : Int = self.mView!.IdAbogado
@@ -33,6 +33,19 @@ public class PresenterHora{
         if let hrs = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
+        }
+    }
+    
+    func buscar(){
+        let id : Int32 = self.mEditViewHora!.IdHora
+        if let objHora = LocalStoreTimeSummary.instance.getById(id)
+        {
+            self.mEditViewHora.Asunto = objHora.tim_asunto
+            self.mEditViewHora.Minutos = objHora.tim_minutos
+            self.mEditViewHora.Horas = objHora.tim_horas
+            self.mEditViewHora.ProyectoId = objHora.proyecto.pro_id
+            self.mEditViewHora.setNombreProyecto(objHora.proyecto)
+            self.mEditViewHora.FechaIngreso = objHora.tim_fecha_ing
         }
     }
     
@@ -62,7 +75,7 @@ public class PresenterHora{
             let horas = self.mEditViewHora!.Horas
             let minutos = self.mEditViewHora!.Minutos
             
-            objHora.pro_id = Int32(proyectoId)
+            objHora.proyecto.pro_id = Int32(proyectoId)
             objHora.tim_fecha_ing = fechaIngreso
             objHora.abo_id = Int(idAbogado)
             objHora.tim_asunto = asunto

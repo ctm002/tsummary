@@ -1,11 +1,3 @@
-//
-//  HoraViewController.swift
-//  tsummary
-//
-//  Created by OTRO on 18-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import UIKit
 
 class HoraViewController: UIViewController,
@@ -17,6 +9,7 @@ class HoraViewController: UIViewController,
     @IBOutlet weak var txtMinutos: UITextField!
     @IBOutlet weak var txtHoraInicio: UILabel!
     @IBOutlet weak var txtAsunto: UITextView!
+    @IBOutlet var btnEliminar: UIButton!
     
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
@@ -28,9 +21,7 @@ class HoraViewController: UIViewController,
     private var mProyectoId: Int32 = 0
     private var mTimCorrel: Int32 = 0
     
-    private var mFechaIngreso: Date = {
-        return Date()
-    }()
+    private var mFechaIngreso: String = ""
     
     var minutosTotales: Int
     {
@@ -107,6 +98,15 @@ class HoraViewController: UIViewController,
     
     override func viewWillAppear(_ animated: Bool) {
         self.presenterProyecto!.getListProyectos()
+        
+        if self.IdHora == 0
+        {
+            btnEliminar.isEnabled = false
+        }else
+        {
+            btnEliminar.isEnabled = true
+            presenterHora?.buscar()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,27 +117,28 @@ class HoraViewController: UIViewController,
         return 1
     }
     
-    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.mProyectos.count
     }
-    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(self.mProyectos[row].cli_nom) \(self.mProyectos[row].pro_nombre)"
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        let attributedText = NSMutableAttributedString(string: self.mProyectos[row].cli_nom, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black])
-        
-        attributedText.append(NSAttributedString(string: ",\(self.mProyectos[row].pro_nombre)", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.gray]))
-        
-        pickerTextField.attributedText =  attributedText
-        
-        self.ProyectoId = self.mProyectos[row].pro_id
+        let proyecto = self.mProyectos[row]
+        self.setNombreProyecto(proyecto)
+        self.ProyectoId = proyecto.pro_id
     }
     
+    public func setNombreProyecto(_ proyecto : ClienteProyecto)
+    {
+        let attributedText = NSMutableAttributedString(string: proyecto.cli_nom, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black])
+        
+        attributedText.append(NSAttributedString(string: ",\(proyecto.pro_nombre)", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.gray]))
+        
+        pickerTextField.attributedText =  attributedText
+    }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return  50
@@ -175,7 +176,7 @@ class HoraViewController: UIViewController,
     
     var ProyectoId : Int32 { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
     
-    var FechaIngreso : Date { get { return mFechaIngreso } set { self.mFechaIngreso = newValue }}
+    var FechaIngreso : String { get { return self.mFechaIngreso } set { self.mFechaIngreso = newValue }}
     
     var Horas : Int { get { return Int(self.txtHoras.text!)! } set { self.txtHoras.text = String(newValue) }}
     

@@ -70,11 +70,11 @@ public class ClienteProyecto {
         self.mpro_idioma = ""
     }
     
-    private var mpro_id: Int32
-    public var pro_id: Int32 { get{return self.mpro_id} set {self.mpro_id=newValue} }
-    
     private var mcli_nom: String
     public var cli_nom: String { get{return self.mcli_nom} set {self.mcli_nom=newValue} }
+    
+    private var mpro_id: Int32
+    public var pro_id: Int32 { get{return self.mpro_id} set {self.mpro_id=newValue} }
     
     private var mpro_nombre: String
     public var pro_nombre: String { get{ return self.mpro_nombre} set {self.mpro_nombre=newValue} }
@@ -94,59 +94,97 @@ public class Horas {
     
     init() {
         self.mtim_correl = 0
-        self.mpro_id = 0
+        //self.mpro_id = 0
         self.mtim_asunto = ""
         self.mtim_horas = 0
         self.mtim_minutos = 0
         self.mabo_id = 0
         self.mModificable = false
         self.mOffLine = false
-        self.mtim_fecha_ing = nil
-        self.mNombreCliente = ""
-        self.mNombreProyecto = ""
+        self.mtim_fecha_ing = Date()
+        //self.mNombreCliente = ""
+        //self.mNombreProyecto = ""
         self.mIdHora = 0
         self.mEstado = .nuevo
+        self.proyecto = ClienteProyecto()
     }
     
     private var mEstado: Estados
-    var Estado: Estados {get{ return self.mEstado} set{ self.mEstado = newValue}}
+    var Estado: Estados { get { return self.mEstado } set { self.mEstado = newValue}}
     
     private var mIdHora: Int32
-    var IdHora: Int32 {get{ return self.mIdHora} set{ self.mIdHora = newValue}}
+    var IdHora: Int32 { get { return self.mIdHora } set { self.mIdHora = newValue}}
     
     private var mtim_correl:Int32
-    var tim_correl: Int32 { get { return self.mtim_correl} set { self.mtim_correl = newValue} }
+    var tim_correl: Int32 { get { return self.mtim_correl } set { self.mtim_correl = newValue} }
     
-    private var mpro_id:Int32
-    var pro_id: Int32 { get {return self.mpro_id} set {self.mpro_id = newValue} }
+    private var mtim_fecha_ing: Date
+    var tim_fecha_ing: String {
+        get {
+            
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "es_CL")
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let strFechaIng : String = formatter.string(from:mtim_fecha_ing)
+            return strFechaIng
+        }
+        set {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dtFechaIng : Date? = formatter.date(from:newValue)
+            self.mtim_fecha_ing = dtFechaIng!
+        }
+    }
     
-    private var mtim_fecha_ing: Date?
-    var tim_fecha_ing: Date? { get{ return self.mtim_fecha_ing} set{ self.mtim_fecha_ing = newValue} }
+    var tim_fecha_ing_hh_mm: String {
+        get {
+            
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "es_CL")
+            formatter.dateFormat = "HH:mm"
+            let strFechaIng : String = formatter.string(from:mtim_fecha_ing)
+            return strFechaIng
+        }
+    }
     
     private var mtim_asunto: String
-    var tim_asunto: String { get {return self.mtim_asunto} set{ self.mtim_asunto = newValue} }
+    var tim_asunto: String { get { return self.mtim_asunto } set { self.mtim_asunto = newValue} }
     
     private var mtim_horas:Int
-    var tim_horas:Int { get {return self.mtim_horas} set {self.mtim_horas=newValue} }
+    var tim_horas:Int { get { return self.mtim_horas } set { self.mtim_horas=newValue} }
     
     private var mtim_minutos:Int
-    var tim_minutos: Int { get{return self.mtim_minutos} set {self.mtim_minutos = newValue} }
+    var tim_minutos: Int { get { return self.mtim_minutos } set { self.mtim_minutos = newValue} }
     
     private var mabo_id:Int
-    var  abo_id: Int { get {return self.mabo_id} set {self.mabo_id = newValue} }
+    var  abo_id: Int { get { return self.mabo_id } set { self.mabo_id = newValue} }
     
     private var mModificable: Bool
-    var  Modificable: Bool { get { return self.mModificable} set {self.mModificable = newValue} }
+    var  Modificable: Bool { get { return self.mModificable } set { self.mModificable = newValue} }
     
     private var mOffLine: Bool
-    var OffLine: Bool { get { return self.mOffLine} set {self.mOffLine = newValue} }
+    var OffLine: Bool { get { return self.mOffLine } set { self.mOffLine = newValue} }
+    
+    /*
+    private var mpro_id:Int32
+    var pro_id: Int32 { get {return self.mpro_id} set {self.mpro_id = newValue} }
     
     private var mNombreProyecto: String
     var NombreProyecto: String { get{return self.mNombreProyecto} set {self.mNombreProyecto = newValue}}
     
     private var mNombreCliente: String
     var NombreCliente: String { get{return self.mNombreCliente} set {self.mNombreCliente = newValue}}
+    */
     
+    private var mProyecto: ClienteProyecto!
+    var proyecto: ClienteProyecto {
+        get {
+            return self.mProyecto
+        }
+        set {
+            self.mProyecto = newValue
+        }
+    }
 }
 
 public class Dia {

@@ -55,6 +55,8 @@ class TVCDetalleHora: UITableViewCell {
         setupLayout()
     }
     
+    var IdHora: Int32 = 0
+    
     func setupLayout()
     {
         contentView.addSubview(lblCliente)
