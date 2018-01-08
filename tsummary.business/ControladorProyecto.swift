@@ -6,10 +6,10 @@ public class ControladorProyecto
     
     init() {}
     
-    func sincronizar(_ codigo: String) -> Bool
+    func syncronizer(_ codigo: String) -> Bool
     {
         //sincronizarProyectos(codigo: codigo)
-        //sincronizarHoras(codigo:codigo)
+        sincronizarHoras(codigo:codigo)
         return true
     }
     
@@ -87,7 +87,13 @@ public class ControladorProyecto
     
     public func save(_ hora: Horas)-> Bool
     {
-        return LocalStoreTimeSummary.instance.save(hora: hora)
+        if hora.IdHora == 0
+        {
+            return LocalStoreTimeSummary.instance.save(hora)
+        }
+        else{
+            return LocalStoreTimeSummary.instance.update(hora)
+        }
     }
     
     public func getById(_ id: Int32)-> Horas?
@@ -98,5 +104,16 @@ public class ControladorProyecto
     public func getListHorasByCodAbogado(_ codigo: String) -> [Horas]?
     {
         return LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo)
+    }
+    
+    public func deleteById(_ id: Int32) -> Bool
+    {
+        let objHora = LocalStoreTimeSummary.instance.getById(id)
+        if (objHora != nil)
+        {
+            objHora?.Estado = .eliminado
+            return LocalStoreTimeSummary.instance.delete(hora: objHora!)
+        }
+        return false
     }
 }

@@ -29,7 +29,6 @@ public class PresenterHora{
 
         let fecha : String =  self.mView!.getFechaActual()
         let codigo : Int = self.mView!.IdAbogado
-        
         if let hrs = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
@@ -49,14 +48,13 @@ public class PresenterHora{
         }
     }
     
-    func save()
+    func guardar()
     {
         do {
             
             let id: Int32  = self.mEditViewHora!.IdHora
             
             var objHora : Horas
-
             if let objHoraTemp = ControladorProyecto.instance.getById(id) {
                 objHora = objHoraTemp
                 objHora.tim_correl = 0
@@ -90,4 +88,11 @@ public class PresenterHora{
             print(error)
         }
     }
+    
+    
+    func eliminar(){
+        let id: Int32  = self.mEditViewHora!.IdHora
+        ControladorProyecto.instance.deleteById(id)
+    }
+    
 }

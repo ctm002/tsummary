@@ -10,6 +10,10 @@ class HoraViewController: UIViewController,
     @IBOutlet weak var txtHoraInicio: UILabel!
     @IBOutlet weak var txtAsunto: UITextView!
     @IBOutlet var btnEliminar: UIButton!
+    @IBOutlet var datePickerFechaIngreso: UIDatePicker! = {
+        let dt = UIDatePicker()
+        return dt
+    }()
     
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
@@ -35,23 +39,25 @@ class HoraViewController: UIViewController,
     @IBAction func stepper1(_ sender: UIStepper) {
         txtHoras.text = String(format:"%02d", Int(sender.value))
         
-        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
-        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
+        //var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
+        //setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
     }
     
     @IBAction func stepper2(_ sender: UIStepper) {
         txtMinutos.text = String(format:"%02d", Int(sender.value))
         
-        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
-        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
+        //var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
+        //setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
         
     }
     
+    /*
     @IBAction func slider(_ sender: UISlider) {
         self.horaInicial = Int(sender.value)
         var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
         setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
     }
+    */
     
     func setTextHoras(horaDeInicio inicio: Int, horaDeTermino termino: inout Int)
     {
@@ -168,7 +174,12 @@ class HoraViewController: UIViewController,
     }
     
     @IBAction func btnGuardar(_ sender: UIButton) {
-        presenterHora!.save()
+        presenterHora!.guardar()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func btnEliminar_Click(_ sender: UIButton) {
+        presenterHora!.eliminar()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -176,7 +187,24 @@ class HoraViewController: UIViewController,
     
     var ProyectoId : Int32 { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
     
-    var FechaIngreso : String { get { return self.mFechaIngreso } set { self.mFechaIngreso = newValue }}
+    let formatter : DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "es_CL")
+        f.dateFormat="yyyy-MM-dd HH:mm"
+        return f
+    }()
+    
+    var FechaIngreso : String {
+        get {
+            return self.formatter.string(from: self.datePickerFechaIngreso.date)
+        }
+        set {
+            if let date = self.formatter.date(from: newValue)
+            {
+                self.datePickerFechaIngreso.date = date
+            }
+        }
+    }
     
     var Horas : Int { get { return Int(self.txtHoras.text!)! } set { self.txtHoras.text = String(newValue) }}
     

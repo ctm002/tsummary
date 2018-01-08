@@ -91,6 +91,8 @@ enum Estados: Int
 }
 
 public class Horas {
+    let formatter = DateFormatter()
+    
     
     init() {
         self.mtim_correl = 0
@@ -107,6 +109,12 @@ public class Horas {
         self.mIdHora = 0
         self.mEstado = .nuevo
         self.proyecto = ClienteProyecto()
+        
+        
+        formatter.locale = Locale(identifier: "es_CL")
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        //formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
     }
     
     private var mEstado: Estados
@@ -122,24 +130,30 @@ public class Horas {
     var tim_fecha_ing: String {
         get {
             
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "es_CL")
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let strFechaIng : String = formatter.string(from:mtim_fecha_ing)
-            return strFechaIng
+            if (self.mtim_fecha_ing != nil)
+            {
+                let strFechaIng : String = formatter.string(from: self.mtim_fecha_ing)
+                return strFechaIng
+            }
+            return ""
         }
         set {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let dtFechaIng : Date? = formatter.date(from:newValue)
-            self.mtim_fecha_ing = dtFechaIng!
+            
+            if (newValue != nil)
+            {
+                let dtFechaIng : Date? = formatter.date(from:newValue)
+                if (dtFechaIng != nil)
+                {
+                    self.mtim_fecha_ing = dtFechaIng!
+                }
+            }
         }
     }
     
     var tim_fecha_ing_hh_mm: String {
         get {
-            
             let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(identifier: "UTC")
             formatter.locale = Locale(identifier: "es_CL")
             formatter.dateFormat = "HH:mm"
             let strFechaIng : String = formatter.string(from:mtim_fecha_ing)

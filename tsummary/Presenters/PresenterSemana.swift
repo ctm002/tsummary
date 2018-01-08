@@ -27,15 +27,16 @@ class PresenterSemana{
 
     init(view: IListViewSemana, rangoDeDias cantidad: Int) {
         self.mView = view
-        self.mFecha = Date()
         self.mCantidadDias = cantidad
+        self.mFecha = Date()
     }
     
-    
+    /*
     func setDate(fecha: Date)
     {
         self.mFecha = fecha
     }
+    */
     
     private func firstDateOfWeek(year: Int, weekOfYear: Int) -> Date?
     {
@@ -50,7 +51,12 @@ class PresenterSemana{
         let firstWeekDay  = self.calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
        
         let firstWeek = self.calendar.component(Calendar.Component.weekOfYear, from: newDate!)
-        let weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ?  weekOfYear - 2 : weekOfYear
+        var weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ?  weekOfYear - 2 : weekOfYear
+        if (weekOfYearTemp == 0)
+        {
+            weekOfYearTemp = 1
+        }
+        
         return self.calendar.date(byAdding: Calendar.Component.day, value: ((weekOfYearTemp*7)+7), to: firstWeekDay!)
     }
     
@@ -74,6 +80,7 @@ class PresenterSemana{
                 dia.nombre = dateFormatter.string(from: fechaDeInicio!)
                 dia.nro = calendar.component(Calendar.Component.day, from: fechaDeInicio!)
                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                //dateFormatter.dateFormat = "dd-MM-yyyy"
                 dia.Fecha = dateFormatter.string(from: fechaDeInicio!)
                 semana.append(dia)
                 fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!)

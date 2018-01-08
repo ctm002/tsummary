@@ -48,17 +48,17 @@ class SchedulerViewController: UIViewController,
         }
     }
     
-    var mFechaActual: String = {
-        let date = Date()
+    let formatter : DateFormatter = {
         let locale = Locale(identifier: "es_CL")
         let tz = TimeZone(abbreviation: "UTC")!
-        var dateFormatter = DateFormatter()
-        dateFormatter.locale = locale
-        dateFormatter.timeZone = tz
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date)
-        
+        var f = DateFormatter()
+        f.locale = locale
+        f.timeZone = tz
+        f.dateFormat = "yyyy-MM-dd"
+        return f
     }()
+    
+    var mFechaActual: String
     
     func getFechaActual() -> String{
         return mFechaActual
@@ -146,10 +146,9 @@ class SchedulerViewController: UIViewController,
         mTVHoras.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
         
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
-        let now = Date()
-        presenterSemana.setDate(fecha: now)
         presenterSemana.calcularSemana()
-    
+        
+        self.mFechaActual = formatter.string(from: Date())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -232,8 +231,6 @@ class SchedulerViewController: UIViewController,
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         }
-        
-        
         return cell
     }
     
@@ -281,17 +278,21 @@ class SchedulerViewController: UIViewController,
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: fecha)
-        dateFormatter.locale = Locale(identifier: "es_CL")
-        dateFormatter.timeStyle = .none
-        dateFormatter.dateStyle = .full
-        return dateFormatter.string(from: date!)
+        if (date != nil)
+        {
+            dateFormatter.locale = Locale(identifier: "es_CL")
+            dateFormatter.timeStyle = .none
+            dateFormatter.dateStyle = .full
+            return dateFormatter.string(from: date!)
+        }
+        return ""
     }
     
     @objc func addHora()
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado
-        horaViewController.FechaIngreso = self.mFechaActual
+        horaViewController.FechaIngreso = self.mFechaActual + " 00:00:00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }

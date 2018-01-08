@@ -60,6 +60,6 @@ class ViewController: UIViewController {
     
     func sincronizar(_ codigo:String)
     {
-        ControladorProyecto.instance.sincronizar(codigo)
+        ControladorProyecto.instance.syncronizer(codigo)
     }
 }
