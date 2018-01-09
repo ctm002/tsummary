@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C5D6D1FE864930054B95A /* HoraViewController.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7C5D6D1FE864930054B95A /* HoraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		DE0E04781FD0B16D00AE0D7F /* tsummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tsummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				DE7D25911FE0639E003B0F4C /* ControladorProyecto.swift */,
+				2F7AE39E2005097400CB0492 /* ControladorLogica.swift */,
 			);
 			path = tsummary.business;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				DEF3B6021FD57D1C00437BD7 /* WSTimeSummary.swift in Sources */,
 				DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */,
 				DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */,
+				2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */,
 				DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */,
 				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
 				DE7D25921FE0639E003B0F4C /* ControladorProyecto.swift in Sources */,

@@ -9,34 +9,53 @@ public class ControladorProyecto
     func syncronizer(_ codigo: String) -> Bool
     {
         //sincronizarProyectos(codigo: codigo)
-        sincronizarHoras(codigo:codigo)
+        sincronizarHoras(codigo)
         return true
     }
     
     
-    private func sincronizarHoras(codigo: String) -> Bool
+    private func sincronizarHoras(_ codigo: String) -> Bool
     {
-        let fechaDesde : String = "2017-12-15 00:00:00"
-        let fechaHasta : String = "2015-12-30 23:59:59"
-        
-        //let hrsLocales = LocalStoreTimeSummary.Instance.getListDetalleHorasByCodAbogadoOffline(codigo: codigo)
-        //let resp = WSTimeSummary.Instance.sincronizar(codigo: codigo, horas:"¨[{},{},{}]")
+
         WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            if let hrsLocales = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo)
+            if let hrsLocales = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
                 if (nuevos.count > 0)
                 {
-                    LocalStoreTimeSummary.instance.save(horas: nuevos)
+                    do
+                    {
+                        try  LocalStoreTimeSummary.instance.open()
+                        for h in nuevos
+                        {
+                            LocalStoreTimeSummary.instance.save(h)
+                        }
+                        LocalStoreTimeSummary.instance.close()
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
                 
-                /*
-                let eliminadas : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: horasRemotas!)
-                if (eliminadas.count > 0)
+                
+                let eliminados : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: hrsRemotas!)
+                if (eliminados.count > 0)
                 {
-                    LocalStoreTimeSummary.Instance.delete(horas:eliminadas)
+                    do
+                    {
+                        try LocalStoreTimeSummary.instance.open()
+                        for e in eliminados
+                        {
+                            e.Estado = .eliminado
+                            LocalStoreTimeSummary.instance.delete(e)
+                        }
+                        LocalStoreTimeSummary.instance.close()
+                    }
+                    catch{
+                        
+                    }
                 }
-                */
             }
             else
             {
@@ -44,7 +63,7 @@ public class ControladorProyecto
                 {
                     if (hrs.count > 0)
                     {
-                        LocalStoreTimeSummary.instance.save(horas: hrs)
+                        LocalStoreTimeSummary.instance.save(hrs)
                     }
                 }
             }
@@ -75,44 +94,94 @@ public class ControladorProyecto
     }
     
     
-    private func sincronizarProyectos(codigo: String) -> Bool
+    private func sincronizarProyectos(_ codigo: String) -> Bool
     {
         var resp : Bool = false
         WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
-            LocalStoreTimeSummary.instance.save(proyectos: proyectos!)
-            resp = true
+            do
+            {
+                try LocalStoreTimeSummary.instance.open()
+                LocalStoreTimeSummary.instance.save(proyectos!)
+                LocalStoreTimeSummary.instance.close()
+                resp = true
+            }
+            catch{
+                print("Error: sincronizarProyectos")
+                LocalStoreTimeSummary.instance.close()
+            }
         })
         return resp
     }
     
     public func save(_ hora: Horas)-> Bool
     {
-        if hora.IdHora == 0
+        var resp: Bool = false
+        do
         {
-            return LocalStoreTimeSummary.instance.save(hora)
+            try LocalStoreTimeSummary.instance.open()
+            if hora.IdHora == 0
+            {
+                resp =  LocalStoreTimeSummary.instance.save(hora)
+            }
+            else{
+                resp = LocalStoreTimeSummary.instance.update(hora)
+            }
+            LocalStoreTimeSummary.instance.close()
         }
-        else{
-            return LocalStoreTimeSummary.instance.update(hora)
+        catch{
+            print("Error: save")
+            LocalStoreTimeSummary.instance.close()
         }
+        return resp
     }
     
     public func getById(_ id: Int32)-> Horas?
     {
-        return LocalStoreTimeSummary.instance.getById(id)
+        do{
+            try LocalStoreTimeSummary.instance.open()
+            let hora =  LocalStoreTimeSummary.instance.getById(id)
+            LocalStoreTimeSummary.instance.close()
+            return hora
+        }
+        catch
+        {
+            print("Error: getById")
+            LocalStoreTimeSummary.instance.close()
+        }
+        return nil
     }
     
     public func getListHorasByCodAbogado(_ codigo: String) -> [Horas]?
     {
-        return LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo)
+        do
+        {
+            try LocalStoreTimeSummary.instance.open()
+            let horas =  LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo)
+            LocalStoreTimeSummary.instance.close()
+            return horas
+        }
+        catch
+        {
+            print("Error: getListHorasByCodAbogado")
+            LocalStoreTimeSummary.instance.close()
+        }
+        return nil
     }
     
-    public func deleteById(_ id: Int32) -> Bool
+    public func delete(_ hora:Horas) -> Bool
     {
-        let objHora = LocalStoreTimeSummary.instance.getById(id)
-        if (objHora != nil)
+        do
         {
-            objHora?.Estado = .eliminado
-            return LocalStoreTimeSummary.instance.delete(hora: objHora!)
+            hora.Estado = .eliminado
+            try LocalStoreTimeSummary.instance.open()
+            LocalStoreTimeSummary.instance.delete(hora)
+            LocalStoreTimeSummary.instance.close()
+            return true
+        }
+        catch
+        {
+            print("Error: delete")
+            LocalStoreTimeSummary.instance.close()
         }
         return false
     }

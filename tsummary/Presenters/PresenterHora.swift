@@ -54,37 +54,38 @@ public class PresenterHora{
             
             let id: Int32  = self.mEditViewHora!.IdHora
             
-            var objHora : Horas
-            if let objHoraTemp = ControladorProyecto.instance.getById(id) {
-                objHora = objHoraTemp
-                objHora.tim_correl = 0
-                objHora.Estado = .nuevo
+            var detalleHora : Horas
+            if let detalleHoraTemp = ControladorProyecto.instance.getById(id) {
+                detalleHora = detalleHoraTemp
+                detalleHora.tim_correl = 0
+                detalleHora.Estado = .nuevo
             }
             else
             {
-                objHora = Horas()
-                objHora.Estado = .actualizado
+                detalleHora = Horas()
+                detalleHora.Estado = .actualizado
             }
             
             let proyectoId = self.mEditViewHora!.ProyectoId
             let fechaIngreso = self.mEditViewHora!.FechaIngreso
             let idAbogado = self.mEditViewHora!.IdAbogado
             let asunto = self.mEditViewHora!.Asunto
-            let horas = self.mEditViewHora!.Horas
-            let minutos = self.mEditViewHora!.Minutos
+            let cantHoras = self.mEditViewHora!.Horas
+            let cantMinutos = self.mEditViewHora!.Minutos
             
-            objHora.proyecto.pro_id = Int32(proyectoId)
-            objHora.tim_fecha_ing = fechaIngreso
-            objHora.abo_id = Int(idAbogado)
-            objHora.tim_asunto = asunto
-            objHora.tim_horas = Int(horas)
-            objHora.tim_minutos = Int(minutos)
+            detalleHora.proyecto.pro_id = Int32(proyectoId)
+            detalleHora.tim_fecha_ing = fechaIngreso
+            detalleHora.abo_id = Int(idAbogado)
+            detalleHora.tim_asunto = asunto
+            detalleHora.tim_horas = Int(cantHoras)
+            detalleHora.tim_minutos = Int(cantMinutos)
+            detalleHora.OffLine = true
             
-            objHora.OffLine = true
-            let result : Bool = ControladorProyecto.instance.save(objHora)
+            let result : Bool = ControladorProyecto.instance.save(detalleHora)
             if (result == true){ print("operacion exitosa") }
  
-        } catch let error {
+        }
+        catch let error {
             print(error)
         }
     }
@@ -92,7 +93,6 @@ public class PresenterHora{
     
     func eliminar(){
         let id: Int32  = self.mEditViewHora!.IdHora
-        ControladorProyecto.instance.deleteById(id)
+        ControladorLogica.instance.deleteById(id)
     }
-    
 }
