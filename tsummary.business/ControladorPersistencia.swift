@@ -2,7 +2,7 @@ import Foundation
 
 public class ControladorProyecto
 {
-    static let  instance = ControladorProyecto()
+    static let instance = ControladorProyecto()
     
     init() {}
     
@@ -16,7 +16,6 @@ public class ControladorProyecto
     
     private func sincronizarHoras(_ codigo: String) -> Bool
     {
-
         WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
             if let hrsLocales = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo)
             {
@@ -93,6 +92,39 @@ public class ControladorProyecto
         return resultado
     }
     
+    func delete(_ horas: [Horas]) -> Bool
+    {
+        do
+        {
+            try LocalStoreTimeSummary.instance.open()
+            for h in horas {
+                LocalStoreTimeSummary.instance.delete(hora)
+            }
+            LocalStoreTimeSummary.instance.close()
+        }
+        catch
+        {
+            LocalStoreTimeSummary.instance.close()
+            print("Error: delete")
+        }
+    }
+    
+    func save(_ horas:[Horas]) -> Bool
+    {
+        do
+        {
+            try LocalStoreTimeSummary.instance.open()
+            for h in horas {
+                LocalStoreTimeSummary.instance.save(hora)
+            }
+            LocalStoreTimeSummary.instance.close()
+        }
+        catch
+        {
+            LocalStoreTimeSummary.instance.close()
+            print("Error: delete")
+        }
+    }
     
     private func sincronizarProyectos(_ codigo: String) -> Bool
     {
