@@ -49,20 +49,23 @@ class SchedulerViewController: UIViewController,
     }
     
     let formatter : DateFormatter = {
-        let locale = Locale(identifier: "es_CL")
-        let tz = TimeZone(abbreviation: "UTC")!
         var f = DateFormatter()
-        f.locale = locale
-        f.timeZone = tz
+        f.locale = Locale(identifier: "es_CL")
+        f.timeZone = TimeZone(abbreviation: "UTC")!
         f.dateFormat = "yyyy-MM-dd"
         return f
     }()
     
-    var mFechaActual: String
-    
-    func getFechaActual() -> String{
-        return mFechaActual
+    var mFechaIngreso: String = ""
+    var FechaIngreso : String {
+        get {
+            return self.mFechaIngreso
+        }
+        set {
+            self.mFechaIngreso = newValue
+        }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,13 +151,13 @@ class SchedulerViewController: UIViewController,
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         presenterSemana.calcularSemana()
         
-        self.mFechaActual = formatter.string(from: Date())
+        self.FechaIngreso = formatter.string(from: Date())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.presenterHora = PresenterHora(self)
         self.presenterHora.buscarHoras()
-        self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
+        self.mLblTextFecha.text = self.toDateFormatter(fecha: self.FechaIngreso)
     }
     
     func setList(horas: [Horas]) {
@@ -226,7 +229,7 @@ class SchedulerViewController: UIViewController,
         cell.indexPath = indexPath.row
         cell.addGestureRecognizer(gesture)
         
-        if self.mFechaActual == self.semana[indexPath.row].Fecha
+        if self.FechaIngreso == self.semana[indexPath.row].Fecha
         {
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
@@ -258,11 +261,11 @@ class SchedulerViewController: UIViewController,
             if let nro = cell.lblNro.text
             {
                 let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
-                self.mFechaActual = dias[0].Fecha
+                self.FechaIngreso = dias[0].Fecha
                 self.presenterHora.buscarHoras()
                 
                 DispatchQueue.main.async {
-                    self.mLblTextFecha.text = self.toDateFormatter(fecha: self.mFechaActual)
+                    self.mLblTextFecha.text = self.toDateFormatter(fecha: self.FechaIngreso)
                 }
             }
             
@@ -292,7 +295,9 @@ class SchedulerViewController: UIViewController,
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado
-        horaViewController.FechaIngreso = self.mFechaActual + " 00:00:00"
+        let formatterHours = DateFormatter()
+        formatterHours.dateFormat = "HH"
+        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHours.string(from: Date()) + ":00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }

@@ -26,7 +26,7 @@ class LocalStoreTimeSummary
             try openDB()
             //try dropTables()
             try createTables()
-            try deleteTables()
+            //try deleteTables()
             closeDB()
         }
         catch
@@ -1077,7 +1077,8 @@ class LocalStoreTimeSummary
                 from
                     Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
                 where
-                    abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
+                    h.estado != 2
+                    AND abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
                 order by h.tim_fecha_ing asc
             """
             

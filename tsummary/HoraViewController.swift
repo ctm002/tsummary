@@ -7,9 +7,11 @@ class HoraViewController: UIViewController,
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var txtHoras: UITextField!
     @IBOutlet weak var txtMinutos: UITextField!
-    @IBOutlet weak var txtHoraInicio: UILabel!
     @IBOutlet weak var txtAsunto: UITextView!
     @IBOutlet var btnEliminar: UIButton!
+    @IBOutlet weak var stepper1: UIStepper!
+    @IBOutlet weak var stepper2: UIStepper!
+    
     @IBOutlet var datePickerFechaIngreso: UIDatePicker! = {
         let dt = UIDatePicker()
         return dt
@@ -25,7 +27,7 @@ class HoraViewController: UIViewController,
     private var mProyectoId: Int32 = 0
     private var mTimCorrel: Int32 = 0
     
-    private var mFechaIngreso: String = ""
+    var mFechaIngreso: String = ""
     
     var minutosTotales: Int
     {
@@ -37,27 +39,14 @@ class HoraViewController: UIViewController,
     }
 
     @IBAction func stepper1(_ sender: UIStepper) {
-        txtHoras.text = String(format:"%02d", Int(sender.value))
-        
-        //var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
-        //setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
+        let s = Int(sender.value)
+        txtHoras.text = String(format:"%02d", s)
     }
     
     @IBAction func stepper2(_ sender: UIStepper) {
-        txtMinutos.text = String(format:"%02d", Int(sender.value))
-        
-        //var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
-        //setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
-        
+        let s = Int(sender.value)
+        txtMinutos.text = String(format:"%02d", s)
     }
-    
-    /*
-    @IBAction func slider(_ sender: UISlider) {
-        self.horaInicial = Int(sender.value)
-        var horasTermino : Int = self.horaInicial*60 + self.minutosTotales
-        setTextHoras(horaDeInicio: self.horaInicial, horaDeTermino: &horasTermino)
-    }
-    */
     
     func setTextHoras(horaDeInicio inicio: Int, horaDeTermino termino: inout Int)
     {
@@ -79,7 +68,6 @@ class HoraViewController: UIViewController,
         let text : String =  "Desde las " + horasInicialText + ":00 hrs. Hasta las " + horasTerminoText + " hrs."
         let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black])
         
-        txtHoraInicio.attributedText = attributedText
     }
     
     func setList(proyectos: [ClienteProyecto]) {
@@ -99,7 +87,6 @@ class HoraViewController: UIViewController,
         
         txtHoras.text = "00"
         txtMinutos.text = "00"
-        txtHoraInicio.text = "00:00"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,6 +95,7 @@ class HoraViewController: UIViewController,
         if self.IdHora == 0
         {
             btnEliminar.isEnabled = false
+            self.FechaIngreso = mFechaIngreso
         }else
         {
             btnEliminar.isEnabled = true
@@ -163,7 +151,7 @@ class HoraViewController: UIViewController,
         }
 
         lbl?.textAlignment = .center
-        	lbl?.numberOfLines = 0
+        lbl?.numberOfLines = 0
         
         let attributedText = NSMutableAttributedString(string: self.mProyectos[row].cli_nom, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
         
@@ -187,28 +175,44 @@ class HoraViewController: UIViewController,
     
     var ProyectoId : Int32 { get { return self.mProyectoId } set { self.mProyectoId = newValue }}
     
-    let formatter : DateFormatter = {
+    var mFormatter : DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "es_CL")
-        f.dateFormat="yyyy-MM-dd HH:mm"
+        f.dateFormat = "yyyy-MM-dd HH:mm"
         return f
     }()
     
     var FechaIngreso : String {
         get {
-            return self.formatter.string(from: self.datePickerFechaIngreso.date)
+            return self.mFormatter.string(from: self.datePickerFechaIngreso.date)
         }
         set {
-            if let date = self.formatter.date(from: newValue)
+           if let date = self.mFormatter.date(from: newValue)
             {
                 self.datePickerFechaIngreso.date = date
             }
         }
     }
     
-    var Horas : Int { get { return Int(self.txtHoras.text!)! } set { self.txtHoras.text = String(newValue) }}
+    var Horas : Int {
+        get {
+            return Int(self.txtHoras.text!)!
+        }
+        set {
+            self.stepper1.value = Double(newValue)
+            self.txtHoras.text = String(format:"%02d", newValue)
+        }
+    }
     
-    var Minutos : Int { get { return Int(self.txtMinutos.text!)! } set { self.txtMinutos.text = String(newValue) }}
+    var Minutos : Int {
+        get {
+            return Int(self.txtMinutos.text!)!
+        }
+        set {
+             self.stepper2.value = Double(newValue)
+            self.txtMinutos.text = String(format:"%02d", newValue)
+        }
+    }
     
     var Asunto : String { get { return self.txtAsunto.text! } set { self.txtAsunto.text = newValue }}
     

@@ -27,7 +27,7 @@ public class PresenterHora{
     
     func buscarHoras(){
 
-        let fecha : String =  self.mView!.getFechaActual()
+        let fecha : String =  self.mView!.FechaIngreso
         let codigo : Int = self.mView!.IdAbogado
         if let hrs = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {

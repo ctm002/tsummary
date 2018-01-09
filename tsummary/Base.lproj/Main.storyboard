@@ -233,7 +233,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="24" translatesAutoresizingMaskIntoConstraints="NO" id="xbi-Tn-hTm">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="23" translatesAutoresizingMaskIntoConstraints="NO" id="xbi-Tn-hTm">
                                         <rect key="frame" x="0.0" y="60" width="94" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="J83-0c-AcN"/>
@@ -321,15 +321,6 @@
                                     <!--2017-12-29 13:28:02 +0000-->
                                 </date>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSB-4i-haf" userLabel="LblHoraInicio">
-                                <rect key="frame" x="10" y="497" width="355" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="UDO-Mp-cBa"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -346,7 +337,6 @@
                             <constraint firstItem="1sE-wr-GYz" firstAttribute="bottom" secondItem="XZ2-oc-w8h" secondAttribute="bottom" constant="30" id="FHv-fx-Qma"/>
                             <constraint firstItem="dHR-ET-v8N" firstAttribute="top" secondItem="MJm-r4-vFW" secondAttribute="bottom" id="H0J-OE-OzS"/>
                             <constraint firstItem="1sE-wr-GYz" firstAttribute="bottom" secondItem="pg8-kj-n5y" secondAttribute="bottom" constant="30" id="L0j-lU-GPL"/>
-                            <constraint firstItem="fSB-4i-haf" firstAttribute="top" secondItem="qbk-a0-HHQ" secondAttribute="bottom" id="Oyy-4S-7cp"/>
                             <constraint firstItem="MJm-r4-vFW" firstAttribute="trailing" secondItem="dHR-ET-v8N" secondAttribute="trailing" id="QpK-jR-ydm"/>
                             <constraint firstAttribute="trailing" secondItem="MJm-r4-vFW" secondAttribute="trailing" id="RAK-PZ-gfJ"/>
                             <constraint firstItem="pg8-kj-n5y" firstAttribute="leading" secondItem="XZ2-oc-w8h" secondAttribute="trailing" constant="35" id="RJv-3G-dzO"/>
@@ -354,7 +344,6 @@
                             <constraint firstItem="1sE-wr-GYz" firstAttribute="trailing" secondItem="pg8-kj-n5y" secondAttribute="trailing" constant="30" id="W8N-1g-Ozc"/>
                             <constraint firstItem="Kkn-fz-crH" firstAttribute="trailing" secondItem="1sE-wr-GYz" secondAttribute="trailing" id="XMG-60-MJX"/>
                             <constraint firstItem="C80-xr-cEe" firstAttribute="leading" secondItem="1sE-wr-GYz" secondAttribute="leading" id="ato-GE-EjN"/>
-                            <constraint firstAttribute="trailing" secondItem="fSB-4i-haf" secondAttribute="trailing" constant="10" id="c3U-a1-kuh"/>
                             <constraint firstItem="9Fd-AJ-IlT" firstAttribute="top" secondItem="fhF-ZC-on5" secondAttribute="bottom" constant="8" id="elo-nd-gjs"/>
                             <constraint firstItem="pg8-kj-n5y" firstAttribute="width" secondItem="XZ2-oc-w8h" secondAttribute="width" id="f82-3i-NFG"/>
                             <constraint firstItem="qbk-a0-HHQ" firstAttribute="top" secondItem="C80-xr-cEe" secondAttribute="bottom" id="geR-Ev-tay"/>
@@ -363,7 +352,6 @@
                             <constraint firstItem="dHR-ET-v8N" firstAttribute="trailing" secondItem="fhF-ZC-on5" secondAttribute="trailing" id="nju-im-BG7"/>
                             <constraint firstItem="Kkn-fz-crH" firstAttribute="top" secondItem="fzE-cY-9jG" secondAttribute="bottom" constant="8" id="o3A-Ub-69a"/>
                             <constraint firstItem="C80-xr-cEe" firstAttribute="trailing" secondItem="1sE-wr-GYz" secondAttribute="trailing" id="o4R-P6-mUK"/>
-                            <constraint firstItem="fSB-4i-haf" firstAttribute="leading" secondItem="1sE-wr-GYz" secondAttribute="leading" constant="10" id="obi-Fh-8Yk"/>
                             <constraint firstItem="dHR-ET-v8N" firstAttribute="leading" secondItem="fhF-ZC-on5" secondAttribute="leading" id="opw-0I-Flh"/>
                             <constraint firstItem="XZ2-oc-w8h" firstAttribute="leading" secondItem="1sE-wr-GYz" secondAttribute="leading" constant="30" id="rPg-iR-Ezj"/>
                             <constraint firstItem="9Fd-AJ-IlT" firstAttribute="trailing" secondItem="1sE-wr-GYz" secondAttribute="trailing" id="uCg-5D-nk4"/>
@@ -375,8 +363,9 @@
                         <outlet property="btnEliminar" destination="XZ2-oc-w8h" id="F6N-Cl-ewl"/>
                         <outlet property="datePickerFechaIngreso" destination="qbk-a0-HHQ" id="Pgy-m6-KFN"/>
                         <outlet property="pickerTextField" destination="dHR-ET-v8N" id="MKh-E0-LzZ"/>
+                        <outlet property="stepper1" destination="xbi-Tn-hTm" id="0Wi-Gr-gw5"/>
+                        <outlet property="stepper2" destination="U4U-KD-mny" id="L9O-XK-vzP"/>
                         <outlet property="txtAsunto" destination="9Fd-AJ-IlT" id="Hq4-8Y-rr2"/>
-                        <outlet property="txtHoraInicio" destination="fSB-4i-haf" id="T6X-Ua-Pmt"/>
                         <outlet property="txtHoras" destination="5PG-P9-3Vs" id="c9w-qM-Q7g"/>
                         <outlet property="txtMinutos" destination="qVj-x5-1KP" id="OxW-rS-dxx"/>
                     </connections>
