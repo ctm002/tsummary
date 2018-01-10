@@ -103,4 +103,9 @@ public class ControladorLogica
         }
         return resultado
     }
+    
+    func deleteAll()
+    {
+        DataBase.horas.deleteAll()
+    }
 }

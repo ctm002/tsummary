@@ -98,10 +98,25 @@
                                         </constraints>
                                         <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5a-FY-71L" userLabel="BtnEliminar">
+                                        <rect key="frame" x="0.0" y="464" width="320" height="40"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="CkG-Jj-8SZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Eliminar datos">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnDeleteOnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CAZ-HU-dfc"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="9Ra-NN-cdP" secondAttribute="trailing" id="5fc-xy-eeM"/>
+                                    <constraint firstAttribute="bottom" secondItem="z5a-FY-71L" secondAttribute="bottom" id="6Df-oD-Oar"/>
                                     <constraint firstItem="zfH-ik-7kJ" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="9k4-Rc-6Ew"/>
                                     <constraint firstAttribute="trailing" secondItem="vze-uz-Bka" secondAttribute="trailing" id="Ajg-mo-CYm"/>
                                     <constraint firstItem="vze-uz-Bka" firstAttribute="top" secondItem="zfH-ik-7kJ" secondAttribute="bottom" id="Efd-9b-GbW"/>
@@ -116,6 +131,7 @@
                                     <constraint firstItem="Fp7-PF-PEr" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="h1e-4n-tvY"/>
                                     <constraint firstAttribute="trailing" secondItem="nHI-5K-U8m" secondAttribute="trailing" id="hNP-Oq-945"/>
                                     <constraint firstItem="9Ra-NN-cdP" firstAttribute="top" secondItem="vze-uz-Bka" secondAttribute="bottom" id="hs3-Ws-kH7"/>
+                                    <constraint firstAttribute="trailing" secondItem="z5a-FY-71L" secondAttribute="trailing" id="iyD-67-eps"/>
                                     <constraint firstItem="vze-uz-Bka" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="iyO-dO-HwO"/>
                                     <constraint firstAttribute="trailing" secondItem="MGL-MI-TIQ" secondAttribute="trailing" id="m2r-UI-bf5"/>
                                     <constraint firstItem="zfH-ik-7kJ" firstAttribute="top" secondItem="Fp7-PF-PEr" secondAttribute="bottom" id="tAg-uq-jDF"/>
@@ -123,6 +139,7 @@
                                     <constraint firstItem="nHI-5K-U8m" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="wMx-h2-o9x"/>
                                     <constraint firstItem="MGL-MI-TIQ" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="wOO-Ph-9ce"/>
                                     <constraint firstItem="Fp7-PF-PEr" firstAttribute="top" secondItem="Vzk-EO-pzs" secondAttribute="top" id="xvY-ki-OwP"/>
+                                    <constraint firstItem="z5a-FY-71L" firstAttribute="leading" secondItem="Vzk-EO-pzs" secondAttribute="leading" id="z7z-oI-FHc"/>
                                     <constraint firstAttribute="trailing" secondItem="Fp7-PF-PEr" secondAttribute="trailing" id="zQo-6h-Dcb"/>
                                 </constraints>
                             </view>
@@ -139,6 +156,7 @@
                     <navigationItem key="navigationItem" id="G2O-1D-cT8"/>
                     <connections>
                         <outlet property="activity" destination="A2C-ZI-umr" id="yNH-xF-G8V"/>
+                        <outlet property="btnEliminar" destination="z5a-FY-71L" id="W7Y-jF-d4e"/>
                         <outlet property="btnRegistrar" destination="nHI-5K-U8m" id="oYl-0a-LmM"/>
                         <outlet property="txtIMEI" destination="tWp-L7-hha" id="u2U-G3-f89"/>
                         <outlet property="txtLoginName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
@@ -147,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="802.39999999999998" y="-952.17391304347836"/>
+            <point key="canvasLocation" x="800.625" y="-952.81690140845069"/>
         </scene>
         <!--Scheduler-->
         <scene sceneID="Ndw-sZ-PlT">

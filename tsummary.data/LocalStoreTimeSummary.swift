@@ -26,7 +26,7 @@ class LocalStoreTimeSummary
             try open()
             //try dropTables()
             try createTables()
-            //try deleteTables()
+            try deleteTables()
             close()
         }
         catch

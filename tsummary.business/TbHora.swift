@@ -723,4 +723,23 @@ class TbHora
         }
         return nil
     }
+    
+    func deleteAll()-> Bool
+    {
+        do
+        {
+            try open()
+            if sqlite3_exec(db, "delete from Horas", nil, nil, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error deleting table: \(errmsg)")
+            }
+            close()
+            return true
+        }
+        catch
+        {
+            print("\(error)")
+            return false
+        }
+    }
 }
