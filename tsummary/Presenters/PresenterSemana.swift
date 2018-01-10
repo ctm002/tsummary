@@ -1,11 +1,3 @@
-//
-//  PresenterSemana.swift
-//  tsummary
-//
-//  Created by Soporte on 11-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import Foundation
 
 class PresenterSemana{
@@ -30,13 +22,6 @@ class PresenterSemana{
         self.mCantidadDias = cantidad
         self.mFecha = Date()
     }
-    
-    /*
-    func setDate(fecha: Date)
-    {
-        self.mFecha = fecha
-    }
-    */
     
     private func firstDateOfWeek(year: Int, weekOfYear: Int) -> Date?
     {
@@ -66,9 +51,9 @@ class PresenterSemana{
         let nroSemana = self.calendar.component(Calendar.Component.weekOfYear, from:  self.mFecha)
         var semana:[Dia] = [Dia]()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = calendar.locale
-        dateFormatter.timeZone = calendar.timeZone
+        let formatter = DateFormatter()
+        formatter.locale = calendar.locale
+        formatter.timeZone = calendar.timeZone
         
         let diaTermino = firstDateOfWeek(year: año, weekOfYear: nroSemana)
         if let fechaDeTermino = diaTermino
@@ -76,19 +61,15 @@ class PresenterSemana{
             var fechaDeInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -self.mCantidadDias, to: fechaDeTermino)
             for i in 0..<self.mCantidadDias {
                 let dia = Dia()
-                dateFormatter.dateFormat = "EE"
-                dia.nombre = dateFormatter.string(from: fechaDeInicio!)
+                formatter.dateFormat = "EE"
+                dia.nombre = formatter.string(from: fechaDeInicio!)
                 dia.nro = calendar.component(Calendar.Component.day, from: fechaDeInicio!)
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                //dateFormatter.dateFormat = "dd-MM-yyyy"
-                dia.Fecha = dateFormatter.string(from: fechaDeInicio!)
+                formatter.dateFormat = "yyyy-MM-dd"
+                dia.Fecha = formatter.string(from: fechaDeInicio!)
                 semana.append(dia)
                 fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!)
             }
-            
             self.mView.setList(semana: semana)
         }
-        
     }
-    
 }

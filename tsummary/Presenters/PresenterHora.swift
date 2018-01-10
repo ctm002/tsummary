@@ -29,7 +29,7 @@ public class PresenterHora{
 
         let fecha : String =  self.mView!.FechaIngreso
         let codigo : Int = self.mView!.IdAbogado
-        if let hrs = LocalStoreTimeSummary.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
+        if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
         }
@@ -37,7 +37,7 @@ public class PresenterHora{
     
     func buscar(){
         let id : Int32 = self.mEditViewHora!.IdHora
-        if let objHora = LocalStoreTimeSummary.instance.getById(id)
+        if let objHora : Horas = DataBase.horas.getById(id)
         {
             self.mEditViewHora.Asunto = objHora.tim_asunto
             self.mEditViewHora.Minutos = objHora.tim_minutos
@@ -50,12 +50,13 @@ public class PresenterHora{
     
     func guardar()
     {
-        do {
-            
+        do
+        {
             let id: Int32  = self.mEditViewHora!.IdHora
             
             var detalleHora : Horas
-            if let detalleHoraTemp = ControladorProyecto.instance.getById(id) {
+            if let detalleHoraTemp = DataBase.horas.getById(id)
+            {
                 detalleHora = detalleHoraTemp
                 detalleHora.tim_correl = 0
                 detalleHora.Estado = .nuevo
@@ -81,7 +82,7 @@ public class PresenterHora{
             detalleHora.tim_minutos = Int(cantMinutos)
             detalleHora.OffLine = true
             
-            let result : Bool = ControladorProyecto.instance.save(detalleHora)
+            let result : Bool = DataBase.horas.save(detalleHora)
             if (result == true){ print("operacion exitosa") }
  
         }

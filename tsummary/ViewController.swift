@@ -13,10 +13,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        txtPassword.isSecureTextEntry = true
-        
+        self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,10 +39,10 @@ class ViewController: UIViewController {
             do
             {
                 self.codigo =  Int(u!.Id)
-                sincronizar(String(self.codigo))
+                self.sincronizar(String(self.codigo))
                 
                 DispatchQueue.main.async {
-                   self.btnRegistrar.isEnabled = true
+                    self.btnRegistrar.isEnabled = true
                     self.activity.stopAnimating()
                     let scheduler =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
                     scheduler.IdAbogado = self.codigo
@@ -53,13 +51,17 @@ class ViewController: UIViewController {
             }
             catch
             {
+                DispatchQueue.main.async {
+                    self.btnRegistrar.isEnabled = true
+                    self.activity.stopAnimating()
+                }
                 print("Error:\(error)")
             }
         }
-   }
+    }
     
     func sincronizar(_ codigo:String)
     {
-        ControladorProyecto.instance.syncronizer(codigo)
+        ControladorLogica.instance.syncronizer(codigo)
     }
 }

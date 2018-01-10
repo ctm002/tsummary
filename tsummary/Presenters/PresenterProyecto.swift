@@ -10,7 +10,7 @@ class PresenterProyecto {
     
     func getListProyectos()
     {
-        if let proyectos = LocalStoreTimeSummary.instance.getListProyectos()
+        if let proyectos = DataBase.proyectos.getListProyectos()
         {
             self.mView!.setList(proyectos: proyectos)
         }

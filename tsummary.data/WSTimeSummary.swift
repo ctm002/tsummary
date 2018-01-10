@@ -11,7 +11,7 @@ import Foundation
 
 class WSTimeSummary: NSObject
 {
-    private var  _urlWebService : String = "http://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";//
+    private var  _urlWebService : String = "https://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";
 
     private var  username: String
     private var  password: String
@@ -53,7 +53,7 @@ class WSTimeSummary: NSObject
                 callback(nil)
             }
 
-            print(response)
+            //print(response)
 
             if (data != nil)
             {
@@ -222,6 +222,7 @@ class WSTimeSummary: NSObject
                         proyecto.pro_nombre = d["pro_nombre"] as! String
                         proyecto.pro_idioma = d["Idioma"] as! String
                         proyectos.append(proyecto)
+                        
                     }
                     callback(proyectos)
                 }
@@ -240,7 +241,7 @@ extension WSTimeSummary: URLSessionDelegate
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
-        print("got challenge")
+        //print("got challenge")
         
         guard challenge.previousFailureCount == 0 else {
             print("too many failures")
@@ -250,11 +251,25 @@ extension WSTimeSummary: URLSessionDelegate
         }
         
         guard challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodNTLM else {
-            print("unknown authentication method \(challenge.protectionSpace.authenticationMethod)")
-            challenge.sender?.cancel(challenge)
-            completionHandler(.cancelAuthenticationChallenge, nil)
+            
+            if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+            {
+                let credentials = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                challenge.sender?.use(credentials, for: challenge)
+                completionHandler(.useCredential, credentials)
+            }
+            /*
+            else
+            {
+                print("unknown authentication method \(challenge.protectionSpace.authenticationMethod)")
+                challenge.sender?.cancel(challenge)
+                completionHandler(.cancelAuthenticationChallenge, nil)
+                return
+            }
+            */
             return
         }
+            
         
         let credentials = URLCredential(user: self.username, password: self.password, persistence: .permanent)
         challenge.sender?.use(credentials, for: challenge)

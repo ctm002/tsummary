@@ -75,7 +75,7 @@ class SchedulerViewController: UIViewController,
         
         let btn: UIButton = UIButton.init(type: .custom)
         btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
-        btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpOutside)
         let barBtn = UIBarButtonItem(customView: btn)
         navigationItem.rightBarButtonItem = barBtn
         

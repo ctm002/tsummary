@@ -14,9 +14,9 @@ public class ControladorLogica
     init() {}
     
     func deleteById(_ id:Int32)-> Bool{
-        if let hora = ControladorProyecto.instance.getById(id)
+        if let hora = DataBase.horas.getById(id)
         {
-            ControladorProyecto.instance.delete(hora)
+            DataBase.horas.delete(hora)
             return true
         }
         return false
@@ -24,31 +24,31 @@ public class ControladorLogica
     
     func save(_ hora: Horas) -> Bool
     {
-        return ControladorProyecto.instance.save(hora)
+        return DataBase.horas.save(hora)
     }
     
     func syncronizer(_ codigo: String)-> Bool
     {
         sincronizerProyects(codigo)
-        sincronizerHours(codigo)
         return true
     }
     
     private func sincronizerHours(_ codigo: String)-> Bool
     {
         WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            if let hrsLocales = ControladorProyecto.instance.getListHorasByCodAbogado(codigo)
+            
+            if let hrsLocales = DataBase.horas.getListHorasByCodAbogado(codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
                 if (nuevos.count > 0)
                 {
-                    ControladorProyecto.instance.save(nuevos)
+                    DataBase.horas.save(nuevos)
                 }
                 
                 let eliminados : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: hrsRemotas!)
                 if (eliminados.count > 0)
                 {
-                    ControladorProyecto.instance.delete(eliminados)
+                    DataBase.horas.delete(eliminados)
                 }
             }
             else
@@ -57,7 +57,7 @@ public class ControladorLogica
                 {
                     if (hrs.count > 0)
                     {
-                       ControladorProyecto.instance.save(hrs)
+                       DataBase.horas.save(hrs)
                     }
                 }
             }
@@ -67,8 +67,40 @@ public class ControladorLogica
     
     private func sincronizerProyects(_ codigo: String)-> Bool
     {
-        return true
+        var resp : Bool = false
+        WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
+            for p in proyectos!
+            {
+                let exists = DataBase.proyectos.getById(p.pro_id)
+                if (exists == nil)
+                {
+                   DataBase.proyectos.save(p)
+                }
+            }
+            self.sincronizerHours(codigo)
+        })
+        return resp
     }
     
-    
+    func minus(arreglo1:[Horas], arreglo2:[Horas]) -> [Horas]
+    {
+        var resultado = [Horas]()
+        
+        var exists : Bool = false
+        for i in arreglo1
+        {
+            for j in arreglo2 {
+                if i.tim_correl == j.tim_correl
+                {
+                    exists = true
+                }
+            }
+            if (exists == false)
+            {
+                resultado.append(i)
+            }
+            exists = false
+        }
+        return resultado
+    }
 }
