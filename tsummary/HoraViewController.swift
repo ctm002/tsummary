@@ -92,7 +92,7 @@ class HoraViewController: UIViewController,
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
-        txtAsunto.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
@@ -178,8 +178,18 @@ class HoraViewController: UIViewController,
     }
     
     @IBAction func btnEliminar_Click(_ sender: UIButton) {
-        presenterHora!.eliminar()
-        self.navigationController?.popViewController(animated: true)
+        
+        let alert = UIAlertController(title: "Alerta", message: "Esta seguro de eliminar el registro?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            self.presenterHora!.eliminar()
+            self.navigationController?.popViewController(animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     var IdHora : Int32 { get { return self.mIdHora }  set { self.mIdHora = newValue }}

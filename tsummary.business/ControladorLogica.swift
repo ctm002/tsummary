@@ -16,6 +16,8 @@ public class ControladorLogica
     func deleteById(_ id:Int32)-> Bool{
         if let hora = DataBase.horas.getById(id)
         {
+            hora.Estado = .eliminado
+            hora.OffLine = true
             DataBase.horas.delete(hora)
             return true
         }

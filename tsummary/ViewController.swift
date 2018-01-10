@@ -18,12 +18,22 @@ class ViewController: UIViewController {
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
         
-        
-        
+        //datos de pruebas
         self.txtLoginName.text = "carlos_tapia"
         self.txtPassword.text = "Car.2711"
+        self.txtIMEI.text = getUIDevice()
+        self.txtIMEI.isUserInteractionEnabled = false
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
-
+    
+    func getUIDevice() -> String
+    {
+        return UIDevice.current.identifierForVendor!.uuidString
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -81,5 +91,10 @@ class ViewController: UIViewController {
             self.activity.stopAnimating()
             self.btnEliminar.isEnabled = true
         }
+    }
+    
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 }
