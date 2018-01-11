@@ -29,16 +29,30 @@ public class ControladorLogica
         return DataBase.horas.save(hora)
     }
     
-    func syncronizer(_ codigo: String)-> Bool
+    func sincronizar(_ codigo: String,_ callback: @escaping (Bool) -> Void)
     {
-        sincronizerProyects(codigo)
-        return true
+        sincronizerProyects(codigo, callback)
     }
     
-    private func sincronizerHours(_ codigo: String)-> Bool
+    private func sincronizerProyects(_ codigo: String,_ callback: @escaping (Bool) -> Void)
+    {
+        WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
+            for p in proyectos!
+            {
+                let exists = DataBase.proyectos.getById(p.pro_id)
+                if (exists == nil)
+                {
+                   DataBase.proyectos.save(p)
+                }
+            }
+            print("proyectos descargados")
+            self.sincronizerHours(codigo, callback)
+        })
+    }
+    
+    private func sincronizerHours(_ codigo: String,_ callback: @escaping (Bool) -> Void)
     {
         WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            
             if let hrsLocales = DataBase.horas.getListHorasByCodAbogado(codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
@@ -59,29 +73,13 @@ public class ControladorLogica
                 {
                     if (hrs.count > 0)
                     {
-                       DataBase.horas.save(hrs)
+                        DataBase.horas.save(hrs)
                     }
                 }
             }
+            print("horas descargadas")
+            callback(true)
         })
-        return true
-    }
-    
-    private func sincronizerProyects(_ codigo: String)-> Bool
-    {
-        var resp : Bool = false
-        WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
-            for p in proyectos!
-            {
-                let exists = DataBase.proyectos.getById(p.pro_id)
-                if (exists == nil)
-                {
-                   DataBase.proyectos.save(p)
-                }
-            }
-            self.sincronizerHours(codigo)
-        })
-        return resp
     }
     
     func minus(arreglo1:[Horas], arreglo2:[Horas]) -> [Horas]

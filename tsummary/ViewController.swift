@@ -41,30 +41,23 @@ class ViewController: UIViewController {
     @IBAction func Registrar(_ sender: Any) {
         btnRegistrar.isEnabled = false
         self.activity.startAnimating()
+        
         WSTimeSummary.instance.registrar(
             imei: "863166032574597",
             userName: self.txtLoginName.text,
             password: self.txtPassword.text,
-            callback: self.redirect
+            callback: self.sincronizar
         )
     }
     
-    func redirect(u: Usuario?)
+    func sincronizar(u: Usuario?)
     {
         if (u != nil)
         {
             do
             {
                 self.codigo =  Int(u!.Id)
-                self.sincronizar(String(self.codigo))
-                
-                DispatchQueue.main.async {
-                    self.btnRegistrar.isEnabled = true
-                    self.activity.stopAnimating()
-                    let scheduler =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-                    scheduler.IdAbogado = self.codigo
-                    self.navigationController?.pushViewController(scheduler, animated: true)
-                }
+                self.sincronizar(String(self.codigo), callback: redirect)
             }
             catch
             {
@@ -77,9 +70,23 @@ class ViewController: UIViewController {
         }
     }
     
-    func sincronizar(_ codigo:String)
+    func redirect(estado: Bool)
     {
-        ControladorLogica.instance.syncronizer(codigo)
+        if (estado == true)
+        {
+            DispatchQueue.main.async {
+                self.btnRegistrar.isEnabled = true
+                self.activity.stopAnimating()
+                let scheduler =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+                scheduler.IdAbogado = self.codigo
+                self.navigationController?.pushViewController(scheduler, animated: true)
+            }
+        }
+    }
+    
+    func sincronizar(_ codigo:String, callback: @escaping (Bool) -> Void)
+    {
+        ControladorLogica.instance.sincronizar(codigo, callback)
     }
 
     @IBAction func btnDeleteOnClick(_ sender: Any)

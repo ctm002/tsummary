@@ -29,7 +29,7 @@ public class TbHora
         createTableIfExists()
     }
     
-    private func createTableIfExists() -> Bool
+    private func createTableIfExists()
     {
         do
         {
@@ -53,13 +53,11 @@ public class TbHora
                 print("error creating table: \(errmsg)")
             }
             close()
-            return true
         }
         catch
         {
             print("\(error)")
         }
-        return false
     }
     
     func open() throws

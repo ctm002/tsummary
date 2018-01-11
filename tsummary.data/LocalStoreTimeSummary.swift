@@ -23,6 +23,20 @@ public class LocalStoreTimeSummary
                     for: .documentDirectory,
                     in: .userDomainMask,
                     appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
+
+            initialize()
+        }
+        catch
+        {
+            print("\(error)")
+        }
+    }
+    
+    
+    func initialize()
+    {
+        do
+        {
             try open()
             try createTables()
             try deleteTables()
