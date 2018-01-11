@@ -9,7 +9,7 @@
 import Foundation
 import SQLite3
 
-class TbHora
+public class TbHora
 {
     internal let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
     internal let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
@@ -19,26 +19,22 @@ class TbHora
     
     static let instance = TbHora()
     
-    init() {
+    init()
+    {
         fileURL = try! FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
             appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
+        
+        createTableIfExists()
+    }
+    
+    private func createTableIfExists() -> Bool
+    {
         do
         {
             try open()
-            createTable()
-            close()
-        }
-        catch
-        {
-             print("\(error)")
-        }
-    }
-    
-    func  createTable()
-    {
-        if sqlite3_exec(db, """
+            let sql = """
                 create table if not exists Horas(
                     hora_id integer primary key,
                     tim_correl integer,
@@ -50,22 +46,34 @@ class TbHora
                     OffLine integer,
                     tim_fecha_ing datetime,
                     estado  integer)
-            """, nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error creating table: \(errmsg)")
+            """
+            if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error creating table: \(errmsg)")
+            }
+            close()
+            return true
         }
+        catch
+        {
+            print("\(error)")
+        }
+        return false
     }
     
     func open() throws
     {
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK
+        {
            throw  Errores.ErrorConexionDataBase
         }
     }
     
     func close()
     {
-        if sqlite3_close(db) != SQLITE_OK {
+        if sqlite3_close(db) != SQLITE_OK
+        {
             print("error closing database")
         }
         db = nil
@@ -76,34 +84,40 @@ class TbHora
         do
         {
             try open()
-            for hora in horas {
-                
+            for hora in horas
+            {
                 var statement: OpaquePointer?
                 
-                if sqlite3_prepare_v2(db,"""
+                let sql = """
                     update Horas set OffLine=1, estado=? where hora_id=?
                 """
-                    , -1, &statement, nil) != SQLITE_OK {
+                
+                if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error preparing update: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding estado: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding hora_id: \(errmsg)")
                 }
                 
-                if sqlite3_step(statement) != SQLITE_DONE{
+                if sqlite3_step(statement) != SQLITE_DONE
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("fallo preparing update: \(errmsg)")
                 }
                 
-                if sqlite3_finalize(statement) != SQLITE_OK {
+                if sqlite3_finalize(statement) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error finalizing prepared statement: \(errmsg)")
                 }
@@ -124,8 +138,8 @@ class TbHora
         do
         {
             try open()
-            for hora in horas {
-                
+            for hora in horas
+            {
                 var statement: OpaquePointer?
                 let sql = """
                 insert into Horas(
@@ -152,75 +166,88 @@ class TbHora
                         ?)
                 """
                 
-                if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
+                if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error preparing insert: \(errmsg)")
                 }
                 
                 let correlativo: Int32 = hora.tim_correl
-                if sqlite3_bind_int(statement, 1, correlativo) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 1, correlativo) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_correl: \(errmsg)")
                 }
                 
                 let prodId : Int32 = Int32(hora.proyecto.pro_id)
-                if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 3, hora.tim_asunto, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 3, hora.tim_asunto, -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_asunto: \(errmsg)")
                 }
                 
                 let horas : Int = hora.tim_horas
-                if sqlite3_bind_int(statement, 4, Int32(horas)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 4, Int32(horas)) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_horas: \(errmsg)")
                 }
                 
                 let minutos : Int = hora.tim_minutos
-                if sqlite3_bind_int(statement, 5, Int32(minutos))  != SQLITE_OK {
+                if sqlite3_bind_int(statement, 5, Int32(minutos))  != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_minutos: \(errmsg)")
                 }
                 
                 let aboId : Int = hora.abo_id
-                if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
                 let modificable : Int32 = hora.Modificable ? 1 : 0
-                if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
                 let offline : Int32 = hora.OffLine ? 1 : 0
-                if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
                 let estado : Int32 = Int32(hora.Estado.rawValue)
-                if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_step(statement) != SQLITE_DONE{
+                if sqlite3_step(statement) != SQLITE_DONE
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("fallo al insertar en la tabla horas: \(errmsg)")
                 }
                 
-                if sqlite3_finalize(statement) != SQLITE_OK {
+                if sqlite3_finalize(statement) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error finalizing prepared statement: \(errmsg)")
                 }
@@ -271,75 +298,88 @@ class TbHora
                         ?)
                 """
                 
-                if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
+                if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error preparing insert: \(errmsg)")
                 }
                 
                 let correlativo: Int32 = hora.tim_correl
-                if sqlite3_bind_int(statement, 1, correlativo) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 1, correlativo) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_correl: \(errmsg)")
                 }
                 
                 let prodId : Int32 = Int32(hora.proyecto.pro_id)
-                if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 3, hora.tim_asunto, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 3, hora.tim_asunto, -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_asunto: \(errmsg)")
                 }
                 
                 let horas : Int = hora.tim_horas
-                if sqlite3_bind_int(statement, 4, Int32(horas)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 4, Int32(horas)) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_horas: \(errmsg)")
                 }
                 
                 let minutos : Int = hora.tim_minutos
-                if sqlite3_bind_int(statement, 5, Int32(minutos))  != SQLITE_OK {
+                if sqlite3_bind_int(statement, 5, Int32(minutos))  != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_minutos: \(errmsg)")
                 }
                 
                 let aboId : Int = hora.abo_id
-                if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
                 let modificable : Int32 = hora.Modificable ? 1 : 0
-                if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
                 let offline : Int32 = hora.OffLine ? 1 : 0
-                if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 9, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
                 let estado : Int32 = Int32(hora.Estado.rawValue)
-                if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_step(statement) != SQLITE_DONE{
+                if sqlite3_step(statement) != SQLITE_DONE
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("fallo al insertar en la tabla horas: \(errmsg)")
                 }
                 
-                if sqlite3_finalize(statement) != SQLITE_OK {
+                if sqlite3_finalize(statement) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error finalizing prepared statement: \(errmsg)")
                 }
@@ -365,76 +405,89 @@ class TbHora
                     hora_id=?
                 """
                 
-                if sqlite3_prepare_v2(db, sql , -1, &statement, nil) != SQLITE_OK {
+                if sqlite3_prepare_v2(db, sql , -1, &statement, nil) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error preparing update: \(errmsg)")
                 }
                 
                 let prodId : Int32 = Int32(hora.proyecto.pro_id)
-                if sqlite3_bind_int(statement, 1,  prodId) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 1,  prodId) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
                 let asunto : String? = hora.tim_asunto
-                if sqlite3_bind_text(statement, 2, asunto , -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 2, asunto , -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_asunto: \(errmsg)")
                 }
                 
                 let horas : Int32 = Int32(hora.tim_horas)
-                if sqlite3_bind_int(statement, 3, horas) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 3, horas) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_horas: \(errmsg)")
                 }
                 
                 let minutos : Int32 = Int32(hora.tim_minutos)
-                if sqlite3_bind_int(statement, 4, minutos) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 4, minutos) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_minutos: \(errmsg)")
                 }
                 
                 let aboId : Int32 = Int32(hora.abo_id)
-                if sqlite3_bind_int(statement, 5,  aboId) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 5,  aboId) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
                 let modificable : Int32 = hora.Modificable ? 1 : 0
-                if sqlite3_bind_int(statement, 6, modificable) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 6, modificable) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
                 let offline : Int32 = hora.OffLine ? 1 : 0
-                if sqlite3_bind_int(statement, 7, offline) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 7, offline) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 8, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 8, hora.tim_fecha_ing, -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
                 let estado: Int32 = Int32(hora.Estado.rawValue)
-                if sqlite3_bind_int(statement, 9, estado) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 9, estado) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding estado: \(errmsg)")
                 }
                 
                 let id: Int32 = hora.IdHora
-                if sqlite3_bind_int(statement, 10, id) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 10, id) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding hora_id: \(errmsg)")
                 }
                 
-                if sqlite3_step(statement) != SQLITE_DONE{
+                if sqlite3_step(statement) != SQLITE_DONE
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("fallo al actualizar en la tabla horas: \(errmsg)")
                 }
                 
-                if sqlite3_finalize(statement) != SQLITE_OK {
+                if sqlite3_finalize(statement) != SQLITE_OK
+                {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error finalizing prepared statement: \(errmsg)")
                 }
@@ -442,7 +495,8 @@ class TbHora
             }
             close()
         }
-        catch{
+        catch
+        {
             print("Error: save")
             close()
         }
@@ -477,21 +531,25 @@ class TbHora
 
             try open()
             var statement: OpaquePointer?
-            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing get list horas: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(id)) != SQLITE_OK{
+            if sqlite3_bind_int(statement, 1, Int32(id)) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding abo_id: \(errmsg)")
             }
             
-            if sqlite3_step(statement) == SQLITE_ROW{
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
                 hora = getHoraFromRecord(&statement)
             }
             
-            if sqlite3_finalize(statement) != SQLITE_OK {
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error finalizing prepared statement: \(errmsg)")
             }
@@ -532,23 +590,27 @@ class TbHora
             
             try open()
             var statement: OpaquePointer?
-            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing get list horas: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK{
+            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding abo_id: \(errmsg)")
             }
             
             var horas = [Horas]()
-            while sqlite3_step(statement) == SQLITE_ROW {
+            while sqlite3_step(statement) == SQLITE_ROW
+            {
                 let hora = getHoraFromRecord(&statement)
                 horas.append(hora)
             }
             
-            if sqlite3_finalize(statement) != SQLITE_OK {
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error finalizing prepared statement: \(errmsg)")
             }
@@ -571,31 +633,36 @@ class TbHora
             
             var statement: OpaquePointer?
             
-            if sqlite3_prepare_v2(db,
-            """
+            let sql = """
                 update Horas set OffLine=1, estado=? where hora_id=?
             """
-                , -1, &statement, nil) != SQLITE_OK {
+            
+            if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing update: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding estado: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding hora_id: \(errmsg)")
             }
             
-            if sqlite3_step(statement) != SQLITE_DONE{
+            if sqlite3_step(statement) != SQLITE_DONE
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("fallo preparing update: \(errmsg)")
             }
             
-            if sqlite3_finalize(statement) != SQLITE_OK {
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error finalizing prepared statement: \(errmsg)")
             }
@@ -610,7 +677,8 @@ class TbHora
         return false
     }
     
-    private func getHoraFromRecord(_ record: inout OpaquePointer?) -> Horas {
+    private func getHoraFromRecord(_ record: inout OpaquePointer?) -> Horas
+    {
         let hora = Horas()
         
         let tim_correl : Int32 = sqlite3_column_int(record, 0)
@@ -688,28 +756,33 @@ class TbHora
         {
             try open()
             var statement: OpaquePointer?
-            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing get list horas: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK{
+            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding abo_id: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 2, fecha, -1, SQLITE_TRANSIENT) != SQLITE_OK{
+            if sqlite3_bind_text(statement, 2, fecha, -1, SQLITE_TRANSIENT) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding fecha: \(errmsg)")
             }
             
             var horas = [Horas]()
-            while sqlite3_step(statement) == SQLITE_ROW {
+            while sqlite3_step(statement) == SQLITE_ROW
+            {
                 let hora = getHoraFromRecord(&statement)
                 horas.append(hora)
             }
             
-            if sqlite3_finalize(statement) != SQLITE_OK {
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error finalizing prepared statement: \(errmsg)")
             }
@@ -729,7 +802,8 @@ class TbHora
         do
         {
             try open()
-            if sqlite3_exec(db, "delete from Horas", nil, nil, nil) != SQLITE_OK {
+            if sqlite3_exec(db, "delete from Horas", nil, nil, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error deleting table: \(errmsg)")
             }

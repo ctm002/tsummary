@@ -12,52 +12,59 @@ class TbProyecto
     
     static let instance = TbProyecto()
     
-    init() {
+    init()
+    {
         fileURL = try! FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
             appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
-        do
-        {
-            try open()
-            createTable()
-            close()
-        }
-        catch
-        {
-            print("\(error)")
-        }
+        
+        createTableIfExists()
     }
     
     func open() throws
     {
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK
+        {
             throw  Errores.ErrorConexionDataBase
         }
     }
     
     func close()
     {
-        if sqlite3_close(db) != SQLITE_OK {
+        if sqlite3_close(db) != SQLITE_OK
+        {
             print("error closing database")
         }
         db = nil
     }
     
-    public func createTable() -> Bool
+    public func createTableIfExists() -> Bool
     {
-        if sqlite3_exec(db, """
+        do
+        {
+            try open()
+            let sql = """
                 create table if not exists ClienteProyecto(
                 pro_id integer primary key,
                 cli_nom text,
                 pro_nombre text,
                 pro_idioma text)
-            """, nil, nil, nil) != SQLITE_OK {
+            """
+            if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
+            {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error creating table: \(errmsg)")
                 return false
+            }
+            close()
+            return true
         }
-        return true
+        catch
+        {
+            print("\(error)")
+        }
+        return false
     }
     
     public func save(_ proyectos: [ClienteProyecto])-> Bool
