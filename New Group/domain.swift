@@ -96,7 +96,6 @@ public class Horas {
     
     init() {
         self.mtim_correl = 0
-        //self.mpro_id = 0
         self.mtim_asunto = ""
         self.mtim_horas = 0
         self.mtim_minutos = 0
@@ -104,16 +103,12 @@ public class Horas {
         self.mModificable = false
         self.mOffLine = false
         self.mtim_fecha_ing = Date()
-        //self.mNombreCliente = ""
-        //self.mNombreProyecto = ""
         self.mIdHora = 0
         self.mEstado = .nuevo
+        self.mpro_id = 0
         self.proyecto = ClienteProyecto()
-        
-        
         formatter.locale = Locale(identifier: "es_CL")
         formatter.timeZone = TimeZone(identifier: "UTC")
-        //formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
     }
     
@@ -174,15 +169,16 @@ public class Horas {
     var  abo_id: Int { get { return self.mabo_id } set { self.mabo_id = newValue} }
     
     private var mModificable: Bool
-    var  Modificable: Bool { get { return self.mModificable } set { self.mModificable = newValue} }
+    var  modificable: Bool { get { return self.mModificable } set { self.mModificable = newValue} }
     
     private var mOffLine: Bool
-    var OffLine: Bool { get { return self.mOffLine } set { self.mOffLine = newValue} }
+    var offline: Bool { get { return self.mOffLine } set { self.mOffLine = newValue} }
     
-    /*
+    
     private var mpro_id:Int32
     var pro_id: Int32 { get {return self.mpro_id} set {self.mpro_id = newValue} }
     
+    /*
     private var mNombreProyecto: String
     var NombreProyecto: String { get{return self.mNombreProyecto} set {self.mNombreProyecto = newValue}}
     

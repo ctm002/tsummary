@@ -13,7 +13,8 @@ public class PresenterHora{
     private var mView: IViewHora?
     private var mEditViewHora:IEditViewHora!
     
-    init(_ view: IViewHora) {
+    init(_ view: IViewHora)
+    {
         self.mView = view
         self.mEditViewHora = nil
     }
@@ -25,8 +26,8 @@ public class PresenterHora{
     }
     
     
-    func buscarHoras(){
-
+    func buscarHoras()
+    {
         let fecha : String =  self.mView!.FechaIngreso
         let codigo : Int = self.mView!.IdAbogado
         if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
@@ -35,16 +36,17 @@ public class PresenterHora{
         }
     }
     
-    func buscar(){
+    func buscar()
+    {
         let id : Int32 = self.mEditViewHora!.IdHora
-        if let objHora : Horas = DataBase.horas.getById(id)
+        if let detalleHora : Horas = DataBase.horas.getById(id)
         {
-            self.mEditViewHora.Asunto = objHora.tim_asunto
-            self.mEditViewHora.Minutos = objHora.tim_minutos
-            self.mEditViewHora.Horas = objHora.tim_horas
-            self.mEditViewHora.ProyectoId = objHora.proyecto.pro_id
-            self.mEditViewHora.setNombreProyecto(objHora.proyecto)
-            self.mEditViewHora.FechaIngreso = objHora.tim_fecha_ing
+            self.mEditViewHora.Asunto = detalleHora.tim_asunto
+            self.mEditViewHora.Minutos = detalleHora.tim_minutos
+            self.mEditViewHora.Horas = detalleHora.tim_horas
+            self.mEditViewHora.ProyectoId = detalleHora.proyecto.pro_id
+            self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
+            self.mEditViewHora.FechaIngreso = detalleHora.tim_fecha_ing
         }
     }
     
@@ -80,20 +82,21 @@ public class PresenterHora{
             detalleHora.tim_asunto = asunto
             detalleHora.tim_horas = Int(cantHoras)
             detalleHora.tim_minutos = Int(cantMinutos)
-            detalleHora.OffLine = true
+            detalleHora.offline = true
             
-            let result : Bool = DataBase.horas.save(detalleHora)
+            let result : Bool = DataBase.horas.guardar(detalleHora)
             if (result == true){ print("operacion exitosa") }
  
         }
-        catch let error {
+        catch let error
+        {
             print(error)
         }
     }
     
-    
-    func eliminar(){
+    func eliminar() -> Bool
+    {
         let id: Int32  = self.mEditViewHora!.IdHora
-        ControladorLogica.instance.deleteById(id)
+        return ControladorLogica.instance.eliminarById(id)
     }
 }

@@ -74,7 +74,7 @@ class SchedulerViewController: UIViewController,
         
         let btn: UIButton = UIButton.init(type: .custom)
         //btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
-        btn.addTarget(self, action: #selector(self.addHora), for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.agregarNuevaHora), for: UIControlEvents.touchUpInside)
         btn.setTitle("Nuevo", for: .normal)
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         let barBtn = UIBarButtonItem(customView: btn)
@@ -158,7 +158,7 @@ class SchedulerViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
         self.presenterHora = PresenterHora(self)
         self.presenterHora.buscarHoras()
-        self.mLblTextFecha.text = self.toDateFormatter(fecha: self.FechaIngreso)
+        self.mLblTextFecha.text = self.formatearFecha(fecha: self.FechaIngreso)
     }
     
     func setList(horas: [Horas]) {
@@ -266,7 +266,7 @@ class SchedulerViewController: UIViewController,
                 self.presenterHora.buscarHoras()
                 
                 DispatchQueue.main.async {
-                    self.mLblTextFecha.text = self.toDateFormatter(fecha: self.FechaIngreso)
+                    self.mLblTextFecha.text = self.formatearFecha(fecha: self.FechaIngreso)
                 }
             }
             
@@ -277,7 +277,7 @@ class SchedulerViewController: UIViewController,
         self.semana = semana
     }
     
-    func toDateFormatter(fecha: String) -> String
+    func formatearFecha(fecha: String) -> String
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -292,13 +292,13 @@ class SchedulerViewController: UIViewController,
         return ""
     }
     
-    @objc func addHora()
+    @objc func agregarNuevaHora()
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado
-        let formatterHours = DateFormatter()
-        formatterHours.dateFormat = "HH"
-        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHours.string(from: Date()) + ":00"
+        let formatterHora = DateFormatter()
+        formatterHora.dateFormat = "HH"
+        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }

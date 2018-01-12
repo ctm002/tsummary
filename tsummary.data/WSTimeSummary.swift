@@ -87,7 +87,7 @@ class WSTimeSummary: NSObject
     }
     
     
-    func getListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void)
+    func obtListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void)
     {
         var conn: URLSession = {
             let config = URLSessionConfiguration.ephemeral
@@ -127,7 +127,7 @@ class WSTimeSummary: NSObject
                         hora.tim_horas =  d["tim_horas"] as! Int
                         hora.tim_minutos = d["tim_minutos"] as! Int
                         hora.tim_asunto = d["tim_asunto"] as! String
-                        hora.Modificable = d["Modificable"]  as! Int == 1 ? true : false;
+                        hora.modificable = d["Modificable"]  as! Int == 1 ? true : false;
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
                         hora.abo_id = d["abo_id"] as! Int
                         hora.tim_fecha_ing = d["tim_fecha_ing"] as! String
@@ -177,7 +177,7 @@ class WSTimeSummary: NSObject
         task.resume()
     }
     
-    func getListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
+    func obtListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
         
         var conn: URLSession = {
@@ -215,15 +215,63 @@ class WSTimeSummary: NSObject
                     let datos =  try JSONSerialization.jsonObject(with: data!, options: []) as! [AnyObject]
                     for d  in datos
                     {
-                        var proyecto = ClienteProyecto()
+                        let proyecto = ClienteProyecto()
                         proyecto.pro_id = d["pro_id"] as! Int32
                         proyecto.cli_nom = d["cli_nom"] as! String
                         proyecto.pro_nombre = d["pro_nombre"] as! String
                         proyecto.pro_idioma = d["Idioma"] as! String
                         proyectos.append(proyecto)
-                        
                     }
                     callback(proyectos)
+                }
+                catch
+                {
+                    print("Error:\(error)")
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    func guardar(hora: Horas, retorno: @escaping (Horas?) -> Void)
+    {
+        let conn: URLSession =
+        {
+            let config = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            return session
+        }()
+    
+        let urlString = _urlWebService + "GuardarInformacion"
+        let url = URL(string: urlString)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        request.httpMethod = "POST"
+    
+        var postData: String = ""
+        postData.append("tim_correl=" +  String(hora.tim_correl) + "&")
+        postData.append("pro_id=" + String(hora.proyecto.pro_id) + "&")
+        postData.append("tim_fecha_ing=" + hora.tim_fecha_ing + "&")
+        postData.append("tim_asunto=" + hora.tim_asunto + "&")
+        postData.append("tim_horas=" + String(hora.tim_horas) + "&")
+        postData.append("tim_minutos=" + String(hora.tim_minutos) + "&")
+        postData.append("abo_id=" + String(hora.abo_id) + "&")
+        postData.append("OffLine= " + String(hora.offline))
+        request.httpBody = postData.data(using: String.Encoding.utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+    
+        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if(error != nil)
+            {
+                retorno(nil)
+                return
+            }
+            
+            if (data != nil)
+            {
+                do{
+                    let data =  try JSONSerialization.jsonObject(with: data!, options: []) as! AnyObject
+                    hora.tim_correl = data["tim_correl"] as! Int32
+                    retorno(hora)
                 }
                 catch
                 {
@@ -268,7 +316,6 @@ extension WSTimeSummary: URLSessionDelegate
             */
             return
         }
-            
         
         let credentials = URLCredential(user: self.username, password: self.password, persistence: .permanent)
         challenge.sender?.use(credentials, for: challenge)

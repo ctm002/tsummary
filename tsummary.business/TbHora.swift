@@ -77,7 +77,7 @@ public class TbHora
         db = nil
     }
     
-    func delete(_ horas: [Horas]) -> Bool
+    func eliminar(_ horas: [Horas]) -> Bool
     {
         do
         {
@@ -131,7 +131,7 @@ public class TbHora
         return false
     }
     
-    func save(_ horas:[Horas]) -> Bool
+    func guardar(_ horas:[Horas]) -> Bool
     {
         do
         {
@@ -211,14 +211,14 @@ public class TbHora
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
-                let modificable : Int32 = hora.Modificable ? 1 : 0
+                let modificable : Int32 = hora.modificable ? 1 : 0
                 if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
-                let offline : Int32 = hora.OffLine ? 1 : 0
+                let offline : Int32 = hora.offline ? 1 : 0
                 if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -262,7 +262,7 @@ public class TbHora
         return false
     }
     
-    public func save(_ hora: Horas)-> Bool
+    public func guardar(_ hora: Horas)-> Bool
     {
         var resp: Bool = false
         do
@@ -343,14 +343,14 @@ public class TbHora
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
-                let modificable : Int32 = hora.Modificable ? 1 : 0
+                let modificable : Int32 = hora.modificable ? 1 : 0
                 if sqlite3_bind_int(statement, 7, modificable) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
-                let offline : Int32 = hora.OffLine ? 1 : 0
+                let offline : Int32 = hora.offline ? 1 : 0
                 if sqlite3_bind_int(statement, 8, offline) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -444,14 +444,14 @@ public class TbHora
                     print("failure binding abo_id: \(errmsg)")
                 }
                 
-                let modificable : Int32 = hora.Modificable ? 1 : 0
+                let modificable : Int32 = hora.modificable ? 1 : 0
                 if sqlite3_bind_int(statement, 6, modificable) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding modificable: \(errmsg)")
                 }
                 
-                let offline : Int32 = hora.OffLine ? 1 : 0
+                let offline : Int32 = hora.offline ? 1 : 0
                 if sqlite3_bind_int(statement, 7, offline) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -562,7 +562,7 @@ public class TbHora
         return nil
     }
     
-    public func getListHorasByCodAbogado(_ codigo: String) -> [Horas]?
+    public func obtListHorasByCodAbogado(_ codigo: String) -> [Horas]?
     {
         do
         {
@@ -623,7 +623,7 @@ public class TbHora
         return nil
     }
     
-    public func delete(_ hora:Horas) -> Bool
+    public func eliminar(_ hora:Horas) -> Bool
     {
         do
         {
@@ -701,10 +701,10 @@ public class TbHora
         hora.abo_id = Int(aboId)
         
         let modificable : Int32 = sqlite3_column_int(record, 6)
-        hora.Modificable = modificable == 1 ? true: false
+        hora.modificable = modificable == 1 ? true: false
         
         let offline : Int32 = sqlite3_column_int(record, 7)
-        hora.OffLine = offline == 1 ? true: false
+        hora.offline = offline == 1 ? true: false
         
         if let csString = sqlite3_column_text(record, 8)
         {
@@ -795,7 +795,7 @@ public class TbHora
         return nil
     }
     
-    func deleteAll()-> Bool
+    func eliminarTodo()-> Bool
     {
         do
         {

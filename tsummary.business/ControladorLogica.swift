@@ -1,11 +1,3 @@
-//
-//  ControladorLogica.swift
-//  tsummary
-//
-//  Created by OTRO on 09-01-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import Foundation
 public class ControladorLogica
 {
@@ -13,58 +5,64 @@ public class ControladorLogica
     
     init() {}
     
-    func deleteById(_ id:Int32)-> Bool{
+    func eliminarById(_ id:Int32)-> Bool
+    {
         if let hora = DataBase.horas.getById(id)
         {
             hora.Estado = .eliminado
-            hora.OffLine = true
-            DataBase.horas.delete(hora)
+            hora.offline = true
+            DataBase.horas.eliminar(hora)
             return true
         }
         return false
     }
     
-    func save(_ hora: Horas) -> Bool
+    func guardar(_ hora: Horas)
     {
-        return DataBase.horas.save(hora)
+        WSTimeSummary.instance.guardar(hora: hora, retorno: { (hora)-> Void in
+            if let hrs = hora
+            {
+                DataBase.horas.guardar(hrs)
+            }
+        })
     }
     
     func sincronizar(_ codigo: String,_ callback: @escaping (Bool) -> Void)
     {
-        sincronizerProyects(codigo, callback)
+        sincronizarProyectos(codigo, callback)
     }
     
-    private func sincronizerProyects(_ codigo: String,_ callback: @escaping (Bool) -> Void)
+    private func sincronizarProyectos(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
-        WSTimeSummary.instance.getListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
+        WSTimeSummary.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
             for p in proyectos!
             {
-                let exists = DataBase.proyectos.getById(p.pro_id)
+                let exists = DataBase.proyectos.obtById(p.pro_id)
                 if (exists == nil)
                 {
-                   DataBase.proyectos.save(p)
+                   DataBase.proyectos.guardar(p)
                 }
             }
             print("proyectos descargados")
-            self.sincronizerHours(codigo, callback)
+            self.sincronizarHoras(codigo, retorno)
         })
     }
     
-    private func sincronizerHours(_ codigo: String,_ callback: @escaping (Bool) -> Void)
+    private func sincronizarHoras(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
-        WSTimeSummary.instance.getListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            if let hrsLocales = DataBase.horas.getListHorasByCodAbogado(codigo)
+        WSTimeSummary.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
+            if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
                 if (nuevos.count > 0)
                 {
-                    DataBase.horas.save(nuevos)
+                    DataBase.horas.guardar(nuevos)
                 }
                 
                 let eliminados : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: hrsRemotas!)
                 if (eliminados.count > 0)
                 {
-                    DataBase.horas.delete(eliminados)
+                    DataBase.horas.eliminar(eliminados)
                 }
             }
             else
@@ -73,12 +71,12 @@ public class ControladorLogica
                 {
                     if (hrs.count > 0)
                     {
-                        DataBase.horas.save(hrs)
+                        DataBase.horas.guardar(hrs)
                     }
                 }
             }
             print("horas descargadas")
-            callback(true)
+            retorno(true)
         })
     }
     
@@ -104,8 +102,8 @@ public class ControladorLogica
         return resultado
     }
     
-    func deleteAll()
+    func eliminarTodo()
     {
-        DataBase.horas.deleteAll()
+        DataBase.horas.eliminarTodo()
     }
 }

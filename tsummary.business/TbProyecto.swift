@@ -1,7 +1,7 @@
 import Foundation
 import SQLite3
 
-class TbProyecto
+public class TbProyecto
 {
     
     internal let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
@@ -125,7 +125,7 @@ class TbProyecto
         return false
     }
     
-    public func save(_ proyecto: ClienteProyecto)-> Bool
+    public func guardar(_ proyecto: ClienteProyecto)-> Bool
     {
         do
         {
@@ -184,7 +184,7 @@ class TbProyecto
     }
     
     
-    public func getById(_ id: Int32) -> ClienteProyecto?
+    public func obtById(_ id: Int32) -> ClienteProyecto?
     {
         do
         {
@@ -248,7 +248,7 @@ class TbProyecto
         return nil
     }
     
-    func getListProyectos() -> [ClienteProyecto]?
+    func obtListProyectos() -> [ClienteProyecto]?
     {
         
         do

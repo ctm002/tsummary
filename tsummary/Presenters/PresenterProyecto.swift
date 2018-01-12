@@ -4,13 +4,14 @@ class PresenterProyecto {
     
     var mView: IListViewProyecto?
     
-    init(_ view : IListViewProyecto) {
+    init(_ view : IListViewProyecto)
+    {
         self.mView = view
     }
     
-    func getListProyectos()
+    func obtListProyectos()
     {
-        if let proyectos = DataBase.proyectos.getListProyectos()
+        if let proyectos = DataBase.proyectos.obtListProyectos()
         {
             self.mView!.setList(proyectos: proyectos)
         }

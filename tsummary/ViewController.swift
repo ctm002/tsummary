@@ -54,23 +54,12 @@ class ViewController: UIViewController {
     {
         if (u != nil)
         {
-            do
-            {
-                self.codigo =  Int(u!.Id)
-                self.sincronizar(String(self.codigo), callback: redirect)
-            }
-            catch
-            {
-                DispatchQueue.main.async {
-                    self.btnRegistrar.isEnabled = true
-                    self.activity.stopAnimating()
-                }
-                print("Error:\(error)")
-            }
+            self.codigo =  Int(u!.Id)
+            self.sincronizar(String(self.codigo), callback: redireccionar)
         }
     }
     
-    func redirect(estado: Bool)
+    func redireccionar(estado: Bool)
     {
         if (estado == true)
         {
@@ -94,14 +83,13 @@ class ViewController: UIViewController {
         self.btnEliminar.isEnabled = false
         self.activity.startAnimating()
         DispatchQueue.main.async {
-            ControladorLogica.instance.deleteAll()
+            ControladorLogica.instance.eliminarTodo()
             self.activity.stopAnimating()
             self.btnEliminar.isEnabled = true
         }
     }
     
     @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
 }
