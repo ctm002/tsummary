@@ -281,6 +281,47 @@ class WSTimeSummary: NSObject
         })
         task.resume()
     }
+    
+    func eliminar(hora: Horas, retorno: @escaping (Horas?) -> Void)
+    {
+        let conn: URLSession =
+        {
+            let config = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            return session
+        }()
+        
+        let urlString = _urlWebService + "GuardarInformacion"
+        let url = URL(string: urlString)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        request.httpMethod = "POST"
+        
+        var postData: String = ""
+        postData.append("tim_correl=" +  String(hora.tim_correl))
+        request.httpBody = postData.data(using: String.Encoding.utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if(error != nil)
+            {
+                retorno(nil)
+                return
+            }
+            
+            if (data != nil)
+            {
+                do{
+                    let data =  try JSONSerialization.jsonObject(with: data!, options: []) as! AnyObject
+                    retorno(hora)
+                }
+                catch
+                {
+                    print("Error:\(error)")
+                }
+            }
+        })
+        task.resume()
+    }
 }
 
 extension WSTimeSummary: URLSessionDelegate

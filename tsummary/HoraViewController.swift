@@ -167,7 +167,6 @@ class HoraViewController: UIViewController,
         return self.view.frame.width
     }
     
-    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
     {
         var lbl: UILabel?  =  (view as? UILabel)

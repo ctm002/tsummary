@@ -5,16 +5,20 @@ public class ControladorLogica
     
     init() {}
     
-    func eliminarById(_ id:Int32)-> Bool
+    func eliminarById(_ id:Int32)
     {
         if let hora = DataBase.horas.getById(id)
         {
             hora.Estado = .eliminado
             hora.offline = true
             DataBase.horas.eliminar(hora)
-            return true
+            
+            /*
+            WSTimeSummary.instance.eliminar(hora: hora, retorno: { (hora) -> Void in
+                 DataBase.horas.eliminar(hora)
+            })
+            */
         }
-        return false
     }
     
     func guardar(_ hora: Horas)
