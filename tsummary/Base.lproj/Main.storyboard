@@ -381,6 +381,7 @@
                     </view>
                     <connections>
                         <outlet property="btnEliminar" destination="XZ2-oc-w8h" id="F6N-Cl-ewl"/>
+                        <outlet property="btnGuardar" destination="pg8-kj-n5y" id="8Be-5g-LOD"/>
                         <outlet property="datePickerFechaIngreso" destination="qbk-a0-HHQ" id="Pgy-m6-KFN"/>
                         <outlet property="pickerTextField" destination="dHR-ET-v8N" id="MKh-E0-LzZ"/>
                         <outlet property="stepper1" destination="xbi-Tn-hTm" id="0Wi-Gr-gw5"/>

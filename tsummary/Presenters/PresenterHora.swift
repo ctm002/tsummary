@@ -47,6 +47,7 @@ public class PresenterHora{
             self.mEditViewHora.ProyectoId = detalleHora.proyecto.pro_id
             self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
             self.mEditViewHora.FechaIngreso = detalleHora.tim_fecha_ing
+            self.mEditViewHora.bloquearBotones(detalleHora.modificable)
         }
     }
     
@@ -97,6 +98,7 @@ public class PresenterHora{
     func eliminar() -> Bool
     {
         let id: Int32  = self.mEditViewHora!.IdHora
-        return ControladorLogica.instance.eliminarById(id)
+        ControladorLogica.instance.eliminarById(id)
+        return true
     }
 }

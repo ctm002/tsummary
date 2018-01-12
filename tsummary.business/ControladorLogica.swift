@@ -5,7 +5,7 @@ public class ControladorLogica
     
     init() {}
     
-    func eliminarById(_ id:Int32)
+    func eliminarById(_ id: Int32)
     {
         if let hora = DataBase.horas.getById(id)
         {
@@ -23,12 +23,17 @@ public class ControladorLogica
     
     func guardar(_ hora: Horas)
     {
+        
+        DataBase.horas.guardar(hora)
+        
+        /*
         WSTimeSummary.instance.guardar(hora: hora, retorno: { (hora)-> Void in
             if let hrs = hora
             {
                 DataBase.horas.guardar(hrs)
             }
         })
+         */
     }
     
     func sincronizar(_ codigo: String,_ callback: @escaping (Bool) -> Void)
