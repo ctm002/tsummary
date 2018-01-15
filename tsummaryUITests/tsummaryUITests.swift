@@ -7,9 +7,11 @@
 //
 
 import XCTest
+@testable import tsummary
+
 
 class tsummaryUITests: XCTestCase {
-        
+    
     override func setUp() {
         super.setUp()
         
@@ -22,15 +24,40 @@ class tsummaryUITests: XCTestCase {
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
-    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    /*
+    func presenterIsNotNull()
+    {
+        let presenter: PresenterSemana = PresenterSemana()
+        XCTAssertNotNil(presenter)
     }
     
+    func calcularSemana() {
+        let presenter: PresenterSemana = PresenterSemana()
+        let calculated = presenter.firstDateOfWeek(getDate(3, 1, 2019))
+        
+        let date = getDate(7, 1, 2019)
+        XCTAssertEqual(date, calculated)
+    }
+    
+    private func getDate(_ dia: Int, _ mes: Int, _ año: Int) -> Date?
+    {
+        let locale = Locale(identifier: "es_CL")
+        let tz = TimeZone(abbreviation: "UTC")!
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        calendar.locale = locale
+        calendar.timeZone = tz
+        
+        var dtComponents = DateComponents()
+        dtComponents.day = dia
+        dtComponents.month = mes
+        dtComponents.year = año
+        let fechaExpected = calendar.date(from:dtComponents)
+        return fechaExpected
+    }
+     */
 }

@@ -1,8 +1,7 @@
 import Foundation
 
-class PresenterSemana{
-    
-    
+public class PresenterSemana
+{
     private var mView : IListViewSemana!
     private var mFecha: Date!
     private var mCantidadDias: Int = 0
@@ -16,15 +15,25 @@ class PresenterSemana{
         return calendar
     }()
     
-
-    init(view: IListViewSemana, rangoDeDias cantidad: Int) {
+    public init()
+    {
+        self.mView = nil
+        self.mCantidadDias = 14
+        self.mFecha = Date()
+    }
+    
+    init(view: IListViewSemana, rangoDeDias cantidad: Int)
+    {
         self.mView = view
         self.mCantidadDias = cantidad
         self.mFecha = Date()
     }
     
-    private func firstDateOfWeek(year: Int, weekOfYear: Int) -> Date?
+    func firstDateOfWeek(_ mFecha: Date!) -> Date?
     {
+        let year = self.calendar.component(Calendar.Component.year, from:  mFecha)
+        let weekOfYear = self.calendar.component(Calendar.Component.weekOfYear, from: mFecha)
+        
         var dtComponents = DateComponents()
         dtComponents.day = 1
         dtComponents.month = 1
@@ -35,27 +44,24 @@ class PresenterSemana{
         
         let firstWeekDay  = self.calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
        
-        let firstWeek = self.calendar.component(Calendar.Component.weekOfYear, from: newDate!)
-        var weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ?  weekOfYear - 2 : weekOfYear
-        if (weekOfYearTemp == 0)
+        let firstWeek = self.calendar.component(Calendar.Component.weekOfYear, from: firstWeekDay!)
+        var weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ? weekOfYear - 1 : weekOfYear
+        if (weekOfYearTemp <= 0)
         {
             weekOfYearTemp = 1
         }
-        
         return self.calendar.date(byAdding: Calendar.Component.day, value: ((weekOfYearTemp*7)+7), to: firstWeekDay!)
     }
     
     public func calcularSemana()
     {
-        let año = self.calendar.component(Calendar.Component.year, from:  self.mFecha)
-        let nroSemana = self.calendar.component(Calendar.Component.weekOfYear, from:  self.mFecha)
         var semana:[Dia] = [Dia]()
         
         let formatter = DateFormatter()
         formatter.locale = calendar.locale
         formatter.timeZone = calendar.timeZone
         
-        let diaTermino = firstDateOfWeek(year: año, weekOfYear: nroSemana)
+        let diaTermino = firstDateOfWeek(self.mFecha)
         if let fechaDeTermino = diaTermino
         {
             var fechaDeInicio: Date? = calendar.date(byAdding: Calendar.Component.day, value: -self.mCantidadDias, to: fechaDeTermino)

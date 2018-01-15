@@ -12,6 +12,12 @@
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
 		2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C5D6D1FE864930054B95A /* HoraViewController.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
+		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
+		2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
+		2FCBE621200D3B98005B6E8E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
+		2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
+		2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
+		2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */; };
 		DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E047F1FD0B16D00AE0D7F /* Main.storyboard */; };
@@ -54,6 +60,8 @@
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
 		2F7C5D6D1FE864930054B95A /* HoraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
+		2F8C72BA200D058600FFD00A /* presenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presenterTests.swift; sourceTree = "<group>"; };
+		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		DE0E04781FD0B16D00AE0D7F /* tsummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tsummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F8C72B9200D058600FFD00A /* presenterTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F8C72BA200D058600FFD00A /* presenterTests.swift */,
+				2F8C72BC200D058600FFD00A /* Info.plist */,
+			);
+			path = presenterTests;
+			sourceTree = "<group>";
+		};
 		DE0E046F1FD0B16D00AE0D7F = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +132,7 @@
 				DE0E047A1FD0B16D00AE0D7F /* tsummary */,
 				DE0E048F1FD0B16E00AE0D7F /* tsummaryTests */,
 				DE0E049A1FD0B16E00AE0D7F /* tsummaryUITests */,
+				2F8C72B9200D058600FFD00A /* presenterTests */,
 				DE0E04791FD0B16D00AE0D7F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -276,7 +294,7 @@
 		DE0E04701FD0B16D00AE0D7F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = cariola;
 				TargetAttributes = {
@@ -373,6 +391,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */,
+				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
+				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
 				DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,6 +402,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */,
+				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
+				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,
 				DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,12 +492,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -519,7 +544,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -531,6 +556,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummary/Info.plist;
@@ -539,7 +565,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s x64_86";
 			};
 			name = Debug;
 		};
@@ -547,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummary/Info.plist;
@@ -555,7 +583,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7 armv7s x64_86";
 			};
 			name = Release;
 		};
@@ -564,15 +593,18 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8UT82G4CS;
+				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummaryTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummaryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tsummary.app/tsummary";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s x64_86";
 			};
 			name = Debug;
 		};
@@ -581,15 +613,18 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8UT82G4CS;
+				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummaryTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummaryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tsummary.app/tsummary";
+				VALID_ARCHS = "arm64 armv7 armv7s x64_86";
 			};
 			name = Release;
 		};
@@ -597,15 +632,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8UT82G4CS;
+				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummaryUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummaryUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = tsummary;
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s x64_86";
 			};
 			name = Debug;
 		};
@@ -613,15 +651,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8UT82G4CS;
+				DEVELOPMENT_TEAM = 3RMD9J6PUN;
 				INFOPLIST_FILE = tsummaryUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cl.cariola.tsummaryUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = tsummary;
+				VALID_ARCHS = "arm64 armv7 armv7s x64_86";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s x64_86";
 			};
 			name = Release;
 		};
