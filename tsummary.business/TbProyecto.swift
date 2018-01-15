@@ -22,7 +22,7 @@ public class TbProyecto
         createTableIfExists()
     }
     
-    func open() throws
+    private func open() throws
     {
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK
         {
@@ -30,7 +30,7 @@ public class TbProyecto
         }
     }
     
-    func close()
+    private func close()
     {
         if sqlite3_close(db) != SQLITE_OK
         {

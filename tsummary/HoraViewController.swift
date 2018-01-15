@@ -11,7 +11,7 @@ class HoraViewController: UIViewController,
     @IBOutlet var btnEliminar: UIButton!
     @IBOutlet weak var stepper1: UIStepper!
     @IBOutlet weak var stepper2: UIStepper!
-    @IBOutlet weak var btnGuardar: UIButton!
+    @IBOutlet var btnGuardar: UIButton!
     
     @IBOutlet var datePickerFechaIngreso: UIDatePicker! =
     {
@@ -124,8 +124,15 @@ class HoraViewController: UIViewController,
 
     func bloquearBotones(_ estado: Bool)
     {
-        btnEliminar.isEnabled = estado
-        btnGuardar.isEnabled = estado
+        if(btnEliminar != nil)
+        {
+            btnEliminar.isEnabled = estado
+        }
+       
+        if (btnGuardar != nil)
+        {
+            btnGuardar.isEnabled = estado
+        }
     }
     
     override func didReceiveMemoryWarning()
