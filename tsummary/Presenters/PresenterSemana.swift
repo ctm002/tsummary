@@ -29,28 +29,24 @@ public class PresenterSemana
         self.mFecha = Date()
     }
     
+    //sabado = 1 , Domingo=7
     func firstDateOfWeek(_ mFecha: Date!) -> Date?
     {
         let year = self.calendar.component(Calendar.Component.year, from:  mFecha)
-        let weekOfYear = self.calendar.component(Calendar.Component.weekOfYear, from: mFecha)
-        
+        var weekOfYear = self.calendar.component(Calendar.Component.weekOfYear, from: mFecha)
         var dtComponents = DateComponents()
         dtComponents.day = 1
         dtComponents.month = 1
         dtComponents.year = year
-        
         let newDate = self.calendar.date(from:dtComponents)
-        let offset =  self.calendar.firstWeekday - self.calendar.component(Calendar.Component.weekday, from: newDate!)
         
-        let firstWeekDay  = self.calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
-       
+        let offset = self.calendar.firstWeekday - self.calendar.component(Calendar.Component.weekday, from: newDate!)
+        let firstWeekDay = self.calendar.date(byAdding: Calendar.Component.day, value: offset, to: newDate!)
         let firstWeek = self.calendar.component(Calendar.Component.weekOfYear, from: firstWeekDay!)
-        var weekOfYearTemp = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ? weekOfYear - 1 : weekOfYear
-        if (weekOfYearTemp <= 0)
-        {
-            weekOfYearTemp = 1
-        }
-        return self.calendar.date(byAdding: Calendar.Component.day, value: ((weekOfYearTemp*7)+7), to: firstWeekDay!)
+        weekOfYear = ((firstWeek <= 1 || firstWeek >= 52) && offset >= -3) ? weekOfYear - 1: weekOfYear
+        
+        let fechaResult = self.calendar.date(byAdding: Calendar.Component.day, value: ((weekOfYear*7)+7), to: firstWeekDay!)
+        return fechaResult
     }
     
     public func calcularSemana()

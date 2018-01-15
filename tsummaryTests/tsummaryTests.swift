@@ -15,20 +15,37 @@ class tsummaryTests: XCTestCase {
         super.setUp()
     }
     
-    func presenterIsNotNil() {
-        let presenter: PresenterSemana = PresenterSemana()
+    func testPresenterNotNil(){
+        let presenter = PresenterSemana()
         XCTAssertNotNil(presenter)
     }
     
-    func calcularSemana()
+    func testCalcularSemana03012019()
     {
         let presenter: PresenterSemana = PresenterSemana()
         let calculated = presenter.firstDateOfWeek(getDate(3, 1, 2019))
-        let date = getDate(8, 1, 2019)
-        XCTAssertEqual(date, calculated)
+        let now = getDate(7, 1, 2019)
+        XCTAssertEqual(now, calculated)
     }
     
-    private func getDate(_ dia: Int, _ mes: Int, _ año: Int) -> Date?
+    func testCalcularSemana19012018()
+    {
+        let presenter: PresenterSemana = PresenterSemana()
+        let calculated = presenter.firstDateOfWeek(getDate(19, 1, 2018))
+        let now = getDate(22, 1, 2018)
+        XCTAssertEqual(now, calculated)
+    }
+    
+    func testCalcularSemana15012018()
+    {
+        let presenter: PresenterSemana = PresenterSemana()
+        let calculated = presenter.firstDateOfWeek(getDate(15, 1, 2018))
+        let now = getDate(22, 1, 2018)
+        XCTAssertEqual(now, calculated)
+    }
+    
+    
+    func getDate(_ dia: Int, _ mes: Int, _ año: Int) -> Date?
     {
         let locale = Locale(identifier: "es_CL")
         let tz = TimeZone(abbreviation: "UTC")!
