@@ -123,35 +123,29 @@ public class Horas {
     
     private var mtim_fecha_ing: Date
     var tim_fecha_ing: String {
-        get {
-            
-            if (self.mtim_fecha_ing != nil)
-            {
-                let strFechaIng : String = formatter.string(from: self.mtim_fecha_ing)
-                return strFechaIng
-            }
-            return ""
+        get
+        {
+            let strFechaIng : String = formatter.string(from: self.mtim_fecha_ing)
+            return strFechaIng
         }
-        set {
-            
-            if (newValue != nil)
+        set
+        {
+            let dtFechaIng : Date? = formatter.date(from:newValue)
+            if (dtFechaIng != nil)
             {
-                let dtFechaIng : Date? = formatter.date(from:newValue)
-                if (dtFechaIng != nil)
-                {
-                    self.mtim_fecha_ing = dtFechaIng!
-                }
+                self.mtim_fecha_ing = dtFechaIng!
             }
         }
     }
     
     var tim_fecha_ing_hh_mm: String {
-        get {
+        get
+        {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(identifier: "UTC")
             formatter.locale = Locale(identifier: "es_CL")
             formatter.dateFormat = "HH:mm"
-            let strFechaIng : String = formatter.string(from:mtim_fecha_ing)
+            let strFechaIng : String = formatter.string(from:self.mtim_fecha_ing)
             return strFechaIng
         }
     }
