@@ -87,7 +87,7 @@ class WSTimeSummary: NSObject
     }
     
     
-    func obtListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void)
+    func obtListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void, _ fechaDesde:Date?, _ fechaHasta:Date?)
     {
         var conn: URLSession = {
             let config = URLSessionConfiguration.ephemeral

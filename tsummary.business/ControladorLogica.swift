@@ -23,7 +23,6 @@ public class ControladorLogica
     
     func guardar(_ hora: Horas)
     {
-        
         DataBase.horas.guardar(hora)
         
         /*
@@ -43,16 +42,17 @@ public class ControladorLogica
     
     private func sincronizarProyectos(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
-        WSTimeSummary.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectos) -> Void in
-            for p in proyectos!
-            {
-                let exists = DataBase.proyectos.obtById(p.pro_id)
-                if (exists == nil)
-                {
-                   DataBase.proyectos.guardar(p)
-                }
+        WSTimeSummary.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectosRemotos) -> Void in
+            
+            let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
+            let proyectosNuevos = proyectosRemotos?.filter {
+                !((proyectosLocalesIds?.contains($0.pro_id))!)
             }
-            print("proyectos descargados")
+            let result = DataBase.proyectos.save(proyectosNuevos!)
+            if (result)
+            {
+                print("proyectos actualizados")
+            }
             self.sincronizarHoras(codigo, retorno)
         })
     }
@@ -60,18 +60,19 @@ public class ControladorLogica
     private func sincronizarHoras(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
         WSTimeSummary.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
+            var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
             {
                 let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
                 if (nuevos.count > 0)
                 {
-                    DataBase.horas.guardar(nuevos)
+                    resp = DataBase.horas.guardar(nuevos)
                 }
                 
                 let eliminados : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: hrsRemotas!)
                 if (eliminados.count > 0)
                 {
-                    DataBase.horas.eliminar(eliminados)
+                    resp = DataBase.horas.eliminar(eliminados)
                 }
             }
             else
@@ -80,13 +81,13 @@ public class ControladorLogica
                 {
                     if (hrs.count > 0)
                     {
-                        DataBase.horas.guardar(hrs)
+                        resp = DataBase.horas.guardar(hrs)
                     }
                 }
             }
             print("horas descargadas")
-            retorno(true)
-        })
+            retorno(resp)
+        }, Date(), Date())
     }
     
     func minus(arreglo1:[Horas], arreglo2:[Horas]) -> [Horas]
