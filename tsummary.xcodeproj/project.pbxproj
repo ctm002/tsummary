@@ -19,6 +19,9 @@
 		2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		2FCF295820110274006FD735 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF295720110274006FD735 /* ApiClient.swift */; };
+		2FCF295A201140E6006FD735 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF2959201140E6006FD735 /* Utils.swift */; };
+		2FCF295B201140E6006FD735 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF2959201140E6006FD735 /* Utils.swift */; };
+		2FCF295C201140E6006FD735 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF2959201140E6006FD735 /* Utils.swift */; };
 		DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */; };
 		DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E047F1FD0B16D00AE0D7F /* Main.storyboard */; };
@@ -64,6 +67,7 @@
 		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		2FCF2959201140E6006FD735 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DE0E04781FD0B16D00AE0D7F /* tsummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tsummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 				DE7D25911FE0639E003B0F4C /* DataBase.swift */,
 				2FCF295720110274006FD735 /* ApiClient.swift */,
 				DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */,
+				2FCF2959201140E6006FD735 /* Utils.swift */,
 			);
 			path = tsummary.data;
 			sourceTree = "<group>";
@@ -383,6 +388,7 @@
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
 				2FCF295820110274006FD735 /* ApiClient.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
+				2FCF295A201140E6006FD735 /* Utils.swift in Sources */,
 				DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FCF295B201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */,
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
 				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
@@ -402,6 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FCF295C201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */,
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
 				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,

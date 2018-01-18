@@ -19,7 +19,7 @@ public class TbProyecto
             in: .userDomainMask,
             appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
         
-        createTableIfExists()
+        createTableIfNotExists()
     }
     
     private func open() throws
@@ -39,7 +39,28 @@ public class TbProyecto
         db = nil
     }
     
-    public func createTableIfExists() -> Bool
+    public func dropTable() -> Bool
+    {
+        do
+        {
+            try open()
+            let sql = "drop table ClienteProyecto"
+            if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error creating table: \(errmsg)")
+                return false
+            }
+            close()
+        }
+        catch
+        {
+            print("\(error)")
+        }
+        return false
+    }
+    
+    public func createTableIfNotExists() -> Bool
     {
         do
         {
@@ -67,7 +88,7 @@ public class TbProyecto
         return false
     }
     
-    public func save(_ proyectos: [ClienteProyecto])-> Bool
+    public func guardar(_ proyectos: [ClienteProyecto])-> Bool
     {
         do
         {

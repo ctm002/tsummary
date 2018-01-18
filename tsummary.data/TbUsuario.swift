@@ -38,8 +38,7 @@ public class TbUsuario
         do
         {
             try open()
-            try createTables()
-            try deleteTables()
+            try createTableIfNoExists()
             close()
         }
         catch
@@ -71,85 +70,35 @@ public class TbUsuario
             var sql: String = "select * from Usuario where 1=1 "
             var statement: OpaquePointer?
 
-        }catch{
-        
+        }
+        catch{
+            print("\(error)")
         }
         return nil
     }
     
-    func dropTables()->Bool
+    
+    func dropTable()->Bool
     {
-        if sqlite3_exec(db, "drop table Cliente", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error dropping table: \(errmsg)")
+        do
+        {
+            try open()
+            if sqlite3_exec(db, "drop table Usuario", nil, nil, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error dropping table: \(errmsg)")
+                return false
+            }
+            close()
         }
-        
-        if sqlite3_exec(db, "drop table ClienteProyecto", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error dropping table: \(errmsg)")
-        }
-        
-        if sqlite3_exec(db, "drop table Usuario", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error dropping table: \(errmsg)")
-        }
-        
-        if sqlite3_exec(db, "drop table Horas", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error dropping table: \(errmsg)")
+        catch
+        {
+            print("\(error)")
         }
         return true
     }
     
-    func deleteTables()->Bool
+    func createTableIfNoExists() throws
     {
-        /*
-        if sqlite3_exec(db, "delete from Cliente", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error deleting table: \(errmsg)")
-        }
-        
-        if sqlite3_exec(db, "delete from ClienteProyecto", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error deleting table: \(errmsg)")
-        }
-        
-        if sqlite3_exec(db, "delete from Usuario", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error deleting table: \(errmsg)")
-        }
- 
-         if sqlite3_exec(db, "delete from Horas", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error deleting table: \(errmsg)")
-        }
-        */
-        return true
-    }
-    
-    func createTables() throws
-    {
-        if sqlite3_exec(db, """
-                create table if not exists Cliente(
-                cli_cod integer primary key,
-                cli_nom text,
-                pro_id int)
-            """, nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error creating table: \(errmsg)")
-        }
-
-        if sqlite3_exec(db, """
-                create table if not exists ClienteProyecto(
-                pro_id integer primary key,
-                cli_nom text,
-                pro_nombre text,
-                pro_idioma text)
-            """, nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error creating table: \(errmsg)")
-        }
-        
         if sqlite3_exec(db, """
                 create table if not exists Usuario(
                 Id integer primary key,
@@ -158,23 +107,6 @@ public class TbUsuario
                 Password text,
                 IMEI text,
                 [Default] integer)
-            """, nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error creating table: \(errmsg)")
-        }
-
-        if sqlite3_exec(db, """
-                    create table if not exists Horas(
-                    hora_id integer primary key,
-                    tim_correl integer,
-                    pro_id integer, tim_asunto text,
-                    tim_horas text,
-                    tim_minutos text,
-                    abo_id integer,
-                    Modificable integer,
-                    OffLine integer,
-                    tim_fecha_ing datetime,
-                    estado  integer)
             """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")

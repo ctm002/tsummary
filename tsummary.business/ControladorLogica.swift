@@ -48,7 +48,7 @@ public class ControladorLogica
             let proyectosNuevos = proyectosRemotos?.filter {
                 !((proyectosLocalesIds?.contains($0.pro_id))!)
             }
-            let result = DataBase.proyectos.save(proyectosNuevos!)
+            let result = DataBase.proyectos.guardar(proyectosNuevos!)
             if (result)
             {
                 print("proyectos actualizados")
@@ -80,19 +80,44 @@ public class ControladorLogica
                 resp = DataBase.horas.eliminar(hrsEliminadas)
             
                 let hrsNuevasLocales = hrsLocales.filter { $0.tim_correl == 0}
-                for hrs in hrsNuevasLocales {
-                    /*
-                    WSTimeSummary.instance.guardar(hrs, {(hora: Horas?) -> Void in
+                hrsNuevasLocales.forEach { hrs in
+                    ApiClient.instance.guardar(hrs, {(hora: Horas?) -> Void in
                         if let hr = hora
                         {
                             print(hr.tim_correl)
                             DataBase.horas.guardar(hr)
                         }
                     })
-                    */
                 }
                 
-                //Faltan los actualizados
+                //Actualizar hora locales que han sido actualizadas remotamente
+                hrsLocales.forEach { hrs in
+                    let hrsActualizadasLocales = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! > hrs.fechaUltMod!})
+                    if let hrs = hrsActualizadasLocales
+                    {
+                        if hrs.count > 0
+                        {
+                           DataBase.horas.guardar(hrs[0])
+                        }
+                    }
+                }
+                
+                //Actualizar horas remotas que han sido actualizadas localmente
+                hrsLocales.forEach { hrs in
+                    let hrsActualizadasRemotas = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! < hrs.fechaUltMod!})
+                    if let hrs = hrsActualizadasRemotas
+                    {
+                        if hrs.count > 0
+                        {
+                            ApiClient.instance.guardar(hrs[0], {(hora: Horas?) -> Void in
+                                if let hr = hora
+                                {
+                                    print("\(hr.tim_correl)")
+                                }
+                            })
+                        }
+                    }
+                }
             }
             else
             {
@@ -111,6 +136,6 @@ public class ControladorLogica
     
     func eliminarTodo()
     {
-        DataBase.horas.eliminarTodo()
+        DataBase.horas.eliminar()
     }
 }

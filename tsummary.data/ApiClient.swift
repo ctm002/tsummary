@@ -119,7 +119,7 @@ class ApiClient: NSObject
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
                         hora.abo_id = d["abo_id"] as! Int
                         hora.tim_fecha_ing = d["tim_fecha_ing"] as! String
-                        hora.fechaUltMod = self.toDateFromString(string:(d["fecha_ult_mod"] as! String))!
+                        hora.fechaUltMod = Utils.toDateFromString((d["FechaUltMod"] as! String))!
                         horas.append(hora)
                     }
                     callback(horas)
@@ -134,24 +134,9 @@ class ApiClient: NSObject
     }
     
     
-    func toDateFromString(string: String) -> Date?
-    {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "es_CL")
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        return formatter.date(from: string)
-    }
+
     
-    func toStringFromDate(date: Date) -> String
-    {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "es_CL")
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        return formatter.string(from: date)
-    }
-    
+    /*
     func sincronizar(codigo: String, horas:String)
     {
         let sesion: URLSession = {
@@ -181,6 +166,7 @@ class ApiClient: NSObject
         })
         task.resume()
     }
+    */
     
     func obtListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
