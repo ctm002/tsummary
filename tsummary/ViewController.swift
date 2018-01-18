@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         btnRegistrar.isEnabled = false
         self.activity.startAnimating()
         
-        WSTimeSummary.instance.registrar(
+        ApiClient.instance.registrar(
             imei: "863166032574597",
             userName: self.txtLoginName.text,
             password: self.txtPassword.text,

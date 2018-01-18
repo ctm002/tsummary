@@ -43,7 +43,7 @@ public class ControladorLogica
     
     private func sincronizarProyectos(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
-        WSTimeSummary.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectosRemotos) -> Void in
+        ApiClient.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectosRemotos) -> Void in
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
             let proyectosNuevos = proyectosRemotos?.filter {
                 !((proyectosLocalesIds?.contains($0.pro_id))!)
@@ -59,7 +59,7 @@ public class ControladorLogica
     
     private func sincronizarHoras(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
-        WSTimeSummary.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
+        ApiClient.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
             {

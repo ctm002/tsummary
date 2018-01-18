@@ -85,7 +85,7 @@ public class PresenterHora{
             detalleHora.tim_minutos = Int(cantMinutos)
             detalleHora.offline = true
             
-            let result = ControladorLogica.instance.guardar(detalleHora)
+            let result : Bool = ControladorLogica.instance.guardar(detalleHora)
             //let result : Bool = DataBase.horas.guardar(detalleHora)
             if (result == true){ print("operacion exitosa") }
  

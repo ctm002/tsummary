@@ -1,23 +1,14 @@
-//
-//  data.swift
-//  tsummary
-//
-//  Created by Soporte on 01-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import Foundation
 
-
-class WSTimeSummary: NSObject
+class ApiClient: NSObject
 {
-    private var  url : String = "https://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";
+    private var strURL : String = "https://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";
 
     private var  username: String
     private var  password: String
     private var credential: URLCredential!
     
-    static let instance : WSTimeSummary = WSTimeSummary(username:"carlos_tapia", password:"Car.2711")
+    static let instance : ApiClient = ApiClient(username:"carlos_tapia", password:"Car.2711")
     
     init(username:String, password: String) {
         
@@ -27,15 +18,14 @@ class WSTimeSummary: NSObject
     
     func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (Usuario?) -> Void)
     {
-        let conn: URLSession =
+        let sesion: URLSession =
         {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
         
-        let urlString = url + "AutenticarUsuario"
-        let url = URL(string: urlString)
+        let url = URL(string:self.strURL + "AutenticarUsuario")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
         
@@ -46,14 +36,13 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8);
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            
             if(error != nil)
             {
                 callback(nil)
             }
-
-            //print(response)
-
+            
             if (data != nil)
             {
                 do{
@@ -89,14 +78,13 @@ class WSTimeSummary: NSObject
     
     func obtListDetalleHorasByCodAbogado(codigo: String, callback: @escaping ([Horas]?) -> Void, _ fechaDesde:Date?, _ fechaHasta:Date?)
     {
-        var conn: URLSession = {
+        let sesion: URLSession = {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
         
-        let urlString = url + "ObtenerHorasPorAbogado"
-        let url = URL(string: urlString)
+        let url = URL(string: self.strURL + "ObtenerHorasPorAbogado")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
 
@@ -106,10 +94,9 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
      
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
-                print(error)
                 callback(nil)
                 return
             }
@@ -121,7 +108,7 @@ class WSTimeSummary: NSObject
                     let datos =  try JSONSerialization.jsonObject(with: data!, options: []) as! [AnyObject]
                     for d  in datos
                     {
-                        var hora = Horas()
+                        let hora = Horas()
                         hora.proyecto.pro_id =  d["pro_id"] as! Int32
                         hora.tim_correl  = d["tim_correl"] as! Int32
                         hora.tim_horas =  d["tim_horas"] as! Int
@@ -147,14 +134,13 @@ class WSTimeSummary: NSObject
     
     func sincronizar(codigo: String, horas:String)
     {
-        var conn: URLSession = {
+        let sesion: URLSession = {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
         
-        let urlString = url + "SincronizacionData"
-        let url = URL(string: urlString)
+        let url = URL(string: self.strURL + "SincronizacionData")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
         
@@ -165,10 +151,9 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
-                print(error)
                 //callback(nil)
                 return
             }
@@ -179,18 +164,15 @@ class WSTimeSummary: NSObject
     
     func obtListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
-        
-        var conn: URLSession = {
+        let sesion: URLSession = {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
         
-        let urlString = url + "ObtenerClienteProyectoPorAbogado"
-        let url = URL(string: urlString)
+        let url = URL(string: self.strURL + "ObtenerClienteProyectoPorAbogado")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
-        
         
         var postData: String = ""
         postData.append("piAbo=" + codigo + "&")
@@ -198,15 +180,12 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
-                print(error)
                 callback(nil)
                 return
             }
-            
-            //print(response)
             
             if (data != nil)
             {
@@ -235,15 +214,14 @@ class WSTimeSummary: NSObject
     
     func guardar(_ hora: Horas, _ retorno: @escaping (Horas?) -> Void)
     {
-        let conn: URLSession =
+        let sesion: URLSession =
         {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
     
-        let urlString = url + "GuardarInformacion"
-        let url = URL(string: urlString)
+        let url = URL(string: self.strURL + "GuardarInformacion")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
     
@@ -259,7 +237,7 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 retorno(nil)
@@ -284,15 +262,14 @@ class WSTimeSummary: NSObject
     
     func eliminar(hora: Horas, retorno: @escaping (Horas?) -> Void)
     {
-        let conn: URLSession =
+        let sesion: URLSession =
         {
             let config = URLSessionConfiguration.ephemeral
             let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             return session
         }()
         
-        let urlString = url + "GuardarInformacion"
-        let url = URL(string: urlString)
+        let url = URL(string: self.strURL + "GuardarInformacion")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
         
@@ -301,7 +278,7 @@ class WSTimeSummary: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = conn.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 retorno(nil)
@@ -324,12 +301,10 @@ class WSTimeSummary: NSObject
     }
 }
 
-extension WSTimeSummary: URLSessionDelegate
+extension ApiClient: URLSessionDelegate
 {
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
-        //print("got challenge")
         
         guard challenge.previousFailureCount == 0 else {
             print("too many failures")
@@ -346,15 +321,7 @@ extension WSTimeSummary: URLSessionDelegate
                 challenge.sender?.use(credentials, for: challenge)
                 completionHandler(.useCredential, credentials)
             }
-            /*
-            else
-            {
-                print("unknown authentication method \(challenge.protectionSpace.authenticationMethod)")
-                challenge.sender?.cancel(challenge)
-                completionHandler(.cancelAuthenticationChallenge, nil)
-                return
-            }
-            */
+            
             return
         }
         
