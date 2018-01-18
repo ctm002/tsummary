@@ -21,7 +21,7 @@ public class ControladorLogica
         }
     }
     
-    func guardar(_ hora: Horas)
+    func guardar(_ hora: Horas) -> Bool
     {
         DataBase.horas.guardar(hora)
         
@@ -33,6 +33,7 @@ public class ControladorLogica
             }
         })
          */
+        return true
     }
     
     func sincronizar(_ codigo: String,_ callback: @escaping (Bool) -> Void)
@@ -43,7 +44,6 @@ public class ControladorLogica
     private func sincronizarProyectos(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
         WSTimeSummary.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectosRemotos) -> Void in
-            
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
             let proyectosNuevos = proyectosRemotos?.filter {
                 !((proyectosLocalesIds?.contains($0.pro_id))!)
@@ -63,17 +63,36 @@ public class ControladorLogica
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
             {
-                let nuevos:[Horas] = self.minus(arreglo1: hrsRemotas!, arreglo2: hrsLocales)
-                if (nuevos.count > 0)
-                {
-                    resp = DataBase.horas.guardar(nuevos)
+                let hrsLocalesIds = hrsLocales.map { $0.tim_correl }
+                let hrsRemotasIds = hrsRemotas?.map { $0.tim_correl }
+                
+                let hrsNuevas = hrsRemotas?.filter {
+                     !hrsLocalesIds.contains($0.tim_correl)
                 }
                 
-                let eliminados : [Horas] = self.minus(arreglo1: hrsLocales, arreglo2: hrsRemotas!)
-                if (eliminados.count > 0)
-                {
-                    resp = DataBase.horas.eliminar(eliminados)
+                if let hrsNuevas = hrsNuevas {
+                    resp = DataBase.horas.guardar(hrsNuevas)
                 }
+                
+                let hrsEliminadas = hrsLocales.filter {
+                    !(hrsRemotasIds?.contains($0.tim_correl))! && $0.tim_correl != 0
+                }
+                resp = DataBase.horas.eliminar(hrsEliminadas)
+            
+                let hrsNuevasLocales = hrsLocales.filter { $0.tim_correl == 0}
+                for hrs in hrsNuevasLocales {
+                    /*
+                    WSTimeSummary.instance.guardar(hrs, {(hora: Horas?) -> Void in
+                        if let hr = hora
+                        {
+                            print(hr.tim_correl)
+                            DataBase.horas.guardar(hr)
+                        }
+                    })
+                    */
+                }
+                
+                //Faltan los actualizados
             }
             else
             {
@@ -88,28 +107,6 @@ public class ControladorLogica
             print("horas descargadas")
             retorno(resp)
         }, Date(), Date())
-    }
-    
-    func minus(arreglo1:[Horas], arreglo2:[Horas]) -> [Horas]
-    {
-        var resultado = [Horas]()
-        
-        var exists : Bool = false
-        for i in arreglo1
-        {
-            for j in arreglo2 {
-                if i.tim_correl == j.tim_correl
-                {
-                    exists = true
-                }
-            }
-            if (exists == false)
-            {
-                resultado.append(i)
-            }
-            exists = false
-        }
-        return resultado
     }
     
     func eliminarTodo()

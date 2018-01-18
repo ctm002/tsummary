@@ -11,7 +11,7 @@ import Foundation
 
 class WSTimeSummary: NSObject
 {
-    private var  _urlWebService : String = "https://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";
+    private var  url : String = "https://timesummary.cariola.cl/WebApiCariola/ws/api.asmx/";
 
     private var  username: String
     private var  password: String
@@ -34,7 +34,7 @@ class WSTimeSummary: NSObject
             return session
         }()
         
-        let urlString = _urlWebService + "AutenticarUsuario"
+        let urlString = url + "AutenticarUsuario"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -95,7 +95,7 @@ class WSTimeSummary: NSObject
             return session
         }()
         
-        let urlString = _urlWebService + "ObtenerHorasPorAbogado"
+        let urlString = url + "ObtenerHorasPorAbogado"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -153,7 +153,7 @@ class WSTimeSummary: NSObject
             return session
         }()
         
-        let urlString = _urlWebService + "SincronizacionData"
+        let urlString = url + "SincronizacionData"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -186,7 +186,7 @@ class WSTimeSummary: NSObject
             return session
         }()
         
-        let urlString = _urlWebService + "ObtenerClienteProyectoPorAbogado"
+        let urlString = url + "ObtenerClienteProyectoPorAbogado"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -233,7 +233,7 @@ class WSTimeSummary: NSObject
         task.resume()
     }
     
-    func guardar(hora: Horas, retorno: @escaping (Horas?) -> Void)
+    func guardar(_ hora: Horas, _ retorno: @escaping (Horas?) -> Void)
     {
         let conn: URLSession =
         {
@@ -242,7 +242,7 @@ class WSTimeSummary: NSObject
             return session
         }()
     
-        let urlString = _urlWebService + "GuardarInformacion"
+        let urlString = url + "GuardarInformacion"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -291,7 +291,7 @@ class WSTimeSummary: NSObject
             return session
         }()
         
-        let urlString = _urlWebService + "GuardarInformacion"
+        let urlString = url + "GuardarInformacion"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
