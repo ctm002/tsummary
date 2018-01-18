@@ -45,7 +45,8 @@ class ApiClient: NSObject
             
             if (data != nil)
             {
-                do{
+                do
+                {
                     var obj : Dictionary<String, AnyObject> =  try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, AnyObject>
                     if (obj["DatosUsuario"] != nil)
                     {
@@ -118,6 +119,7 @@ class ApiClient: NSObject
                         //hora.OffLine = d["OffLine"]  as! Int == 1 ? true : false;
                         hora.abo_id = d["abo_id"] as! Int
                         hora.tim_fecha_ing = d["tim_fecha_ing"] as! String
+                        hora.fechaUltMod = self.toDateFromString(string:(d["fecha_ult_mod"] as! String))!
                         horas.append(hora)
                     }
                     callback(horas)
@@ -131,6 +133,24 @@ class ApiClient: NSObject
         task.resume()
     }
     
+    
+    func toDateFromString(string: String) -> Date?
+    {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_CL")
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return formatter.date(from: string)
+    }
+    
+    func toStringFromDate(date: Date) -> String
+    {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_CL")
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return formatter.string(from: date)
+    }
     
     func sincronizar(codigo: String, horas:String)
     {

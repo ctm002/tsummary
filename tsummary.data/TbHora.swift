@@ -38,14 +38,16 @@ public class TbHora
                 create table if not exists Horas(
                     hora_id integer primary key,
                     tim_correl integer,
-                    pro_id integer, tim_asunto text,
+                    pro_id integer,
+                    tim_asunto text,
                     tim_horas text,
                     tim_minutos text,
                     abo_id integer,
                     Modificable integer,
                     OffLine integer,
                     tim_fecha_ing datetime,
-                    estado  integer)
+                    estado  integer,
+                    fecha_ult_mod datetime)
             """
             if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
             {
@@ -282,8 +284,10 @@ public class TbHora
                         Modificable,
                         OffLine,
                         tim_fecha_ing,
-                        estado)
+                        estado,
+                        fecha_ult_mod)
                     values (
+                        ?,
                         ?,
                         ?,
                         ?,
@@ -370,6 +374,12 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
+                if sqlite3_bind_text(statement, 11, toDateFormat(date:hora.fechaUltMod, dateFormat: "yyyy-MM-dd HH:mm:ss"), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding fecha_insert: \(errmsg)")
+                }
+                
                 if sqlite3_step(statement) != SQLITE_DONE
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -398,7 +408,8 @@ public class TbHora
                     Modificable=?,
                     OffLine=?,
                     tim_fecha_ing=?,
-                    estado=?
+                    estado=?,
+                    fecha_ult_mod=?
                 where
                     hora_id=?
                 """
@@ -471,8 +482,14 @@ public class TbHora
                     print("failure binding estado: \(errmsg)")
                 }
                 
+                if sqlite3_bind_text(statement, 10, toDateFormat(date:hora.fechaUltMod, dateFormat: "yyyy-MM-dd HH:mm:ss"), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding fecha_insert: \(errmsg)")
+                }
+                
                 let id: Int32 = hora.IdHora
-                if sqlite3_bind_int(statement, 10, id) != SQLITE_OK
+                if sqlite3_bind_int(statement, 11, id) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding hora_id: \(errmsg)")
@@ -499,6 +516,15 @@ public class TbHora
             close()
         }
         return resp
+    }
+    
+    func toDateFormat(date: Date?, dateFormat: String) -> String
+    {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.locale = Locale(identifier: "es_CL")
+        formatter.dateFormat = dateFormat
+        return formatter.string(from: date!)
     }
     
     public func getById(_ id: Int32) -> Horas?

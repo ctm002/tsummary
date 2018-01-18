@@ -18,6 +18,7 @@
 		2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
 		2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
+		2FCF295820110274006FD735 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF295720110274006FD735 /* ApiClient.swift */; };
 		DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */; };
 		DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E047F1FD0B16D00AE0D7F /* Main.storyboard */; };
@@ -34,8 +35,7 @@
 		DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */; };
 		DE7D25921FE0639E003B0F4C /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* DataBase.swift */; };
 		DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */; };
-		DEF3B6021FD57D1C00437BD7 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6011FD57D1C00437BD7 /* ApiClient.swift */; };
-		DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */; };
+		DEF3B6041FD57D9400437BD7 /* TbUsuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +63,7 @@
 		2F8C72BA200D058600FFD00A /* presenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presenterTests.swift; sourceTree = "<group>"; };
 		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
+		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		DE0E04781FD0B16D00AE0D7F /* tsummary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tsummary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0E047D1FD0B16D00AE0D7F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,8 +86,7 @@
 		DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterHora.swift; sourceTree = "<group>"; };
 		DE7D25911FE0639E003B0F4C /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
-		DEF3B6011FD57D1C00437BD7 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
-		DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreTimeSummary.swift; sourceTree = "<group>"; };
+		DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbUsuario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,10 +215,7 @@
 		DE7D25901FE0626E003B0F4C /* tsummary.business */ = {
 			isa = PBXGroup;
 			children = (
-				DE7D25911FE0639E003B0F4C /* DataBase.swift */,
 				2F7AE39E2005097400CB0492 /* ControladorLogica.swift */,
-				2F7AE3A0200519EA00CB0492 /* TbHora.swift */,
-				2F7AE3A220051A0600CB0492 /* TbProyecto.swift */,
 			);
 			path = tsummary.business;
 			sourceTree = "<group>";
@@ -226,8 +223,11 @@
 		DEF3B6001FD57CAC00437BD7 /* tsummary.data */ = {
 			isa = PBXGroup;
 			children = (
-				DEF3B6011FD57D1C00437BD7 /* ApiClient.swift */,
-				DEF3B6031FD57D9400437BD7 /* LocalStoreTimeSummary.swift */,
+				2F7AE3A220051A0600CB0492 /* TbProyecto.swift */,
+				2F7AE3A0200519EA00CB0492 /* TbHora.swift */,
+				DE7D25911FE0639E003B0F4C /* DataBase.swift */,
+				2FCF295720110274006FD735 /* ApiClient.swift */,
+				DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */,
 			);
 			path = tsummary.data;
 			sourceTree = "<group>";
@@ -371,8 +371,7 @@
 				DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,
 				DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */,
-				DEF3B6021FD57D1C00437BD7 /* ApiClient.swift in Sources */,
-				DEF3B6041FD57D9400437BD7 /* LocalStoreTimeSummary.swift in Sources */,
+				DEF3B6041FD57D9400437BD7 /* TbUsuario.swift in Sources */,
 				DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */,
 				2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */,
 				DE0E047E1FD0B16D00AE0D7F /* ViewController.swift in Sources */,
@@ -382,6 +381,7 @@
 				DE7D25921FE0639E003B0F4C /* DataBase.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
+				2FCF295820110274006FD735 /* ApiClient.swift in Sources */,
 				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
 				DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */,
 			);

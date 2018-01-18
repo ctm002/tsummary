@@ -21,4 +21,12 @@ public class DataBase
             return TbProyecto.instance
         }
     }
+    
+    static var usuarios : TbUsuario
+    {
+        get
+        {
+            return TbUsuario.instance
+        }
+    }
 }
