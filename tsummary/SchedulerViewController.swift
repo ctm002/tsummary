@@ -48,14 +48,6 @@ class SchedulerViewController: UIViewController,
         }
     }
     
-    let formatter : DateFormatter = {
-        var f = DateFormatter()
-        f.locale = Locale(identifier: "es_CL")
-        f.timeZone = TimeZone(abbreviation: "UTC")!
-        f.dateFormat = "yyyy-MM-dd"
-        return f
-    }()
-    
     var mFechaIngreso: String = ""
     var FechaIngreso : String {
         get {
@@ -74,7 +66,7 @@ class SchedulerViewController: UIViewController,
         
         let btn: UIButton = UIButton.init(type: .custom)
         //btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
-        btn.addTarget(self, action: #selector(self.agregarNuevaHora), for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.agregarHora), for: UIControlEvents.touchUpInside)
         btn.setTitle("Nuevo", for: .normal)
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         let barBtn = UIBarButtonItem(customView: btn)
@@ -152,7 +144,7 @@ class SchedulerViewController: UIViewController,
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         presenterSemana.calcularSemana()
         
-        self.FechaIngreso = formatter.string(from: Date())
+        self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -269,7 +261,6 @@ class SchedulerViewController: UIViewController,
                     self.mLblTextFecha.text = self.formatearFecha(fecha: self.FechaIngreso)
                 }
             }
-            
         }
     }
     
@@ -279,11 +270,10 @@ class SchedulerViewController: UIViewController,
     
     func formatearFecha(fecha: String) -> String
     {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from: fecha)
+        let date =  Utils.toDateFromString(fecha, "yyyy-MM-dd")
         if (date != nil)
         {
+            let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "es_CL")
             dateFormatter.timeStyle = .none
             dateFormatter.dateStyle = .full
@@ -292,7 +282,7 @@ class SchedulerViewController: UIViewController,
         return ""
     }
     
-    @objc func agregarNuevaHora()
+    @objc func agregarHora()
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado

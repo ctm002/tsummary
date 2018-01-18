@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func Registrar(_ sender: Any) {
+    @IBAction func registrar(_ sender: Any) {
         btnRegistrar.isEnabled = false
         self.activity.startAnimating()
         

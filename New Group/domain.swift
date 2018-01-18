@@ -160,9 +160,8 @@ enum Estados: Int
 
 public class Horas
 {
-    let formatter = DateFormatter()
-    
-    init() {
+    init()
+    {
         self.mtim_correl = 0
         self.mtim_asunto = ""
         self.mtim_horas = 0
@@ -176,9 +175,6 @@ public class Horas
         self.mpro_id = 0
         self.proyecto = ClienteProyecto()
         self.fechaUltMod = nil
-        formatter.locale = Locale(identifier: "es_CL")
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
     }
     
     private var mEstado: Estados
@@ -226,12 +222,12 @@ public class Horas
     {
         get
         {
-            let strFechaIng : String = formatter.string(from: self.mtim_fecha_ing)
+            let strFechaIng : String = Utils.toStringFromDate(self.mtim_fecha_ing, "yyyy-MM-dd HH:mm")
             return strFechaIng
         }
         set
         {
-            let dtFechaIng : Date? = formatter.date(from:newValue)
+            let dtFechaIng : Date? = Utils.toDateFromString(newValue, "yyyy-MM-dd HH:mm")
             if (dtFechaIng != nil)
             {
                 self.mtim_fecha_ing = dtFechaIng!
@@ -243,11 +239,7 @@ public class Horas
     {
         get
         {
-            let formatter = DateFormatter()
-            formatter.timeZone = TimeZone(identifier: "UTC")
-            formatter.locale = Locale(identifier: "es_CL")
-            formatter.dateFormat = "HH:mm"
-            let strFechaIng : String = formatter.string(from:self.mtim_fecha_ing)
+            let strFechaIng : String =  Utils.toStringFromDate(self.mtim_fecha_ing, "HH:mm")
             return strFechaIng
         }
     }

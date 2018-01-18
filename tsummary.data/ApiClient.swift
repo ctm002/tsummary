@@ -240,6 +240,7 @@ class ApiClient: NSObject
         postData.append("tim_minutos=" + String(hora.tim_minutos) + "&")
         postData.append("abo_id=" + String(hora.abo_id) + "&")
         postData.append("OffLine= " + String(hora.offline))
+        //postData.append("FechaUltMod=" +  Utils.toStringFromDate(hora.fechaUltMod!))
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
