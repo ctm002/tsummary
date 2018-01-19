@@ -60,6 +60,7 @@ public class ControladorLogica
     private func sincronizarHoras(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
     {
         ApiClient.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
+            
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
             {
@@ -92,24 +93,27 @@ public class ControladorLogica
                 
                 //Actualizar hora locales que han sido actualizadas remotamente
                 hrsLocales.forEach { hrs in
-                    let hrsActualizadasLocales = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! > hrs.fechaUltMod!})
-                    if let hrs = hrsActualizadasLocales
+                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! > hrs.fechaUltMod!})
+                    if let hrsResult = hrsResult
                     {
-                        if hrs.count > 0
+                        if hrsResult.count > 0
                         {
-                           DataBase.horas.guardar(hrs[0])
+                            let hr = hrsResult[0]
+                            hr.offline = false
+                            hr.IdHora = hrs.IdHora
+                            DataBase.horas.guardar(hr)
                         }
                     }
                 }
                 
                 //Actualizar horas remotas que han sido actualizadas localmente
                 hrsLocales.forEach { hrs in
-                    let hrsActualizadasRemotas = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! < hrs.fechaUltMod!})
-                    if let hrs = hrsActualizadasRemotas
+                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! < hrs.fechaUltMod!})
+                    if let hrsRemotas = hrsResult
                     {
-                        if hrs.count > 0
+                        if hrsRemotas.count > 0
                         {
-                            ApiClient.instance.guardar(hrs[0], {(hora: Horas?) -> Void in
+                            ApiClient.instance.guardar(hrs, {(hora: Horas?) -> Void in
                                 if let hr = hora
                                 {
                                     print("\(hr.tim_correl)")
@@ -130,6 +134,7 @@ public class ControladorLogica
                 }
             }
             print("horas descargadas")
+            
             retorno(resp)
         }, Date(), Date())
     }

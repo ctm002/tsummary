@@ -133,41 +133,6 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    
-
-    
-    /*
-    func sincronizar(codigo: String, horas:String)
-    {
-        let sesion: URLSession = {
-            let config = URLSessionConfiguration.ephemeral
-            let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-            return session
-        }()
-        
-        let url = URL(string: self.strURL + "SincronizacionData")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
-        request.httpMethod = "POST"
-        
-        
-        var postData: String = ""
-        postData.append("abo_id=" + codigo + "&")
-        postData.append("Horas=" + horas)
-        request.httpBody = postData.data(using: String.Encoding.utf8)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if(error != nil)
-            {
-                //callback(nil)
-                return
-            }
-            
-        })
-        task.resume()
-    }
-    */
-    
     func obtListProyectosByCodAbogado(codigo: String, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
         let sesion: URLSession = {
@@ -239,8 +204,8 @@ class ApiClient: NSObject
         postData.append("tim_horas=" + String(hora.tim_horas) + "&")
         postData.append("tim_minutos=" + String(hora.tim_minutos) + "&")
         postData.append("abo_id=" + String(hora.abo_id) + "&")
-        postData.append("OffLine= " + String(hora.offline))
-        //postData.append("FechaUltMod=" +  Utils.toStringFromDate(hora.fechaUltMod!))
+        postData.append("OffLine= " + String(hora.offline) + "&")
+        postData.append("FechaInsert=" +  Utils.toStringFromDate(hora.fechaUltMod!))
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
