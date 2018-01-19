@@ -1,11 +1,3 @@
-//
-//  Utils.swift
-//  tsummary
-//
-//  Created by OTRO on 18-01-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import Foundation
 
 public class Utils
