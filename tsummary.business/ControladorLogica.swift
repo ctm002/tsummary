@@ -85,7 +85,7 @@ public class ControladorLogica
                     ApiClient.instance.guardar(hrs, {(hora: Horas?) -> Void in
                         if let hr = hora
                         {
-                            print(hr.tim_correl)
+                            print("hora actualizada remotamente -> \(hr.tim_correl)")
                             DataBase.horas.guardar(hr)
                         }
                     })
@@ -101,6 +101,8 @@ public class ControladorLogica
                             let hr = hrsResult[0]
                             hr.offline = false
                             hr.IdHora = hrs.IdHora
+                            
+                            print("hora actualizada localmente -> \(hr.tim_correl)")
                             DataBase.horas.guardar(hr)
                         }
                     }
