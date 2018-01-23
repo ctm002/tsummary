@@ -1,5 +1,6 @@
 import UIKit
 
+
 class HoraViewController: UIViewController,
     UIPickerViewDataSource, UIPickerViewDelegate,
     IListViewProyecto, IEditViewHora{
@@ -12,6 +13,8 @@ class HoraViewController: UIViewController,
     @IBOutlet weak var stepper1: UIStepper!
     @IBOutlet weak var stepper2: UIStepper!
     @IBOutlet var btnGuardar: UIButton!
+    
+    
     
     @IBOutlet var datePickerFechaIngreso: UIDatePicker! =
     {
@@ -55,26 +58,6 @@ class HoraViewController: UIViewController,
     
     func setTextHoras(horaDeInicio inicio: Int, horaDeTermino termino: inout Int)
     {
-        /*
-        var horaTerminoTemp: Int = 0
-        var minutoTerminoTemp: Int = 0
-        if (termino > 0)
-        {
-            horaTerminoTemp = (termino/60) > 23 ? 23 : (termino/60)
-            minutoTerminoTemp = (termino%60)
-        }
-        else
-        {
-            horaTerminoTemp = (termino/60)
-            minutoTerminoTemp = 0
-        }
-        
-         let horasInicialText = String(format:"%02d", inicio)
-        let horasTerminoText = String(format:"%02d", horaTerminoTemp) + ":" + String(format:"%02d", minutoTerminoTemp)
-        
-        let text : String =  "Desde las " + horasInicialText + ":00 hrs. Hasta las " + horasTerminoText + " hrs."
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black])
-        */
     }
     
     func setList(proyectos: [ClienteProyecto])

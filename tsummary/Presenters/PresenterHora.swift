@@ -61,13 +61,13 @@ public class PresenterHora{
             if let detalleHoraTemp = DataBase.horas.getById(id)
             {
                 detalleHora = detalleHoraTemp
-                detalleHora.tim_correl = 0
-                detalleHora.Estado = .nuevo
+                detalleHora.Estado = .actualizado
             }
             else
             {
                 detalleHora = Horas()
-                detalleHora.Estado = .actualizado
+                detalleHora.tim_correl = 0
+                detalleHora.Estado = .nuevo
             }
             
             let proyectoId = self.mEditViewHora!.ProyectoId
@@ -84,7 +84,7 @@ public class PresenterHora{
             detalleHora.tim_horas = Int(cantHoras)
             detalleHora.tim_minutos = Int(cantMinutos)
             detalleHora.offline = true
-            detalleHora.fechaUltMod = Date()
+            detalleHora.fechaUltMod =  Date()
             
             let result : Bool = ControladorLogica.instance.guardar(detalleHora)
             if (result == true){ print("operacion exitosa") }

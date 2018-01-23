@@ -58,6 +58,8 @@ class SchedulerViewController: UIViewController,
         }
     }
     
+    let vCalendario = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
@@ -72,7 +74,6 @@ class SchedulerViewController: UIViewController,
         let barBtn = UIBarButtonItem(customView: btn)
         navigationItem.rightBarButtonItem = barBtn
         
-        let vCalendario = UIView()
         self.view.addSubview(vCalendario)
         
         vCalendario.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +82,7 @@ class SchedulerViewController: UIViewController,
         vCalendario.heightAnchor.constraint(equalToConstant: 50).isActive = true
         vCalendario.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         vCalendario.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
-        
+
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
@@ -99,7 +100,6 @@ class SchedulerViewController: UIViewController,
         mCVDias.register(CustomCell.self, forCellWithReuseIdentifier:cellId1)
         mCVDias.dataSource = self
         mCVDias.delegate = self
-        
         
         let vFecha = UIView()
         self.view.addSubview(vFecha)
@@ -145,6 +145,9 @@ class SchedulerViewController: UIViewController,
         presenterSemana.calcularSemana()
         
         self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        
+        //let selectedIndexPath = IndexPath(item: 0, section: 0)
+        //mCVDias.selectItem(at: selectedIndexPath, animated: false, scrollPosition:.top)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -227,7 +230,15 @@ class SchedulerViewController: UIViewController,
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         }
+        
+        print("item->\(indexPath.item)")
+        print("section->\(indexPath.section)")
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.mCVDias.frame.width/7, height: self.mCVDias.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -284,11 +295,11 @@ class SchedulerViewController: UIViewController,
     
     @objc func agregarHora()
     {
-        let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-        horaViewController.IdAbogado = self.IdAbogado
-        let formatterHora = DateFormatter()
-        formatterHora.dateFormat = "HH"
-        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
+        let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HorasViewController") as! HorasViewController
+        //horaViewController.IdAbogado = self.IdAbogado
+        //let formatterHora = DateFormatter()
+        //formatterHora.dateFormat = "HH"
+        //horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }
