@@ -296,10 +296,10 @@ class SchedulerViewController: UIViewController,
     @objc func agregarHora()
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HorasViewController") as! HorasViewController
-        //horaViewController.IdAbogado = self.IdAbogado
-        //let formatterHora = DateFormatter()
-        //formatterHora.dateFormat = "HH"
-        //horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
+        horaViewController.IdAbogado = self.IdAbogado
+        let formatterHora = DateFormatter()
+        formatterHora.dateFormat = "HH"
+        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
     }
 }

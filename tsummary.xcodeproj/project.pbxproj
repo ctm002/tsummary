@@ -13,7 +13,6 @@
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
-		2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C5D6D1FE864930054B95A /* HoraViewController.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
@@ -68,7 +67,6 @@
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
-		2F7C5D6D1FE864930054B95A /* HoraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
 		2F8C72BA200D058600FFD00A /* presenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presenterTests.swift; sourceTree = "<group>"; };
 		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 				DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */,
 				DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */,
-				2F7C5D6D1FE864930054B95A /* HoraViewController.swift */,
 				2F53732920163CEB008C9B97 /* HorasViewController.swift */,
 			);
 			path = tsummary;
@@ -463,7 +460,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F7C5D6E1FE864930054B95A /* HoraViewController.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,

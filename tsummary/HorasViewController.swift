@@ -2,7 +2,7 @@ import Foundation
 import SearchTextField
 import UIKit
 
-class HorasViewController: UIViewController,
+class HoraViewController: UIViewController,
     UIPickerViewDataSource, UIPickerViewDelegate,
     IListViewProyecto, IEditViewHora
 {
