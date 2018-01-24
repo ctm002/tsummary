@@ -166,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="800.14992503748135" y="-954.39999999999998"/>
+            <point key="canvasLocation" x="794" y="-1113"/>
         </scene>
         <!--Scheduler-->
         <scene sceneID="Ndw-sZ-PlT">
@@ -181,7 +181,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1612" y="-954.87256371814101"/>
+            <point key="canvasLocation" x="1497" y="-1113"/>
         </scene>
         <!--Hora View Controller-->
         <scene sceneID="9Hx-Om-1df">
@@ -404,7 +404,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2624.8000000000002" y="-1073.6131934032985"/>
+            <point key="canvasLocation" x="2202" y="-1113"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WXj-6r-hJw">

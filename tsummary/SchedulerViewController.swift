@@ -63,12 +63,13 @@ class SchedulerViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        //navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        navigationItem.hidesBackButton = true
         navigationController?.navigationBar.isTranslucent = false
         
         let btn: UIButton = UIButton.init(type: .custom)
         //btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
-        btn.addTarget(self, action: #selector(self.agregarHora), for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.agregar), for: UIControlEvents.touchUpInside)
         btn.setTitle("Nuevo", for: .normal)
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         let barBtn = UIBarButtonItem(customView: btn)
@@ -290,7 +291,7 @@ class SchedulerViewController: UIViewController,
         return ""
     }
     
-    @objc func agregarHora()
+    @objc func agregar()
     {
         let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado

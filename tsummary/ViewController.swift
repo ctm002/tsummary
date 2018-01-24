@@ -14,7 +14,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
+        
+        /*
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        */
+        
+        
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
         
