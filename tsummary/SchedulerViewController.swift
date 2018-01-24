@@ -63,9 +63,17 @@ class SchedulerViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
-        //navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.isTranslucent = false
+        
+        let btnMenu: UIButton = UIButton.init(type: .custom)
+        btnMenu.setImage(#imageLiteral(resourceName: "menu_24x") , for: .normal)
+        btnMenu.addTarget(self, action: #selector(self.agregar), for: UIControlEvents.touchUpInside)
+        //btnMenu.setTitle("Nuevo", for: .normal)
+        btnMenu.setTitleColor(UIColor.darkGray, for: .normal)
+        let barBtnMenu = UIBarButtonItem(customView: btnMenu)
+        navigationItem.leftBarButtonItem  = barBtnMenu
+        
         
         let btn: UIButton = UIButton.init(type: .custom)
         //btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
