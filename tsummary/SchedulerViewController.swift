@@ -145,9 +145,6 @@ class SchedulerViewController: UIViewController,
         presenterSemana.calcularSemana()
         
         self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
-        
-        //let selectedIndexPath = IndexPath(item: 0, section: 0)
-        //mCVDias.selectItem(at: selectedIndexPath, animated: false, scrollPosition:.top)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -295,7 +292,7 @@ class SchedulerViewController: UIViewController,
     
     @objc func agregarHora()
     {
-        let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HorasViewController") as! HorasViewController
+        let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
         horaViewController.IdAbogado = self.IdAbogado
         let formatterHora = DateFormatter()
         formatterHora.dateFormat = "HH"

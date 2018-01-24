@@ -68,6 +68,7 @@ public class PresenterHora{
                 detalleHora = Horas()
                 detalleHora.tim_correl = 0
                 detalleHora.Estado = .nuevo
+                detalleHora.modificable = true
             }
             
             let proyectoId = self.mEditViewHora!.ProyectoId

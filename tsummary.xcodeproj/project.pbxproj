@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F53732A20163CEB008C9B97 /* HorasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HorasViewController.swift */; };
-		2F53732B20163CEB008C9B97 /* HorasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HorasViewController.swift */; };
-		2F53732C20163CEB008C9B97 /* HorasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HorasViewController.swift */; };
+		2F53732A20163CEB008C9B97 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HoraViewController.swift */; };
+		2F53732B20163CEB008C9B97 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HoraViewController.swift */; };
+		2F53732C20163CEB008C9B97 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53732920163CEB008C9B97 /* HoraViewController.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
@@ -62,7 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F53732920163CEB008C9B97 /* HorasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorasViewController.swift; sourceTree = "<group>"; };
+		2F53732920163CEB008C9B97 /* HoraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
 		2F53732E201642F8008C9B97 /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
@@ -198,7 +198,7 @@
 				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 				DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */,
 				DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */,
-				2F53732920163CEB008C9B97 /* HorasViewController.swift */,
+				2F53732920163CEB008C9B97 /* HoraViewController.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -471,7 +471,7 @@
 				2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */,
 				2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */,
 				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
-				2F53732A20163CEB008C9B97 /* HorasViewController.swift in Sources */,
+				2F53732A20163CEB008C9B97 /* HoraViewController.swift in Sources */,
 				DE7D25921FE0639E003B0F4C /* DataBase.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
@@ -490,7 +490,7 @@
 				2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */,
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
 				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
-				2F53732B20163CEB008C9B97 /* HorasViewController.swift in Sources */,
+				2F53732B20163CEB008C9B97 /* HoraViewController.swift in Sources */,
 				DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,7 +503,7 @@
 				2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */,
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
 				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,
-				2F53732C20163CEB008C9B97 /* HorasViewController.swift in Sources */,
+				2F53732C20163CEB008C9B97 /* HoraViewController.swift in Sources */,
 				DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
