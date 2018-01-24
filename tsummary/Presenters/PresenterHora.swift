@@ -29,7 +29,7 @@ public class PresenterHora{
     func buscarHoras()
     {
         let fecha : String =  self.mView!.FechaIngreso
-        let codigo : Int = self.mView!.IdAbogado
+        let codigo : Int =  129 //self.mView!.IdAbogado
         if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)

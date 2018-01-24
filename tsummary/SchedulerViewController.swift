@@ -5,8 +5,11 @@ class SchedulerViewController: UIViewController,
     UITableViewDataSource,UITableViewDelegate,
     IListViewSemana, IViewHora {
     
-    var mCVDias : UICollectionView!
+    var sideMenuConstraint: NSLayoutConstraint!
+    var isSlideMenuHidden = true
     
+    
+    var mCVDias : UICollectionView!
     
     var mTVHoras: UITableView = {
         let tv = UITableView()
@@ -60,31 +63,59 @@ class SchedulerViewController: UIViewController,
     
     let vCalendario = UIView()
     
+    let vMenu = UIView()
+    
+    fileprivate func setupConstraintMenu() {
+        self.view.addSubview(vMenu)
+        vMenu.translatesAutoresizingMaskIntoConstraints = false
+        vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
+        vMenu.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: 0).isActive = true
+        vMenu.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        sideMenuConstraint = vMenu.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant:-self.view.frame.width)
+        sideMenuConstraint.isActive = true
+        vMenu.backgroundColor = UIColor.white
+        
+        
+        let btnConfig : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnConfig)
+        btnConfig.translatesAutoresizingMaskIntoConstraints = false
+        btnConfig.topAnchor.constraint(equalTo: vMenu.topAnchor, constant: 0).isActive = true
+        btnConfig.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
+        btnConfig.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
+        btnConfig.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnConfig.setTitle("Ajustes", for: .normal)
+        btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
+        btnConfig.setTitleColor(UIColor.black, for: .normal)
+        
+        
+        let btnCuenta : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnCuenta)
+        btnCuenta.translatesAutoresizingMaskIntoConstraints = false
+        btnCuenta.topAnchor.constraint(equalTo: btnConfig.topAnchor, constant: 35).isActive = true
+        btnCuenta.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
+        btnCuenta.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
+        btnCuenta.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnCuenta.setTitle("Resumen de horas", for: .normal)
+        btnCuenta.setTitleColor(UIColor.black, for: .normal)
+    }
+    
+    @objc  func mostrarAjustes()
+    {
+        sideMenuConstraint.constant = -140
+        isSlideMenuHidden = !isSlideMenuHidden
+    
+        let ajustesViewController = self.storyboard?.instantiateViewController(withIdentifier: "AjustesViewController") as! AjustesViewController
+        self.navigationController?.pushViewController(ajustesViewController, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
-        navigationItem.hidesBackButton = true
         navigationController?.navigationBar.isTranslucent = false
         
-        let btnMenu: UIButton = UIButton.init(type: .custom)
-        btnMenu.setImage(#imageLiteral(resourceName: "menu_24x") , for: .normal)
-        btnMenu.addTarget(self, action: #selector(self.agregar), for: UIControlEvents.touchUpInside)
-        //btnMenu.setTitle("Nuevo", for: .normal)
-        btnMenu.setTitleColor(UIColor.darkGray, for: .normal)
-        let barBtnMenu = UIBarButtonItem(customView: btnMenu)
-        navigationItem.leftBarButtonItem  = barBtnMenu
-        
-        
-        let btn: UIButton = UIButton.init(type: .custom)
-        //btn.setImage(#imageLiteral(resourceName: "add_24x") , for: .normal)
-        btn.addTarget(self, action: #selector(self.agregar), for: UIControlEvents.touchUpInside)
-        btn.setTitle("Nuevo", for: .normal)
-        btn.setTitleColor(UIColor.darkGray, for: .normal)
-        let barBtn = UIBarButtonItem(customView: btn)
-        navigationItem.rightBarButtonItem = barBtn
+        setupConstraintMenu()
         
         self.view.addSubview(vCalendario)
-        
         vCalendario.translatesAutoresizingMaskIntoConstraints = false
         vCalendario.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         vCalendario.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -154,6 +185,9 @@ class SchedulerViewController: UIViewController,
         presenterSemana.calcularSemana()
         
         self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        
+        
+        self.view.bringSubview(toFront: vMenu)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -307,5 +341,28 @@ class SchedulerViewController: UIViewController,
         formatterHora.dateFormat = "HH"
         horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
         self.navigationController?.pushViewController(horaViewController, animated: true)
+    }
+    
+    @IBAction func add(_ sender: Any)
+    {
+        agregar()
+    }
+    
+    @IBAction func show(_ sender: Any)
+    {
+    
+    }
+    
+    @IBAction func menuBtnPresed(_ sender: UIBarButtonItem)
+    {
+        if isSlideMenuHidden
+        {
+            sideMenuConstraint.constant = 0
+        }
+        else
+        {
+            sideMenuConstraint.constant = -self.view.frame.width
+        }
+        isSlideMenuHidden = !isSlideMenuHidden
     }
 }
