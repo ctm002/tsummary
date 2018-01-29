@@ -26,10 +26,10 @@ public class PresenterHora{
     }
     
     
-    func buscarHoras()
+    func buscarHoras()  
     {
         let fecha : String =  self.mView!.FechaIngreso
-        let codigo : Int =  129 //self.mView!.IdAbogado
+        let codigo : Int =  self.mView!.IdAbogado
         if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
@@ -73,7 +73,7 @@ public class PresenterHora{
             
             let proyectoId = self.mEditViewHora!.ProyectoId
             let fechaIngreso = self.mEditViewHora!.FechaIngreso
-            let idAbogado = self.mEditViewHora!.IdAbogado
+            let idAbogado =  self.mEditViewHora!.IdAbogado
             let asunto = self.mEditViewHora!.Asunto
             let cantHoras = self.mEditViewHora!.Horas
             let cantMinutos = self.mEditViewHora!.Minutos

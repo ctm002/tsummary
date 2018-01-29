@@ -175,7 +175,6 @@ class SchedulerViewController: UIViewController,
         mTVHoras.trailingAnchor.constraint(equalTo: vHoras.trailingAnchor, constant:-0).isActive = true
         mTVHoras.bottomAnchor.constraint(equalTo: vHoras.bottomAnchor, constant: 0).isActive = true
         
-        
         mTVHoras.register(TVCDetalleHora.self, forCellReuseIdentifier:cellId2)
         mTVHoras.delegate = self
         mTVHoras.dataSource = self
@@ -185,7 +184,6 @@ class SchedulerViewController: UIViewController,
         presenterSemana.calcularSemana()
         
         self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
-        
         
         self.view.bringSubview(toFront: vMenu)
     }
@@ -254,6 +252,7 @@ class SchedulerViewController: UIViewController,
     }
  
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
         cell.lblDia.text = self.semana[indexPath.row].nombre
         cell.lblNro.text = String(self.semana[indexPath.row].nro)

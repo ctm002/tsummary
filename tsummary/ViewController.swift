@@ -66,7 +66,7 @@ class ViewController: UIViewController {
     
     func redireccionar(estado: Bool)
     {
-        if (estado == true)
+        if (estado)
         {
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
