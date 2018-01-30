@@ -43,8 +43,8 @@ public class ControladorLogica
     
     private func sincronizarProyectos(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
     {
-        let codigo : String = String(usuario.Id)
-        ApiClient.instance.obtListProyectosByCodAbogado(usuario: usuario, callback: { (proyectosRemotos) -> Void in
+        ApiClient.instance.obtListProyectosByCodAbogado(usuario, callback: { (proyectosRemotos) -> Void in
+            
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
             let proyectosNuevos = proyectosRemotos?.filter {
                 !((proyectosLocalesIds?.contains($0.pro_id))!)
@@ -52,24 +52,24 @@ public class ControladorLogica
             let result = DataBase.proyectos.guardar(proyectosNuevos!)
             if (result)
             {
-                print("proyectos actualizados")
+                print("proyectos descargados")
             }
             self.sincronizarHoras(usuario, retorno)
+        
         })
     }
     
     private func sincronizarHoras(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
     {
-        
         let codigo : String = String(usuario.Id)
         let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         
         ApiClient.instance.obtListDetalleHorasByCodAbogado(usuario, fDesde, fHasta, callback:{(hrsRemotas)->Void in
+            
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo, fDesde, fHasta)
             {
-                
                 let hrsLocalesIds = hrsLocales.map { $0.tim_correl }
                 let hrsRemotasIds = hrsRemotas?.map { $0.tim_correl }
                 

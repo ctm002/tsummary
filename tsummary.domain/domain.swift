@@ -414,3 +414,10 @@ public class Dia
         }
     }
 }
+
+public class CabeceraHora
+{
+    var estado: Int!
+    var mensaje: String!
+    var data : [Horas]!
+}

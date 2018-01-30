@@ -3,7 +3,7 @@ import JWTDecode
 
 class ApiClient: NSObject
 {
-    private var strURL : String = "https://docroom.cariola.cl/";
+    private var strURL : String = "https://docroom.cariola.cl/"
     
     private var  username: String
     private var  password: String
@@ -19,7 +19,7 @@ class ApiClient: NSObject
     
     func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (Usuario?) -> Void)
     {
-        let sesion: URLSession = URLSession.shared
+        let session: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "token")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
@@ -30,7 +30,7 @@ class ApiClient: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8);
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
             if(error != nil)
             {
@@ -75,16 +75,14 @@ class ApiClient: NSObject
     
     func obtListDetalleHorasByCodAbogado(_ usuario: Usuario,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Horas]?) -> Void)
     {
-        let sesion: URLSession =  URLSession.shared
-        
-        let strURL : String = "https://docroom.cariola.cl/api/Horas/GetHorasByParameters?"
-        let parameters : String = "AboId=\(usuario.Id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
-        let url = URL(string: "\(strURL)\(parameters)")
+        let session: URLSession = URLSession.shared
+        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters?AboId=\(usuario.Id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
+        let url = URL(string: "\(sURL)")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.Token)",forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(usuario.Token)", forHTTPHeaderField: "Authorization")
         
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 callback(nil)
@@ -93,24 +91,34 @@ class ApiClient: NSObject
             
             if (data != nil)
             {
-                do{
-                    var horas = [Horas]()
-                    let datos =  try JSONSerialization.jsonObject(with: data!, options: []) as! [AnyObject]
-                    for d  in datos
+                do
+                {
+                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+                    if (responseString != "")
                     {
-                        let hora = Horas()
-                        hora.proyecto.pro_id =  d["pro_id"] as! Int32
-                        hora.tim_correl  = d["tim_correl"] as! Int32
-                        hora.tim_horas =  d["tim_horas"] as! Int
-                        hora.tim_minutos = d["tim_minutos"] as! Int
-                        hora.tim_asunto = d["tim_asunto"] as! String
-                        hora.modificable = d["nro_folio"] as! Int == 0 ? true : false;
-                        hora.abo_id = d["abo_id"] as! Int
-                        hora.tim_fecha_ing = Utils.toDateFromString(d["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
-                        hora.fechaInsert = Utils.toDateFromString((d["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss.SSS")!
-                        horas.append(hora)
+                        var horas = [Horas]()
+                        let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
+                        let aJSON = dataJSON["data"] as! [AnyObject]
+                        for item in aJSON
+                        {
+                            let hora = Horas()
+                            hora.proyecto.pro_id = item["pro_id"] as! Int32
+                            hora.tim_correl = item["tim_correl"] as! Int32
+                            hora.tim_horas = item["tim_horas"] as! Int
+                            hora.tim_minutos = item["tim_minutos"] as! Int
+                            hora.tim_asunto = item["tim_asunto"] as! String
+                            hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
+                            hora.abo_id = item["abo_id"] as! Int
+                            hora.tim_fecha_ing = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
+                            hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss.SSS")!
+                            horas.append(hora)
+                        }
+                        callback(horas)
                     }
-                    callback(horas)
+                    else
+                    {
+                        callback(nil)
+                    }
                 }
                 catch
                 {
@@ -121,17 +129,16 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func obtListProyectosByCodAbogado(usuario: Usuario, callback: @escaping ([ClienteProyecto]?) -> Void)
+    func obtListProyectosByCodAbogado(_ usuario: Usuario, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
-        let sesion: URLSession = URLSession.shared
-        
-        let url = URL(string: "https://docroom.cariola.cl/api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=" + String(usuario.Id))
-        
+        let session: URLSession = URLSession.shared
+        let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(usuario.Id)"
+        let url = URL(string: sURL)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.Token)",forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(usuario.Token)", forHTTPHeaderField: "Authorization")
         
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 callback(nil)
@@ -143,15 +150,16 @@ class ApiClient: NSObject
                 do
                 {
                     var proyectos = [ClienteProyecto]()
-                    let datos =  try JSONSerialization.jsonObject(with: data!, options: []) as! [AnyObject]
-                    for d  in datos
+                    let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
+                    let aJSON = dataJSON["data"] as! [AnyObject]
+                    for item in aJSON
                     {
                         let proyecto = ClienteProyecto()
-                        proyecto.pro_id = d["pro_id"] as! Int32
-                        proyecto.cli_cod = d["cli_cod"] as! Int
-                        proyecto.cli_nom = d["nombreCliente"] as! String
-                        proyecto.pro_nombre = d["nombreProyecto"] as! String
-                        proyecto.pro_idioma = d["idioma"] as! String
+                        proyecto.pro_id = item["pro_id"] as! Int32
+                        proyecto.cli_cod = item["cli_cod"] as! Int
+                        proyecto.cli_nom = item["nombreCliente"] as! String
+                        proyecto.pro_nombre = item["nombreProyecto"] as! String
+                        proyecto.pro_idioma = item["idioma"] as! String
                         proyectos.append(proyecto)
                     }
                     callback(proyectos)
@@ -277,19 +285,3 @@ class ApiClient: NSObject
  }
  }
  */
-
-struct JWT: Decodable
-{
-    let token:String
-}
-
-struct User: Decodable
-{
-    let Nombre: String
-    let Perfil: String
-    let AboId: String
-    let exp: Int32
-    let iss: String
-    let aud: String
-}
-
