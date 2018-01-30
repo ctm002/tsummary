@@ -36,14 +36,15 @@ public class ControladorLogica
         return true
     }
     
-    func sincronizar(_ codigo: String,_ callback: @escaping (Bool) -> Void)
+    func sincronizar(_ usuario: Usuario,_ callback: @escaping (Bool) -> Void)
     {
-        sincronizarProyectos(codigo, callback)
+        sincronizarProyectos(usuario, callback)
     }
     
-    private func sincronizarProyectos(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarProyectos(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
     {
-        ApiClient.instance.obtListProyectosByCodAbogado(codigo: codigo, callback: { (proyectosRemotos) -> Void in
+        let codigo : String = String(usuario.Id)
+        ApiClient.instance.obtListProyectosByCodAbogado(usuario: usuario, callback: { (proyectosRemotos) -> Void in
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
             let proyectosNuevos = proyectosRemotos?.filter {
                 !((proyectosLocalesIds?.contains($0.pro_id))!)
@@ -53,17 +54,22 @@ public class ControladorLogica
             {
                 print("proyectos actualizados")
             }
-            self.sincronizarHoras(codigo, retorno)
+            self.sincronizarHoras(usuario, retorno)
         })
     }
     
-    private func sincronizarHoras(_ codigo: String,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarHoras(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
     {
-        ApiClient.instance.obtListDetalleHorasByCodAbogado(codigo: codigo, callback:{(hrsRemotas)->Void in
-            
+        
+        let codigo : String = String(usuario.Id)
+        let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
+        let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
+        
+        ApiClient.instance.obtListDetalleHorasByCodAbogado(usuario, fDesde, fHasta, callback:{(hrsRemotas)->Void in
             var resp : Bool = false
-            if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo)
+            if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo, fDesde, fHasta)
             {
+                
                 let hrsLocalesIds = hrsLocales.map { $0.tim_correl }
                 let hrsRemotasIds = hrsRemotas?.map { $0.tim_correl }
                 
@@ -75,6 +81,7 @@ public class ControladorLogica
                     resp = DataBase.horas.guardar(hrsNuevas)
                 }
                 
+                /*
                 let hrsEliminadas = hrsLocales.filter {
                     !(hrsRemotasIds?.contains($0.tim_correl))! && $0.tim_correl != 0
                 }
@@ -93,7 +100,7 @@ public class ControladorLogica
                 
                 //Actualizar hora locales que han sido actualizadas remotamente
                 hrsLocales.forEach { hrs in
-                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! > hrs.fechaUltMod!})
+                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaInsert! > hrs.fechaInsert!})
                     if let hrsResult = hrsResult
                     {
                         if hrsResult.count > 0
@@ -110,7 +117,7 @@ public class ControladorLogica
                 
                 //Actualizar horas remotas que han sido actualizadas localmente
                 hrsLocales.forEach { hrs in
-                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaUltMod! < hrs.fechaUltMod!})
+                    let hrsResult = hrsRemotas?.filter( {$0.tim_correl == hrs.tim_correl && $0.fechaInsert! < hrs.fechaInsert!})
                     if let hrsRemotas = hrsResult
                     {
                         if hrsRemotas.count > 0
@@ -124,6 +131,7 @@ public class ControladorLogica
                         }
                     }
                 }
+                */
             }
             else
             {
@@ -136,9 +144,8 @@ public class ControladorLogica
                 }
             }
             print("horas descargadas")
-            
             retorno(resp)
-        }, Date(), Date())
+        })
     }
     
     func eliminarTodo()

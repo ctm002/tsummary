@@ -10,13 +10,13 @@
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
+		2F8DFC5A2020A57400814A34 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC592020A57300814A34 /* HoraViewController.swift */; };
+		2F966D782020A06A001DE17F /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F966D772020A06A001DE17F /* domain.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		2FCBE621200D3B98005B6E8E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
 		2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
-		2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
-		2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		2FCF295820110274006FD735 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF295720110274006FD735 /* ApiClient.swift */; };
 		2FCF295A201140E6006FD735 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF2959201140E6006FD735 /* Utils.swift */; };
 		2FCF295B201140E6006FD735 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF2959201140E6006FD735 /* Utils.swift */; };
@@ -32,7 +32,6 @@
 		DE0E04861FD0B16D00AE0D7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E04841FD0B16D00AE0D7F /* LaunchScreen.storyboard */; };
 		DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */; };
 		DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */; };
-		DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04AC1FD16E1200AE0D7F /* domain.swift */; };
 		DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */; };
 		DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */; };
 		DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
@@ -68,6 +67,8 @@
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
 		2F8C72BA200D058600FFD00A /* presenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presenterTests.swift; sourceTree = "<group>"; };
 		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F8DFC592020A57300814A34 /* HoraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoraViewController.swift; sourceTree = "<group>"; };
+		2F966D772020A06A001DE17F /* domain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = domain.swift; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		2FCF2959201140E6006FD735 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		DE0E04971FD0B16E00AE0D7F /* tsummaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tsummaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tsummaryUITests.swift; sourceTree = "<group>"; };
 		DE0E049D1FD0B16E00AE0D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE0E04AC1FD16E1200AE0D7F /* domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = domain.swift; sourceTree = "<group>"; };
 		DE1EF4A81FD97E5000CD60A8 /* SchedulerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerViewController.swift; sourceTree = "<group>"; };
 		DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterSemana.swift; sourceTree = "<group>"; };
@@ -137,6 +137,14 @@
 			path = presenterTests;
 			sourceTree = "<group>";
 		};
+		2F966D762020A00B001DE17F /* tsummary.domain */ = {
+			isa = PBXGroup;
+			children = (
+				2F966D772020A06A001DE17F /* domain.swift */,
+			);
+			path = tsummary.domain;
+			sourceTree = "<group>";
+		};
 		7308A227C9EFB69E13811868 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,9 +168,9 @@
 		DE0E046F1FD0B16D00AE0D7F = {
 			isa = PBXGroup;
 			children = (
+				2F966D762020A00B001DE17F /* tsummary.domain */,
 				DE7D25901FE0626E003B0F4C /* tsummary.business */,
 				DEF3B6001FD57CAC00437BD7 /* tsummary.data */,
-				DE0E04AB1FD16DD300AE0D7F /* tsummary.domain */,
 				DE0E047A1FD0B16D00AE0D7F /* tsummary */,
 				DE0E048F1FD0B16E00AE0D7F /* tsummaryTests */,
 				DE0E049A1FD0B16E00AE0D7F /* tsummaryUITests */,
@@ -198,6 +206,7 @@
 				DE1EF4AE1FD98A8C00CD60A8 /* CustomCell.swift */,
 				DE7D258C1FE02E99003B0F4C /* TVCDetalleHora.swift */,
 				DEBC4BA91FE2F3C800B146E7 /* CustomTabBarController.swift */,
+				2F8DFC592020A57300814A34 /* HoraViewController.swift */,
 				2FF6D123201925A400199DA2 /* AjustesViewController.swift */,
 			);
 			path = tsummary;
@@ -219,15 +228,6 @@
 				DE0E049D1FD0B16E00AE0D7F /* Info.plist */,
 			);
 			path = tsummaryUITests;
-			sourceTree = "<group>";
-		};
-		DE0E04AB1FD16DD300AE0D7F /* tsummary.domain */ = {
-			isa = PBXGroup;
-			children = (
-				DE0E04AC1FD16E1200AE0D7F /* domain.swift */,
-			);
-			name = tsummary.domain;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		DE7D25821FDEC068003B0F4C /* Presenters */ = {
@@ -409,10 +409,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-tsummary/Pods-tsummary-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework",
 				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JWTDecode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +466,7 @@
 				DE7D258D1FE02E99003B0F4C /* TVCDetalleHora.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,
 				DE1EF4AF1FD98A8C00CD60A8 /* CustomCell.swift in Sources */,
+				2F966D782020A06A001DE17F /* domain.swift in Sources */,
 				DEF3B6041FD57D9400437BD7 /* TbUsuario.swift in Sources */,
 				DE1EF4A91FD97E5100CD60A8 /* SchedulerViewController.swift in Sources */,
 				2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */,
@@ -475,8 +478,8 @@
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
 				2FCF295820110274006FD735 /* ApiClient.swift in Sources */,
+				2F8DFC5A2020A57400814A34 /* HoraViewController.swift in Sources */,
 				2FF6D124201925A400199DA2 /* AjustesViewController.swift in Sources */,
-				DE0E04AD1FD16E1200AE0D7F /* domain.swift in Sources */,
 				2FCF295A201140E6006FD735 /* Utils.swift in Sources */,
 				DE7D258F1FE02F60003B0F4C /* PresenterHora.swift in Sources */,
 			);
@@ -488,7 +491,6 @@
 			files = (
 				2FF6D125201925A400199DA2 /* AjustesViewController.swift in Sources */,
 				2FCF295B201140E6006FD735 /* Utils.swift in Sources */,
-				2FCBE624200D3BDD005B6E8E /* domain.swift in Sources */,
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
 				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
 				DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */,
@@ -501,7 +503,6 @@
 			files = (
 				2FF6D126201925A400199DA2 /* AjustesViewController.swift in Sources */,
 				2FCF295C201140E6006FD735 /* Utils.swift in Sources */,
-				2FCBE623200D3BD2005B6E8E /* domain.swift in Sources */,
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
 				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,
 				DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */,

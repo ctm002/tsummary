@@ -14,12 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
-        
-        /*
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        */
-        
-        
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
         
@@ -55,12 +50,11 @@ class ViewController: UIViewController {
         )
     }
     
-    func sincronizar(u: Usuario?)
+    func sincronizar(usuario: Usuario?)
     {
-        if (u != nil)
-        {
-            self.codigo =  Int(u!.Id)
-            self.sincronizar(String(self.codigo), callback: redireccionar)
+        if let u = usuario {
+            self.codigo = Int(u.Id)
+            self.sincronizar(u, callback: redireccionar)
         }
     }
     
@@ -71,16 +65,16 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
                 self.activity.stopAnimating()
-                let scheduler =  self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
+                let scheduler = self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
                 scheduler.IdAbogado = self.codigo
                 self.navigationController?.pushViewController(scheduler, animated: true)
             }
         }
     }
     
-    func sincronizar(_ codigo:String, callback: @escaping (Bool) -> Void)
+    func sincronizar(_ usuario: Usuario, callback: @escaping (Bool) -> Void)
     {
-        ControladorLogica.instance.sincronizar(codigo, callback)
+        ControladorLogica.instance.sincronizar(usuario, callback)
     }
 
     @IBAction func btnDeleteOnClick(_ sender: Any)

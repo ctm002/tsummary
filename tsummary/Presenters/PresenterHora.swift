@@ -26,10 +26,10 @@ public class PresenterHora{
     }
     
     
-    func buscarHoras()  
+    func buscarHoras()
     {
         let fecha : String =  self.mView!.FechaIngreso
-        let codigo : Int =  self.mView!.IdAbogado
+        let codigo : Int = self.mView!.IdAbogado
         if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
@@ -46,7 +46,7 @@ public class PresenterHora{
             self.mEditViewHora.Horas = detalleHora.tim_horas
             self.mEditViewHora.ProyectoId = detalleHora.proyecto.pro_id
             self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
-            self.mEditViewHora.FechaIngreso = detalleHora.tim_fecha_ing
+            self.mEditViewHora.FechaIngreso = Utils.toStringFromDate(detalleHora.tim_fecha_ing,"yyyy-MM-dd")
             self.mEditViewHora.bloquearBotones(detalleHora.modificable)
         }
     }
@@ -68,24 +68,23 @@ public class PresenterHora{
                 detalleHora = Horas()
                 detalleHora.tim_correl = 0
                 detalleHora.Estado = .nuevo
-                detalleHora.modificable = true
             }
             
             let proyectoId = self.mEditViewHora!.ProyectoId
             let fechaIngreso = self.mEditViewHora!.FechaIngreso
-            let idAbogado =  self.mEditViewHora!.IdAbogado
+            let idAbogado = self.mEditViewHora!.IdAbogado
             let asunto = self.mEditViewHora!.Asunto
             let cantHoras = self.mEditViewHora!.Horas
             let cantMinutos = self.mEditViewHora!.Minutos
             
             detalleHora.proyecto.pro_id = Int32(proyectoId)
-            detalleHora.tim_fecha_ing = fechaIngreso
+            detalleHora.tim_fecha_ing = Utils.toDateFromString(fechaIngreso, "yyyy-MM-dd")!
             detalleHora.abo_id = Int(idAbogado)
             detalleHora.tim_asunto = asunto
             detalleHora.tim_horas = Int(cantHoras)
             detalleHora.tim_minutos = Int(cantMinutos)
             detalleHora.offline = true
-            detalleHora.fechaUltMod =  Date()
+            detalleHora.fechaInsert = Date()
             
             let result : Bool = ControladorLogica.instance.guardar(detalleHora)
             if (result == true){ print("operacion exitosa") }

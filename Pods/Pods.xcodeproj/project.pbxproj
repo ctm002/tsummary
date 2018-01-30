@@ -7,79 +7,102 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2867A27CECD5F7509CD38D356B0FB80B /* SearchTextField-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0038A559AF139AE630EC7F5B4E65694D /* SearchTextField-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		540DBD738F85FD0AFF6BE4713F2B47E3 /* SearchTextField-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E0CC4C8AAF0A2D483E76D20D1479EA /* SearchTextField-dummy.m */; };
-		55665ED247416CE19B120313873250A7 /* Pods-tsummary-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D9E69BEAD224DDA599EE00C03F9846 /* Pods-tsummary-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		66CF76EAC05F88590F2D78F72A593CD0 /* Pods-tsummary-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C99522805E6FC8D7BF5D7F3B8E7FBA /* Pods-tsummary-dummy.m */; };
-		8EDC0C44A04B37C52AF860BA1D489912 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		C6C0225C6B71CD70EB40BD2E6874D98E /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBDD8A2CC7723573E4982B4BF4C28B /* SearchTextField.swift */; };
-		F51C3B7DEB28481275DEFF7B78536FED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		0FFB8BBEE817B87DC48D88B27F032AEF /* SearchTextField-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4EC89A2011FB0AF0D64623B72C789F /* SearchTextField-dummy.m */; };
+		196CC77EEC70669997437EEDDA42588F /* SearchTextField-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7285F2BC4CF8FA2A7F18C5B6A430E4 /* SearchTextField-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FEDFF05578F240D6A0BFC47A3839C33 /* Pods-tsummary-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D9E69BEAD224DDA599EE00C03F9846 /* Pods-tsummary-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5944E2D024536025780592F98790B795 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		743E10657B4CC40D04BDF501C69BDE36 /* Pods-tsummary-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C99522805E6FC8D7BF5D7F3B8E7FBA /* Pods-tsummary-dummy.m */; };
+		98022D1600D56CC5017A3BAC58E7778A /* JWTDecode-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02F3DB96D5A33226E190C1421DF6331E /* JWTDecode-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9446745193904C17AA24F0E27598332 /* JWTDecode-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ED81926D1C356AE9F917257F8ECDC354 /* JWTDecode-dummy.m */; };
+		C9B0FF5A0106E352E3EC3854BDD36A93 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE7FF0DDC49AA5FD9A30B832F6BB9B /* JWT.swift */; };
+		CA79CBF22E3ABF544E73107CB3FB7460 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9629E33DB3D80A1F01771F886B79C14F /* Errors.swift */; };
+		D0E2F0F2ADD84482502AA3C8753D925D /* JWTDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125CFBF3E564BA6ADD22125EE2BA7EED /* JWTDecode.swift */; };
+		D4A46840B6A96C5F6A106530D9ECC987 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		DFBA76B2C24B31B9B23C4444FE142C12 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FC93DB5527FC662120CE42DDE5091 /* SearchTextField.swift */; };
+		ED56A7B3B4F8C8EAA7667F81D2D0A04A /* A0JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6847F63FD28507A64FE4D29A1D0742D8 /* A0JWT.swift */; };
+		EDB9D143668F7E71EF37843BCA74498B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FA56532B39323855E55B89F2E5E51F5C /* PBXContainerItemProxy */ = {
+		0A443E687B4CB44852E5D3471C267C79 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 67AB5E65AED35D839AE794EBDD764654;
+			remoteGlobalIDString = 60527A3AB9CC53C3759F67D4125D4AF5;
 			remoteInfo = SearchTextField;
+		};
+		4448C8A44B8D56D7ACB4BA63E1E6CFA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 734E126F2A1BB2F7F1ACCF523A9A8351;
+			remoteInfo = JWTDecode;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0038A559AF139AE630EC7F5B4E65694D /* SearchTextField-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SearchTextField-umbrella.h"; sourceTree = "<group>"; };
-		18D4DB8D618F0CD88F1B8D16A123A31D /* SearchTextField.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SearchTextField.xcconfig; sourceTree = "<group>"; };
-		19311BD09835BC55EBBD9763E1BF5DC2 /* SearchTextField.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SearchTextField.modulemap; sourceTree = "<group>"; };
+		016A17C6D1B63212C12D212786B2933B /* JWTDecode-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JWTDecode-prefix.pch"; sourceTree = "<group>"; };
+		02F3DB96D5A33226E190C1421DF6331E /* JWTDecode-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JWTDecode-umbrella.h"; sourceTree = "<group>"; };
+		0F7285F2BC4CF8FA2A7F18C5B6A430E4 /* SearchTextField-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SearchTextField-umbrella.h"; sourceTree = "<group>"; };
+		125CFBF3E564BA6ADD22125EE2BA7EED /* JWTDecode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JWTDecode.swift; path = JWTDecode/JWTDecode.swift; sourceTree = "<group>"; };
 		1948426CD45F87F1BE6EDCFB9F507892 /* Pods-tsummary.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-tsummary.modulemap"; sourceTree = "<group>"; };
-		2F25802A5FCF05FC779025C09DDEC895 /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SearchTextField.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32D9C30594DA23F012E9BDCB66A5190A /* SearchTextField-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SearchTextField-prefix.pch"; sourceTree = "<group>"; };
+		249F50100A3FA13671A95B6B84BE7D2D /* SearchTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SearchTextField.framework; path = SearchTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A2F68CD277F9C763E7FAD44EC6B41D /* SearchTextField-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SearchTextField-prefix.pch"; sourceTree = "<group>"; };
+		2EB62D4EBDB3B80289419967191926ED /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		367F65EFE87BC950740D7AAEB39629DE /* Pods-tsummary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tsummary.debug.xcconfig"; sourceTree = "<group>"; };
+		375FC93DB5527FC662120CE42DDE5091 /* SearchTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchTextField.swift; path = SearchTextField/Classes/SearchTextField.swift; sourceTree = "<group>"; };
 		41F8805E9520A33636D4D9F5791381D2 /* Pods-tsummary-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tsummary-frameworks.sh"; sourceTree = "<group>"; };
 		62D9E69BEAD224DDA599EE00C03F9846 /* Pods-tsummary-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-tsummary-umbrella.h"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		84254FADAE9D93FDCD7DB9810E282B71 /* Pods_tsummary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_tsummary.framework; path = "Pods-tsummary.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6847F63FD28507A64FE4D29A1D0742D8 /* A0JWT.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = A0JWT.swift; path = JWTDecode/A0JWT.swift; sourceTree = "<group>"; };
+		6FAC91D667C7232D61CF0B7AF7AE7939 /* JWTDecode.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = JWTDecode.modulemap; sourceTree = "<group>"; };
 		857D23689A2972E24AA7EA677A33F3AE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8916D49703992EF713CD56A5E7604D89 /* SearchTextField.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SearchTextField.xcconfig; sourceTree = "<group>"; };
+		8D4EC89A2011FB0AF0D64623B72C789F /* SearchTextField-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SearchTextField-dummy.m"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		998F0FE07A01D8096BCA36DCA79DDE91 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9629E33DB3D80A1F01771F886B79C14F /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = JWTDecode/Errors.swift; sourceTree = "<group>"; };
+		9950DA2F5B14C2A387355C7E384963C7 /* Pods_tsummary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_tsummary.framework; path = "Pods-tsummary.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A87BCC2DAD258815631C024B3767F783 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B06A5BA8ED72A392CC49A504C14474BD /* Pods-tsummary-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tsummary-resources.sh"; sourceTree = "<group>"; };
+		D30BBF0695BFA5E60592CC5420CD68BC /* SearchTextField.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SearchTextField.modulemap; sourceTree = "<group>"; };
 		D9C99522805E6FC8D7BF5D7F3B8E7FBA /* Pods-tsummary-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-tsummary-dummy.m"; sourceTree = "<group>"; };
-		DADBDD8A2CC7723573E4982B4BF4C28B /* SearchTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchTextField.swift; path = SearchTextField/Classes/SearchTextField.swift; sourceTree = "<group>"; };
 		DFFC8D34A5BB9D8EA45B2C7D28228FEC /* Pods-tsummary-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tsummary-acknowledgements.plist"; sourceTree = "<group>"; };
+		E4CE7FF0DDC49AA5FD9A30B832F6BB9B /* JWT.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JWT.swift; path = JWTDecode/JWT.swift; sourceTree = "<group>"; };
 		E68DAC54376B0F263CE0A02AEA7402BA /* Pods-tsummary-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tsummary-acknowledgements.markdown"; sourceTree = "<group>"; };
-		F3E0CC4C8AAF0A2D483E76D20D1479EA /* SearchTextField-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SearchTextField-dummy.m"; sourceTree = "<group>"; };
+		ED81926D1C356AE9F917257F8ECDC354 /* JWTDecode-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JWTDecode-dummy.m"; sourceTree = "<group>"; };
+		EDE6B366037D1DD9568940F983C053E2 /* JWTDecode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JWTDecode.xcconfig; sourceTree = "<group>"; };
+		F96A92224E0DE759560E34553DA1D96F /* JWTDecode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JWTDecode.framework; path = JWTDecode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9EE6DA918D600263CD5468B93E01932 /* Pods-tsummary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tsummary.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BC5E88460EF51DF057576101B8C7F6AD /* Frameworks */ = {
+		14BF850B20D6C1E568DC676ECE1E543F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EDC0C44A04B37C52AF860BA1D489912 /* Foundation.framework in Frameworks */,
+				5944E2D024536025780592F98790B795 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CF8942BB1CDD7725493ABEF897C935B7 /* Frameworks */ = {
+		308C01419439E075AEF155390223556A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F51C3B7DEB28481275DEFF7B78536FED /* Foundation.framework in Frameworks */,
+				EDB9D143668F7E71EF37843BCA74498B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2AB564598350DCB65FED80490737B25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4A46840B6A96C5F6A106530D9ECC987 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0369F6394E1C0582BF08D11A0B8DEE61 /* SearchTextField */ = {
-			isa = PBXGroup;
-			children = (
-				DADBDD8A2CC7723573E4982B4BF4C28B /* SearchTextField.swift */,
-				4AC480FF100B8A68649FA1CCB524CAAB /* Support Files */,
-			);
-			name = SearchTextField;
-			path = SearchTextField;
-			sourceTree = "<group>";
-		};
 		0E4AA55A0C1B9B5E7011633578164389 /* Pods-tsummary */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,25 +121,39 @@
 			path = "Target Support Files/Pods-tsummary";
 			sourceTree = "<group>";
 		};
-		4AC480FF100B8A68649FA1CCB524CAAB /* Support Files */ = {
+		1F1F97472C2C6D021F1F59190466707D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				998F0FE07A01D8096BCA36DCA79DDE91 /* Info.plist */,
-				19311BD09835BC55EBBD9763E1BF5DC2 /* SearchTextField.modulemap */,
-				18D4DB8D618F0CD88F1B8D16A123A31D /* SearchTextField.xcconfig */,
-				F3E0CC4C8AAF0A2D483E76D20D1479EA /* SearchTextField-dummy.m */,
-				32D9C30594DA23F012E9BDCB66A5190A /* SearchTextField-prefix.pch */,
-				0038A559AF139AE630EC7F5B4E65694D /* SearchTextField-umbrella.h */,
+				A87BCC2DAD258815631C024B3767F783 /* Info.plist */,
+				D30BBF0695BFA5E60592CC5420CD68BC /* SearchTextField.modulemap */,
+				8916D49703992EF713CD56A5E7604D89 /* SearchTextField.xcconfig */,
+				8D4EC89A2011FB0AF0D64623B72C789F /* SearchTextField-dummy.m */,
+				24A2F68CD277F9C763E7FAD44EC6B41D /* SearchTextField-prefix.pch */,
+				0F7285F2BC4CF8FA2A7F18C5B6A430E4 /* SearchTextField-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SearchTextField";
 			sourceTree = "<group>";
 		};
-		55913C293EBD283906DBA634E2CCBDEC /* Products */ = {
+		24E1F04D3D24EAA2AADCD56E7DC4A303 /* JWTDecode */ = {
 			isa = PBXGroup;
 			children = (
-				84254FADAE9D93FDCD7DB9810E282B71 /* Pods_tsummary.framework */,
-				2F25802A5FCF05FC779025C09DDEC895 /* SearchTextField.framework */,
+				6847F63FD28507A64FE4D29A1D0742D8 /* A0JWT.swift */,
+				9629E33DB3D80A1F01771F886B79C14F /* Errors.swift */,
+				E4CE7FF0DDC49AA5FD9A30B832F6BB9B /* JWT.swift */,
+				125CFBF3E564BA6ADD22125EE2BA7EED /* JWTDecode.swift */,
+				93B9C367A50C3E9FE06E44B9F2CDCF0E /* Support Files */,
+			);
+			name = JWTDecode;
+			path = JWTDecode;
+			sourceTree = "<group>";
+		};
+		3738C85B21D00FABCAA119C683192679 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F96A92224E0DE759560E34553DA1D96F /* JWTDecode.framework */,
+				9950DA2F5B14C2A387355C7E384963C7 /* Pods_tsummary.framework */,
+				249F50100A3FA13671A95B6B84BE7D2D /* SearchTextField.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,10 +171,34 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				C2F4B51807996A845941D41828B2F016 /* Pods */,
-				55913C293EBD283906DBA634E2CCBDEC /* Products */,
+				EB41872877AAAD920040D3B0FD2A713B /* Pods */,
+				3738C85B21D00FABCAA119C683192679 /* Products */,
 				762F8C2DD42580BF1BF4D71D978A99C3 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		88F974F95A8BD103A06E9F4344FB2FE1 /* SearchTextField */ = {
+			isa = PBXGroup;
+			children = (
+				375FC93DB5527FC662120CE42DDE5091 /* SearchTextField.swift */,
+				1F1F97472C2C6D021F1F59190466707D /* Support Files */,
+			);
+			name = SearchTextField;
+			path = SearchTextField;
+			sourceTree = "<group>";
+		};
+		93B9C367A50C3E9FE06E44B9F2CDCF0E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2EB62D4EBDB3B80289419967191926ED /* Info.plist */,
+				6FAC91D667C7232D61CF0B7AF7AE7939 /* JWTDecode.modulemap */,
+				EDE6B366037D1DD9568940F983C053E2 /* JWTDecode.xcconfig */,
+				ED81926D1C356AE9F917257F8ECDC354 /* JWTDecode-dummy.m */,
+				016A17C6D1B63212C12D212786B2933B /* JWTDecode-prefix.pch */,
+				02F3DB96D5A33226E190C1421DF6331E /* JWTDecode-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/JWTDecode";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -148,14 +209,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C2F4B51807996A845941D41828B2F016 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0369F6394E1C0582BF08D11A0B8DEE61 /* SearchTextField */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,35 +217,71 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		EB41872877AAAD920040D3B0FD2A713B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				24E1F04D3D24EAA2AADCD56E7DC4A303 /* JWTDecode */,
+				88F974F95A8BD103A06E9F4344FB2FE1 /* SearchTextField */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		722925A5CB8AD3692AA0EED81D6F8C38 /* Headers */ = {
+		1758B28A1566D623D1B0A8BB9ED12525 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55665ED247416CE19B120313873250A7 /* Pods-tsummary-umbrella.h in Headers */,
+				196CC77EEC70669997437EEDDA42588F /* SearchTextField-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F3EE19DDA3849E5D67C0DC2CBA49396F /* Headers */ = {
+		3C4F570C82ABD812DFFBD0F0628C8C46 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2867A27CECD5F7509CD38D356B0FB80B /* SearchTextField-umbrella.h in Headers */,
+				1FEDFF05578F240D6A0BFC47A3839C33 /* Pods-tsummary-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B15BDD3E0F268D14A780995210F255C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98022D1600D56CC5017A3BAC58E7778A /* JWTDecode-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		67AB5E65AED35D839AE794EBDD764654 /* SearchTextField */ = {
+		2BB7DBC3561CEB0BFBCC2BBDA7A57855 /* Pods-tsummary */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E0D8D62958F9B26F7680D025E8329C1D /* Build configuration list for PBXNativeTarget "SearchTextField" */;
+			buildConfigurationList = 98A32D7CE4B3671D73CE48DFEA3F38C4 /* Build configuration list for PBXNativeTarget "Pods-tsummary" */;
 			buildPhases = (
-				22070F7D59595D0C2F0B5E158C84EF12 /* Sources */,
-				CF8942BB1CDD7725493ABEF897C935B7 /* Frameworks */,
-				F3EE19DDA3849E5D67C0DC2CBA49396F /* Headers */,
+				CDC34895918F96446E414912E661FA9B /* Sources */,
+				308C01419439E075AEF155390223556A /* Frameworks */,
+				3C4F570C82ABD812DFFBD0F0628C8C46 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BDB5A1AA23B9CA8C5E4092C2D65860B8 /* PBXTargetDependency */,
+				35719FF0068B41BF18F5268ADBFC9FA3 /* PBXTargetDependency */,
+			);
+			name = "Pods-tsummary";
+			productName = "Pods-tsummary";
+			productReference = 9950DA2F5B14C2A387355C7E384963C7 /* Pods_tsummary.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		60527A3AB9CC53C3759F67D4125D4AF5 /* SearchTextField */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75DECE6C3AA8DA9B8B4E52180EBCC6F3 /* Build configuration list for PBXNativeTarget "SearchTextField" */;
+			buildPhases = (
+				8E9540BF0C00662C38968651ECAA8982 /* Sources */,
+				C2AB564598350DCB65FED80490737B25 /* Frameworks */,
+				1758B28A1566D623D1B0A8BB9ED12525 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -200,25 +289,24 @@
 			);
 			name = SearchTextField;
 			productName = SearchTextField;
-			productReference = 2F25802A5FCF05FC779025C09DDEC895 /* SearchTextField.framework */;
+			productReference = 249F50100A3FA13671A95B6B84BE7D2D /* SearchTextField.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D8B2BFDD0E078D349DB0D94C957AF5B1 /* Pods-tsummary */ = {
+		734E126F2A1BB2F7F1ACCF523A9A8351 /* JWTDecode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B8F8236E5AE5BA1CE798729C515F0F60 /* Build configuration list for PBXNativeTarget "Pods-tsummary" */;
+			buildConfigurationList = 033B38A811E6E54B02C8CB30C17608FB /* Build configuration list for PBXNativeTarget "JWTDecode" */;
 			buildPhases = (
-				C98127A4BA75F9F6BAE15B9CC78B10AA /* Sources */,
-				BC5E88460EF51DF057576101B8C7F6AD /* Frameworks */,
-				722925A5CB8AD3692AA0EED81D6F8C38 /* Headers */,
+				A609FCE138E7FE7BA6445FC3598F7293 /* Sources */,
+				14BF850B20D6C1E568DC676ECE1E543F /* Frameworks */,
+				8B15BDD3E0F268D14A780995210F255C /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E866F71EE8CC0C6BF20BAFB9A50ABFCE /* PBXTargetDependency */,
 			);
-			name = "Pods-tsummary";
-			productName = "Pods-tsummary";
-			productReference = 84254FADAE9D93FDCD7DB9810E282B71 /* Pods_tsummary.framework */;
+			name = JWTDecode;
+			productName = JWTDecode;
+			productReference = F96A92224E0DE759560E34553DA1D96F /* JWTDecode.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -238,49 +326,68 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 55913C293EBD283906DBA634E2CCBDEC /* Products */;
+			productRefGroup = 3738C85B21D00FABCAA119C683192679 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D8B2BFDD0E078D349DB0D94C957AF5B1 /* Pods-tsummary */,
-				67AB5E65AED35D839AE794EBDD764654 /* SearchTextField */,
+				734E126F2A1BB2F7F1ACCF523A9A8351 /* JWTDecode */,
+				2BB7DBC3561CEB0BFBCC2BBDA7A57855 /* Pods-tsummary */,
+				60527A3AB9CC53C3759F67D4125D4AF5 /* SearchTextField */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		22070F7D59595D0C2F0B5E158C84EF12 /* Sources */ = {
+		8E9540BF0C00662C38968651ECAA8982 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				540DBD738F85FD0AFF6BE4713F2B47E3 /* SearchTextField-dummy.m in Sources */,
-				C6C0225C6B71CD70EB40BD2E6874D98E /* SearchTextField.swift in Sources */,
+				0FFB8BBEE817B87DC48D88B27F032AEF /* SearchTextField-dummy.m in Sources */,
+				DFBA76B2C24B31B9B23C4444FE142C12 /* SearchTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C98127A4BA75F9F6BAE15B9CC78B10AA /* Sources */ = {
+		A609FCE138E7FE7BA6445FC3598F7293 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66CF76EAC05F88590F2D78F72A593CD0 /* Pods-tsummary-dummy.m in Sources */,
+				ED56A7B3B4F8C8EAA7667F81D2D0A04A /* A0JWT.swift in Sources */,
+				CA79CBF22E3ABF544E73107CB3FB7460 /* Errors.swift in Sources */,
+				C9B0FF5A0106E352E3EC3854BDD36A93 /* JWT.swift in Sources */,
+				A9446745193904C17AA24F0E27598332 /* JWTDecode-dummy.m in Sources */,
+				D0E2F0F2ADD84482502AA3C8753D925D /* JWTDecode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDC34895918F96446E414912E661FA9B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				743E10657B4CC40D04BDF501C69BDE36 /* Pods-tsummary-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E866F71EE8CC0C6BF20BAFB9A50ABFCE /* PBXTargetDependency */ = {
+		35719FF0068B41BF18F5268ADBFC9FA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SearchTextField;
-			target = 67AB5E65AED35D839AE794EBDD764654 /* SearchTextField */;
-			targetProxy = FA56532B39323855E55B89F2E5E51F5C /* PBXContainerItemProxy */;
+			target = 60527A3AB9CC53C3759F67D4125D4AF5 /* SearchTextField */;
+			targetProxy = 0A443E687B4CB44852E5D3471C267C79 /* PBXContainerItemProxy */;
+		};
+		BDB5A1AA23B9CA8C5E4092C2D65860B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JWTDecode;
+			target = 734E126F2A1BB2F7F1ACCF523A9A8351 /* JWTDecode */;
+			targetProxy = 4448C8A44B8D56D7ACB4BA63E1E6CFA0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2F44EAA29261D51AA849B50B91C30924 /* Debug */ = {
+		0148620153B95A21864DEAB27DE1EB52 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 367F65EFE87BC950740D7AAEB39629DE /* Pods-tsummary.debug.xcconfig */;
+			baseConfigurationReference = EDE6B366037D1DD9568940F983C053E2 /* JWTDecode.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -291,28 +398,89 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-tsummary/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/JWTDecode/JWTDecode-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JWTDecode/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JWTDecode/JWTDecode.modulemap";
+				PRODUCT_NAME = JWTDecode;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		13E7143A251AA14BCA15EFE381185780 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8916D49703992EF713CD56A5E7604D89 /* SearchTextField.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SearchTextField/SearchTextField-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SearchTextField/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-tsummary/Pods-tsummary.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_tsummary;
+				MODULEMAP_FILE = "Target Support Files/SearchTextField/SearchTextField.modulemap";
+				PRODUCT_NAME = SearchTextField;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1BC1B726F05EFA00A640C9A7E12BA069 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDE6B366037D1DD9568940F983C053E2 /* JWTDecode.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JWTDecode/JWTDecode-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JWTDecode/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JWTDecode/JWTDecode.modulemap";
+				PRODUCT_NAME = JWTDecode;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		4CDA9F7152A849CFB52601402E261E27 /* Release */ = {
+		2313ECE87B61EB17775F10DA6DE5F6A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F9EE6DA918D600263CD5468B93E01932 /* Pods-tsummary.release.xcconfig */;
 			buildSettings = {
@@ -401,9 +569,9 @@
 			};
 			name = Release;
 		};
-		A9FF73BBF3F2D43D31EDA04B263E3C6E /* Release */ = {
+		851FE3FB2BD3AFC7134523E7AE2A7A12 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18D4DB8D618F0CD88F1B8D16A123A31D /* SearchTextField.xcconfig */;
+			baseConfigurationReference = 8916D49703992EF713CD56A5E7604D89 /* SearchTextField.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -424,14 +592,13 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		B57951D085A1B98A97F8A1062A5E5C5B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -493,9 +660,9 @@
 			};
 			name = Debug;
 		};
-		C897D9656CFF9247F5CFD95F0CF1996E /* Debug */ = {
+		C236536A60BF075ED0DCA18AB120C88A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18D4DB8D618F0CD88F1B8D16A123A31D /* SearchTextField.xcconfig */;
+			baseConfigurationReference = 367F65EFE87BC950740D7AAEB39629DE /* Pods-tsummary.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -506,18 +673,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SearchTextField/SearchTextField-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SearchTextField/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-tsummary/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SearchTextField/SearchTextField.modulemap";
-				PRODUCT_NAME = SearchTextField;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-tsummary/Pods-tsummary.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_tsummary;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -527,6 +697,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		033B38A811E6E54B02C8CB30C17608FB /* Build configuration list for PBXNativeTarget "JWTDecode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BC1B726F05EFA00A640C9A7E12BA069 /* Debug */,
+				0148620153B95A21864DEAB27DE1EB52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -536,20 +715,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B8F8236E5AE5BA1CE798729C515F0F60 /* Build configuration list for PBXNativeTarget "Pods-tsummary" */ = {
+		75DECE6C3AA8DA9B8B4E52180EBCC6F3 /* Build configuration list for PBXNativeTarget "SearchTextField" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2F44EAA29261D51AA849B50B91C30924 /* Debug */,
-				4CDA9F7152A849CFB52601402E261E27 /* Release */,
+				851FE3FB2BD3AFC7134523E7AE2A7A12 /* Debug */,
+				13E7143A251AA14BCA15EFE381185780 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E0D8D62958F9B26F7680D025E8329C1D /* Build configuration list for PBXNativeTarget "SearchTextField" */ = {
+		98A32D7CE4B3671D73CE48DFEA3F38C4 /* Build configuration list for PBXNativeTarget "Pods-tsummary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C897D9656CFF9247F5CFD95F0CF1996E /* Debug */,
-				A9FF73BBF3F2D43D31EDA04B263E3C6E /* Release */,
+				C236536A60BF075ED0DCA18AB120C88A /* Debug */,
+				2313ECE87B61EB17775F10DA6DE5F6A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

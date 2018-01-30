@@ -154,7 +154,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="G2O-1D-cT8"/>
+                    <navigationItem key="navigationItem" title="TSummary" id="G2O-1D-cT8"/>
                     <connections>
                         <outlet property="activity" destination="A2C-ZI-umr" id="yNH-xF-G8V"/>
                         <outlet property="btnEliminar" destination="z5a-FY-71L" id="W7Y-jF-d4e"/>
@@ -178,7 +178,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="Ult-Gj-cGu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="IWw-iU-Ldd">
+                    <navigationItem key="navigationItem" title="TSummary" id="IWw-iU-Ldd">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="menu_24x" id="cDI-in-xAc" userLabel="itemMenu">
                             <connections>
                                 <action selector="menuBtnPresed:" destination="yMH-3P-hXD" id="93A-RY-RPd"/>
@@ -193,12 +193,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1892" y="-1208.5457271364319"/>
+            <point key="canvasLocation" x="1875" y="-1102"/>
         </scene>
-        <!--Hora View Controller-->
+        <!--TSummary-->
         <scene sceneID="9Hx-Om-1df">
             <objects>
-                <viewController storyboardIdentifier="HoraViewController" id="znN-7t-mT3" customClass="HoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="HoraViewController" storyboardIdentifier="HoraViewController" id="znN-7t-mT3" customClass="HoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c98-Qw-kIv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -402,6 +402,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Zw-Vm-iSm"/>
                     </view>
+                    <navigationItem key="navigationItem" title="TSummary" id="Jsk-Fs-Trg">
+                        <barButtonItem key="leftBarButtonItem" title="Cancelar" id="I2n-fR-pP3">
+                            <connections>
+                                <action selector="btnCancelarPressed:" destination="znN-7t-mT3" id="4LI-F3-G9r"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="btnEliminar" destination="jV0-uq-jEk" id="tPW-aF-pmo"/>
                         <outlet property="btnGuardar" destination="Vgn-v0-re4" id="bYL-gY-q31"/>
@@ -416,7 +423,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2801" y="-1075"/>
+            <point key="canvasLocation" x="2979" y="-1143"/>
         </scene>
         <!--Ajustes View Controller-->
         <scene sceneID="ADk-QW-Dnw">
@@ -470,29 +477,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xL0-WQ-qJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2784" y="-2009"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="lM2-Ou-Hqv">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xNd-JD-BbF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="NavigatorScheduler" automaticallyAdjustsScrollViewInsets="NO" id="59U-p4-KD1" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ovV-cG-fLC">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="yMH-3P-hXD" kind="relationship" relationship="rootViewController" id="btK-ch-oGD"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="1849" y="-2037"/>
+            <point key="canvasLocation" x="2799" y="-1948"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ltp-UA-Rbs">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YV1-rj-Lmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pjg-tH-I0Z" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jhP-WB-5if">
@@ -504,7 +494,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Clk-GG-7jI"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YV1-rj-Lmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1132" y="-1947"/>
         </scene>
@@ -512,7 +501,4 @@
     <resources>
         <image name="menu_24x" width="24" height="24"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="kuN-F1-U3C"/>
-    </inferredMetricsTieBreakers>
 </document>

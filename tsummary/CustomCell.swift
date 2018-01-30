@@ -1,16 +1,7 @@
-//
-//  Custom.swift
-//  tsummary
-//
-//  Created by Soporte on 07-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import UIKit
 
-class CustomCell: UICollectionViewCell {
-
-    
+class CustomCell: UICollectionViewCell
+{
     var indexPath: Int = -1
     
     let lblNro : UILabel = {
@@ -27,7 +18,8 @@ class CustomCell: UICollectionViewCell {
         return lbl
     }()
     
-    override init(frame: CGRect) {
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
         setupLayout()
     }
@@ -54,7 +46,8 @@ class CustomCell: UICollectionViewCell {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 }

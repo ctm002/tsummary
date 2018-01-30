@@ -99,7 +99,7 @@ class SchedulerViewController: UIViewController,
         btnCuenta.setTitleColor(UIColor.black, for: .normal)
     }
     
-    @objc  func mostrarAjustes()
+    @objc func mostrarAjustes()
     {
         sideMenuConstraint.constant = -140
         isSlideMenuHidden = !isSlideMenuHidden

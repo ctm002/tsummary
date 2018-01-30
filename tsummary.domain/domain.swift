@@ -10,6 +10,8 @@ public class  Usuario
         self.mPassword=""
         self.mIMEI=""
         self.mDefault=0
+        self.mPerfil = ""
+        self.mToken  = ""
     }
     
     private var mId : Int32
@@ -28,23 +30,31 @@ public class  Usuario
     var Password:String? { return self.mPassword }
     
     private var mIMEI:String?
-    var  IMEI:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
+    var IMEI:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
     
     private var mDefault:Int?
     var Default:Int?  { return self.mDefault }
+    
+    private var mPerfil: String
+    var Perfil: String { get { return self.mPerfil } set { self.mPerfil = newValue }}
+    
+    private var mToken: String
+    var Token: String {
+        get { return mToken}
+        set { self.mToken = newValue }
+    }
 }
 
-public  class Cliente
+public class Cliente
 {
     init()
     {
         self.mcli_cod = 0
         self.mcli_nom=""
-        self.mpro_id=0
     }
     
-    private var mcli_cod:Int?
-    public var cli_cod : Int?
+    private var mcli_cod:Int
+    public var cli_cod : Int
     {
         get
         {
@@ -56,8 +66,8 @@ public  class Cliente
         }
     }
     
-    private var mcli_nom:String?
-    var cli_nom: String?
+    private var mcli_nom:String
+    var cli_nom: String
     {
         get
         {
@@ -70,20 +80,6 @@ public  class Cliente
             
         }
     }
-    
-    private var mpro_id: Int32?
-    var pro_id: Int32?
-    {
-        get
-        {
-            return self.mpro_id
-        }
-        set
-        {
-            self.mpro_id = newValue
-        }
-    }
-  
 }
 
 
@@ -92,22 +88,34 @@ public class ClienteProyecto
     
     init()
     {
-        self.mcli_nom = ""
         self.mpro_id = 0
         self.mpro_nombre  = ""
         self.mpro_idioma = ""
+        self.mCliente = Cliente()
     }
     
-    private var mcli_nom: String
+    private var mCliente: Cliente
     public var cli_nom: String
     {
         get
         {
-            return self.mcli_nom
+            return self.mCliente.cli_nom
         }
         set
         {
-            self.mcli_nom=newValue
+            self.mCliente.cli_nom=newValue
+        }
+    }
+    
+    public var cli_cod: Int
+    {
+        get
+        {
+            return self.mCliente.cli_cod
+        }
+        set
+        {
+            self.mCliente.cli_cod=newValue
         }
     }
     
@@ -174,7 +182,7 @@ public class Horas
         self.mEstado = .nuevo
         self.mpro_id = 0
         self.proyecto = ClienteProyecto()
-        self.fechaUltMod = nil
+        self.fechaInsert = nil
     }
     
     private var mEstado: Estados
@@ -218,20 +226,15 @@ public class Horas
     }
     
     private var mtim_fecha_ing: Date
-    var tim_fecha_ing: String
+    var tim_fecha_ing: Date
     {
         get
         {
-            let strFechaIng : String = Utils.toStringFromDate(self.mtim_fecha_ing, "yyyy-MM-dd HH:mm")
-            return strFechaIng
+            return self.mtim_fecha_ing
         }
         set
         {
-            let dtFechaIng : Date? = Utils.toDateFromString(newValue, "yyyy-MM-dd HH:mm")
-            if (dtFechaIng != nil)
-            {
-                self.mtim_fecha_ing = dtFechaIng!
-            }
+            self.mtim_fecha_ing = newValue
         }
     }
     
@@ -349,16 +352,16 @@ public class Horas
         }
     }
     
-    private var mFechaUltMod: Date?
-    var fechaUltMod: Date?
+    private var mFechaInsert: Date?
+    var fechaInsert: Date?
     {
         get
         {
-            return self.mFechaUltMod
+            return self.mFechaInsert
         }
         set
         {
-            self.mFechaUltMod = newValue
+            self.mFechaInsert = newValue
         }
     }
 }
