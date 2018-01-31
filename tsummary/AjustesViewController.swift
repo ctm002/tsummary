@@ -8,4 +8,8 @@ public class AjustesViewController: UIViewController
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
     }
+    
+    @IBAction func btnCancelar_Click(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

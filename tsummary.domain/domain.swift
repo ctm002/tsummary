@@ -186,7 +186,7 @@ public class Horas
     }
     
     private var mEstado: Estados
-    var Estado: Estados
+    var estado: Estados
     {
         get
         {
@@ -200,7 +200,7 @@ public class Horas
     }
     
     private var mIdHora: Int32
-    var IdHora: Int32
+    var idHora: Int32
     {
         get
         {

@@ -1,11 +1,3 @@
-//
-//  PresenterProyecto.swift
-//  tsummary
-//
-//  Created by Soporte on 12-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import Foundation
 
 public class PresenterHora{
@@ -28,9 +20,9 @@ public class PresenterHora{
     
     func buscarHoras()
     {
-        let fecha : String =  self.mView!.FechaIngreso
-        let codigo : Int = self.mView!.IdAbogado
-        if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo), fecha: fecha)
+        let fecha : String =  self.mView!.fechaHoraIngreso
+        let codigo : Int = self.mView!.idAbogado
+        if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo),fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
         }
@@ -38,15 +30,15 @@ public class PresenterHora{
     
     func buscar()
     {
-        let id : Int32 = self.mEditViewHora!.IdHora
+        let id : Int32 = self.mEditViewHora!.idHora
         if let detalleHora : Horas = DataBase.horas.getById(id)
         {
-            self.mEditViewHora.Asunto = detalleHora.tim_asunto
-            self.mEditViewHora.Minutos = detalleHora.tim_minutos
-            self.mEditViewHora.Horas = detalleHora.tim_horas
-            self.mEditViewHora.ProyectoId = detalleHora.proyecto.pro_id
+            self.mEditViewHora.asunto = detalleHora.tim_asunto
+            self.mEditViewHora.minutos = detalleHora.tim_minutos
+            self.mEditViewHora.horas = detalleHora.tim_horas
+            self.mEditViewHora.proyectoId = detalleHora.proyecto.pro_id
             self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
-            self.mEditViewHora.FechaIngreso = Utils.toStringFromDate(detalleHora.tim_fecha_ing,"yyyy-MM-dd")
+            self.mEditViewHora.fechaHoraIngreso = detalleHora.tim_fecha_ing
             self.mEditViewHora.bloquearBotones(detalleHora.modificable)
         }
     }
@@ -55,30 +47,31 @@ public class PresenterHora{
     {
         do
         {
-            let id: Int32  = self.mEditViewHora!.IdHora
+            let id: Int32  = self.mEditViewHora!.idHora
             
             var detalleHora : Horas
             if let detalleHoraTemp = DataBase.horas.getById(id)
             {
                 detalleHora = detalleHoraTemp
-                detalleHora.Estado = .actualizado
+                detalleHora.estado = .actualizado
             }
             else
             {
                 detalleHora = Horas()
                 detalleHora.tim_correl = 0
-                detalleHora.Estado = .nuevo
+                detalleHora.estado = .nuevo
+                detalleHora.modificable = true
             }
             
-            let proyectoId = self.mEditViewHora!.ProyectoId
-            let fechaIngreso = self.mEditViewHora!.FechaIngreso
-            let idAbogado = self.mEditViewHora!.IdAbogado
-            let asunto = self.mEditViewHora!.Asunto
-            let cantHoras = self.mEditViewHora!.Horas
-            let cantMinutos = self.mEditViewHora!.Minutos
+            let proyectoId = self.mEditViewHora!.proyectoId
+            let fechaIngreso = self.mEditViewHora!.fechaHoraIngreso
+            let idAbogado = self.mEditViewHora!.idAbogado
+            let asunto = self.mEditViewHora!.asunto
+            let cantHoras = self.mEditViewHora!.horas
+            let cantMinutos = self.mEditViewHora!.minutos
             
             detalleHora.proyecto.pro_id = Int32(proyectoId)
-            detalleHora.tim_fecha_ing = Utils.toDateFromString(fechaIngreso, "yyyy-MM-dd")!
+            detalleHora.tim_fecha_ing = fechaIngreso
             detalleHora.abo_id = Int(idAbogado)
             detalleHora.tim_asunto = asunto
             detalleHora.tim_horas = Int(cantHoras)
@@ -98,7 +91,7 @@ public class PresenterHora{
     
     func eliminar() -> Bool
     {
-        let id: Int32  = self.mEditViewHora!.IdHora
+        let id: Int32  = self.mEditViewHora!.idHora
         ControladorLogica.instance.eliminarById(id)
         return true
     }

@@ -66,7 +66,7 @@ class ViewController: UIViewController {
                 self.btnRegistrar.isEnabled = true
                 self.activity.stopAnimating()
                 let scheduler = self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-                scheduler.IdAbogado = self.codigo
+                scheduler.idAbogado = self.codigo
                 self.navigationController?.pushViewController(scheduler, animated: true)
             }
         }

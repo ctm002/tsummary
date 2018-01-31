@@ -42,7 +42,7 @@ class SchedulerViewController: UIViewController,
     let cellId2 = "cellId2"
     
     private var mIdAbo : Int = 0
-    var IdAbogado : Int {
+    var idAbogado : Int {
         get {
             return self.mIdAbo
         }
@@ -52,7 +52,7 @@ class SchedulerViewController: UIViewController,
     }
     
     var mFechaIngreso: String = ""
-    var FechaIngreso : String {
+    var fechaHoraIngreso : String {
         get {
             return self.mFechaIngreso
         }
@@ -183,7 +183,7 @@ class SchedulerViewController: UIViewController,
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         presenterSemana.calcularSemana()
         
-        self.FechaIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         
         self.view.bringSubview(toFront: vMenu)
     }
@@ -191,7 +191,7 @@ class SchedulerViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
         self.presenterHora = PresenterHora(self)
         self.presenterHora.buscarHoras()
-        self.mLblTextFecha.text = self.formatearFecha(fecha: self.FechaIngreso)
+        self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
     }
     
     func setList(horas: [Horas]) {
@@ -220,7 +220,7 @@ class SchedulerViewController: UIViewController,
             cell.lblProyecto.text = hrs[indexPath.row].proyecto.pro_nombre
             cell.lblDetalleHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
-            cell.IdHora = hrs[indexPath.row].IdHora
+            cell.IdHora = hrs[indexPath.row].idHora
             cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
             
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -239,8 +239,8 @@ class SchedulerViewController: UIViewController,
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
             let id = cell.IdHora
             let horaViewController =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-            horaViewController.IdAbogado = self.IdAbogado
-            horaViewController.IdHora = id
+            horaViewController.idAbogado = self.idAbogado
+            horaViewController.idHora = id
             self.navigationController?.pushViewController(horaViewController, animated: true)
         }
     }
@@ -264,7 +264,7 @@ class SchedulerViewController: UIViewController,
         cell.indexPath = indexPath.row
         cell.addGestureRecognizer(gesture)
         
-        if self.FechaIngreso == self.semana[indexPath.row].Fecha
+        if self.fechaHoraIngreso == self.semana[indexPath.row].Fecha
         {
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
@@ -304,11 +304,11 @@ class SchedulerViewController: UIViewController,
             if let nro = cell.lblNro.text
             {
                 let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
-                self.FechaIngreso = dias[0].Fecha
+                self.fechaHoraIngreso = dias[0].Fecha
                 self.presenterHora.buscarHoras()
                 
                 DispatchQueue.main.async {
-                    self.mLblTextFecha.text = self.formatearFecha(fecha: self.FechaIngreso)
+                    self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
                 }
             }
         }
@@ -334,12 +334,20 @@ class SchedulerViewController: UIViewController,
     
     @objc func agregar()
     {
-        let horaViewController = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-        horaViewController.IdAbogado = self.IdAbogado
-        let formatterHora = DateFormatter()
-        formatterHora.dateFormat = "HH"
-        horaViewController.mFechaIngreso = self.FechaIngreso + " " + formatterHora.string(from: Date()) + ":00"
-        self.navigationController?.pushViewController(horaViewController, animated: true)
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
+        controller.idAbogado = self.idAbogado
+        controller.mFechaHoraIngreso = getFechaHoraActual()
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func getFechaHoraActual()-> Date
+    {
+        let now = Date()
+        let hora = Utils.toStringFromDate(now, "HH")
+        let sMinutos = Utils.toStringFromDate(now, "mm")
+        let iMinutos = (Int(sMinutos)!/15)*15
+        let time = "\(hora):\(iMinutos):00"
+        return Utils.toDateFromString("\(self.fechaHoraIngreso) \(time)", "yyyy-MM-dd HH:mm:ss")!
     }
     
     @IBAction func add(_ sender: Any)

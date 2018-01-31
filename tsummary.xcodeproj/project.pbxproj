@@ -16,6 +16,9 @@
 		2F8DFC602020CFCF00814A34 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC5F2020CFCF00814A34 /* HoraViewController.swift */; };
 		2F8DFC612020CFCF00814A34 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC5F2020CFCF00814A34 /* HoraViewController.swift */; };
 		2F8DFC622020CFCF00814A34 /* HoraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC5F2020CFCF00814A34 /* HoraViewController.swift */; };
+		2F8DFC6420211CFE00814A34 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC6320211CFE00814A34 /* Extends.swift */; };
+		2F8DFC6520211CFE00814A34 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC6320211CFE00814A34 /* Extends.swift */; };
+		2F8DFC6620211CFE00814A34 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC6320211CFE00814A34 /* Extends.swift */; };
 		2F966D782020A06A001DE17F /* domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F966D772020A06A001DE17F /* domain.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
@@ -74,6 +77,7 @@
 		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F8DFC5B2020CF1000814A34 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		2F8DFC5F2020CFCF00814A34 /* HoraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HoraViewController.swift; path = tsummary/HoraViewController.swift; sourceTree = SOURCE_ROOT; };
+		2F8DFC6320211CFE00814A34 /* Extends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
 		2F966D772020A06A001DE17F /* domain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = domain.swift; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			children = (
 				2F966D772020A06A001DE17F /* domain.swift */,
 				2F8DFC5B2020CF1000814A34 /* Structs.swift */,
+				2F8DFC6320211CFE00814A34 /* Extends.swift */,
 			);
 			path = tsummary.domain;
 			sourceTree = "<group>";
@@ -486,6 +491,7 @@
 				2F8DFC602020CFCF00814A34 /* HoraViewController.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				DEBC4BAA1FE2F3C900B146E7 /* CustomTabBarController.swift in Sources */,
+				2F8DFC6420211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295820110274006FD735 /* ApiClient.swift in Sources */,
 				2FF6D124201925A400199DA2 /* AjustesViewController.swift in Sources */,
 				2FCF295A201140E6006FD735 /* Utils.swift in Sources */,
@@ -500,6 +506,7 @@
 				2F8DFC612020CFCF00814A34 /* HoraViewController.swift in Sources */,
 				2F8DFC5D2020CF1000814A34 /* Structs.swift in Sources */,
 				2FF6D125201925A400199DA2 /* AjustesViewController.swift in Sources */,
+				2F8DFC6520211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295B201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
 				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
@@ -514,6 +521,7 @@
 				2F8DFC622020CFCF00814A34 /* HoraViewController.swift in Sources */,
 				2F8DFC5E2020CF1000814A34 /* Structs.swift in Sources */,
 				2FF6D126201925A400199DA2 /* AjustesViewController.swift in Sources */,
+				2F8DFC6620211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295C201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
 				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,

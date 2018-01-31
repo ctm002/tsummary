@@ -114,13 +114,13 @@ public class TbHora
                     print("error preparing update: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK
+                if sqlite3_bind_int(statement, 1, Int32(hora.estado.rawValue)) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding estado: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK
+                if sqlite3_bind_int(statement, 2, hora.idHora) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding hora_id: \(errmsg)")
@@ -251,7 +251,7 @@ public class TbHora
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
-                let estado : Int32 = Int32(hora.Estado.rawValue)
+                let estado : Int32 = Int32(hora.estado.rawValue)
                 if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -294,7 +294,7 @@ public class TbHora
         do
         {
             try open()
-            if hora.IdHora == 0
+            if hora.idHora == 0
             {
                 var statement: OpaquePointer?
                 let sql = """
@@ -388,10 +388,10 @@ public class TbHora
                 if sqlite3_bind_text(statement, 9, Utils.toStringFromDate(hora.tim_fecha_ing), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_insert: \(errmsg)")
+                    print("failure binding fecha_ing: \(errmsg)")
                 }
                 
-                let estado : Int32 = Int32(hora.Estado.rawValue)
+                let estado : Int32 = Int32(hora.estado.rawValue)
                 if sqlite3_bind_int(statement, 10, estado) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -499,7 +499,7 @@ public class TbHora
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
-                let estado: Int32 = Int32(hora.Estado.rawValue)
+                let estado: Int32 = Int32(hora.estado.rawValue)
                 if sqlite3_bind_int(statement, 9, estado) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -512,7 +512,7 @@ public class TbHora
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
-                let id: Int32 = hora.IdHora
+                let id: Int32 = hora.idHora
                 if sqlite3_bind_int(statement, 11, id) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -699,13 +699,13 @@ public class TbHora
                 print("error preparing update: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(hora.Estado.rawValue)) != SQLITE_OK
+            if sqlite3_bind_int(statement, 1, Int32(hora.estado.rawValue)) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding estado: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 2, hora.IdHora) != SQLITE_OK
+            if sqlite3_bind_int(statement, 2, hora.idHora) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding hora_id: \(errmsg)")
@@ -780,7 +780,7 @@ public class TbHora
         }
         
         let id : Int32 = sqlite3_column_int(record, 11)
-        hora.IdHora = id
+        hora.idHora = id
         
         if let csString = sqlite3_column_text(record, 12)
         {
@@ -810,8 +810,9 @@ public class TbHora
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
-                h.estado != 2 AND
-                abo_id=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
+                h.estado != 2
+                AND abo_id=?
+                AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
             order by h.tim_fecha_ing asc
         """
         do
@@ -830,13 +831,11 @@ public class TbHora
                 print("failure binding abo_id: \(errmsg)")
             }
             
-            
             if sqlite3_bind_text(statement, 2, fecha, -1, SQLITE_TRANSIENT) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding fecha: \(errmsg)")
             }
-            
             
             var horas = [Horas]()
             while sqlite3_step(statement) == SQLITE_ROW

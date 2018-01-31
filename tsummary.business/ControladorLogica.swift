@@ -9,7 +9,7 @@ public class ControladorLogica
     {
         if let hora = DataBase.horas.getById(id)
         {
-            hora.Estado = .eliminado
+            hora.estado = .eliminado
             hora.offline = true
             DataBase.horas.eliminar(hora)
             

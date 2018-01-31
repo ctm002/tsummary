@@ -193,7 +193,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1875" y="-1102"/>
+            <point key="canvasLocation" x="1939" y="-1113"/>
         </scene>
         <!--TSummary-->
         <scene sceneID="9Hx-Om-1df">
@@ -323,7 +323,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="btnGuardar:" destination="znN-7t-mT3" eventType="touchUpInside" id="biw-dI-QmD"/>
+                                                            <action selector="btnGuardar_Click:" destination="znN-7t-mT3" eventType="touchUpInside" id="biw-dI-QmD"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -405,7 +405,7 @@
                     <navigationItem key="navigationItem" title="TSummary" id="Jsk-Fs-Trg">
                         <barButtonItem key="leftBarButtonItem" title="Cancelar" id="I2n-fR-pP3">
                             <connections>
-                                <action selector="btnCancelarPressed:" destination="znN-7t-mT3" id="4LI-F3-G9r"/>
+                                <action selector="btnCancelar_Click:" destination="znN-7t-mT3" id="Xo0-EN-2lQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -470,6 +470,7 @@
                     <navigationItem key="navigationItem" id="tm4-Di-6YQ">
                         <barButtonItem key="leftBarButtonItem" title="Cancelar" id="bfJ-IQ-IHY">
                             <connections>
+                                <action selector="btnCancelar_Click:" destination="jtA-U1-yZL" id="fIh-Yn-d8O"/>
                                 <segue destination="yMH-3P-hXD" kind="show" id="kuN-F1-U3C"/>
                             </connections>
                         </barButtonItem>
@@ -477,12 +478,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xL0-WQ-qJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2799" y="-1948"/>
+            <point key="canvasLocation" x="1939" y="-1948"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ltp-UA-Rbs">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YV1-rj-Lmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pjg-tH-I0Z" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jhP-WB-5if">
@@ -494,6 +494,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Clk-GG-7jI"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YV1-rj-Lmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1132" y="-1947"/>
         </scene>
