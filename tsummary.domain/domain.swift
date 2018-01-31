@@ -27,7 +27,7 @@ public class  Usuario
     var LoginName:String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
     
     private var mPassword:String?
-    var Password:String? { return self.mPassword }
+    var Password:String? { get {return self.mPassword } set { self.mPassword = newValue }}
     
     private var mIMEI:String?
     var IMEI:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}

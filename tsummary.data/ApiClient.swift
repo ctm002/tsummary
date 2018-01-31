@@ -20,12 +20,13 @@ class ApiClient: NSObject
     func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (Usuario?) -> Void)
     {
         let session: URLSession = URLSession.shared
-        let url = URL(string:self.strURL + "token")
+        let url = URL(string:self.strURL + "tokenmobile")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
         
         var postData: String = ""
         postData.append("{\"usuario\":\"" + userName! + "\"," );
+        postData.append("\"imei\":\"" + imei! + "\"," );
         postData.append("\"password\":\"" + password! + "\"}");
         request.httpBody = postData.data(using: String.Encoding.utf8);
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -39,33 +40,52 @@ class ApiClient: NSObject
             
             if (data != nil)
             {
-                do
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                print(responseString)
+                if (responseString == "")
                 {
-                    let usuario: Usuario? = Usuario()
-                    let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
-                    
-                    let jwt = try decode(jwt: jsonwt.token)
-                    let clainNombre = jwt.claim(name: "Nombre")
-                    if let nombre = clainNombre.string{
-                        usuario?.Nombre=nombre
-                    }
-                    
-                    let clainPerfil = jwt.claim(name: "Perfil")
-                    if let perfil = clainPerfil.string{
-                        usuario?.Perfil = perfil
-                    }
-                    
-                    let clainIdAbogado = jwt.claim(name: "AboId")
-                    if let idAbogado = clainIdAbogado.integer {
-                        usuario?.Id = Int32(idAbogado)
-                    }
-                    
-                    usuario?.Token = jsonwt.token
-                    callback(usuario)
+                    callback(nil)
                 }
-                catch
+                else
                 {
-                    print("Error:\(error)")
+                    do
+                    {
+                        let usuario: Usuario? = Usuario()
+                        let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
+                        
+                        let jwt = try decode(jwt: jsonwt.token)
+                        
+                        let cNombre = jwt.claim(name: "Nombre")
+                        if let nombre = cNombre.string{
+                            usuario?.Nombre=nombre
+                        }
+                        
+                        let cPerfil = jwt.claim(name: "Perfil")
+                        if let perfil = cPerfil.string{
+                            usuario?.Perfil = perfil
+                        }
+                        
+                        let cIdAbogado = jwt.claim(name: "AboId")
+                        if let idAbogado = cIdAbogado.integer {
+                            usuario?.Id = Int32(idAbogado)
+                        }
+                        
+                        let cGrupo = jwt.claim(name: "Grupo")
+                        if let grupo = cGrupo.string
+                        {
+                            usuario?.Grupo = grupo
+                        }
+                        
+                        usuario?.Password = password
+                        usuario?.IMEI = imei
+                        usuario?.Token = jsonwt.token
+                        
+                        callback(usuario)
+                    }
+                    catch
+                    {
+                        print("Error:\(error)")
+                    }
                 }
             }
         })

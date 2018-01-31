@@ -17,8 +17,6 @@ class ViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
-        
-        //datos de pruebas
         self.txtLoginName.text = "carlos_tapia"
         self.txtPassword.text = "Car.2711"
         self.txtIMEI.text = getUIDevice()
@@ -27,35 +25,57 @@ class ViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        autentificar()
     }
     
     func getUIDevice() -> String
     {
-        return UIDevice.current.identifierForVendor!.uuidString
+        return "863166032574597" //UIDevice.current.identifierForVendor!.uuidString
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func registrar(_ sender: Any) {
+    fileprivate func autentificar() {
         btnRegistrar.isEnabled = false
         self.activity.startAnimating()
-        
-        ApiClient.instance.registrar(
-            imei: "863166032574597",
-            userName: self.txtLoginName.text,
-            password: self.txtPassword.text,
-            callback: self.sincronizar
-        )
+        if let usuario = ControladorLogica.instance.autentificar(self.txtLoginName.text!, self.txtPassword.text!, self.txtIMEI.text!)
+        {
+            sincronizar(usuario)
+        }
+        else
+        {
+            ApiClient.instance.registrar(
+                imei: txtIMEI.text,
+                userName: self.txtLoginName.text,
+                password: self.txtPassword.text,
+                callback: self.setUsuario
+            )
+        }
     }
     
-    func sincronizar(usuario: Usuario?)
+    @IBAction func registrar(_ sender: Any) {
+        autentificar()
+    }
+    
+    func setUsuario(usuario: Usuario?)
     {
-        if let u = usuario {
-            self.codigo = Int(u.Id)
-            self.sincronizar(u, callback: redireccionar)
+        if let u = usuario
+        {
+            let response = ControladorLogica.instance.guardar(u)
+            if (response)
+            {
+                self.sincronizar(u)
+            }
         }
+    }
+    
+    func sincronizar(_ usuario: Usuario)
+    {
+        self.codigo = Int(usuario.Id)
+        self.sincronizar(usuario, callback: redireccionar)
     }
     
     func redireccionar(estado: Bool)

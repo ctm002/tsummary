@@ -36,8 +36,6 @@ class SchedulerViewController: UIViewController,
     
     let cantDias: Int = 14
     let diasBySemana: CGFloat = 7
-    
-    
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
     
@@ -75,7 +73,6 @@ class SchedulerViewController: UIViewController,
         sideMenuConstraint.isActive = true
         vMenu.backgroundColor = UIColor.white
         
-        
         let btnConfig : UIButton = UIButton(frame: vMenu.frame)
         vMenu.addSubview(btnConfig)
         btnConfig.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +84,7 @@ class SchedulerViewController: UIViewController,
         btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
         btnConfig.setTitleColor(UIColor.black, for: .normal)
         
-        
+        /*
         let btnCuenta : UIButton = UIButton(frame: vMenu.frame)
         vMenu.addSubview(btnCuenta)
         btnCuenta.translatesAutoresizingMaskIntoConstraints = false
@@ -97,15 +94,18 @@ class SchedulerViewController: UIViewController,
         btnCuenta.heightAnchor.constraint(equalToConstant: 30).isActive = true
         btnCuenta.setTitle("Resumen de horas", for: .normal)
         btnCuenta.setTitleColor(UIColor.black, for: .normal)
+        */
     }
     
     @objc func mostrarAjustes()
     {
-        sideMenuConstraint.constant = -140
+        sideMenuConstraint.constant = -self.view.frame.width
         isSlideMenuHidden = !isSlideMenuHidden
     
-        let ajustesViewController = self.storyboard?.instantiateViewController(withIdentifier: "AjustesViewController") as! AjustesViewController
-        self.navigationController?.pushViewController(ajustesViewController, animated: true)
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "AjustesViewController") as! AjustesViewController
+        controller.idAbogado = self.idAbogado
+        //self.navigationController?.pushViewController(controller, animated: true)
+        self.present(controller, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -181,7 +181,7 @@ class SchedulerViewController: UIViewController,
         mTVHoras.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
         
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
-        presenterSemana.calcularSemana()
+        presenterSemana.mostrar()
         
         self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         

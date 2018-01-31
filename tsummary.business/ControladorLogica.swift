@@ -152,4 +152,14 @@ public class ControladorLogica
     {
         DataBase.horas.eliminar()
     }
+    
+    func autentificar(_ user: String, _ password: String, _ imei: String) -> Usuario?
+    {
+        return DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
+    }
+    
+    func guardar(_ usuario: Usuario) -> Bool
+    {
+        return DataBase.usuarios.guardar(usuario: usuario)
+    }
 }

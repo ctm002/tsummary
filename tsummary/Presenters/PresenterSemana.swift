@@ -49,7 +49,7 @@ public class PresenterSemana
         return fechaResult
     }
     
-    public func calcularSemana()
+    public func mostrar()
     {
         var semana:[Dia] = [Dia]()
         
