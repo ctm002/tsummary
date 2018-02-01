@@ -39,13 +39,13 @@ class SchedulerViewController: UIViewController,
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
     
-    private var mIdAbo : Int = 0
+    private var mIdAbogado : Int = 0
     var idAbogado : Int {
         get {
-            return self.mIdAbo
+            return self.mIdAbogado
         }
         set {
-            self.mIdAbo = newValue
+            self.mIdAbogado = newValue
         }
     }
     
@@ -104,8 +104,9 @@ class SchedulerViewController: UIViewController,
     
         let controller = self.storyboard?.instantiateViewController(withIdentifier: "AjustesViewController") as! AjustesViewController
         controller.idAbogado = self.idAbogado
-        //self.navigationController?.pushViewController(controller, animated: true)
-        self.present(controller, animated: true, completion: nil)
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+        //self.present(controller, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
