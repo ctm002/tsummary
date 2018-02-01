@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //window?.makeKeyAndVisible()
         //window?.rootViewController = CustomTabBarController()
         
+        ControladorLogica.instance.eliminarDatos()
         return true
     }
 
@@ -30,6 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        if  let usuario = Session.shared.usuario
+        {
+            ControladorLogica.instance.sincronizar(usuario, { (resp: Bool) -> Void in
+                print("procesando datos...")
+            })
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -44,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    
+ 
 
 }
 

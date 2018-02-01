@@ -160,8 +160,8 @@
                         <outlet property="btnEliminar" destination="z5a-FY-71L" id="W7Y-jF-d4e"/>
                         <outlet property="btnRegistrar" destination="nHI-5K-U8m" id="oYl-0a-LmM"/>
                         <outlet property="txtIMEI" destination="tWp-L7-hha" id="u2U-G3-f89"/>
-                        <outlet property="txtLoginName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
                         <outlet property="txtPassword" destination="9Ra-NN-cdP" id="nFk-WF-UMA"/>
+                        <outlet property="txtUserName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

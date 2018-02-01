@@ -270,9 +270,8 @@ class SchedulerViewController: UIViewController,
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         }
         
-        print("item->\(indexPath.item)")
-        print("section->\(indexPath.section)")
-        
+//        print("item->\(indexPath.item)")
+//        print("section->\(indexPath.section)")
         return cell
     }
     

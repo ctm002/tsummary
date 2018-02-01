@@ -2,7 +2,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var txtLoginName: UITextField!
+    @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var txtIMEI: UITextField!
     @IBOutlet weak var btnRegistrar: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -17,13 +17,16 @@ class ViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
-        self.txtIMEI.text = getUIDevice()
+        
         self.txtIMEI.isUserInteractionEnabled = false
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        self.txtIMEI.text = getUIDevice()
         validar(getUIDevice())
+        setDataDefaults()
     }
     
     func validar(_ imei: String)
@@ -33,6 +36,11 @@ class ViewController: UIViewController {
             self.activity.startAnimating()
             sincronizar(u)
         }
+    }
+    
+    func setDataDefaults(){
+        self.txtPassword.text = "Car.2711"
+        self.txtUserName.text = "Carlos_Tapia"
     }
     
     func getUIDevice() -> String
@@ -48,7 +56,7 @@ class ViewController: UIViewController {
         
         var mensaje : String!
         
-        if txtLoginName.text?.isEmpty ?? false {
+        if txtUserName.text?.isEmpty ?? false {
             mensaje = "loginName vacio"
         }
         else
@@ -63,7 +71,7 @@ class ViewController: UIViewController {
                 }
                 else
                 {
-                    let user = txtLoginName.text!
+                    let user = txtUserName.text!
                     let password = txtPassword.text!
                     let imei = txtIMEI.text!
                     
@@ -85,13 +93,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        /*
-        if (mensaje != "")
-        {
-            let alert = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
-            present(alert, animated: true, completion: nil)
-        }
-        */
     }
     
     @IBAction func registrar(_ sender: Any) {
@@ -105,6 +106,7 @@ class ViewController: UIViewController {
             let response = ControladorLogica.instance.guardar(u)
             if (response)
             {
+                Session.shared.usuario = u
                 self.sincronizar(u)
             }
         }

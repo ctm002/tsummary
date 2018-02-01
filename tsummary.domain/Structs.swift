@@ -22,7 +22,16 @@ struct User: Decodable
     let aud: String
 }
 
-struct Session
-{
-    static var shared: Usuario!
+
+class Session {
+    var usuario: Usuario?
+    
+    class var shared: Session {
+        struct Static {
+            static let instance = Session()
+        }
+        return Static.instance
+    }
 }
+
+

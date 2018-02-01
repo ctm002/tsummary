@@ -248,7 +248,7 @@ public class TbUsuario
             
             if sqlite3_prepare_v2(db, """
                 insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token)
-                values (?, ?, ?, ?, ?, ?)
+                values (?, ?, ?, ?, ?, ?, ?)
                 """
                 , -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)

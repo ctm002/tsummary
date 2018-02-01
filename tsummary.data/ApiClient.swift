@@ -41,7 +41,7 @@ class ApiClient: NSObject
             if (data != nil)
             {
                 let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                print(responseString)
+//                print(responseString)
                 if (responseString == "")
                 {
                     callback(nil)
@@ -79,7 +79,7 @@ class ApiClient: NSObject
                         usuario?.password = password
                         usuario?.imei = imei
                         usuario?.token = jsonwt.token
-                        
+                        usuario?.loginName = userName
                         callback(usuario)
                     }
                     catch

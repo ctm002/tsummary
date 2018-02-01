@@ -55,7 +55,6 @@ public class ControladorLogica
                 print("proyectos descargados")
             }
             self.sincronizarHoras(usuario, retorno)
-        
         })
     }
     
@@ -164,12 +163,20 @@ public class ControladorLogica
     
     func autentificar(_ user: String, _ password: String, _ imei: String) -> Usuario?
     {
-        return DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
+        if (Session.shared.usuario == nil)
+        {
+            Session.shared.usuario =  DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
+        }
+        return Session.shared.usuario
     }
     
     func validar(_ imei: String) -> Usuario?
     {
-        return DataBase.usuarios.validar(imei)
+        if (Session.shared.usuario == nil)
+        {
+            Session.shared.usuario = DataBase.usuarios.validar(imei)
+        }
+        return Session.shared.usuario
     }
     
     func guardar(_ usuario: Usuario) -> Bool
