@@ -43,7 +43,6 @@ class CustomCell: UICollectionViewCell
         contentView.addConstraint(NSLayoutConstraint(item: lblDia, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal,
                                                      toItem: lblNro, attribute: NSLayoutAttribute.bottom, multiplier: 1,
                                                      constant: 0))
-        
     }
     
     required init?(coder aDecoder: NSCoder)

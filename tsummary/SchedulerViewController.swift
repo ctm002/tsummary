@@ -218,7 +218,7 @@ class SchedulerViewController: UIViewController,
         if let hrs = self.horas {
             cell.lblCliente.text = hrs[indexPath.row].proyecto.cli_nom
             cell.lblProyecto.text = hrs[indexPath.row].proyecto.pro_nombre
-            cell.lblDetalleHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
+            cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
             cell.IdHora = hrs[indexPath.row].idHora
             cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm

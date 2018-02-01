@@ -28,7 +28,7 @@ class TVCDetalleHora: UITableViewCell {
         return lbl
     }()
     
-    var lblDetalleHora: UILabel = {
+    var lblHora: UILabel = {
         let lbl = UILabel(frame:.zero)
         lbl.textColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
         lbl.font = UIFont.boldSystemFont(ofSize: 16)
@@ -61,51 +61,52 @@ class TVCDetalleHora: UITableViewCell {
     {
         contentView.addSubview(lblCliente)
         contentView.addSubview(lblProyecto)
-        contentView.addSubview(lblDetalleHora)
+        contentView.addSubview(lblHora)
         contentView.addSubview(lblAsunto)
         contentView.addSubview(lblFechaIngreso)
         
         lblCliente.translatesAutoresizingMaskIntoConstraints = false
         lblCliente.textAlignment = .left
-        lblCliente.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        lblCliente.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
         lblCliente.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         lblCliente.numberOfLines = 0
         lblCliente.backgroundColor = mostrar ? UIColor.yellow :  UIColor.white
         
-        lblDetalleHora.translatesAutoresizingMaskIntoConstraints = false
-        lblDetalleHora.textAlignment = .center
-        lblDetalleHora.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        lblDetalleHora.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        lblDetalleHora.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        lblDetalleHora.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        lblDetalleHora.backgroundColor = mostrar ?  UIColor.brown : UIColor.white
+        lblHora.translatesAutoresizingMaskIntoConstraints = false
+        lblHora.textAlignment = .center
+        lblHora.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        lblHora.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        lblHora.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        lblHora.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        lblHora.backgroundColor = mostrar ?  UIColor.brown : UIColor.white
         
         lblProyecto.translatesAutoresizingMaskIntoConstraints = false
         lblProyecto.textAlignment = .left
+        lblProyecto.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        lblProyecto.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5).isActive = true
         lblProyecto.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         lblProyecto.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        lblProyecto.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        lblProyecto.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         lblProyecto.numberOfLines = 0
         lblProyecto.backgroundColor = mostrar ?  UIColor.purple : UIColor.white
         
         lblAsunto.translatesAutoresizingMaskIntoConstraints = false
         lblAsunto.textAlignment = .left
+        lblAsunto.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        lblAsunto.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
+//        lblAsunto.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         lblAsunto.numberOfLines = 0
-        //lblAsunto.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        lblAsunto.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        //lblAsunto.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        lblAsunto.backgroundColor = UIColor.darkGray
         
         lblFechaIngreso.translatesAutoresizingMaskIntoConstraints = false
         lblFechaIngreso.textAlignment = .left
-        lblFechaIngreso.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        lblFechaIngreso.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        lblFechaIngreso.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        lblFechaIngreso.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5).isActive = true
         lblFechaIngreso.heightAnchor.constraint(equalToConstant: 20).isActive = true
         lblFechaIngreso.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
-        contentView.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblDetalleHora, attribute: .height, multiplier: 1, constant: 0))
+        contentView.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
         
-        contentView.addConstraint(NSLayoutConstraint(item: lblDetalleHora, attribute: .leading, relatedBy: .equal, toItem: lblCliente, attribute: .trailing, multiplier: 1, constant: 0))
+        contentView.addConstraint(NSLayoutConstraint(item: lblHora, attribute: .leading, relatedBy: .equal, toItem: lblCliente, attribute: .trailing, multiplier: 1, constant: 0))
         
         contentView.addConstraint(NSLayoutConstraint(item: lblProyecto, attribute: .top, relatedBy: .equal, toItem: lblCliente, attribute: .bottom, multiplier: 1, constant: 0))
         
