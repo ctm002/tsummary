@@ -68,7 +68,7 @@ public class TbUsuario
         {
             try open()
             let sql : String = """
-                select Id,Nombre,Grupo,LoginName,IMEI,Perfil
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token
                 from Usuario where 1=1
                     and LoginName=? and Password=? and IMEI=?
                 """
@@ -84,12 +84,12 @@ public class TbUsuario
                 print("failure binding user: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 1, password, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 2, password, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding password: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 1, imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 3, imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding imei: \(errmsg)")
             }
@@ -97,39 +97,7 @@ public class TbUsuario
             var usuario: Usuario!
             if sqlite3_step(statement) == SQLITE_ROW
             {
-                usuario = Usuario()
-                let id : Int32 = sqlite3_column_int(statement, 0)
-                usuario.Id  = id
-                
-                if let csString = sqlite3_column_text(statement,1)
-                {
-                    let nombre : String = String(cString: csString)
-                    usuario.Nombre = nombre
-                }
-                
-                if let csString = sqlite3_column_text(statement,2)
-                {
-                    let grupo : String = String(cString: csString)
-                    usuario.Grupo = grupo
-                }
-                
-                if let csString = sqlite3_column_text(statement,3)
-                {
-                    let loginName : String = String(cString: csString)
-                    usuario.LoginName = loginName
-                }
-                
-                if let csString = sqlite3_column_text(statement,4)
-                {
-                    let imei : String = String(cString: csString)
-                    usuario.IMEI = imei
-                }
-                
-                if let csString = sqlite3_column_text(statement,5)
-                {
-                    let perfil : String = String(cString: csString)
-                    usuario.Perfil = perfil
-                }
+                usuario = getUsuarioFromRecord(&statement)
             }
             
             if sqlite3_finalize(statement) != SQLITE_OK
@@ -147,6 +115,93 @@ public class TbUsuario
         return nil
     }
     
+    func validar(_ imei: String) -> Usuario?
+    {
+        do
+        {
+            try open()
+            let sql : String = """
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token
+                from Usuario where 1=1 and IMEI=?
+                """
+            var statement: OpaquePointer?
+            
+            if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing select: \(errmsg)")
+            }
+            
+            if sqlite3_bind_text(statement, 1, imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding imei: \(errmsg)")
+            }
+            
+            var usuario: Usuario!
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
+                usuario = getUsuarioFromRecord(&statement)
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return usuario
+        }
+        catch
+        {
+            print("\(error)")
+        }
+        return nil
+    }
+    
+    func getUsuarioFromRecord(_ statement: inout OpaquePointer?)->Usuario
+    {
+        let usuario = Usuario()
+        let id : Int32 = sqlite3_column_int(statement, 0)
+        usuario.id  = id
+        
+        if let csString = sqlite3_column_text(statement,1)
+        {
+            let nombre : String = String(cString: csString)
+            usuario.nombre = nombre
+        }
+        
+        if let csString = sqlite3_column_text(statement,2)
+        {
+            let grupo : String = String(cString: csString)
+            usuario.grupo = grupo
+        }
+        
+        if let csString = sqlite3_column_text(statement,3)
+        {
+            let loginName : String = String(cString: csString)
+            usuario.loginName = loginName
+        }
+        
+        if let csString = sqlite3_column_text(statement,4)
+        {
+            let imei : String = String(cString: csString)
+            usuario.imei = imei
+        }
+        
+        if let csString = sqlite3_column_text(statement,5)
+        {
+            let perfil : String = String(cString: csString)
+            usuario.perfil = perfil
+        }
+        
+        if let csString = sqlite3_column_text(statement,6)
+        {
+            let token : String = String(cString: csString)
+            usuario.token = token
+        }
+        
+        
+        return usuario
+    }
     
     func dropTable()->Bool
     {
@@ -176,6 +231,8 @@ public class TbUsuario
                 LoginName text,
                 Password text,
                 IMEI text,
+                Perfil text,
+                Token text,
                 [Default] integer)
             """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -190,7 +247,7 @@ public class TbUsuario
             var statement: OpaquePointer?
             
             if sqlite3_prepare_v2(db, """
-                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password)
+                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token)
                 values (?, ?, ?, ?, ?, ?)
                 """
                 , -1, &statement, nil) != SQLITE_OK {
@@ -198,38 +255,39 @@ public class TbUsuario
                 print("error preparing insert: \(errmsg)")
             }
             
-            let nombre: String? = usuario.Nombre
-            if sqlite3_bind_text(statement, 1, nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 1, usuario.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding nombre: \(errmsg)")
             }
             
-            let grupo : String? = usuario.Grupo
-            if sqlite3_bind_text(statement, 2, grupo , -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 2, usuario.grupo, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding grupo: \(errmsg)")
             }
             
-            let id : Int32 = Int32(usuario.Id)
-            if sqlite3_bind_int(statement, 3,  id) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 3, Int32(usuario.id)) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding id: \(errmsg)")
             }
             
-            let imei : String? = usuario.IMEI
-            if sqlite3_bind_text(statement, 4, imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 4, usuario.imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding imei: \(errmsg)")
             }
             
-            if sqlite3_bind_null(statement, 5) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 5, usuario.loginName, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding username: \(errmsg)")
             }
             
-            if sqlite3_bind_null(statement, 6) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 6, usuario.password, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding password: \(errmsg)")
+            }
+            
+            if sqlite3_bind_text(statement, 7, usuario.token, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding token: \(errmsg)")
             }
             
             if sqlite3_step(statement) != SQLITE_DONE{
@@ -252,67 +310,21 @@ public class TbUsuario
         return false
     }
     
-    func obtUsuarioByIMEI(imei:String) -> Usuario? {
-        var usuario: Usuario?
+    func eliminar()
+    {
         do
         {
             try open()
-            var statement: OpaquePointer?
-            
-            if sqlite3_prepare_v2(db,"""
-                select Id, Nombre, Grupo, IMEI from Usuario where IMEI=?
-                """, -1, &statement, nil) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error preparing select: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 1, imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding imei: \(errmsg)")
-            }
-            
-            if sqlite3_step(statement) == SQLITE_ROW {
-                usuario = Usuario()
-                
-                let id : Int32 = sqlite3_column_int(statement, 0)
-                usuario?.Id  = id
-                
-                if let csString = sqlite3_column_text(statement,1)
-                {
-                   let nombre : String = String(cString: csString)
-                    usuario?.Nombre = nombre
-                }
-                
-                if let csString = sqlite3_column_text(statement,2)
-                {
-                    let grupo : String = String(cString: csString)
-                    usuario?.Grupo = grupo
-                }
-                
-                if let csString = sqlite3_column_text(statement,3)
-                {
-                    let imei : String = String(cString: csString)
-                    usuario?.IMEI = imei
-                }
-            }
-            else
+            if sqlite3_exec(db, "delete from Usuario", nil, nil, nil) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("fallo al consultar en la tabla usuario: \(errmsg)")
-                usuario = nil
+                print("error deleting table: \(errmsg)")
             }
-            
-            if sqlite3_finalize(statement) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error finalizing prepared statement: \(errmsg)")
-            }
-            
-            statement = nil
             close()
         }
-        catch{
-            print("Error: \(error)")
+        catch
+        {
+            print("\(error)")
         }
-        return usuario
     }
 }

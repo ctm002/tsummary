@@ -57,28 +57,28 @@ class ApiClient: NSObject
                         
                         let cNombre = jwt.claim(name: "Nombre")
                         if let nombre = cNombre.string{
-                            usuario?.Nombre=nombre
+                            usuario?.nombre=nombre
                         }
                         
                         let cPerfil = jwt.claim(name: "Perfil")
                         if let perfil = cPerfil.string{
-                            usuario?.Perfil = perfil
+                            usuario?.perfil = perfil
                         }
                         
                         let cIdAbogado = jwt.claim(name: "AboId")
                         if let idAbogado = cIdAbogado.integer {
-                            usuario?.Id = Int32(idAbogado)
+                            usuario?.id = Int32(idAbogado)
                         }
                         
                         let cGrupo = jwt.claim(name: "Grupo")
                         if let grupo = cGrupo.string
                         {
-                            usuario?.Grupo = grupo
+                            usuario?.grupo = grupo
                         }
                         
-                        usuario?.Password = password
-                        usuario?.IMEI = imei
-                        usuario?.Token = jsonwt.token
+                        usuario?.password = password
+                        usuario?.imei = imei
+                        usuario?.token = jsonwt.token
                         
                         callback(usuario)
                     }
@@ -96,11 +96,11 @@ class ApiClient: NSObject
     func obtListDetalleHorasByCodAbogado(_ usuario: Usuario,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Horas]?) -> Void)
     {
         let session: URLSession = URLSession.shared
-        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters?AboId=\(usuario.Id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
+        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters?AboId=\(usuario.id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
         let url = URL(string: "\(sURL)")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.Token)", forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(usuario.token)", forHTTPHeaderField: "Authorization")
         
         let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
@@ -152,11 +152,11 @@ class ApiClient: NSObject
     func obtListProyectosByCodAbogado(_ usuario: Usuario, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
         let session: URLSession = URLSession.shared
-        let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(usuario.Id)"
+        let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(usuario.id)"
         let url = URL(string: sURL)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.Token)", forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(usuario.token)", forHTTPHeaderField: "Authorization")
         
         let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)

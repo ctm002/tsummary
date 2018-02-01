@@ -98,7 +98,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="btnDeleteOnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CAZ-HU-dfc"/>
+                                            <action selector="btnDeleteOnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="thH-AU-57d"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="A2C-ZI-umr">

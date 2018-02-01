@@ -15,31 +15,31 @@ public class  Usuario
     }
     
     private var mId : Int32
-    var Id:Int32  { get{ return self.mId } set{ self.mId=newValue }}
+    var id:Int32  { get{ return self.mId } set{ self.mId=newValue }}
     
     private var mNombre: String?
-    var Nombre:String? { get{ return self.mNombre} set {self.mNombre=newValue }}
+    var nombre:String? { get{ return self.mNombre} set {self.mNombre=newValue }}
     
     private var mGrupo:String?
-    var Grupo:String? { get {return self.mGrupo } set{ self.mGrupo=newValue }}
+    var grupo:String? { get {return self.mGrupo } set{ self.mGrupo=newValue }}
     
     private var mLoginName:String?
-    var LoginName:String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
+    var loginName:String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
     
     private var mPassword:String?
-    var Password:String? { get {return self.mPassword } set { self.mPassword = newValue }}
+    var password:String? { get {return self.mPassword } set { self.mPassword = newValue }}
     
     private var mIMEI:String?
-    var IMEI:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
+    var imei:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
     
     private var mDefault:Int?
-    var Default:Int?  { return self.mDefault }
+    var defaults:Int?  { return self.mDefault }
     
     private var mPerfil: String
-    var Perfil: String { get { return self.mPerfil } set { self.mPerfil = newValue }}
+    var perfil: String { get { return self.mPerfil } set { self.mPerfil = newValue }}
     
     private var mToken: String
-    var Token: String {
+    var token: String {
         get { return mToken}
         set { self.mToken = newValue }
     }

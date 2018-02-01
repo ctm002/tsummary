@@ -17,16 +17,22 @@ class ViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         self.txtPassword.isSecureTextEntry = true
         self.activity.center = self.view.center
-        self.txtLoginName.text = "carlos_tapia"
-        self.txtPassword.text = "Car.2711"
         self.txtIMEI.text = getUIDevice()
         self.txtIMEI.isUserInteractionEnabled = false
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
-        autentificar()
+        validar(getUIDevice())
+    }
+    
+    func validar(_ imei: String)
+    {
+        if let u = ControladorLogica.instance.validar(imei)
+        {
+            self.activity.startAnimating()
+            sincronizar(u)
+        }
     }
     
     func getUIDevice() -> String
@@ -39,21 +45,53 @@ class ViewController: UIViewController {
     }
     
     fileprivate func autentificar() {
-        btnRegistrar.isEnabled = false
-        self.activity.startAnimating()
-        if let usuario = ControladorLogica.instance.autentificar(self.txtLoginName.text!, self.txtPassword.text!, self.txtIMEI.text!)
-        {
-            sincronizar(usuario)
+        
+        var mensaje : String!
+        
+        if txtLoginName.text?.isEmpty ?? false {
+            mensaje = "loginName vacio"
         }
         else
         {
-            ApiClient.instance.registrar(
-                imei: txtIMEI.text,
-                userName: self.txtLoginName.text,
-                password: self.txtPassword.text,
-                callback: self.setUsuario
-            )
+            if txtPassword.text?.isEmpty ?? false {
+                mensaje = mensaje + "\n" + "contraseña vacia"
+            }
+            else
+            {
+                if self.txtIMEI.text?.isEmpty ?? false {
+                    mensaje = mensaje + "\n" + "imei vacio"
+                }
+                else
+                {
+                    let user = txtLoginName.text!
+                    let password = txtPassword.text!
+                    let imei = txtIMEI.text!
+                    
+                    btnRegistrar.isEnabled = false
+                    self.activity.startAnimating()
+                    if let usuario = ControladorLogica.instance.autentificar(user, password, imei)
+                    {
+                        sincronizar(usuario)
+                    }
+                    else
+                    {
+                        ApiClient.instance.registrar(
+                            imei: imei,
+                            userName: user,
+                            password: password,
+                            callback: self.setUsuario
+                        )
+                    }
+                }
+            }
         }
+        /*
+        if (mensaje != "")
+        {
+            let alert = UIAlertController(title: "Alerta", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
+            present(alert, animated: true, completion: nil)
+        }
+        */
     }
     
     @IBAction func registrar(_ sender: Any) {
@@ -74,7 +112,7 @@ class ViewController: UIViewController {
     
     func sincronizar(_ usuario: Usuario)
     {
-        self.codigo = Int(usuario.Id)
+        self.codigo = Int(usuario.id)
         self.sincronizar(usuario, callback: redireccionar)
     }
     
@@ -102,7 +140,7 @@ class ViewController: UIViewController {
         self.btnEliminar.isEnabled = false
         self.activity.startAnimating()
         DispatchQueue.main.async {
-            ControladorLogica.instance.eliminarTodo()
+            ControladorLogica.instance.eliminarDatos()
             self.activity.stopAnimating()
             self.btnEliminar.isEnabled = true
         }

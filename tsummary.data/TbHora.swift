@@ -860,7 +860,7 @@ public class TbHora
         return nil
     }
     
-    func eliminar()-> Bool
+    func eliminar()
     {
         do
         {
@@ -871,12 +871,10 @@ public class TbHora
                 print("error deleting table: \(errmsg)")
             }
             close()
-            return true
         }
         catch
         {
             print("\(error)")
-            return false
         }
     }
 }

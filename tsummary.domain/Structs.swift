@@ -21,3 +21,8 @@ struct User: Decodable
     let iss: String
     let aud: String
 }
+
+struct Session
+{
+    static var shared: Usuario!
+}

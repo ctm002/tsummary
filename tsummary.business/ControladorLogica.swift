@@ -61,7 +61,7 @@ public class ControladorLogica
     
     private func sincronizarHoras(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
     {
-        let codigo : String = String(usuario.Id)
+        let codigo : String = String(usuario.id)
         let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         
@@ -148,14 +148,28 @@ public class ControladorLogica
         })
     }
     
-    func eliminarTodo()
+    func eliminarDatos()
     {
         DataBase.horas.eliminar()
+        DataBase.proyectos.eliminar()
+        DataBase.usuarios.eliminar()
+    }
+    
+    func borrarTablas()
+    {
+        DataBase.horas.dropTable()
+        DataBase.proyectos.dropTable()  
+        DataBase.usuarios.dropTable()
     }
     
     func autentificar(_ user: String, _ password: String, _ imei: String) -> Usuario?
     {
         return DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
+    }
+    
+    func validar(_ imei: String) -> Usuario?
+    {
+        return DataBase.usuarios.validar(imei)
     }
     
     func guardar(_ usuario: Usuario) -> Bool

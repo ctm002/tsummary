@@ -324,4 +324,22 @@ public class TbProyecto
         }
         return nil
     }
+    
+    func eliminar()
+    {
+        do
+        {
+            try open()
+            if sqlite3_exec(db, "delete from ClienteProyecto", nil, nil, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error deleting table: \(errmsg)")
+            }
+            close()
+        }
+        catch
+        {
+            print("\(error)")
+        }
+    }
 }
