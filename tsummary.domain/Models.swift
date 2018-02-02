@@ -200,7 +200,7 @@ public class Horas
     }
     
     private var mIdHora: Int32
-    var idHora: Int32
+    var id: Int32
     {
         get
         {

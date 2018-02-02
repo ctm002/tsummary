@@ -103,7 +103,7 @@ public class ControladorLogica
                         {
                             let hr = hrsResult[0]
                             hr.offline = false
-                            hr.IdHora = hrs.IdHora
+                            hr.id = hrs.id
                             
                             print("hora actualizada localmente -> \(hr.tim_correl)")
                             DataBase.horas.guardar(hr)

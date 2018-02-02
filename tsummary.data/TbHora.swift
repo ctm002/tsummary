@@ -119,7 +119,7 @@ public class TbHora
                     print("failure binding estado: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 2, hora.idHora) != SQLITE_OK
+                if sqlite3_bind_int(statement, 2, hora.id) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding hora_id: \(errmsg)")
@@ -293,7 +293,7 @@ public class TbHora
         do
         {
             try open()
-            if hora.idHora == 0
+            if hora.id == 0
             {
                 var statement: OpaquePointer?
                 let sql = """
@@ -511,7 +511,7 @@ public class TbHora
                     print("failure binding fecha_insert: \(errmsg)")
                 }
                 
-                let id: Int32 = hora.idHora
+                let id: Int32 = hora.id
                 if sqlite3_bind_int(statement, 11, id) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -704,7 +704,7 @@ public class TbHora
                 print("failure binding estado: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 2, hora.idHora) != SQLITE_OK
+            if sqlite3_bind_int(statement, 2, hora.id) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding hora_id: \(errmsg)")
@@ -779,7 +779,7 @@ public class TbHora
         }
         
         let id : Int32 = sqlite3_column_int(record, 11)
-        hora.idHora = id
+        hora.id = id
         
         if let csString = sqlite3_column_text(record, 12)
         {

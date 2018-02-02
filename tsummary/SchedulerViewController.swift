@@ -163,7 +163,7 @@ IListViewSemana, IViewHora {
                 let hora = hora as! Horas
                 let controller = segue.destination as! HoraViewController
                 controller.idAbogado = hora.abo_id
-                controller.idHora = hora.idHora
+                controller.idHora = hora.id
                 controller.mFechaHoraIngreso = hora.tim_fecha_ing
                 //controller.fechaHoraIngreso = hora.tim_fecha_ing
             }
@@ -206,7 +206,7 @@ IListViewSemana, IViewHora {
             cell.lblProyecto.text = hrs[indexPath.row].proyecto.pro_nombre
             cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
             cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
-            cell.IdHora = hrs[indexPath.row].idHora
+            cell.IdHora = hrs[indexPath.row].id
             cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
             
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -225,7 +225,7 @@ IListViewSemana, IViewHora {
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
             let hora = Horas()
             hora.abo_id = self.idAbogado
-            hora.idHora = cell.IdHora
+            hora.id = cell.IdHora
             self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
         }
     }
@@ -234,7 +234,7 @@ IListViewSemana, IViewHora {
     {
         let hora = Horas()
         hora.abo_id = self.idAbogado
-        hora.idHora = 0
+        hora.id = 0
         hora.tim_fecha_ing = getFechaHoraActual()
         self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
     }
