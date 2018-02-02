@@ -3,7 +3,7 @@ import UIKit
 class SchedulerViewController: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
     UITableViewDataSource,UITableViewDelegate,
-    IListViewSemana, IViewHora {
+IListViewSemana, IViewHora {
     
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
@@ -60,60 +60,13 @@ class SchedulerViewController: UIViewController,
     }
     
     let vCalendario = UIView()
-    
     let vMenu = UIView()
     
-    fileprivate func setupConstraintMenu() {
-        self.view.addSubview(vMenu)
-        vMenu.translatesAutoresizingMaskIntoConstraints = false
-        vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
-        vMenu.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: 0).isActive = true
-        vMenu.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-        sideMenuConstraint = vMenu.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant:-self.view.frame.width)
-        sideMenuConstraint.isActive = true
-        vMenu.backgroundColor = UIColor.white
-        
-        let btnConfig : UIButton = UIButton(frame: vMenu.frame)
-        vMenu.addSubview(btnConfig)
-        btnConfig.translatesAutoresizingMaskIntoConstraints = false
-        btnConfig.topAnchor.constraint(equalTo: vMenu.topAnchor, constant: 0).isActive = true
-        btnConfig.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
-        btnConfig.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
-        btnConfig.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        btnConfig.setTitle("Ajustes", for: .normal)
-        btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
-        btnConfig.setTitleColor(UIColor.black, for: .normal)
-        
-        /*
-        let btnCuenta : UIButton = UIButton(frame: vMenu.frame)
-        vMenu.addSubview(btnCuenta)
-        btnCuenta.translatesAutoresizingMaskIntoConstraints = false
-        btnCuenta.topAnchor.constraint(equalTo: btnConfig.topAnchor, constant: 35).isActive = true
-        btnCuenta.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
-        btnCuenta.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
-        btnCuenta.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        btnCuenta.setTitle("Resumen de horas", for: .normal)
-        btnCuenta.setTitleColor(UIColor.black, for: .normal)
-        */
-    }
-    
-    @objc func mostrarAjustes()
-    {
-        sideMenuConstraint.constant = -self.view.frame.width
-        isSlideMenuHidden = !isSlideMenuHidden
-    
-        let controller = self.storyboard?.instantiateViewController(withIdentifier: "AjustesViewController") as! AjustesViewController
-        controller.idAbogado = self.idAbogado
-        
-        self.navigationController?.pushViewController(controller, animated: true)
-        //self.present(controller, animated: true, completion: nil)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         navigationController?.navigationBar.isTranslucent = false
-        
         setupConstraintMenu()
         
         self.view.addSubview(vCalendario)
@@ -123,11 +76,11 @@ class SchedulerViewController: UIViewController,
         vCalendario.heightAnchor.constraint(equalToConstant: 50).isActive = true
         vCalendario.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         vCalendario.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
-
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
-
+        
         if (self.mCVDias == nil)  {self.mCVDias = UICollectionView(frame: .zero, collectionViewLayout: layout)}
         
         vCalendario.addSubview(mCVDias)
@@ -188,11 +141,61 @@ class SchedulerViewController: UIViewController,
         
         self.view.bringSubview(toFront: vMenu)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         self.presenterHora = PresenterHora(self)
         self.presenterHora.buscarHoras()
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
+    }
+    
+    fileprivate func setupConstraintMenu() {
+        self.view.addSubview(vMenu)
+        vMenu.translatesAutoresizingMaskIntoConstraints = false
+        vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
+        vMenu.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: 0).isActive = true
+        vMenu.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        sideMenuConstraint = vMenu.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant:-self.view.frame.width)
+        sideMenuConstraint.isActive = true
+        vMenu.backgroundColor = UIColor.white
+        
+        let btnConfig : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnConfig)
+        btnConfig.translatesAutoresizingMaskIntoConstraints = false
+        btnConfig.topAnchor.constraint(equalTo: vMenu.topAnchor, constant: 0).isActive = true
+        btnConfig.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
+        btnConfig.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
+        btnConfig.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnConfig.setTitle("Ajustes", for: .normal)
+        
+        btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
+        
+        btnConfig.setTitleColor(UIColor.black, for: .normal)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let identifier : String = segue.identifier!
+        switch identifier
+        {
+        case "editarHoraSegue":
+            if let hora = sender
+            {
+                let hora = hora as! Horas
+                let controller = segue.destination as! HoraViewController
+                controller.idAbogado = hora.abo_id
+                controller.idHora = hora.idHora
+                controller.mFechaHoraIngreso = hora.tim_fecha_ing
+            }
+        case "ajustesSegue":
+            if let id = sender
+            {
+                sideMenuConstraint.constant = -self.view.frame.width
+                isSlideMenuHidden = !isSlideMenuHidden
+                let controller  = segue.destination as! AjustesViewController
+                controller.idAbogado = id as! Int
+            }
+        default:
+            print("default")
+        }
     }
     
     func setList(horas: [Horas]) {
@@ -202,8 +205,8 @@ class SchedulerViewController: UIViewController,
         }
     }
     
-    //TableCell
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //Inicio TableCell----------------------------------------------------------------------------------------
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let hrs = self.horas
         {
             return  hrs.count
@@ -238,20 +241,29 @@ class SchedulerViewController: UIViewController,
     @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
-            let id = cell.IdHora
-            let horaViewController =  self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-            horaViewController.idAbogado = self.idAbogado
-            horaViewController.idHora = id
-            self.navigationController?.pushViewController(horaViewController, animated: true)
+            let hora = Horas()
+            let id: Int32 = cell.IdHora
+            hora.abo_id = self.idAbogado
+            hora.idHora = id
+            self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
         }
     }
-    //Fin de TableCell
     
-    //collectionView
+    @objc func agregar()
+    {
+        let hora = Horas()
+        hora.abo_id = self.idAbogado
+        hora.idHora = 0
+        hora.tim_fecha_ing = getFechaHoraActual()
+        self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
+    }
+    //Fin de TableCell-------------------------------------------------------------------------------------------------
+    
+    //Inicio collectionView--------------------------------------------------------------------------------------------
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return  semana.count
     }
- 
+    
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
@@ -270,9 +282,6 @@ class SchedulerViewController: UIViewController,
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         }
-        
-//        print("item->\(indexPath.item)")
-//        print("section->\(indexPath.section)")
         return cell
     }
     
@@ -314,6 +323,8 @@ class SchedulerViewController: UIViewController,
         }
     }
     
+    //Fin collectionView--------------------------------------------------------------------------------------------
+    
     func setList(semana: [Dia]) {
         self.semana = semana
     }
@@ -332,14 +343,6 @@ class SchedulerViewController: UIViewController,
         return ""
     }
     
-    @objc func agregar()
-    {
-        let controller = self.storyboard?.instantiateViewController(withIdentifier: "HoraViewController") as! HoraViewController
-        controller.idAbogado = self.idAbogado
-        controller.mFechaHoraIngreso = getFechaHoraActual()
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
     func getFechaHoraActual()-> Date
     {
         let now = Date()
@@ -355,11 +358,6 @@ class SchedulerViewController: UIViewController,
         agregar()
     }
     
-    @IBAction func show(_ sender: Any)
-    {
-    
-    }
-    
     @IBAction func menuBtnPresed(_ sender: UIBarButtonItem)
     {
         if isSlideMenuHidden
@@ -371,5 +369,10 @@ class SchedulerViewController: UIViewController,
             sideMenuConstraint.constant = -self.view.frame.width
         }
         isSlideMenuHidden = !isSlideMenuHidden
+    }
+    
+    @objc func mostrarAjustes()
+    {
+        self.performSegue(withIdentifier: "ajustesSegue", sender: self.idAbogado)
     }
 }

@@ -125,9 +125,7 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
                 self.activity.stopAnimating()
-                let scheduler = self.storyboard?.instantiateViewController(withIdentifier: "SchedulerViewController") as! SchedulerViewController
-                scheduler.idAbogado = self.codigo
-                self.navigationController?.pushViewController(scheduler, animated: true)
+                self.performSegue(withIdentifier: "schedulerSegue", sender: self.codigo)
             }
         }
     }
@@ -150,5 +148,10 @@ class ViewController: UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as! SchedulerViewController
+        controller.idAbogado = sender as! Int
     }
 }
