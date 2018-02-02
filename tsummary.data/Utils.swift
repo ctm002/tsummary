@@ -1,5 +1,4 @@
 import Foundation
-
 public class Utils
 {
     static func toDateFromString(_ string: String,_ format: String = "yyyy-MM-dd HH:mm:ss") -> Date?

@@ -21,7 +21,7 @@ class ApiClient: NSObject
     {
         let session: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "tokenmobile")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
         
         var postData: String = ""
@@ -154,7 +154,7 @@ class ApiClient: NSObject
         let session: URLSession = URLSession.shared
         let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(usuario.id)"
         let url = URL(string: sURL)
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "GET"
         request.setValue("bearer \(usuario.token)", forHTTPHeaderField: "Authorization")
         
@@ -198,7 +198,7 @@ class ApiClient: NSObject
         let sesion: URLSession = URLSession.shared
         
         let url = URL(string: self.strURL + "GuardarInformacion")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
         
         var postData: String = ""

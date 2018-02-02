@@ -25,8 +25,11 @@ class ViewController: UIViewController {
         view.addGestureRecognizer(tap)
         
         self.txtIMEI.text = getUIDevice()
-        validar(getUIDevice())
         setDataDefaults()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        validar(getUIDevice())
     }
     
     func validar(_ imei: String)
@@ -115,7 +118,13 @@ class ViewController: UIViewController {
     func sincronizar(_ usuario: Usuario)
     {
         self.codigo = Int(usuario.id)
-        self.sincronizar(usuario, callback: redireccionar)
+        if Reachability.isConnectedToNetwork() {
+            self.sincronizar(usuario, callback: redireccionar)
+        }
+        else
+        {
+            redireccionar(estado: true)
+        }
     }
     
     func redireccionar(estado: Bool)
@@ -153,5 +162,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! SchedulerViewController
         controller.idAbogado = sender as! Int
+        controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        
     }
 }

@@ -19,7 +19,6 @@ public class TbHora
             in: .userDomainMask,
             appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
         
-        dropTable()
         createTableIfNotExists()
     }
     

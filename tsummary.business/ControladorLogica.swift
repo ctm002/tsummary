@@ -46,9 +46,7 @@ public class ControladorLogica
         ApiClient.instance.obtListProyectosByCodAbogado(usuario, callback: { (proyectosRemotos) -> Void in
             
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
-            let proyectosNuevos = proyectosRemotos?.filter {
-                !((proyectosLocalesIds?.contains($0.pro_id))!)
-            }
+            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.pro_id))!)}
             let result = DataBase.proyectos.guardar(proyectosNuevos!)
             if (result)
             {
@@ -80,7 +78,6 @@ public class ControladorLogica
                     resp = DataBase.horas.guardar(hrsNuevas)
                 }
                 
-                /*
                 let hrsEliminadas = hrsLocales.filter {
                     !(hrsRemotasIds?.contains($0.tim_correl))! && $0.tim_correl != 0
                 }
@@ -130,7 +127,6 @@ public class ControladorLogica
                         }
                     }
                 }
-                */
             }
             else
             {

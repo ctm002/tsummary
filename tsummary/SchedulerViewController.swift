@@ -39,25 +39,7 @@ IListViewSemana, IViewHora {
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
     
-    private var mIdAbogado : Int = 0
-    var idAbogado : Int {
-        get {
-            return self.mIdAbogado
-        }
-        set {
-            self.mIdAbogado = newValue
-        }
-    }
-    
-    var mFechaIngreso: String = ""
-    var fechaHoraIngreso : String {
-        get {
-            return self.mFechaIngreso
-        }
-        set {
-            self.mFechaIngreso = newValue
-        }
-    }
+
     
     let vCalendario = UIView()
     let vMenu = UIView()
@@ -134,16 +116,16 @@ IListViewSemana, IViewHora {
         mTVHoras.dataSource = self
         mTVHoras.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
         
+        self.view.bringSubview(toFront: vMenu)
+        
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         presenterSemana.mostrar()
         
-        self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
-        
-        self.view.bringSubview(toFront: vMenu)
+        //self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        self.presenterHora = PresenterHora(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.presenterHora = PresenterHora(self)
         self.presenterHora.buscarHoras()
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
     }
@@ -168,7 +150,6 @@ IListViewSemana, IViewHora {
         btnConfig.setTitle("Ajustes", for: .normal)
         
         btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
-        
         btnConfig.setTitleColor(UIColor.black, for: .normal)
     }
     
@@ -184,6 +165,7 @@ IListViewSemana, IViewHora {
                 controller.idAbogado = hora.abo_id
                 controller.idHora = hora.idHora
                 controller.mFechaHoraIngreso = hora.tim_fecha_ing
+                //controller.fechaHoraIngreso = hora.tim_fecha_ing
             }
         case "ajustesSegue":
             if let id = sender
@@ -242,9 +224,8 @@ IListViewSemana, IViewHora {
     {
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
             let hora = Horas()
-            let id: Int32 = cell.IdHora
             hora.abo_id = self.idAbogado
-            hora.idHora = id
+            hora.idHora = cell.IdHora
             self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
         }
     }
@@ -323,10 +304,30 @@ IListViewSemana, IViewHora {
         }
     }
     
-    //Fin collectionView--------------------------------------------------------------------------------------------
-    
     func setList(semana: [Dia]) {
         self.semana = semana
+    }
+    
+    //Fin collectionView--------------------------------------------------------------------------------------------
+    
+    private var mIdAbogado : Int = 0
+    var idAbogado : Int {
+        get {
+            return self.mIdAbogado
+        }
+        set {
+            self.mIdAbogado = newValue
+        }
+    }
+    
+    var mFechaHoraIngreso: String = ""
+    var fechaHoraIngreso : String {
+        get {
+            return self.mFechaHoraIngreso
+        }
+        set {
+            self.mFechaHoraIngreso = newValue
+        }
     }
     
     func formatearFecha(fecha: String) -> String
