@@ -28,5 +28,4 @@ protocol IEditViewHora {
     var asunto : String { get set }
     var timCorrelativo : Int32 { get set }
     func setNombreProyecto(_ model : ModelController)
-    func bloquearBotones(_ estado: Bool)
 }

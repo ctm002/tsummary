@@ -556,14 +556,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N3s-iJ-Q0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3495" y="-2214"/>
+            <point key="canvasLocation" x="3415" y="-2738"/>
         </scene>
     </scenes>
     <resources>
         <image name="menu_24x" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6yr-2m-zSy"/>
         <segue reference="yJ2-GS-gSU"/>
         <segue reference="pA0-4Z-XSi"/>
     </inferredMetricsTieBreakers>
