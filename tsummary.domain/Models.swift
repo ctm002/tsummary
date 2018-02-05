@@ -87,7 +87,7 @@ public class ClienteProyecto
     }
     
     private var mCliente: Cliente
-    public var NombreCliente: String
+    public var nombreCliente: String
     {
         get
         {
@@ -99,7 +99,7 @@ public class ClienteProyecto
         }
     }
     
-    public var CodigoCliente: Int
+    public var codigoCliente: Int
     {
         get
         {
@@ -112,7 +112,7 @@ public class ClienteProyecto
     }
     
     private var mIdProyecto: Int32
-    public var pro_id: Int32
+    public var id: Int32
     {
         get
         {
@@ -125,7 +125,7 @@ public class ClienteProyecto
     }
     
     private var mNombreProyecto: String
-    public var pro_nombre: String
+    public var nombre: String
     {
         get
         {
@@ -293,7 +293,7 @@ public class Hora
     }
     
     private var mEsModificable: Bool
-    var  modificable: Bool
+    var modificable: Bool
     {
         get
         {
@@ -319,7 +319,7 @@ public class Hora
     }
     
     private var mproyectoId:Int32
-    var pro_id: Int32
+    var proyectoId: Int32
     {
         get
         {

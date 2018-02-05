@@ -11,18 +11,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.activity.center = self.view.center
         navigationItem.title = "TimeSummary"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         self.txtPassword.isSecureTextEntry = true
-        self.activity.center = self.view.center
-        
         self.txtIMEI.isUserInteractionEnabled = false
+        self.txtIMEI.text = getUIDevice()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
-        self.txtIMEI.text = getUIDevice()
         setDataDefaults()
     }
     
@@ -134,7 +133,7 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
                 self.activity.stopAnimating()
-                self.performSegue(withIdentifier: "schedulerSegue", sender: self.codigo)
+                self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.codigo)
             }
         }
     }
@@ -163,6 +162,5 @@ class ViewController: UIViewController {
         let controller = segue.destination as! SchedulerViewController
         controller.idAbogado = sender as! Int
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
-        
     }
 }

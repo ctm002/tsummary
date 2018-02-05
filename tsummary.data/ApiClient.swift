@@ -124,7 +124,7 @@ class ApiClient: NSObject
                         for item in aJSON
                         {
                             let hora = Hora()
-                            hora.proyecto.pro_id = item["pro_id"] as! Int32
+                            hora.proyecto.id = item["pro_id"] as! Int32
                             hora.tim_correl = item["tim_correl"] as! Int32
                             hora.horasTrabajadas = item["tim_horas"] as! Int
                             hora.minutosTrabajados = item["tim_minutos"] as! Int
@@ -177,10 +177,10 @@ class ApiClient: NSObject
                     for item in aJSON
                     {
                         let proyecto = ClienteProyecto()
-                        proyecto.pro_id = item["pro_id"] as! Int32
-                        proyecto.CodigoCliente = item["cli_cod"] as! Int
-                        proyecto.NombreCliente = item["nombreCliente"] as! String
-                        proyecto.pro_nombre = item["nombreProyecto"] as! String
+                        proyecto.id = item["pro_id"] as! Int32
+                        proyecto.codigoCliente = item["cli_cod"] as! Int
+                        proyecto.nombreCliente = item["nombreCliente"] as! String
+                        proyecto.nombre = item["nombreProyecto"] as! String
                         proyecto.idiomaCliente = item["idioma"] as! String
                         proyectos.append(proyecto)
                     }
@@ -205,7 +205,7 @@ class ApiClient: NSObject
         
         var postData: String = ""
         postData.append("tim_correl=" +  String(hora.tim_correl) + "&")
-        postData.append("pro_id=" + String(hora.proyecto.pro_id) + "&")
+        postData.append("pro_id=" + String(hora.proyecto.id) + "&")
         postData.append("tim_fecha_ing=" + Utils.toStringFromDate(hora.fechaHoraIngreso,"yyyy-MM-dd HH:mm:ss") + "&")
         postData.append("tim_asunto=" + hora.asunto + "&")
         postData.append("tim_horas=" + String(hora.horasTrabajadas) + "&")

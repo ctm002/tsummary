@@ -162,7 +162,7 @@
                         <outlet property="txtIMEI" destination="tWp-L7-hha" id="u2U-G3-f89"/>
                         <outlet property="txtPassword" destination="9Ra-NN-cdP" id="nFk-WF-UMA"/>
                         <outlet property="txtUserName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="schedulerSegue" id="pA0-4Z-XSi"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="irSchedulerSegue" id="pA0-4Z-XSi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -424,13 +424,12 @@
                         <outlet property="txtAsunto" destination="g4w-FI-Qgq" id="Jcv-3R-Ihc"/>
                         <outlet property="txtHoras" destination="BlV-7v-yCP" id="p8t-t8-B8P"/>
                         <outlet property="txtMinutos" destination="ehf-np-szz" id="eCc-ZU-hqh"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="eliminarHoraSegue" id="K8j-lC-OYR"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="registrarHoraSegue" id="jVb-E5-7o1"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="volverSchedulerHoraSegue" id="jVb-E5-7o1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3449" y="-1177"/>
+            <point key="canvasLocation" x="3449" y="-1159"/>
         </scene>
         <!--Ajustes-->
         <scene sceneID="ADk-QW-Dnw">

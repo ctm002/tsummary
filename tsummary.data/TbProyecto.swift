@@ -106,17 +106,17 @@ public class TbProyecto
                     print("error preparing insert: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 1, Int32(proyecto.pro_id)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 1, Int32(proyecto.id)) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 2, proyecto.pro_nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 2, proyecto.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding cli_nom: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 3, proyecto.NombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 3, proyecto.nombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_nombre: \(errmsg)")
                 }
@@ -164,17 +164,17 @@ public class TbProyecto
                 print("error preparing insert: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(proyecto.pro_id)) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 1, Int32(proyecto.id)) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding pro_id: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 2, proyecto.pro_nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 2, proyecto.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding cli_nom: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 3, proyecto.NombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 3, proyecto.nombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding pro_nombre: \(errmsg)")
             }
@@ -238,18 +238,18 @@ public class TbProyecto
                 proyecto = ClienteProyecto()
                 
                 let idProyecto : Int32 = sqlite3_column_int(statement, 0)
-                proyecto.pro_id = idProyecto
+                proyecto.id = idProyecto
                 
                 if let csString = sqlite3_column_text(statement,1)
                 {
                     let nombreProyecto : String = String(cString: csString)
-                    proyecto.pro_nombre = nombreProyecto
+                    proyecto.nombre = nombreProyecto
                 }
                 
                 if let csString = sqlite3_column_text(statement,2)
                 {
                     let nombreCliente : String = String(cString: csString)
-                    proyecto.NombreCliente = nombreCliente
+                    proyecto.nombreCliente = nombreCliente
                 }
             }
             
@@ -295,18 +295,18 @@ public class TbProyecto
                 let proyecto = ClienteProyecto()
                 
                 let idProyecto : Int32 = sqlite3_column_int(statement, 0)
-                proyecto.pro_id = idProyecto
+                proyecto.id = idProyecto
                 
                 if let csString = sqlite3_column_text(statement,1)
                 {
                     let nombreProyecto : String = String(cString: csString)
-                    proyecto.pro_nombre = nombreProyecto
+                    proyecto.nombre = nombreProyecto
                 }
                 
                 if let csString = sqlite3_column_text(statement,2)
                 {
                     let nombreCliente : String = String(cString: csString)
-                    proyecto.NombreCliente = nombreCliente
+                    proyecto.nombreCliente = nombreCliente
                 }
                 proyectos.append(proyecto)
             }

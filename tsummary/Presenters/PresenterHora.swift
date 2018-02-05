@@ -28,6 +28,7 @@ public class PresenterHora{
         }
     }
     
+    /*
     func buscar()
     {
         let id : Int32 = self.mEditViewHora!.idHora
@@ -36,12 +37,13 @@ public class PresenterHora{
             self.mEditViewHora.asunto = detalleHora.asunto
             self.mEditViewHora.minutos = detalleHora.minutosTrabajados
             self.mEditViewHora.horas = detalleHora.horasTrabajadas
-            self.mEditViewHora.proyectoId = detalleHora.proyecto.pro_id
+            self.mEditViewHora.proyectoId = detalleHora.proyecto.id
             self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
             self.mEditViewHora.fechaHoraIngreso = detalleHora.fechaHoraIngreso
             self.mEditViewHora.bloquearBotones(detalleHora.modificable)
         }
     }
+    */
     
     func guardar()
     {
@@ -70,7 +72,7 @@ public class PresenterHora{
             let cantHoras = self.mEditViewHora!.horas
             let cantMinutos = self.mEditViewHora!.minutos
             
-            detalleHora.proyecto.pro_id = Int32(proyectoId)
+            detalleHora.proyecto.id = Int32(proyectoId)
             detalleHora.fechaHoraIngreso = fechaIngreso
             detalleHora.abogadoId = Int(idAbogado)
             detalleHora.asunto = asunto

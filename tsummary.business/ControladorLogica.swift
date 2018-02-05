@@ -45,8 +45,8 @@ public class ControladorLogica
     {
         ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
             
-            let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
-            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.pro_id))!)}
+            let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.id }
+            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
             let result = DataBase.proyectos.guardar(proyectosNuevos!)
             if (result)
             {

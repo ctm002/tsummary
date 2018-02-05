@@ -1,11 +1,3 @@
-//
-//  IViewList.swift
-//  tsummary
-//
-//  Created by Soporte on 11-12-17.
-//  Copyright © 2017 cariola. All rights reserved.
-//
-
 import Foundation
 
 protocol IListViewSemana {
@@ -25,6 +17,8 @@ protocol IListViewProyecto {
 }
 
 protocol IEditViewHora {
+    var model : ModelController { get set }
+    
     var idHora : Int32 { get set }
     var proyectoId : Int32 { get set }
     var fechaHoraIngreso : Date { get set }
@@ -32,7 +26,7 @@ protocol IEditViewHora {
     var horas : Int { get set }
     var minutos : Int { get set }
     var asunto : String { get set }
-    var timCorrel: Int32 {get set }
-    func setNombreProyecto(_ proyecto : ClienteProyecto)
+    var timCorrelativo : Int32 { get set }
+    func setNombreProyecto(_ model : ModelController)
     func bloquearBotones(_ estado: Bool)
 }

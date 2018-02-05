@@ -157,26 +157,23 @@ IListViewSemana, IViewHora {
         let identifier : String = segue.identifier!
         switch identifier
         {
-        case "editarHoraSegue":
-            if let hora = sender
-            {
-                let hora = hora as! Hora
-                let controller = segue.destination as! HoraViewController
-                controller.idAbogado = hora.abogadoId
-                controller.idHora = hora.id
-                controller.mFechaHoraIngreso = hora.fechaHoraIngreso
-                //controller.fechaHoraIngreso = hora.tim_fecha_ing
-            }
-        case "ajustesSegue":
-            if let id = sender
-            {
-                sideMenuConstraint.constant = -self.view.frame.width
-                isSlideMenuHidden = !isSlideMenuHidden
-                let controller  = segue.destination as! AjustesViewController
-                controller.idAbogado = id as! Int
-            }
-        default:
-            print("default")
+            case "editarHoraSegue":
+                if let model = sender
+                {
+                    let model = model as! ModelController
+                    let controller = segue.destination as! HoraViewController
+                    controller.model = model
+                }
+            case "ajustesSegue":
+                if let id = sender
+                {
+                    sideMenuConstraint.constant = -self.view.frame.width
+                    isSlideMenuHidden = !isSlideMenuHidden
+                    let controller  = segue.destination as! AjustesViewController
+                    controller.idAbogado = id as! Int
+                }
+            default:
+                print("default")
         }
     }
     
@@ -202,8 +199,8 @@ IListViewSemana, IViewHora {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mTVHoras.dequeueReusableCell(withIdentifier: cellId2, for:indexPath) as! TVCDetalleHora
         if let hrs = self.horas {
-            cell.lblCliente.text = hrs[indexPath.row].proyecto.NombreCliente
-            cell.lblProyecto.text = hrs[indexPath.row].proyecto.pro_nombre
+            cell.lblCliente.text = hrs[indexPath.row].proyecto.nombreCliente
+            cell.lblProyecto.text = hrs[indexPath.row].proyecto.nombre
             cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].horasTrabajadas) + ":" + String(format: "%02d",  hrs[indexPath.row].minutosTrabajados)
             cell.lblAsunto.text = hrs[indexPath.row].asunto
             cell.IdHora = hrs[indexPath.row].id
@@ -223,20 +220,30 @@ IListViewSemana, IViewHora {
     @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
-            let hora = Hora()
-            hora.abogadoId = self.idAbogado
-            hora.id = cell.IdHora
-            self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
+            if let detalleHora = DataBase.horas.getById(cell.IdHora)
+            {
+                let model = ModelController(
+                    id: detalleHora.id,
+                    abogadoId: detalleHora.abogadoId,
+                    fechaHoraIngreso: detalleHora.fechaHoraIngreso,
+                    idProyecto: detalleHora.proyecto.id,
+                    nombreProyecto: detalleHora.proyecto.nombre,
+                    nombreCliente: detalleHora.proyecto.nombreCliente,
+                    horas: detalleHora.horasTrabajadas,
+                    minutos: detalleHora.minutosTrabajados,
+                    asunto: detalleHora.asunto,
+                    correlativo: detalleHora.tim_correl,
+                    modificable : detalleHora.modificable,
+                    offline : detalleHora.offline)
+                self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
+            }
         }
     }
     
     @objc func agregar()
     {
-        let hora = Hora()
-        hora.abogadoId = self.idAbogado
-        hora.id = 0
-        hora.fechaHoraIngreso = getFechaHoraActual()
-        self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
+        let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraIngreso : self.getFechaHoraActual())
+        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
     }
     //Fin de TableCell-------------------------------------------------------------------------------------------------
     
@@ -344,7 +351,7 @@ IListViewSemana, IViewHora {
         return ""
     }
     
-    func getFechaHoraActual()-> Date
+    func getFechaHoraActual() -> Date
     {
         let now = Date()
         let hora = Utils.toStringFromDate(now, "HH")

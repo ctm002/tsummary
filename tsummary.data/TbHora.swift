@@ -196,7 +196,7 @@ public class TbHora
                     print("failure binding tim_correl: \(errmsg)")
                 }
                 
-                let prodId : Int32 = Int32(hora.proyecto.pro_id)
+                let prodId : Int32 = Int32(hora.proyecto.id)
                 if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -336,7 +336,7 @@ public class TbHora
                     print("failure binding tim_correl: \(errmsg)")
                 }
                 
-                let prodId : Int32 = Int32(hora.proyecto.pro_id)
+                let prodId : Int32 = Int32(hora.proyecto.id)
                 if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -443,7 +443,7 @@ public class TbHora
                     print("error preparing update: \(errmsg)")
                 }
                 
-                let prodId : Int32 = Int32(hora.proyecto.pro_id)
+                let prodId : Int32 = Int32(hora.proyecto.id)
                 if sqlite3_bind_int(statement, 1,  prodId) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -740,7 +740,7 @@ public class TbHora
         hora.tim_correl = tim_correl
         
         let prodId : Int32 = sqlite3_column_int(record, 1)
-        hora.proyecto.pro_id = prodId
+        hora.proyecto.id = prodId
         
         if let csString = sqlite3_column_text(record,2)
         {
@@ -770,12 +770,12 @@ public class TbHora
         
         if let csString = sqlite3_column_text(record, 9)
         {
-            hora.proyecto.pro_nombre = String(cString: csString)
+            hora.proyecto.nombre = String(cString: csString)
         }
         
         if let csString = sqlite3_column_text(record, 10)
         {
-            hora.proyecto.NombreCliente = String(cString: csString)
+            hora.proyecto.nombreCliente = String(cString: csString)
         }
         
         let id : Int32 = sqlite3_column_int(record, 11)
