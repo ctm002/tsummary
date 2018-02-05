@@ -195,10 +195,9 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func guardar(_ hora: Hora, _ retorno: @escaping (Hora?) -> Void)
+    func guardar(hora: Hora, responseOK: @escaping (Hora) -> Void,  responseError: @escaping (Hora) -> Void)
     {
-        let sesion: URLSession = URLSession.shared
-        
+        let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "GuardarInformacion")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
@@ -214,12 +213,13 @@ class ApiClient: NSObject
         postData.append("OffLine= " + String(hora.offline) + "&")
         postData.append("FechaInsert=" +  Utils.toStringFromDate(hora.fechaInsert!))
         request.httpBody = postData.data(using: String.Encoding.utf8)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer \(SessionLocal.shared.token)", forHTTPHeaderField: "Authorization")
         
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
-                retorno(nil)
+                responseError(hora)
                 return
             }
             
@@ -228,7 +228,7 @@ class ApiClient: NSObject
                 do{
                     let data =  try JSONSerialization.jsonObject(with: data!, options: []) as! AnyObject
                     hora.tim_correl = data["tim_correl"] as! Int32
-                    retorno(hora)
+                    responseOK(hora)
                 }
                 catch
                 {
@@ -239,31 +239,33 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func eliminar(hora: Hora, retorno: @escaping (Hora?) -> Void)
+    func eliminar(hora: Hora, responseOK: @escaping (Hora) -> Void, responseError: @escaping (Hora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         
         let url = URL(string: self.strURL + "GuardarInformacion")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
         
         var postData: String = ""
         postData.append("tim_correl=" +  String(hora.tim_correl))
         request.httpBody = postData.data(using: String.Encoding.utf8)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer \(SessionLocal.shared.token)", forHTTPHeaderField: "Authorization")
         
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
-                retorno(nil)
+                responseError(hora)
                 return
             }
             
             if (data != nil)
             {
-                do{
+                do
+                {
                     let data =  try JSONSerialization.jsonObject(with: data!, options: []) as! AnyObject
-                    retorno(hora)
+                    responseOK(hora)
                 }
                 catch
                 {

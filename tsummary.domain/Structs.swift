@@ -37,4 +37,22 @@ class SessionLocal {
     
 }
 
+struct HoraJSON
+{
+    let estado: Int
+    let mensaje: String
+    let data: String
+}
 
+
+struct Data {
+    let tim_correl : Int32
+    let pro_id : Int32
+    let tim_fecha_ing: String
+    let tim_asunto: String
+    let tim_horas: Int
+    let tim_minutos: Int
+    let abo_id: Int
+    let offLine: Bool
+    let fechaInsert: String
+}

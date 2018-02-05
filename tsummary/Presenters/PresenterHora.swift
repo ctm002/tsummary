@@ -51,18 +51,18 @@ public class PresenterHora{
         {
             let id: Int32  = self.mEditViewHora!.idHora
             
-            var detalleHora : Hora
+            var detalle : Hora
             if let detalleHoraTemp = DataBase.horas.getById(id)
             {
-                detalleHora = detalleHoraTemp
-                detalleHora.estado = .actualizado
+                detalle = detalleHoraTemp
+                detalle.estado = .actualizado
             }
             else
             {
-                detalleHora = Hora()
-                detalleHora.tim_correl = 0
-                detalleHora.estado = .nuevo
-                detalleHora.modificable = true
+                detalle = Hora()
+                detalle.tim_correl = 0
+                detalle.estado = .nuevo
+                detalle.modificable = true
             }
             
             let proyectoId = self.mEditViewHora!.proyectoId
@@ -72,18 +72,16 @@ public class PresenterHora{
             let cantHoras = self.mEditViewHora!.horas
             let cantMinutos = self.mEditViewHora!.minutos
             
-            detalleHora.proyecto.id = Int32(proyectoId)
-            detalleHora.fechaHoraIngreso = fechaIngreso
-            detalleHora.abogadoId = Int(idAbogado)
-            detalleHora.asunto = asunto
-            detalleHora.horasTrabajadas = Int(cantHoras)
-            detalleHora.minutosTrabajados = Int(cantMinutos)
-            detalleHora.offline = true
-            detalleHora.fechaInsert = Date()
+            detalle.proyecto.id = Int32(proyectoId)
+            detalle.fechaHoraIngreso = fechaIngreso
+            detalle.abogadoId = Int(idAbogado)
+            detalle.asunto = asunto
+            detalle.horasTrabajadas = Int(cantHoras)
+            detalle.minutosTrabajados = Int(cantMinutos)
+            detalle.offline = true
+            detalle.fechaInsert = Date()
             
-            let result : Bool = ControladorLogica.instance.guardar(detalleHora)
-            if (result == true){ print("operacion exitosa") }
- 
+            ControladorLogica.instance.guardar(hora: detalle, callback: self.response)
         }
         catch let error
         {
@@ -91,10 +89,23 @@ public class PresenterHora{
         }
     }
     
+    @objc func response(result: Int)
+    {
+        switch result
+        {
+            case 1:
+                print("Los datos fueron guardados en la nube")
+            case 2:
+                print("Los datos fueron guardados localmente")
+            default:
+                print("Error")
+        }
+    }
+    
     func eliminar() -> Bool
     {
         let id: Int32  = self.mEditViewHora!.idHora
-        ControladorLogica.instance.eliminarById(id)
+        ControladorLogica.instance.eliminarById(id, callback: response)
         return true
     }
 }

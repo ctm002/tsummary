@@ -156,6 +156,7 @@ enum Estado: Int
     case nuevo
     case actualizado
     case eliminado
+    case antiguo
 }
 
 public class Hora
