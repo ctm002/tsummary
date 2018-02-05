@@ -21,7 +21,7 @@ public class ControladorLogica
         }
     }
     
-    func guardar(_ hora: Horas) -> Bool
+    func guardar(_ hora: Hora) -> Bool
     {
         DataBase.horas.guardar(hora)
         
@@ -36,14 +36,14 @@ public class ControladorLogica
         return true
     }
     
-    func sincronizar(_ usuario: Usuario,_ callback: @escaping (Bool) -> Void)
+    func sincronizar(_ session: SessionLocal,_ callback: @escaping (Bool) -> Void)
     {
-        sincronizarProyectos(usuario, callback)
+        sincronizarProyectos(session, callback)
     }
     
-    private func sincronizarProyectos(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
-        ApiClient.instance.obtListProyectosByCodAbogado(usuario, callback: { (proyectosRemotos) -> Void in
+        ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
             
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.pro_id }
             let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.pro_id))!)}
@@ -52,17 +52,17 @@ public class ControladorLogica
             {
                 print("proyectos descargados")
             }
-            self.sincronizarHoras(usuario, retorno)
+            self.sincronizarHoras(session, retorno)
         })
     }
     
-    private func sincronizarHoras(_ usuario: Usuario,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
-        let codigo : String = String(usuario.id)
+        let codigo : String = String(describing: session.usuario?.id)
         let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         
-        ApiClient.instance.obtListDetalleHorasByCodAbogado(usuario, fDesde, fHasta, callback:{(hrsRemotas)->Void in
+        ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback:{(hrsRemotas)->Void in
             
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo, fDesde, fHasta)
@@ -85,7 +85,7 @@ public class ControladorLogica
             
                 let hrsNuevasLocales = hrsLocales.filter { $0.tim_correl == 0}
                 hrsNuevasLocales.forEach { hrs in
-                    ApiClient.instance.guardar(hrs, {(hora: Horas?) -> Void in
+                    ApiClient.instance.guardar(hrs, {(hora: Hora?) -> Void in
                         if let hr = hora
                         {
                             print("hora actualizada remotamente -> \(hr.tim_correl)")
@@ -118,7 +118,7 @@ public class ControladorLogica
                     {
                         if hrsRemotas.count > 0
                         {
-                            ApiClient.instance.guardar(hrs, {(hora: Horas?) -> Void in
+                            ApiClient.instance.guardar(hrs, {(hora: Hora?) -> Void in
                                 if let hr = hora
                                 {
                                     print("\(hr.tim_correl)")
@@ -157,26 +157,18 @@ public class ControladorLogica
         DataBase.usuarios.dropTable()
     }
     
-    func autentificar(_ user: String, _ password: String, _ imei: String) -> Usuario?
+    func autentificar(_ user: String, _ password: String, _ imei: String) -> SessionLocal?
     {
-        if (Session.shared.usuario == nil)
-        {
-            Session.shared.usuario =  DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
-        }
-        return Session.shared.usuario
+        return DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
     }
     
-    func validar(_ imei: String) -> Usuario?
+    func validar(_ imei: String) -> SessionLocal?
     {
-        if (Session.shared.usuario == nil)
-        {
-            Session.shared.usuario = DataBase.usuarios.validar(imei)
-        }
-        return Session.shared.usuario
+        return DataBase.usuarios.validar(imei)
     }
     
-    func guardar(_ usuario: Usuario) -> Bool
+    func guardar(_ session: SessionLocal) -> Bool
     {
-        return DataBase.usuarios.guardar(usuario: usuario)
+        return DataBase.usuarios.guardar(sessionLocal: session)
     }
 }

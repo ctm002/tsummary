@@ -1,5 +1,5 @@
 import Foundation
-public class  Usuario
+public class Usuario
 {
     init()
     {
@@ -11,73 +11,65 @@ public class  Usuario
         self.mIMEI=""
         self.mDefault=0
         self.mPerfil = ""
-        self.mToken  = ""
     }
     
     private var mId : Int32
-    var id:Int32  { get{ return self.mId } set{ self.mId=newValue }}
+    var id : Int32  { get{ return self.mId } set{ self.mId=newValue }}
     
     private var mNombre: String?
-    var nombre:String? { get{ return self.mNombre} set {self.mNombre=newValue }}
+    var nombre : String? { get{ return self.mNombre} set {self.mNombre=newValue }}
     
     private var mGrupo:String?
-    var grupo:String? { get {return self.mGrupo } set{ self.mGrupo=newValue }}
+    var grupo : String? { get {return self.mGrupo } set{ self.mGrupo=newValue }}
     
     private var mLoginName:String?
-    var loginName:String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
+    var loginName : String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
     
     private var mPassword:String?
-    var password:String? { get {return self.mPassword } set { self.mPassword = newValue }}
+    var password : String? { get {return self.mPassword } set { self.mPassword = newValue }}
     
     private var mIMEI:String?
-    var imei:String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
+    var imei : String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
     
     private var mDefault:Int?
-    var defaults:Int?  { return self.mDefault }
+    var defaults : Int?  { return self.mDefault }
     
     private var mPerfil: String
-    var perfil: String { get { return self.mPerfil } set { self.mPerfil = newValue }}
+    var perfil : String { get { return self.mPerfil } set { self.mPerfil = newValue }}
     
-    private var mToken: String
-    var token: String {
-        get { return mToken}
-        set { self.mToken = newValue }
-    }
 }
 
 public class Cliente
 {
     init()
     {
-        self.mcli_cod = 0
-        self.mcli_nom=""
+        self.mCodigo = 0
+        self.mNombre=""
     }
     
-    private var mcli_cod:Int
-    public var cli_cod : Int
+    private var mCodigo:Int
+    public var codigo : Int
     {
         get
         {
-            return self.mcli_cod
+            return self.mCodigo
         }
         set
         {
-            self.mcli_cod = newValue
+            self.mCodigo = newValue
         }
     }
     
-    private var mcli_nom:String
-    var cli_nom: String
+    private var mNombre:String
+    var nombre: String
     {
         get
         {
-            return self.mcli_nom
-            
+            return self.mNombre
         }
         set
         {
-            self.mcli_nom = newValue
-            
+            self.mNombre = newValue
         }
     }
 }
@@ -88,105 +80,105 @@ public class ClienteProyecto
     
     init()
     {
-        self.mpro_id = 0
-        self.mpro_nombre  = ""
-        self.mpro_idioma = ""
+        self.mIdProyecto = 0
+        self.mNombreProyecto  = ""
+        self.mIdiomaCliente = ""
         self.mCliente = Cliente()
     }
     
     private var mCliente: Cliente
-    public var cli_nom: String
+    public var NombreCliente: String
     {
         get
         {
-            return self.mCliente.cli_nom
+            return self.mCliente.nombre
         }
         set
         {
-            self.mCliente.cli_nom=newValue
+            self.mCliente.nombre = newValue
         }
     }
     
-    public var cli_cod: Int
+    public var CodigoCliente: Int
     {
         get
         {
-            return self.mCliente.cli_cod
+            return self.mCliente.codigo
         }
         set
         {
-            self.mCliente.cli_cod=newValue
+            self.mCliente.codigo=newValue
         }
     }
     
-    private var mpro_id: Int32
+    private var mIdProyecto: Int32
     public var pro_id: Int32
     {
         get
         {
-            return self.mpro_id
+            return self.mIdProyecto
         }
         set
         {
-            self.mpro_id=newValue
+            self.mIdProyecto=newValue
         }
     }
     
-    private var mpro_nombre: String
+    private var mNombreProyecto: String
     public var pro_nombre: String
     {
         get
         {
-            return self.mpro_nombre
+            return self.mNombreProyecto
         }
         set
         {
-            self.mpro_nombre=newValue
+            self.mNombreProyecto=newValue
         }
     }
     
-    private var  mpro_idioma: String
-    public var pro_idioma: String
+    private var  mIdiomaCliente: String
+    public var idiomaCliente: String
     {
         get
         {
-            return self.mpro_idioma
+            return self.mIdiomaCliente
         }
         set
         {
-            self.mpro_idioma=newValue
+            self.mIdiomaCliente=newValue
         }
     }
 }
 
-enum Estados: Int
+enum Estado: Int
 {
     case nuevo
     case actualizado
     case eliminado
 }
 
-public class Horas
+public class Hora
 {
     init()
     {
-        self.mtim_correl = 0
-        self.mtim_asunto = ""
-        self.mtim_horas = 0
-        self.mtim_minutos = 0
-        self.mabo_id = 0
-        self.mModificable = false
+        self.mCorrelativo = 0
+        self.mAsunto = ""
+        self.mHoras = 0
+        self.mMinutos = 0
+        self.mAbogadoId = 0
+        self.mEsModificable = false
         self.mOffLine = false
-        self.mtim_fecha_ing = Date()
-        self.mIdHora = 0
+        self.mFechaHoraIngreso = Date()
+        self.mId = 0
         self.mEstado = .nuevo
-        self.mpro_id = 0
+        self.mproyectoId = 0
         self.proyecto = ClienteProyecto()
         self.fechaInsert = nil
     }
     
-    private var mEstado: Estados
-    var estado: Estados
+    private var mEstado: Estado
+    var estado: Estado
     {
         get
         {
@@ -199,42 +191,42 @@ public class Horas
         }
     }
     
-    private var mIdHora: Int32
+    private var mId: Int32
     var id: Int32
     {
         get
         {
-            return self.mIdHora
+            return self.mId
         }
         set
         {
-            self.mIdHora = newValue
+            self.mId = newValue
         }
     }
     
-    private var mtim_correl:Int32
+    private var mCorrelativo:Int32
     var tim_correl: Int32
     {
         get
         {
-            return self.mtim_correl
+            return self.mCorrelativo
         }
         set
         {
-            self.mtim_correl = newValue
+            self.mCorrelativo = newValue
         }
     }
     
-    private var mtim_fecha_ing: Date
-    var tim_fecha_ing: Date
+    private var mFechaHoraIngreso: Date
+    var fechaHoraIngreso: Date
     {
         get
         {
-            return self.mtim_fecha_ing
+            return self.mFechaHoraIngreso
         }
         set
         {
-            self.mtim_fecha_ing = newValue
+            self.mFechaHoraIngreso = newValue
         }
     }
     
@@ -242,74 +234,74 @@ public class Horas
     {
         get
         {
-            let strFechaIng : String =  Utils.toStringFromDate(self.mtim_fecha_ing, "HH:mm")
+            let strFechaIng : String =  Utils.toStringFromDate(self.mFechaHoraIngreso, "HH:mm")
             return strFechaIng
         }
     }
     
-    private var mtim_asunto: String
-    var tim_asunto: String
+    private var mAsunto: String
+    var asunto: String
     {
         get
         {
-            return self.mtim_asunto
+            return self.mAsunto
         }
         set
         {
-            self.mtim_asunto = newValue
+            self.mAsunto = newValue
         }
     }
     
-    private var mtim_horas:Int
-    var tim_horas:Int
+    private var mHoras:Int
+    var horasTrabajadas:Int
     {
         get
         {
-            return self.mtim_horas
+            return self.mHoras
         }
         set
         {
-            self.mtim_horas=newValue
+            self.mHoras=newValue
         }
     }
     
-    private var mtim_minutos:Int
-    var tim_minutos: Int
+    private var mMinutos:Int
+    var minutosTrabajados: Int
     {
         get
         {
-            return self.mtim_minutos
+            return self.mMinutos
             
         }
         set
         {
-            self.mtim_minutos = newValue
+            self.mMinutos = newValue
         }
     }
     
-    private var mabo_id:Int
-    var  abo_id: Int
+    private var mAbogadoId:Int
+    var abogadoId: Int
     {
         get
         {
-            return self.mabo_id
+            return self.mAbogadoId
         }
         set
         {
-            self.mabo_id = newValue
+            self.mAbogadoId = newValue
         }
     }
     
-    private var mModificable: Bool
+    private var mEsModificable: Bool
     var  modificable: Bool
     {
         get
         {
-            return self.mModificable
+            return self.mEsModificable
         }
         set
         {
-            self.mModificable = newValue
+            self.mEsModificable = newValue
         }
     }
     
@@ -326,16 +318,16 @@ public class Horas
         }
     }
     
-    private var mpro_id:Int32
+    private var mproyectoId:Int32
     var pro_id: Int32
     {
         get
         {
-            return self.mpro_id
+            return self.mproyectoId
         }
         set
         {
-            self.mpro_id = newValue
+            self.mproyectoId = newValue
         }
     }
     
@@ -402,7 +394,7 @@ public class Dia
     }
 
     private var mFecha: String
-    var Fecha: String
+    var fecha: String
     {
         get
         {
@@ -419,5 +411,5 @@ public class CabeceraHora
 {
     var estado: Int!
     var mensaje: String!
-    var data : [Horas]!
+    var data : [Hora]!
 }

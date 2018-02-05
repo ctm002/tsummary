@@ -17,9 +17,9 @@ class ApiClient: NSObject
         self.password = password
     }
     
-    func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (Usuario?) -> Void)
+    func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (SessionLocal?) -> Void)
     {
-        let session: URLSession = URLSession.shared
+        let urlSession: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "tokenmobile")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
@@ -31,7 +31,7 @@ class ApiClient: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8);
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
             if(error != nil)
             {
@@ -50,37 +50,39 @@ class ApiClient: NSObject
                 {
                     do
                     {
-                        let usuario: Usuario? = Usuario()
+                        let usuario: Usuario = Usuario()
                         let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
                         
                         let jwt = try decode(jwt: jsonwt.token)
                         
                         let cNombre = jwt.claim(name: "Nombre")
                         if let nombre = cNombre.string{
-                            usuario?.nombre=nombre
+                            usuario.nombre=nombre
                         }
                         
                         let cPerfil = jwt.claim(name: "Perfil")
                         if let perfil = cPerfil.string{
-                            usuario?.perfil = perfil
+                            usuario.perfil = perfil
                         }
                         
                         let cIdAbogado = jwt.claim(name: "AboId")
                         if let idAbogado = cIdAbogado.integer {
-                            usuario?.id = Int32(idAbogado)
+                            usuario.id = Int32(idAbogado)
                         }
                         
                         let cGrupo = jwt.claim(name: "Grupo")
                         if let grupo = cGrupo.string
                         {
-                            usuario?.grupo = grupo
+                            usuario.grupo = grupo
                         }
                         
-                        usuario?.password = password
-                        usuario?.imei = imei
-                        usuario?.token = jsonwt.token
-                        usuario?.loginName = userName
-                        callback(usuario)
+                        usuario.password = password
+                        usuario.imei = imei
+                        usuario.loginName = userName
+                        
+                        SessionLocal.shared.token = jsonwt.token
+                        SessionLocal.shared.usuario = usuario
+                        callback(SessionLocal.shared)
                     }
                     catch
                     {
@@ -93,16 +95,16 @@ class ApiClient: NSObject
     }
     
     
-    func obtListDetalleHorasByCodAbogado(_ usuario: Usuario,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Horas]?) -> Void)
+    func obtListDetalleHorasByCodAbogado(_ session: SessionLocal,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Hora]?) -> Void)
     {
-        let session: URLSession = URLSession.shared
-        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters?AboId=\(usuario.id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
+        let urlSession: URLSession = URLSession.shared
+        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters?AboId=\(session.usuario?.id)&FechaI=\(fechaDesde)&FechaF=\(fechaHasta)"
         let url = URL(string: "\(sURL)")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(session.token)", forHTTPHeaderField: "Authorization")
         
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 callback(nil)
@@ -116,20 +118,20 @@ class ApiClient: NSObject
                     let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
                     if (responseString != "")
                     {
-                        var horas = [Horas]()
+                        var horas = [Hora]()
                         let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
                         let aJSON = dataJSON["data"] as! [AnyObject]
                         for item in aJSON
                         {
-                            let hora = Horas()
+                            let hora = Hora()
                             hora.proyecto.pro_id = item["pro_id"] as! Int32
                             hora.tim_correl = item["tim_correl"] as! Int32
-                            hora.tim_horas = item["tim_horas"] as! Int
-                            hora.tim_minutos = item["tim_minutos"] as! Int
-                            hora.tim_asunto = item["tim_asunto"] as! String
+                            hora.horasTrabajadas = item["tim_horas"] as! Int
+                            hora.minutosTrabajados = item["tim_minutos"] as! Int
+                            hora.asunto = item["tim_asunto"] as! String
                             hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
-                            hora.abo_id = item["abo_id"] as! Int
-                            hora.tim_fecha_ing = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
+                            hora.abogadoId = item["abo_id"] as! Int
+                            hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
                             hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss.SSS")!
                             horas.append(hora)
                         }
@@ -149,16 +151,16 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func obtListProyectosByCodAbogado(_ usuario: Usuario, callback: @escaping ([ClienteProyecto]?) -> Void)
+    func obtListProyectosByCodAbogado(_ session: SessionLocal, callback: @escaping ([ClienteProyecto]?) -> Void)
     {
-        let session: URLSession = URLSession.shared
-        let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(usuario.id)"
+        let urlSession: URLSession = URLSession.shared
+        let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado?AboId=\(session.usuario?.id)"
         let url = URL(string: sURL)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "GET"
-        request.setValue("bearer \(usuario.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("bearer \(session.token)", forHTTPHeaderField: "Authorization")
         
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 callback(nil)
@@ -176,10 +178,10 @@ class ApiClient: NSObject
                     {
                         let proyecto = ClienteProyecto()
                         proyecto.pro_id = item["pro_id"] as! Int32
-                        proyecto.cli_cod = item["cli_cod"] as! Int
-                        proyecto.cli_nom = item["nombreCliente"] as! String
+                        proyecto.CodigoCliente = item["cli_cod"] as! Int
+                        proyecto.NombreCliente = item["nombreCliente"] as! String
                         proyecto.pro_nombre = item["nombreProyecto"] as! String
-                        proyecto.pro_idioma = item["idioma"] as! String
+                        proyecto.idiomaCliente = item["idioma"] as! String
                         proyectos.append(proyecto)
                     }
                     callback(proyectos)
@@ -193,7 +195,7 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func guardar(_ hora: Horas, _ retorno: @escaping (Horas?) -> Void)
+    func guardar(_ hora: Hora, _ retorno: @escaping (Hora?) -> Void)
     {
         let sesion: URLSession = URLSession.shared
         
@@ -204,11 +206,11 @@ class ApiClient: NSObject
         var postData: String = ""
         postData.append("tim_correl=" +  String(hora.tim_correl) + "&")
         postData.append("pro_id=" + String(hora.proyecto.pro_id) + "&")
-        postData.append("tim_fecha_ing=" + Utils.toStringFromDate(hora.tim_fecha_ing,"yyyy-MM-dd HH:mm:ss") + "&")
-        postData.append("tim_asunto=" + hora.tim_asunto + "&")
-        postData.append("tim_horas=" + String(hora.tim_horas) + "&")
-        postData.append("tim_minutos=" + String(hora.tim_minutos) + "&")
-        postData.append("abo_id=" + String(hora.abo_id) + "&")
+        postData.append("tim_fecha_ing=" + Utils.toStringFromDate(hora.fechaHoraIngreso,"yyyy-MM-dd HH:mm:ss") + "&")
+        postData.append("tim_asunto=" + hora.asunto + "&")
+        postData.append("tim_horas=" + String(hora.horasTrabajadas) + "&")
+        postData.append("tim_minutos=" + String(hora.minutosTrabajados) + "&")
+        postData.append("abo_id=" + String(hora.abogadoId) + "&")
         postData.append("OffLine= " + String(hora.offline) + "&")
         postData.append("FechaInsert=" +  Utils.toStringFromDate(hora.fechaInsert!))
         request.httpBody = postData.data(using: String.Encoding.utf8)
@@ -237,9 +239,9 @@ class ApiClient: NSObject
         task.resume()
     }
     
-    func eliminar(hora: Horas, retorno: @escaping (Horas?) -> Void)
+    func eliminar(hora: Hora, retorno: @escaping (Hora?) -> Void)
     {
-        let sesion: URLSession = URLSession.shared
+        let urlSession: URLSession = URLSession.shared
         
         let url = URL(string: self.strURL + "GuardarInformacion")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
@@ -250,7 +252,7 @@ class ApiClient: NSObject
         request.httpBody = postData.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = sesion.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
                 retorno(nil)
@@ -275,10 +277,10 @@ class ApiClient: NSObject
 
 
 /*
- extension ApiClient: URLSessionDelegate
+ extension ApiClient: URLSessionLocalDelegate
  {
  
- func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+ func urlSessionLocal(_ SessionLocal: URLSessionLocal, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSessionLocal.AuthChallengeDisposition, URLCredential?) -> Void) {
  
  guard challenge.previousFailureCount == 0 else {
  print("too many failures")

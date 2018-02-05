@@ -35,12 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Reachability.isConnectedToNetwork()
         {
-            if  let usuario = Session.shared.usuario
-            {
-                ControladorLogica.instance.sincronizar(usuario, { (resp: Bool) -> Void in
-                    print("procesando datos...")
-                })
-            }
+            ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
+                print("procesando datos...")
+            })
         }
     }
 

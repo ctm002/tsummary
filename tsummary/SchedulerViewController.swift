@@ -32,7 +32,7 @@ IListViewSemana, IViewHora {
     var presenterSemana: PresenterSemana!
     var presenterHora: PresenterHora!
     var semana : [Dia]!
-    var horas : [Horas]!
+    var horas : [Hora]!
     
     let cantDias: Int = 14
     let diasBySemana: CGFloat = 7
@@ -160,11 +160,11 @@ IListViewSemana, IViewHora {
         case "editarHoraSegue":
             if let hora = sender
             {
-                let hora = hora as! Horas
+                let hora = hora as! Hora
                 let controller = segue.destination as! HoraViewController
-                controller.idAbogado = hora.abo_id
+                controller.idAbogado = hora.abogadoId
                 controller.idHora = hora.id
-                controller.mFechaHoraIngreso = hora.tim_fecha_ing
+                controller.mFechaHoraIngreso = hora.fechaHoraIngreso
                 //controller.fechaHoraIngreso = hora.tim_fecha_ing
             }
         case "ajustesSegue":
@@ -180,7 +180,7 @@ IListViewSemana, IViewHora {
         }
     }
     
-    func setList(horas: [Horas]) {
+    func setList(horas: [Hora]) {
         self.horas = horas
         DispatchQueue.main.async {
             self.mTVHoras.reloadData()
@@ -202,10 +202,10 @@ IListViewSemana, IViewHora {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = mTVHoras.dequeueReusableCell(withIdentifier: cellId2, for:indexPath) as! TVCDetalleHora
         if let hrs = self.horas {
-            cell.lblCliente.text = hrs[indexPath.row].proyecto.cli_nom
+            cell.lblCliente.text = hrs[indexPath.row].proyecto.NombreCliente
             cell.lblProyecto.text = hrs[indexPath.row].proyecto.pro_nombre
-            cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].tim_horas) + ":" + String(format: "%02d",  hrs[indexPath.row].tim_minutos)
-            cell.lblAsunto.text = hrs[indexPath.row].tim_asunto
+            cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].horasTrabajadas) + ":" + String(format: "%02d",  hrs[indexPath.row].minutosTrabajados)
+            cell.lblAsunto.text = hrs[indexPath.row].asunto
             cell.IdHora = hrs[indexPath.row].id
             cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
             
@@ -223,8 +223,8 @@ IListViewSemana, IViewHora {
     @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? TVCDetalleHora {
-            let hora = Horas()
-            hora.abo_id = self.idAbogado
+            let hora = Hora()
+            hora.abogadoId = self.idAbogado
             hora.id = cell.IdHora
             self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
         }
@@ -232,10 +232,10 @@ IListViewSemana, IViewHora {
     
     @objc func agregar()
     {
-        let hora = Horas()
-        hora.abo_id = self.idAbogado
+        let hora = Hora()
+        hora.abogadoId = self.idAbogado
         hora.id = 0
-        hora.tim_fecha_ing = getFechaHoraActual()
+        hora.fechaHoraIngreso = getFechaHoraActual()
         self.performSegue(withIdentifier: "editarHoraSegue", sender: hora)
     }
     //Fin de TableCell-------------------------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ IListViewSemana, IViewHora {
         cell.indexPath = indexPath.row
         cell.addGestureRecognizer(gesture)
         
-        if self.fechaHoraIngreso == self.semana[indexPath.row].Fecha
+        if self.fechaHoraIngreso == self.semana[indexPath.row].fecha
         {
             cellPrevious = cell
             cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
@@ -294,7 +294,7 @@ IListViewSemana, IViewHora {
             if let nro = cell.lblNro.text
             {
                 let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
-                self.fechaHoraIngreso = dias[0].Fecha
+                self.fechaHoraIngreso = dias[0].fecha
                 self.presenterHora.buscarHoras()
                 
                 DispatchQueue.main.async {

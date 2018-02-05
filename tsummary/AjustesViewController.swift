@@ -7,11 +7,11 @@ public class AjustesViewController: UIViewController, UITableViewDelegate, UITab
     public var idAbogado: Int!
     
     let configuraciones: [Int:[String: String]] =  [
-        0: ["key": "Nombres", "value": Session.shared.usuario!.nombre!],
+        0: ["key": "Nombres", "value": SessionLocal.shared.usuario!.nombre!],
         1: ["key": "Telefono", "value": ""],
         2: ["key": "Correo", "value" : ""],
-        3: ["key": "Grupo" , "value" : Session.shared.usuario!.grupo!],
-        4: ["key": "Id", "value" : String(Session.shared.usuario!.id)],
+        3: ["key": "Grupo" , "value" : SessionLocal.shared.usuario!.grupo!],
+        4: ["key": "Id", "value" : String(SessionLocal.shared.usuario!.id)],
         5: ["key": "Semana", "value" : "10"],]
     
     override public func viewDidLoad()

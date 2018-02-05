@@ -23,15 +23,18 @@ struct User: Decodable
 }
 
 
-class Session {
-    var usuario: Usuario?
+class SessionLocal {
     
-    class var shared: Session {
+    var usuario: Usuario?
+    var token: String?
+    
+    class var shared: SessionLocal {
         struct Static {
-            static let instance = Session()
+            static let instance = SessionLocal()
         }
         return Static.instance
     }
+    
 }
 
 

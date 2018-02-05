@@ -116,12 +116,12 @@ public class TbProyecto
                     print("failure binding cli_nom: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 3, proyecto.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 3, proyecto.NombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_nombre: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 4, proyecto.pro_idioma, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 4, proyecto.idiomaCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_idioma: \(errmsg)")
                 }
@@ -174,12 +174,12 @@ public class TbProyecto
                 print("failure binding cli_nom: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 3, proyecto.cli_nom, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 3, proyecto.NombreCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding pro_nombre: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 4, proyecto.pro_idioma, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 4, proyecto.idiomaCliente, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding pro_idioma: \(errmsg)")
             }
@@ -249,7 +249,7 @@ public class TbProyecto
                 if let csString = sqlite3_column_text(statement,2)
                 {
                     let nombreCliente : String = String(cString: csString)
-                    proyecto.cli_nom = nombreCliente
+                    proyecto.NombreCliente = nombreCliente
                 }
             }
             
@@ -306,7 +306,7 @@ public class TbProyecto
                 if let csString = sqlite3_column_text(statement,2)
                 {
                     let nombreCliente : String = String(cString: csString)
-                    proyecto.cli_nom = nombreCliente
+                    proyecto.NombreCliente = nombreCliente
                 }
                 proyectos.append(proyecto)
             }

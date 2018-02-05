@@ -67,7 +67,7 @@ public class PresenterSemana
                 dia.nombre = formatter.string(from: fechaDeInicio!)
                 dia.nro = calendar.component(Calendar.Component.day, from: fechaDeInicio!)
                 formatter.dateFormat = "yyyy-MM-dd"
-                dia.Fecha = formatter.string(from: fechaDeInicio!)
+                dia.fecha = formatter.string(from: fechaDeInicio!)
                 semana.append(dia)
                 fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!)
             }

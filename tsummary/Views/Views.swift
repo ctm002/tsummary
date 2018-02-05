@@ -15,7 +15,7 @@ protocol IListViewSemana {
 protocol IViewHora {
     var idAbogado : Int { get set }
     var fechaHoraIngreso : String { get set }
-    func setList(horas: [Horas])
+    func setList(horas: [Hora])
 }
 
 

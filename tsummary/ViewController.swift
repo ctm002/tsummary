@@ -6,10 +6,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtIMEI: UITextField!
     @IBOutlet weak var btnRegistrar: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
-   
-    var codigo: Int = 0
-    
     @IBOutlet weak var btnEliminar: UIButton!
+    var codigo: Int32 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +32,10 @@ class ViewController: UIViewController {
     
     func validar(_ imei: String)
     {
-        if let u = ControladorLogica.instance.validar(imei)
+        if let s = ControladorLogica.instance.validar(imei)
         {
             self.activity.startAnimating()
-            sincronizar(u)
+            sincronizar(s)
         }
     }
     
@@ -80,9 +78,9 @@ class ViewController: UIViewController {
                     
                     btnRegistrar.isEnabled = false
                     self.activity.startAnimating()
-                    if let usuario = ControladorLogica.instance.autentificar(user, password, imei)
+                    if let session = ControladorLogica.instance.autentificar(user, password, imei)
                     {
-                        sincronizar(usuario)
+                        sincronizar(session)
                     }
                     else
                     {
@@ -102,28 +100,30 @@ class ViewController: UIViewController {
         autentificar()
     }
     
-    func setUsuario(usuario: Usuario?)
+    func setUsuario(session: SessionLocal?)
     {
-        if let u = usuario
+        if let session = session
         {
-            let response = ControladorLogica.instance.guardar(u)
+            let response = ControladorLogica.instance.guardar(session)
             if (response)
             {
-                Session.shared.usuario = u
-                self.sincronizar(u)
+                self.sincronizar(session)
             }
         }
     }
     
-    func sincronizar(_ usuario: Usuario)
+    func sincronizar(_ session: SessionLocal)
     {
-        self.codigo = Int(usuario.id)
-        if Reachability.isConnectedToNetwork() {
-            self.sincronizar(usuario, callback: redireccionar)
-        }
-        else
+        if let u = session.usuario
         {
-            redireccionar(estado: true)
+            self.codigo = u.id
+            if Reachability.isConnectedToNetwork() {
+                self.sincronizar(session, callback: redireccionar)
+            }
+            else
+            {
+                redireccionar(estado: true)
+            }
         }
     }
     
@@ -139,9 +139,9 @@ class ViewController: UIViewController {
         }
     }
     
-    func sincronizar(_ usuario: Usuario, callback: @escaping (Bool) -> Void)
+    func sincronizar(_ session: SessionLocal, callback: @escaping (Bool) -> Void)
     {
-        ControladorLogica.instance.sincronizar(usuario, callback)
+        ControladorLogica.instance.sincronizar(session, callback)
     }
 
     @IBAction func btnDeleteOnClick(_ sender: Any)

@@ -31,14 +31,14 @@ public class PresenterHora{
     func buscar()
     {
         let id : Int32 = self.mEditViewHora!.idHora
-        if let detalleHora : Horas = DataBase.horas.getById(id)
+        if let detalleHora : Hora = DataBase.horas.getById(id)
         {
-            self.mEditViewHora.asunto = detalleHora.tim_asunto
-            self.mEditViewHora.minutos = detalleHora.tim_minutos
-            self.mEditViewHora.horas = detalleHora.tim_horas
+            self.mEditViewHora.asunto = detalleHora.asunto
+            self.mEditViewHora.minutos = detalleHora.minutosTrabajados
+            self.mEditViewHora.horas = detalleHora.horasTrabajadas
             self.mEditViewHora.proyectoId = detalleHora.proyecto.pro_id
             self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
-            self.mEditViewHora.fechaHoraIngreso = detalleHora.tim_fecha_ing
+            self.mEditViewHora.fechaHoraIngreso = detalleHora.fechaHoraIngreso
             self.mEditViewHora.bloquearBotones(detalleHora.modificable)
         }
     }
@@ -49,7 +49,7 @@ public class PresenterHora{
         {
             let id: Int32  = self.mEditViewHora!.idHora
             
-            var detalleHora : Horas
+            var detalleHora : Hora
             if let detalleHoraTemp = DataBase.horas.getById(id)
             {
                 detalleHora = detalleHoraTemp
@@ -57,7 +57,7 @@ public class PresenterHora{
             }
             else
             {
-                detalleHora = Horas()
+                detalleHora = Hora()
                 detalleHora.tim_correl = 0
                 detalleHora.estado = .nuevo
                 detalleHora.modificable = true
@@ -71,11 +71,11 @@ public class PresenterHora{
             let cantMinutos = self.mEditViewHora!.minutos
             
             detalleHora.proyecto.pro_id = Int32(proyectoId)
-            detalleHora.tim_fecha_ing = fechaIngreso
-            detalleHora.abo_id = Int(idAbogado)
-            detalleHora.tim_asunto = asunto
-            detalleHora.tim_horas = Int(cantHoras)
-            detalleHora.tim_minutos = Int(cantMinutos)
+            detalleHora.fechaHoraIngreso = fechaIngreso
+            detalleHora.abogadoId = Int(idAbogado)
+            detalleHora.asunto = asunto
+            detalleHora.horasTrabajadas = Int(cantHoras)
+            detalleHora.minutosTrabajados = Int(cantMinutos)
             detalleHora.offline = true
             detalleHora.fechaInsert = Date()
             
