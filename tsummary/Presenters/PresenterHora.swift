@@ -1,7 +1,7 @@
 import Foundation
 
-public class PresenterHora{
-    
+public class PresenterHora
+{
     private var mView: IViewHora?
     private var mEditViewHora:IEditViewHora!
     
@@ -27,23 +27,6 @@ public class PresenterHora{
             self.mView?.setList(horas: hrs)
         }
     }
-    
-    /*
-    func buscar()
-    {
-        let id : Int32 = self.mEditViewHora!.idHora
-        if let detalleHora : Hora = DataBase.horas.getById(id)
-        {
-            self.mEditViewHora.asunto = detalleHora.asunto
-            self.mEditViewHora.minutos = detalleHora.minutosTrabajados
-            self.mEditViewHora.horas = detalleHora.horasTrabajadas
-            self.mEditViewHora.proyectoId = detalleHora.proyecto.id
-            self.mEditViewHora.setNombreProyecto(detalleHora.proyecto)
-            self.mEditViewHora.fechaHoraIngreso = detalleHora.fechaHoraIngreso
-            self.mEditViewHora.bloquearBotones(detalleHora.modificable)
-        }
-    }
-    */
     
     func guardar()
     {
