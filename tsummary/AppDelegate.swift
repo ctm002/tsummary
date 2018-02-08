@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //window?.rootViewController = CustomTabBarController()
         
         //ControladorLogica.instance.eliminarDatos()
-        
+        //ControladorLogica.instance.borrarTablas()
         return true
     }
 
@@ -33,12 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        if Reachability.isConnectedToNetwork()
-        {
-            ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
-                print("procesando datos...")
-            })
-        }
+//        if Reachability.isConnectedToNetwork()
+//        {
+//            ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
+//                print("procesando datos...")
+//            })
+//        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

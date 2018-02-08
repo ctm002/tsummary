@@ -6,7 +6,6 @@ public class TbHora
 {
     internal let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
     internal let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-    
     var db: OpaquePointer?
     var fileURL: URL
     
@@ -39,7 +38,7 @@ public class TbHora
                     modificable integer,
                     offline integer,
                     tim_fecha_ing datetime,
-                    estado  integer,
+                    estado integer,
                     fecha_ult_mod datetime)
             """
             if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
@@ -92,7 +91,6 @@ public class TbHora
         }
         return false
     }
-    
     
     func eliminar(_ horas: [Hora]) -> Bool
     {
@@ -682,9 +680,10 @@ public class TbHora
     
     public func eliminar(_ hora:Hora) -> Bool
     {
+        var result = true
         do
         {
-            try open()
+            try self.open()
             
             var statement: OpaquePointer?
             
@@ -696,40 +695,44 @@ public class TbHora
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing update: \(errmsg)")
+                result = false
             }
             
             if sqlite3_bind_int(statement, 1, Int32(hora.estado.rawValue)) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding estado: \(errmsg)")
+                result = false
             }
             
             if sqlite3_bind_int(statement, 2, hora.id) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding hora_id: \(errmsg)")
+                result = false
             }
             
             if sqlite3_step(statement) != SQLITE_DONE
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("fallo preparing update: \(errmsg)")
+                result = false
             }
             
             if sqlite3_finalize(statement) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error finalizing prepared statement: \(errmsg)")
+                result = false
             }
-            close()
-            return true
         }
         catch
         {
             print("Error: delete")
-            close()
+            result = false
         }
-        return false
+        self.close()
+        return result
     }
     
     private func getHoraFromRecord(_ record: inout OpaquePointer?) -> Hora
@@ -786,6 +789,8 @@ public class TbHora
             hora.fechaInsert = Utils.toDateFromString(String(cString: csString))
         }
         
+        let estado : Int32 = sqlite3_column_int(record, 14)
+        hora.estado = Estado(rawValue: Int(estado))!
         return hora
     }
     
@@ -859,6 +864,62 @@ public class TbHora
         return nil
     }
     
+    public func getListDetalleHorasOffline(codigo: String) -> [Hora]?
+    {
+        let query : String = """
+            select
+                h.tim_correl,
+                h.pro_id,
+                h.tim_asunto,
+                h.tim_horas,
+                h.tim_minutos,
+                h.abo_id,
+                h.modificable,
+                h.offline,
+                h.tim_fecha_ing,
+                p.pro_nombre,
+                p.cli_nom,
+                h.hora_id,
+                h.fecha_ult_mod,
+                h.estado
+            from
+                Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
+            where
+                h.offline = 1
+        """
+        do
+        {
+            try open()
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing get list horas: \(errmsg)")
+            }
+            
+            var horas = [Hora]()
+            while sqlite3_step(statement) == SQLITE_ROW
+            {
+                let hora = getHoraFromRecord(&statement)
+                horas.append(hora)
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return horas
+        }
+        catch
+        {
+            close()
+            print("Error: getListDetalleHorasByCodAbogadoAndFecha")
+        }
+        return nil
+    }
+    
     func eliminar()
     {
         do
@@ -875,5 +936,28 @@ public class TbHora
         {
             print("\(error)")
         }
+    }
+
+    func eliminar(codigo: String, fechaDesde: String, fechaHasta: String) -> Bool
+    {
+        do
+        {
+            try open()
+            var query : String = "delete Horas where abo_id=" +  codigo
+            query = query + " and (strftime('%Y-%m-%d',h.tim_fecha_ing)>=" + fechaDesde
+            query = query + " and strftime('%Y-%m-%d',h.tim_fecha_ing)<=" + fechaHasta + ")"
+            if sqlite3_exec(db, query, nil, nil, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error deleting table: \(errmsg)")
+            }
+            close()
+            return true
+        }
+        catch
+        {
+            print("\(error)")
+        }
+        return false
     }
 }

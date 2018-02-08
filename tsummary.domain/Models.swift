@@ -153,10 +153,10 @@ public class ClienteProyecto
 
 enum Estado: Int
 {
-    case nuevo
-    case actualizado
-    case eliminado
-    case antiguo
+    case nuevo = 0
+    case actualizado = 1
+    case eliminado = 2
+    case antiguo = 3
 }
 
 public class Hora

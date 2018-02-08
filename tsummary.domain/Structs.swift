@@ -22,11 +22,11 @@ struct User: Decodable
     let aud: String
 }
 
-
 class SessionLocal {
     
     var usuario: Usuario?
     var token: String?
+    var expiredAt: Date?
     
     class var shared: SessionLocal {
         struct Static {
@@ -35,6 +35,16 @@ class SessionLocal {
         return Static.instance
     }
     
+    func isExpired() -> Bool
+    {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Santiago")!
+        calendar.locale = Locale(identifier: "es_CL")
+        
+        let now: Date = Date()
+        let hours : Int = calendar.dateComponents([.hour], from: self.expiredAt!, to: now).hour ?? 0
+        return (hours > 6)
+    }
 }
 
 struct HoraJSON
@@ -43,7 +53,6 @@ struct HoraJSON
     let mensaje: String
     let data: String
 }
-
 
 struct Data {
     let tim_correl : Int32
@@ -56,3 +65,39 @@ struct Data {
     let offLine: Bool
     let fechaInsert: String
 }
+
+struct DataSend : Codable{
+    let Fecha: String
+    let Lista: [HoraTS]
+}
+
+struct HoraTS : Codable
+{
+    let tim_correl : Int32
+    let pro_id : Int32
+    let tim_fecha_ing: String
+    let tim_asunto: String
+    let tim_horas : Int
+    let tim_minutos : Int
+    let abo_id : Int
+    let OffLine : Bool
+    let FechaInsert : String
+    let Estado : Int
+}
+
+struct Response
+{
+    let estado: Int
+    let mensaje: String
+    let result : Bool
+}
+
+
+struct ParametrosBusquedaTS: Codable
+{
+    let AboId : Int32
+    let FechaI : String
+    let FechaF : String
+    let tim_correl: Int32
+}
+

@@ -26,15 +26,25 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        validar(getUIDevice())
+        autentificar(getUIDevice())
     }
     
-    func validar(_ imei: String)
+    func autentificar(_ imei: String)
     {
-        if let s = ControladorLogica.instance.validar(imei)
+        if let session = ControladorLogica.instance.obtSessionLocal(imei: imei)
         {
-            self.activity.startAnimating()
-            sincronizar(s)
+            if (!session.isExpired())
+            {
+                self.activity.startAnimating()
+                self.sincronizar(session)
+            }
+            else
+            {
+                let sessionLocal = ControladorLogica.instance.obtSessionLocal()
+                let user = sessionLocal?.usuario?.loginName
+                let password = sessionLocal?.usuario?.password
+                ApiClient.instance.registrar(imei: imei, userName: user, password: password, callback: self.guardar)
+            }
         }
     }
     
@@ -52,7 +62,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    fileprivate func autentificar() {
+    fileprivate func registrar() {
         
         var mensaje : String!
         
@@ -77,29 +87,22 @@ class ViewController: UIViewController {
                     
                     btnRegistrar.isEnabled = false
                     self.activity.startAnimating()
-                    if let session = ControladorLogica.instance.autentificar(user, password, imei)
-                    {
-                        sincronizar(session)
-                    }
-                    else
-                    {
-                        ApiClient.instance.registrar(
+                    ApiClient.instance.registrar(
                             imei: imei,
                             userName: user,
                             password: password,
-                            callback: self.setUsuario
-                        )
-                    }
+                            callback: self.guardar
+                    )
                 }
             }
         }
     }
     
     @IBAction func registrar(_ sender: Any) {
-        autentificar()
+        registrar()
     }
     
-    func setUsuario(session: SessionLocal?)
+    func guardar(session: SessionLocal?)
     {
         if let session = session
         {
@@ -116,12 +119,13 @@ class ViewController: UIViewController {
         if let u = session.usuario
         {
             self.codigo = u.id
-            if Reachability.isConnectedToNetwork() {
-                self.sincronizar(session, callback: redireccionar)
+            if Reachability.isConnectedToNetwork()
+            {
+                self.sincronizar(session, callback: self.redireccionar)
             }
             else
             {
-                redireccionar(estado: true)
+                self.redireccionar(estado: true)
             }
         }
     }

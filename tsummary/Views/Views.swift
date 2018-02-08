@@ -28,4 +28,5 @@ protocol IEditViewHora {
     var asunto : String { get set }
     var timCorrelativo : Int32 { get set }
     func setNombreProyecto(_ model : ModelController)
+    func setResponse(_ response: Response)
 }

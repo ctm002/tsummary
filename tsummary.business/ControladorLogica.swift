@@ -5,8 +5,9 @@ public class ControladorLogica
     
     init() {}
     
-    func eliminarById(_ id: Int32, callback: @escaping (Int) -> Void)
+    func eliminarById(_ id: Int32) -> Response
     {
+        var result: Response!
         if let hora = DataBase.horas.getById(id)
         {
             if Reachability.isConnectedToNetwork()
@@ -15,14 +16,28 @@ public class ControladorLogica
                     responseOK: { (hora) -> Void in
                         hora.estado = .eliminado
                         hora.offline = false
-                        DataBase.horas.eliminar(hora)
-                        callback(1)
+                        let rowAffected = DataBase.horas.eliminar(hora)
+                        if rowAffected
+                        {
+                            result = Response(estado: 3, mensaje: "Se elimino remotamente y localmente", result: true)
+                        }
+                        else
+                        {
+                            result = Response(estado: 2, mensaje: "Se elimino remotamente pero no localmente", result: false)
+                        }
                     },
                     responseError: { (hora) -> Void in
                         hora.estado = .eliminado
                         hora.offline = true
-                        DataBase.horas.eliminar(hora)
-                        callback(2)
+                        let rowAffected = DataBase.horas.eliminar(hora)
+                        if rowAffected
+                        {
+                            result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente",  result: false)
+                        }
+                        else
+                        {
+                            result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false)
+                        }
                     }
                 )
             }
@@ -30,50 +45,85 @@ public class ControladorLogica
             {
                 hora.estado = .eliminado
                 hora.offline = true
-                DataBase.horas.eliminar(hora)
-                callback(2)
+                let rowAffected = DataBase.horas.eliminar(hora)
+                if (rowAffected)
+                {
+                    result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente", result: false)
+                }
+                else
+                {
+                    result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false)
+                }
             }
         }
+        return result
     }
     
-    func guardar(hora: Hora, callback: @escaping (Int) -> Void)
+    func guardar(hora: Hora, callback: @escaping (Response) -> Void)
     {
-       if Reachability.isConnectedToNetwork()
-       {
-            ApiClient.instance.guardar(hora: hora, responseOK: { (hora) -> Void in
+        var result: Response!
+
+        if Reachability.isConnectedToNetwork()
+        {
+            ApiClient.instance.guardar(hora: hora
+            , responseOK: { (hora) -> Void in
                 hora.estado = .antiguo
                 hora.offline = false
-                DataBase.horas.guardar(hora)
-                callback(1)
+                let rowAffected = DataBase.horas.guardar(hora)
+                if rowAffected
+                {
+                    result = Response(estado: 0, mensaje: "Se guardo remotamente y localmente", result: true)
+                }
+                else
+                {
+                    result = Response(estado: 0, mensaje: "Se guardo remotamente pero no localmente", result: false)
+                }
+                callback(result)
+                
             }, responseError: { (hora) -> Void in
-                DataBase.horas.guardar(hora)
-                callback(2)
+                let rowAffected = DataBase.horas.guardar(hora)
+                if rowAffected
+                {
+                    result = Response(estado: 0, mensaje: "No se guardo remotamente pero si localmente", result: false)
+                }
+                else
+                {
+                    result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false)
+                }
+                callback(result)
             })
         }
         else
         {
-            DataBase.horas.guardar(hora)
-            callback(2)
+            let rowAffected = DataBase.horas.guardar(hora)
+            if rowAffected
+            {
+                result = Response(estado: 1, mensaje: "No se guardo remotamente pero si localmente", result: false)
+            }
+            else
+            {
+                result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false)
+            }
+           callback(result)
         }
     }
     
     func sincronizar(_ session: SessionLocal,_ callback: @escaping (Bool) -> Void)
     {
-        sincronizarProyectos(session, callback)
+        self.sincronizarProyectos(session, callback)
     }
     
     private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
         ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
-            
             let proyectosLocalesIds = DataBase.proyectos.obtListProyectos()?.map { $0.id }
             let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
             let result = DataBase.proyectos.guardar(proyectosNuevos!)
             if (result)
             {
                 print("proyectos descargados")
+                self.sincronizarHoras(session, retorno)
             }
-            self.sincronizarHoras(session, retorno)
         })
     }
     
@@ -83,8 +133,47 @@ public class ControladorLogica
         let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
         
+        if let horas : [Hora] = DataBase.horas.getListDetalleHorasOffline(codigo: codigo)
+        {
+            if horas.count > 0
+            {
+                var aHorasTS : [HoraTS] = [HoraTS]()
+                for h in horas
+                {
+                    let horaTS = HoraTS(
+                        tim_correl: h.tim_correl,
+                        pro_id: h.proyecto.id,
+                        tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso),
+                        tim_asunto: h.asunto,
+                        tim_horas: h.horasTrabajadas,
+                        tim_minutos: h.minutosTrabajados,
+                        abo_id: h.abogadoId,
+                        OffLine: h.offline,
+                        FechaInsert: Utils.toStringFromDate(h.fechaInsert!),
+                        Estado: h.estado.rawValue)
+                    
+                    aHorasTS.append(horaTS)
+                }
+                
+                let dataSend = DataSend(
+                    Fecha: Utils.toStringFromDate(Date()),
+                    Lista: aHorasTS)
+                ApiClient.instance.sincronizar(session, dataSend)
+                
+                
+                DataBase.horas.eliminar()
+                
+                ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
+                , callback:{(hrsRemotas)->Void in
+                    let result : Bool = DataBase.horas.guardar(hrsRemotas!)
+                })
+            }
+        }
+        retorno(true)
+        
         /*
         ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback:{(hrsRemotas)->Void in
+            
             var resp : Bool = false
             if let hrsLocales = DataBase.horas.obtListHorasByCodAbogado(codigo, fDesde, fHasta)
             {
@@ -184,18 +273,26 @@ public class ControladorLogica
         DataBase.usuarios.dropTable()
     }
     
-    func autentificar(_ user: String, _ password: String, _ imei: String) -> SessionLocal?
+    func obtSessionLocal(loginName: String = "", password: String = "", imei: String = "") -> SessionLocal?
     {
-        return DataBase.usuarios.autentificar(imei: imei, user: user, password: password)
-    }
-    
-    func validar(_ imei: String) -> SessionLocal?
-    {
-        return DataBase.usuarios.validar(imei)
+        return DataBase.usuarios.obtSessionLocal(imei: imei, loginName: loginName, password: password)
     }
     
     func guardar(_ session: SessionLocal) -> Bool
     {
-        return DataBase.usuarios.guardar(sessionLocal: session)
+        let s =  DataBase.usuarios.obtSessionLocal(loginName: (session.usuario?.loginName)!)
+        if s != nil
+        {
+            return DataBase.usuarios.actualizar(sessionLocal: session)
+        }
+        else
+        {
+            return DataBase.usuarios.guardar(sessionLocal: session)
+        }
+    }
+    
+    func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [Hora]?
+    {
+        return DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: codigo,fecha: fecha)
     }
 }

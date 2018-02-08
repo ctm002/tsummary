@@ -17,7 +17,7 @@ public class Utils
         formatter.locale = Locale(identifier: "es_CL")
         formatter.timeZone = TimeZone(identifier: "America/Santiago")
         formatter.dateFormat = format
-        let strDate =  formatter.string(from: date)
+        let strDate = formatter.string(from: date)
         return strDate
     }
 }

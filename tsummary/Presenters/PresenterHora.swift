@@ -22,7 +22,7 @@ public class PresenterHora
     {
         let fecha : String =  self.mView!.fechaHoraIngreso
         let codigo : Int = self.mView!.idAbogado
-        if let hrs = DataBase.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo),fecha: fecha)
+        if let hrs = ControladorLogica.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo),fecha: fecha)
         {
             self.mView?.setList(horas: hrs)
         }
@@ -30,65 +30,51 @@ public class PresenterHora
     
     func guardar()
     {
-        do
+
+        let id: Int32  = self.mEditViewHora!.idHora
+        
+        var detalle : Hora
+        if let detalleDB = DataBase.horas.getById(id)
         {
-            let id: Int32  = self.mEditViewHora!.idHora
-            
-            var detalle : Hora
-            if let detalleHoraTemp = DataBase.horas.getById(id)
-            {
-                detalle = detalleHoraTemp
-                detalle.estado = .actualizado
-            }
-            else
-            {
-                detalle = Hora()
-                detalle.tim_correl = 0
-                detalle.estado = .nuevo
-                detalle.modificable = true
-            }
-            
-            let proyectoId = self.mEditViewHora!.proyectoId
-            let fechaIngreso = self.mEditViewHora!.fechaHoraIngreso
-            let idAbogado = self.mEditViewHora!.idAbogado
-            let asunto = self.mEditViewHora!.asunto
-            let cantHoras = self.mEditViewHora!.horas
-            let cantMinutos = self.mEditViewHora!.minutos
-            
-            detalle.proyecto.id = Int32(proyectoId)
-            detalle.fechaHoraIngreso = fechaIngreso
-            detalle.abogadoId = Int(idAbogado)
-            detalle.asunto = asunto
-            detalle.horasTrabajadas = Int(cantHoras)
-            detalle.minutosTrabajados = Int(cantMinutos)
-            detalle.offline = true
-            detalle.fechaInsert = Date()
-            
-            ControladorLogica.instance.guardar(hora: detalle, callback: self.response)
+            detalle = detalleDB
+            detalle.estado = .actualizado
         }
-        catch let error
+        else
         {
-            print("\(error)")
+            detalle = Hora()
+            detalle.tim_correl = 0
+            detalle.estado = .nuevo
+            detalle.modificable = true
         }
+        
+        let proyectoId = self.mEditViewHora!.proyectoId
+        let fechaIngreso = self.mEditViewHora!.fechaHoraIngreso
+        let idAbogado = self.mEditViewHora!.idAbogado
+        let asunto = self.mEditViewHora!.asunto
+        let cantHoras = self.mEditViewHora!.horas
+        let cantMinutos = self.mEditViewHora!.minutos
+        
+        detalle.proyecto.id = Int32(proyectoId)
+        detalle.fechaHoraIngreso = fechaIngreso
+        detalle.abogadoId = Int(idAbogado)
+        detalle.asunto = asunto
+        detalle.horasTrabajadas = Int(cantHoras)
+        detalle.minutosTrabajados = Int(cantMinutos)
+        detalle.offline = true
+        detalle.fechaInsert = Date()
+        
+        ControladorLogica.instance.guardar(hora: detalle, callback: {(response: Response) in
+            self.mEditViewHora.setResponse(response)
+        })
     }
     
-    @objc func response(result: Int)
-    {
-        switch result
-        {
-            case 1:
-                print("Los datos fueron guardados en la nube")
-            case 2:
-                print("Los datos fueron guardados localmente")
-            default:
-                print("Error")
-        }
-    }
-    
-    func eliminar() -> Bool
+    func eliminar() -> Response
     {
         let id: Int32  = self.mEditViewHora!.idHora
-        ControladorLogica.instance.eliminarById(id, callback: response)
-        return true
+        let response = ControladorLogica.instance.eliminarById(id)
+        return response
     }
 }
+
+
+
