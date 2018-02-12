@@ -22,13 +22,14 @@ class ApiClient: NSObject
         let url = URL(string:self.strURL + "tokenmobile")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var postData: String = ""
         postData.append("{\"usuario\":\"" + userName! + "\"," );
         postData.append("\"imei\":\"" + imei! + "\"," );
         postData.append("\"password\":\"" + password! + "\"}");
         request.httpBody = postData.data(using: String.Encoding.utf8);
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
@@ -98,11 +99,11 @@ class ApiClient: NSObject
     func obtListDetalleHorasByCodAbogado(_ session: SessionLocal,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Hora]?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
-        let sURL : String = "\(self.strURL)api/Horas/GetHorasByParameters"
-        let url = URL(string: "\(sURL)")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5000)
+        let url = URL(string: self.strURL + "api/Horas/GetHorasByParameters")
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
-        request.setValue("bearer \(session.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parametrosBusquedaTS = ParametrosBusquedaTS(
             AboId: (session.usuario?.id)!,
@@ -115,7 +116,8 @@ class ApiClient: NSObject
         do
         {
             let dataJSON = try jsonEncoder.encode(parametrosBusquedaTS)
-            request.httpBody = String(data: dataJSON, encoding:.utf8)?.data(using: String.Encoding.utf8)
+            let strJSON: String = String(data: dataJSON, encoding:.utf8)!
+            request.httpBody = strJSON.data(using: String.Encoding.utf8)
             let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 if(error != nil)
                 {
@@ -144,7 +146,7 @@ class ApiClient: NSObject
                                 hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
                                 hora.abogadoId = item["abo_id"] as! Int
                                 hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
-                                hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss.SSS")!
+                                hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
                                 horas.append(hora)
                             }
                             callback(horas)
@@ -233,7 +235,8 @@ class ApiClient: NSObject
     func guardar(hora: Hora, responseOK: @escaping (Hora) -> Void,  responseError: @escaping (Hora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
-        let url = URL(string: self.strURL + "/api/HorasMobile")
+        let sURL = "\(self.strURL)api/HorasMobile"
+        let url = URL(string: sURL)
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -248,16 +251,17 @@ class ApiClient: NSObject
             tim_minutos : hora.minutosTrabajados,
             abo_id : hora.abogadoId,
             OffLine : hora.offline,
-            FechaInsert :  Utils.toStringFromDate(hora.fechaInsert!),
+            FechaInsert : Utils.toStringFromDate(hora.fechaInsert!),
             Estado : hora.estado.rawValue)
         
         let jsonEncoder = JSONEncoder()
         do
         {
             let jsonData = try jsonEncoder.encode(horaTS)
+            let strJSON = String(data: jsonData, encoding: .utf8)!
             var postData: String = ""
-            postData.append(String(data: jsonData, encoding: .utf8)!)
-            request.httpBody = postData.data(using:.utf8)
+            postData.append(strJSON)
+            request.httpBody = jsonData // postData.data(using: .utf8)
             
             let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 if(error != nil)
@@ -296,16 +300,9 @@ class ApiClient: NSObject
     func eliminar(hora: Hora, responseOK: @escaping (Hora) -> Void, responseError: @escaping (Hora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
-        
-        let url = URL(string: self.strURL + "/api/Horas/Delete")
+        let url = URL(string: self.strURL + "api/Horas/" + String(hora.tim_correl))
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
         request.httpMethod = "DELETE"
-        
-        var postData: String = ""
-        postData.append("tim_correl=" +  String(hora.tim_correl))
-        request.httpBody = postData.data(using: String.Encoding.utf8)
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("bearer " + SessionLocal.shared.token!, forHTTPHeaderField: "Authorization")
         
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
@@ -320,7 +317,7 @@ class ApiClient: NSObject
                 do
                 {
                     let dataJSON =  try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
-                    let estado = dataJSON["Estado"] as! Int32
+                    let estado = dataJSON["estado"] as! Int32
                     if estado ==  1
                     {
                         responseOK(hora)

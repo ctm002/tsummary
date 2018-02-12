@@ -1,5 +1,6 @@
 import UIKit
-class ViewController: UIViewController {
+class ViewController: UIViewController
+{
 
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtUserName: UITextField!
@@ -43,7 +44,22 @@ class ViewController: UIViewController {
                 let sessionLocal = ControladorLogica.instance.obtSessionLocal()
                 let user = sessionLocal?.usuario?.loginName
                 let password = sessionLocal?.usuario?.password
-                ApiClient.instance.registrar(imei: imei, userName: user, password: password, callback: self.guardar)
+                
+                ApiClient.instance.registrar(
+                    imei: imei,
+                    userName: user,
+                    password: password,
+                    callback:{ (sessionLocal : SessionLocal?) in
+                        if let session = sessionLocal
+                        {
+                            let resp = self.guardar(session)
+                            if resp
+                            {
+                                self.sincronizar(session)
+                            }
+                        }
+                    }
+                )
             }
         }
     }
@@ -62,8 +78,12 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    fileprivate func registrar() {
-        
+    @IBAction func registrar(_ sender: Any) {
+        registrar()
+    }
+    
+    fileprivate func registrar()
+    {
         var mensaje : String!
         
         if txtUserName.text?.isEmpty ?? false {
@@ -88,28 +108,49 @@ class ViewController: UIViewController {
                     btnRegistrar.isEnabled = false
                     self.activity.startAnimating()
                     ApiClient.instance.registrar(
-                            imei: imei,
-                            userName: user,
-                            password: password,
-                            callback: self.guardar
+                        imei: imei,
+                        userName: user,
+                        password: password,
+                        callback: { (sessionLocal: SessionLocal?) -> Void in
+                            if let session = sessionLocal
+                            {
+                                let resp = self.guardar(session)
+                                if resp
+                                {
+                                    self.descargar(session)
+                                }
+                            }
+                        }
                     )
                 }
             }
         }
     }
     
-    @IBAction func registrar(_ sender: Any) {
-        registrar()
+    func guardar(_ session: SessionLocal) -> Bool
+    {
+        return ControladorLogica.instance.guardar(session)
     }
     
-    func guardar(session: SessionLocal?)
+    func descargar(_ session: SessionLocal)
     {
-        if let session = session
+        if let u = session.usuario
         {
-            let response = ControladorLogica.instance.guardar(session)
-            if (response)
+            self.codigo = u.id
+            if Reachability.isConnectedToNetwork()
             {
-                self.sincronizar(session)
+                let fDesde : String =  "20180101"
+                let fHasta : String =  "20181231"
+                ControladorLogica.instance.descargar(
+                    session: session,
+                    fDesde: fDesde,
+                    fHasta: fHasta,
+                    redirect: self.redireccionar
+                )
+            }
+            else
+            {
+                self.redireccionar(estado: true)
             }
         }
     }
@@ -130,6 +171,11 @@ class ViewController: UIViewController {
         }
     }
     
+    func sincronizar(_ session: SessionLocal, callback: @escaping (Bool) -> Void)
+    {
+        ControladorLogica.instance.sincronizar(session, callback)
+    }
+    
     func redireccionar(estado: Bool)
     {
         if (estado)
@@ -142,11 +188,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func sincronizar(_ session: SessionLocal, callback: @escaping (Bool) -> Void)
-    {
-        ControladorLogica.instance.sincronizar(session, callback)
-    }
-
     @IBAction func btnDeleteOnClick(_ sender: Any)
     {
         self.btnEliminar.isEnabled = false

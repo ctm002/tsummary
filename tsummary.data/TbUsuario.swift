@@ -120,6 +120,55 @@ public class TbUsuario
         return nil
     }
     
+    
+    func existsSessionLocal(loginName:String) -> Bool
+    {
+        do
+        {
+            try open()
+            
+            var condicion : String = ""
+            var statement: OpaquePointer?
+            
+            
+            var consulta : String = """
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password
+                from Usuario where 1=1
+                """
+            
+            if (loginName != "")
+            {
+                condicion =  condicion + " and LoginName='" + loginName + "'"
+            }
+            
+            consulta = consulta + condicion
+            
+            if sqlite3_prepare_v2(db, consulta, -1, &statement, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing select: \(errmsg)")
+            }
+            
+            var exists: Bool = false
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
+                exists = true
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return exists
+        }
+        catch
+        {
+            print("\(error)")
+        }
+        return false
+    }
+    
     func getSessionLocalFromRecord(_ statement: inout OpaquePointer?)-> SessionLocal
     {
         let usuario = Usuario()
@@ -299,7 +348,7 @@ public class TbUsuario
             var statement: OpaquePointer?
             
             if sqlite3_prepare_v2(db, """
-                    update usuario set (Nombre=?, Grupo=?, IMEI=?, Token=?, ExpiredAt=?)
+                    update usuario set Nombre=?, Grupo=?, IMEI=?, Token=?, ExpiredAt=?
                     where Id=?
                 """
                 , -1, &statement, nil) != SQLITE_OK {

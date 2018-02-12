@@ -34,7 +34,7 @@ public class PresenterHora
         let id: Int32  = self.mEditViewHora!.idHora
         
         var detalle : Hora
-        if let detalleDB = DataBase.horas.getById(id)
+        if let detalleDB = DataStore.horas.getById(id)
         {
             detalle = detalleDB
             detalle.estado = .actualizado
@@ -68,11 +68,12 @@ public class PresenterHora
         })
     }
     
-    func eliminar() -> Response
+    func eliminar()
     {
         let id: Int32  = self.mEditViewHora!.idHora
-        let response = ControladorLogica.instance.eliminarById(id)
-        return response
+        ControladorLogica.instance.eliminarById(id, callback: { (response:Response) in
+                self.mEditViewHora.setResponse(response)
+        })
     }
 }
 

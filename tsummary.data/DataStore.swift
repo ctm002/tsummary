@@ -1,8 +1,8 @@
 import Foundation
 
-public class DataBase
+public class DataStore
 {
-    static let instance = DataBase()
+    static let instance = DataStore()
     
     init() {}
     

@@ -11,7 +11,7 @@ class PresenterProyecto {
     
     func obtListProyectos()
     {
-        if let proyectos = DataBase.proyectos.obtListProyectos()
+        if let proyectos = DataStore.proyectos.obtListProyectos()
         {
             self.mView!.setList(proyectos: proyectos)
         }

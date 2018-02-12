@@ -42,8 +42,8 @@ class SessionLocal {
         calendar.locale = Locale(identifier: "es_CL")
         
         let now: Date = Date()
-        let hours : Int = calendar.dateComponents([.hour], from: self.expiredAt!, to: now).hour ?? 0
-        return (hours > 6)
+        let minutes : Int = calendar.dateComponents([.minute], from: now, to: self.expiredAt!).minute ?? 0
+        return (minutes <= 1)
     }
 }
 

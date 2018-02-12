@@ -2,8 +2,7 @@ import UIKit
 
 class SchedulerViewController: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-    UITableViewDataSource,UITableViewDelegate,
-IListViewSemana, IViewHora {
+    IListViewSemana, IViewHora {
     
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
@@ -38,14 +37,17 @@ IListViewSemana, IViewHora {
     let diasBySemana: CGFloat = 7
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
-    
-
-    
     let vCalendario = UIView()
     let vMenu = UIView()
     
     
-    override func viewDidLoad() {
+    let dhView : DetalleHoraView = {
+        let view = DetalleHoraView()
+        return view
+    }()
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         navigationController?.navigationBar.isTranslucent = false
@@ -95,42 +97,29 @@ IListViewSemana, IViewHora {
         
         self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: vCalendario, attribute: .bottom, multiplier: 1, constant: 0))
         
-        let vHoras = UIView()
-        self.view.addSubview(vHoras)
-        vHoras.translatesAutoresizingMaskIntoConstraints = false
-        vHoras.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        vHoras.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        vHoras.backgroundColor = UIColor.purple
+        self.view.addSubview(self.dhView)
+        self.dhView.translatesAutoresizingMaskIntoConstraints = false
+        self.dhView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.dhView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        self.dhView.delegate = self
         
-        self.view.addConstraint(NSLayoutConstraint(item:vHoras, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 10))
-        
-        vHoras.addSubview(mTVHoras)
-        mTVHoras.translatesAutoresizingMaskIntoConstraints = false
-        mTVHoras.topAnchor.constraint(equalTo: vHoras.topAnchor).isActive = true
-        mTVHoras.leadingAnchor.constraint(equalTo: vHoras.leadingAnchor, constant:0).isActive = true
-        mTVHoras.trailingAnchor.constraint(equalTo: vHoras.trailingAnchor, constant:-0).isActive = true
-        mTVHoras.bottomAnchor.constraint(equalTo: vHoras.bottomAnchor, constant: 0).isActive = true
-        
-        mTVHoras.register(TVCDetalleHora.self, forCellReuseIdentifier:cellId2)
-        mTVHoras.delegate = self
-        mTVHoras.dataSource = self
-        mTVHoras.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
-        
+        self.view.addConstraint(NSLayoutConstraint(item: self.dhView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
+       
         self.view.bringSubview(toFront: vMenu)
-        
         presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
         presenterSemana.mostrar()
         
-        //self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         self.presenterHora = PresenterHora(self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         self.presenterHora.buscarHoras()
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
     }
     
-    fileprivate func setupConstraintMenu() {
+    fileprivate func setupConstraintMenu()
+    {
         self.view.addSubview(vMenu)
         vMenu.translatesAutoresizingMaskIntoConstraints = false
         vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
@@ -148,12 +137,12 @@ IListViewSemana, IViewHora {
         btnConfig.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
         btnConfig.heightAnchor.constraint(equalToConstant: 30).isActive = true
         btnConfig.setTitle("Ajustes", for: .normal)
-        
         btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
         btnConfig.setTitleColor(UIColor.black, for: .normal)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         let identifier : String = segue.identifier!
         switch identifier
         {
@@ -177,83 +166,22 @@ IListViewSemana, IViewHora {
         }
     }
     
-    func setList(horas: [Hora]) {
-        self.horas = horas
+    func setList(horas: [Hora])
+    {
+        self.dhView.objects = horas
         DispatchQueue.main.async {
-            self.mTVHoras.reloadData()
+            self.dhView.collectionView.reloadData()
         }
     }
-    
-    //Inicio TableCell----------------------------------------------------------------------------------------
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let hrs = self.horas
-        {
-            return  hrs.count
-        }
-        else
-        {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = mTVHoras.dequeueReusableCell(withIdentifier: cellId2, for:indexPath) as! TVCDetalleHora
-        if let hrs = self.horas {
-            cell.lblCliente.text = hrs[indexPath.row].proyecto.nombreCliente
-            cell.lblProyecto.text = hrs[indexPath.row].proyecto.nombre
-            cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].horasTrabajadas) + ":" + String(format: "%02d",  hrs[indexPath.row].minutosTrabajados)
-            cell.lblAsunto.text = hrs[indexPath.row].asunto
-            cell.IdHora = hrs[indexPath.row].id
-            cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
-            
-            let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
-                target: self,
-                action: #selector(selectedItemTableView))
-            gesture.numberOfTapsRequired = 1
-            gesture.numberOfTouchesRequired = 1
-            cell.isUserInteractionEnabled = true
-            cell.addGestureRecognizer(gesture)
-        }
-        return cell
-    }
-    
-    @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
+
+    //Inicio collectionView-----------------------------------------------------------------------------------------
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        if let cell = gestureRecognizer.view as? TVCDetalleHora {
-            if let detalleHora = DataBase.horas.getById(cell.IdHora)
-            {
-                let model = ModelController(
-                    id: detalleHora.id,
-                    abogadoId: detalleHora.abogadoId,
-                    fechaHoraIngreso: detalleHora.fechaHoraIngreso,
-                    idProyecto: detalleHora.proyecto.id,
-                    nombreProyecto: detalleHora.proyecto.nombre,
-                    nombreCliente: detalleHora.proyecto.nombreCliente,
-                    horas: detalleHora.horasTrabajadas,
-                    minutos: detalleHora.minutosTrabajados,
-                    asunto: detalleHora.asunto,
-                    correlativo: detalleHora.tim_correl,
-                    modificable : detalleHora.modificable,
-                    offline : detalleHora.offline)
-                self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
-            }
-        }
-    }
-    
-    @objc func agregar()
-    {
-        let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraIngreso : self.getFechaHoraActual())
-        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
-    }
-    //Fin de TableCell-------------------------------------------------------------------------------------------------
-    
-    //Inicio collectionView--------------------------------------------------------------------------------------------
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return  semana.count
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
         cell.lblDia.text = self.semana[indexPath.row].nombre
         cell.lblNro.text = String(self.semana[indexPath.row].nro)
@@ -273,15 +201,18 @@ IListViewSemana, IViewHora {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
         return CGSize(width: self.mCVDias.frame.width/7, height: self.mCVDias.frame.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 0
     }
     
-    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer)
+    {
         if let cell = gestureRecognizer.view as? CustomCell {
             if cellPrevious == nil
             {
@@ -311,10 +242,10 @@ IListViewSemana, IViewHora {
         }
     }
     
-    func setList(semana: [Dia]) {
+    func setList(semana: [Dia])
+    {
         self.semana = semana
     }
-    
     //Fin collectionView--------------------------------------------------------------------------------------------
     
     private var mIdAbogado : Int = 0
@@ -363,7 +294,8 @@ IListViewSemana, IViewHora {
     
     @IBAction func add(_ sender: Any)
     {
-        agregar()
+        let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraIngreso : self.getFechaHoraActual())
+        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
     }
     
     @IBAction func menuBtnPresed(_ sender: UIBarButtonItem)
@@ -382,5 +314,12 @@ IListViewSemana, IViewHora {
     @objc func mostrarAjustes()
     {
         self.performSegue(withIdentifier: "ajustesSegue", sender: self.idAbogado)
+    }
+}
+
+extension SchedulerViewController: DetalleHoraViewDelegate
+{
+    func editViewController(model: ModelController) {
+        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
     }
 }
