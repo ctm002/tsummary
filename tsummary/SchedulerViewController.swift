@@ -1,8 +1,6 @@
 import UIKit
 
-class SchedulerViewController: UIViewController,
-    UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-    IListViewSemana, IViewHora {
+class SchedulerViewController: UIViewController, IViewHora {
     
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
@@ -24,7 +22,7 @@ class SchedulerViewController: UIViewController,
         return lbl
     }()
     
-    var cellPrevious: CustomCell!
+    var cellPrevious: DetalleDiaCell!
     var screenSize: CGRect!
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
@@ -41,8 +39,13 @@ class SchedulerViewController: UIViewController,
     let vMenu = UIView()
     
     
-    let dhView : DetalleHoraView = {
+    let detalleHoraView : DetalleHoraView = {
         let view = DetalleHoraView()
+        return view
+    }()
+    
+    let semanaView : SemanaView = {
+        let view = SemanaView()
         return view
     }()
     
@@ -53,31 +56,13 @@ class SchedulerViewController: UIViewController,
         navigationController?.navigationBar.isTranslucent = false
         setupConstraintMenu()
         
-        self.view.addSubview(vCalendario)
-        vCalendario.translatesAutoresizingMaskIntoConstraints = false
-        vCalendario.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        vCalendario.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        vCalendario.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        vCalendario.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        vCalendario.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.scrollDirection = .horizontal
-        
-        if (self.mCVDias == nil)  {self.mCVDias = UICollectionView(frame: .zero, collectionViewLayout: layout)}
-        
-        vCalendario.addSubview(mCVDias)
-        mCVDias.translatesAutoresizingMaskIntoConstraints = false
-        mCVDias.centerXAnchor.constraint(equalTo: vCalendario.centerXAnchor).isActive = true
-        mCVDias.centerYAnchor.constraint(equalTo: vCalendario.centerYAnchor).isActive = true
-        mCVDias.heightAnchor.constraint(equalTo: vCalendario.heightAnchor).isActive = true
-        mCVDias.leadingAnchor.constraint(equalTo: vCalendario.leadingAnchor, constant: 0).isActive = true
-        mCVDias.trailingAnchor.constraint(equalTo: vCalendario.trailingAnchor, constant: -0).isActive = true
-        mCVDias.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
-        mCVDias.register(CustomCell.self, forCellWithReuseIdentifier:cellId1)
-        mCVDias.dataSource = self
-        mCVDias.delegate = self
+        self.view.addSubview(semanaView)
+        semanaView.translatesAutoresizingMaskIntoConstraints = false
+        semanaView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
+        semanaView.delegate = self
         
         let vFecha = UIView()
         self.view.addSubview(vFecha)
@@ -95,19 +80,17 @@ class SchedulerViewController: UIViewController,
         self.mLblTextFecha.trailingAnchor.constraint(equalTo:  vFecha.trailingAnchor).isActive = true
         self.mLblTextFecha.leadingAnchor.constraint(equalTo: vFecha.leadingAnchor).isActive = true
         
-        self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: vCalendario, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: self.semanaView, attribute: .bottom, multiplier: 1, constant: 0))
         
-        self.view.addSubview(self.dhView)
-        self.dhView.translatesAutoresizingMaskIntoConstraints = false
-        self.dhView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        self.dhView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        self.dhView.delegate = self
+        self.view.addSubview(self.detalleHoraView)
+        self.detalleHoraView.translatesAutoresizingMaskIntoConstraints = false
+        self.detalleHoraView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.detalleHoraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        self.detalleHoraView.delegate = self
         
-        self.view.addConstraint(NSLayoutConstraint(item: self.dhView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.detalleHoraView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
        
         self.view.bringSubview(toFront: vMenu)
-        presenterSemana = PresenterSemana(view: self,  rangoDeDias: self.cantDias)
-        presenterSemana.mostrar()
         
         self.presenterHora = PresenterHora(self)
     }
@@ -168,85 +151,11 @@ class SchedulerViewController: UIViewController,
     
     func setList(horas: [Hora])
     {
-        self.dhView.objects = horas
+        self.detalleHoraView.objects = horas
         DispatchQueue.main.async {
-            self.dhView.collectionView.reloadData()
+            self.detalleHoraView.collectionView.reloadData()
         }
     }
-
-    //Inicio collectionView-----------------------------------------------------------------------------------------
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    {
-        return  semana.count
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! CustomCell
-        cell.lblDia.text = self.semana[indexPath.row].nombre
-        cell.lblNro.text = String(self.semana[indexPath.row].nro)
-        
-        let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        gesture.numberOfTapsRequired = 1
-        gesture.numberOfTouchesRequired = 1
-        cell.isUserInteractionEnabled = true
-        cell.indexPath = indexPath.row
-        cell.addGestureRecognizer(gesture)
-        
-        if self.fechaHoraIngreso == self.semana[indexPath.row].fecha
-        {
-            cellPrevious = cell
-            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        return CGSize(width: self.mCVDias.frame.width/7, height: self.mCVDias.frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-    {
-        return 0
-    }
-    
-    @objc func handleTap(gestureRecognizer: UITapGestureRecognizer)
-    {
-        if let cell = gestureRecognizer.view as? CustomCell {
-            if cellPrevious == nil
-            {
-                cellPrevious = cell
-            }
-            else
-            {
-                if (cellPrevious.indexPath != cell.indexPath)
-                {
-                    cellPrevious.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
-                    cellPrevious = cell
-                }
-            }
-            
-            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
-            
-            if let nro = cell.lblNro.text
-            {
-                let dias: [Dia] =  self.semana.filter {$0.nro == Int(nro)!}
-                self.fechaHoraIngreso = dias[0].fecha
-                self.presenterHora.buscarHoras()
-                
-                DispatchQueue.main.async {
-                    self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
-                }
-            }
-        }
-    }
-    
-    func setList(semana: [Dia])
-    {
-        self.semana = semana
-    }
-    //Fin collectionView--------------------------------------------------------------------------------------------
     
     private var mIdAbogado : Int = 0
     var idAbogado : Int {
@@ -319,7 +228,20 @@ class SchedulerViewController: UIViewController,
 
 extension SchedulerViewController: DetalleHoraViewDelegate
 {
-    func editViewController(model: ModelController) {
+    func editViewController(model: ModelController)
+    {
         self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
+    }
+}
+
+extension SchedulerViewController: ListHorasViewDelegate
+{
+    func selectViewController(fecha: String) {
+        self.fechaHoraIngreso = fecha
+        self.presenterHora.buscarHoras()
+        
+        DispatchQueue.main.async {
+            self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
+        }
     }
 }

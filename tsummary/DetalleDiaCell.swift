@@ -1,6 +1,6 @@
 import UIKit
 
-class CustomCell: UICollectionViewCell
+class DetalleDiaCell: UICollectionViewCell
 {
     var indexPath: Int = -1
     
