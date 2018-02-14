@@ -175,7 +175,7 @@ class ApiClient: NSObject
         if let u = session.usuario
         {
             let urlSession: URLSession = URLSession.shared
-            let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogado"
+            let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogadoMob"
             let url = URL(string: sURL)
             let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
             request.httpMethod = "POST"
@@ -217,6 +217,7 @@ class ApiClient: NSObject
                                 proyecto.nombreCliente = item["nombreCliente"] as! String
                                 proyecto.nombre = item["nombreProyecto"] as! String
                                 proyecto.idiomaCliente = item["idioma"] as! String
+                                proyecto.estado = item["estado"] as! Int
                                 proyectos.append(proyecto)
                             }
                             callback(proyectos)

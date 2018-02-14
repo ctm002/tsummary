@@ -84,6 +84,7 @@ public class ClienteProyecto
         self.mNombreProyecto  = ""
         self.mIdiomaCliente = ""
         self.mCliente = Cliente()
+        self.mEstado = 0
     }
     
     private var mCliente: Cliente
@@ -147,6 +148,19 @@ public class ClienteProyecto
         set
         {
             self.mIdiomaCliente=newValue
+        }
+    }
+    
+    private var mEstado: Int
+    public var estado: Int
+    {
+        get
+        {
+            return self.mEstado
+        }
+        set
+        {
+            self.mEstado = newValue
         }
     }
 }

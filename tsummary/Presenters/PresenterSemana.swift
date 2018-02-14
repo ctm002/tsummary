@@ -51,10 +51,10 @@ public class PresenterSemana
     
     public func mostrar()
     {
-        var semanas : [Int:[Dia]] = [Int : [Dia]]()
+        //var semanas : [Int:[Dia]] = [Int : [Dia]]()
         
         var semana:[Dia] = [Dia]()
-        var nroSemana : Int = 0
+        //var nroSemana : Int = 0
         
         let formatter = DateFormatter()
         formatter.locale = calendar.locale
@@ -74,14 +74,14 @@ public class PresenterSemana
                 semana.append(dia)
                 fechaDeInicio = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fechaDeInicio!)
                 
-                if ((i + 1) % 7 == 0)
-                {
-                    semanas[nroSemana] = semana
-                    nroSemana = nroSemana + 1
-                    semana = [Dia]()
-                }
+//                if ((i + 1) % 7 == 0)
+//                {
+//                    semanas[nroSemana] = semana
+//                    nroSemana = nroSemana + 1
+//                    semana = [Dia]()
+//                }
             }
-            self.mView.setList(semanas: semanas)
+            self.mView.setList(semanas: semana)
         }
     }
 }

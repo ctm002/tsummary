@@ -141,13 +141,12 @@ public class ControladorLogica
     {
         ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
             let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
-            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
+            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!) && $0.estado==1}
             if proyectosNuevos != nil
             {
                 let result = DataStore.proyectos.guardar(proyectosNuevos!)
                 print("proyectos descargados")
             }
-            
             self.sincronizarHoras(session, retorno)
         })
     }

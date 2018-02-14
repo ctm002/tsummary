@@ -1,7 +1,7 @@
 import Foundation
 
 protocol IListViewSemana {
-    func setList(semanas: [Int:[Dia]])
+    func setList(semanas: [Dia])
 }
 
 protocol IViewHora {

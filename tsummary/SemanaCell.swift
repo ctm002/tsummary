@@ -5,7 +5,8 @@ public class SemanaCell: UICollectionViewCell
 {
     var fechaHoraIngreso: String = ""
     private var cellId1 : String = "cellId1"
-    public var objects : [Dia]!
+    var objects : [Dia]!
+    var item : Int = -1
     var cellPrevious: DetalleDiaCell!
     weak var delegate: ListHorasViewDelegate?
     
@@ -37,9 +38,8 @@ public class SemanaCell: UICollectionViewCell
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        self.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
     
     public func reloadData()
@@ -52,7 +52,11 @@ extension SemanaCell: UICollectionViewDataSource, UICollectionViewDelegate,UICol
 {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return objects.count
+        if let objs = objects
+        {
+            return objs.count
+        }
+        return 0;
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
@@ -79,13 +83,14 @@ extension SemanaCell: UICollectionViewDataSource, UICollectionViewDelegate,UICol
         gesture.numberOfTapsRequired = 1
         gesture.numberOfTouchesRequired = 1
         cell.isUserInteractionEnabled = true
-        cell.indexPath = indexPath.row
+        cell.indexPath = indexPath.item
         cell.addGestureRecognizer(gesture)
-        
-        if self.fechaHoraIngreso == self.objects[indexPath.row].fecha
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView?.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+        if self.fechaHoraIngreso == self.objects[indexPath.item].fecha
         {
+            cell.isSelected = true
             cellPrevious = cell
-            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         }
         
         return cell
@@ -94,6 +99,7 @@ extension SemanaCell: UICollectionViewDataSource, UICollectionViewDelegate,UICol
     @objc func handleTap(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? DetalleDiaCell {
+            
             if cellPrevious == nil
             {
                 cellPrevious = cell
@@ -102,18 +108,18 @@ extension SemanaCell: UICollectionViewDataSource, UICollectionViewDelegate,UICol
             {
                 if (cellPrevious.indexPath != cell.indexPath)
                 {
-                    cellPrevious.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
+                    cellPrevious.isSelected = false
                     cellPrevious = cell
                 }
             }
 
-            cell.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+            cell.isSelected = true
 
             if let nro = cell.lblNro.text
             {
                 let dias: [Dia] =  self.objects.filter {$0.nro == Int(nro)!}
                 self.fechaHoraIngreso = dias[0].fecha
-                delegate?.selectViewController(fecha: self.fechaHoraIngreso)
+                delegate?.selectDay(fecha: self.fechaHoraIngreso, item: self.item)
             }
         }
     }
@@ -121,5 +127,5 @@ extension SemanaCell: UICollectionViewDataSource, UICollectionViewDelegate,UICol
 
 protocol ListHorasViewDelegate: class
 {
-    func selectViewController(fecha: String)
+    func selectDay(fecha: String, item: Int)
 }

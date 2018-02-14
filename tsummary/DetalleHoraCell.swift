@@ -88,7 +88,7 @@ class DetalleHoraCell: UICollectionViewCell {
         lblProyecto.backgroundColor = mostrar ?  UIColor.purple : UIColor.white
         
         lblAsunto.translatesAutoresizingMaskIntoConstraints = false
-        lblAsunto.textAlignment = .left
+        lblAsunto.textAlignment = .justified
         lblAsunto.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: delta).isActive = true
         lblAsunto.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
         lblAsunto.numberOfLines = 0

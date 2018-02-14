@@ -238,7 +238,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4w-FI-Qgq" userLabel="TextViewAsunto">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="g4w-FI-Qgq" userLabel="TextViewAsunto">
                                                 <rect key="frame" x="20" y="114" width="335" height="120"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <rect key="contentStretch" x="0.10000000000000001" y="0.0" width="1" height="1"/>
@@ -564,6 +564,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yJ2-GS-gSU"/>
-        <segue reference="pA0-4Z-XSi"/>
+        <segue reference="jVb-E5-7o1"/>
     </inferredMetricsTieBreakers>
 </document>

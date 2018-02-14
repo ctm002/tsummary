@@ -9,7 +9,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor =  UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
+        cv.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
         cv.contentInset =  UIEdgeInsets(top:0, left: 0, bottom: 0, right:0)
         cv.dataSource = self
         cv.delegate = self
@@ -19,12 +19,12 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(collectionView)
-        collectionView.register(DetalleHoraCell.self, forCellWithReuseIdentifier: cellId1)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.collectionView.register(DetalleHoraCell.self, forCellWithReuseIdentifier: cellId1)
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0).isActive = true
+        self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:0).isActive = true
+        self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -33,7 +33,11 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return  objects.count
+        if let hrs = objects
+        {
+            return hrs.count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,16 +90,9 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-    {
-        
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 150)
+        return CGSize(width: self.frame.width, height: 150)
     }
-    
 }
 
 protocol DetalleHoraViewDelegate: class

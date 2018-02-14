@@ -37,7 +37,8 @@ class SchedulerViewController: UIViewController, IViewHora {
     let cellId2 = "cellId2"
     let vCalendario = UIView()
     let vMenu = UIView()
-    
+    var delegate : CalendarViewDelegate?
+    var item : Int = 1 //Defecto
     
     let detalleHoraView : DetalleHoraView = {
         let view = DetalleHoraView()
@@ -57,12 +58,15 @@ class SchedulerViewController: UIViewController, IViewHora {
         setupConstraintMenu()
         
         self.view.addSubview(semanaView)
+        
+        self.delegate = semanaView
         semanaView.translatesAutoresizingMaskIntoConstraints = false
         semanaView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
         semanaView.delegate = self
+       
         
         let vFecha = UIView()
         self.view.addSubview(vFecha)
@@ -97,8 +101,18 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.presenterHora.buscarHoras()
+        self.delegate?.selected(fecha: self.fechaHoraIngreso)
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
+        self.presenterHora.buscarHoras()
+        
+        if (self.item == 0)
+        {
+            self.semanaView.scrollToPreviousCell()
+        }
+        else
+        {
+            self.semanaView.scrollToNextCell()
+        }
     }
     
     fileprivate func setupConstraintMenu()
@@ -135,6 +149,7 @@ class SchedulerViewController: UIViewController, IViewHora {
                     let model = model as! ModelController
                     let controller = segue.destination as! HoraViewController
                     controller.model = model
+                    controller.item = self.item
                 }
             case "ajustesSegue":
                 if let id = sender
@@ -236,12 +251,19 @@ extension SchedulerViewController: DetalleHoraViewDelegate
 
 extension SchedulerViewController: ListHorasViewDelegate
 {
-    func selectViewController(fecha: String) {
+    func selectDay(fecha: String, item: Int) {
+        
         self.fechaHoraIngreso = fecha
-        self.presenterHora.buscarHoras()
+        self.item = item
         
         DispatchQueue.main.async {
             self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
         }
+        self.presenterHora.buscarHoras()
     }
+}
+
+protocol CalendarViewDelegate: class
+{
+    func selected(fecha: String)
 }
