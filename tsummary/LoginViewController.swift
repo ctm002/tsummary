@@ -31,12 +31,12 @@ class LoginViewController: UIViewController
     override func viewWillAppear(_ animated: Bool) {
         if !salir
         {
-            btnRegistrar.titleLabel?.text = "Registar"
+            btnRegistrar.setTitle("Registrar", for: .normal)
             autentificar(getUIDevice())
         }
         else
         {
-            btnRegistrar.titleLabel?.text = "Entrar"
+            btnRegistrar.setTitle("Entrar", for: .normal)
         }
         
         self.txtIMEI.isHidden = true

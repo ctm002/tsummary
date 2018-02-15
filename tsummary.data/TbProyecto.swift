@@ -98,8 +98,11 @@ public class TbProyecto
                 var statement: OpaquePointer?
                 
                 if sqlite3_prepare_v2(db, """
-                    insert into ClienteProyecto(pro_id, pro_nombre, cli_nom, pro_idioma)
-                    values (?, ?, ?, ?)
+                    if not exists (select 1 from ClienteProyecto where prod_id=?)
+                    begin
+                        insert into ClienteProyecto(pro_id, pro_nombre, cli_nom, pro_idioma)
+                        values (?, ?, ?, ?)
+                    end
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -203,7 +206,6 @@ public class TbProyecto
         }
         return false
     }
-    
     
     public func obtById(_ id: Int32) -> ClienteProyecto?
     {
