@@ -1,5 +1,5 @@
 import UIKit
-class ViewController: UIViewController
+class LoginViewController: UIViewController
 {
 
     @IBOutlet weak var txtPassword: UITextField!
@@ -8,26 +8,40 @@ class ViewController: UIViewController
     @IBOutlet weak var btnRegistrar: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var btnEliminar: UIButton!
+    @IBOutlet weak var lblIMEI: UILabel!
     var codigo: Int32 = 0
+    public var salir: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.activity.center = self.view.center
-        navigationItem.title = "TimeSummary"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        self.activity.center = self.view.center
+        navigationItem.title = "Login"
+        navigationItem.hidesBackButton = true
+        
         self.txtPassword.isSecureTextEntry = true
         self.txtIMEI.isUserInteractionEnabled = false
         self.txtIMEI.text = getUIDevice()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
         setDataDefaults()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        autentificar(getUIDevice())
+        if !salir
+        {
+            btnRegistrar.titleLabel?.text = "Registar"
+            autentificar(getUIDevice())
+        }
+        else
+        {
+            btnRegistrar.titleLabel?.text = "Entrar"
+        }
+        
+        self.txtIMEI.isHidden = true
+        self.lblIMEI.isHidden = true
+        self.btnEliminar.isHidden = true
     }
     
     func autentificar(_ imei: String)
@@ -64,7 +78,8 @@ class ViewController: UIViewController
         }
     }
     
-    func setDataDefaults(){
+    func setDataDefaults()
+    {
         self.txtPassword.text = "Car.2711"
         self.txtUserName.text = "Carlos_Tapia"
     }
@@ -74,11 +89,13 @@ class ViewController: UIViewController
         return "863166032574597" //UIDevice.current.identifierForVendor!.uuidString
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func registrar(_ sender: Any) {
+    @IBAction func registrar(_ sender: Any)
+    {
         registrar()
     }
     
@@ -105,7 +122,7 @@ class ViewController: UIViewController
                     let password = txtPassword.text!
                     let imei = txtIMEI.text!
                     
-                    btnRegistrar.isEnabled = false
+                    self.btnRegistrar.isEnabled = false
                     self.activity.startAnimating()
                     ApiClient.instance.registrar(
                         imei: imei,
@@ -118,6 +135,13 @@ class ViewController: UIViewController
                                 if resp
                                 {
                                     self.descargar(session)
+                                }
+                            }
+                            else
+                            {
+                                DispatchQueue.main.async {
+                                    self.btnRegistrar.isEnabled = true
+                                    self.activity.stopAnimating()
                                 }
                             }
                         }
@@ -199,11 +223,13 @@ class ViewController: UIViewController
         }
     }
     
-    @objc func dismissKeyboard() {
+    @objc func dismissKeyboard()
+    {
         view.endEditing(true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         let controller = segue.destination as! SchedulerViewController
         controller.idAbogado = sender as! Int
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")

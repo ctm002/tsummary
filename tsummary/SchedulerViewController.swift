@@ -5,17 +5,9 @@ class SchedulerViewController: UIViewController, IViewHora {
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
     
-    
-    var mCVDias : UICollectionView!
-    
-    var mTVHoras: UITableView = {
-        let tv = UITableView()
-        tv.backgroundColor = UIColor.yellow
-        return tv
-    }()
-    
     var mLblTextFecha: UILabel = {
         let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor.white
         lbl.textAlignment = .center
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
@@ -40,33 +32,32 @@ class SchedulerViewController: UIViewController, IViewHora {
     var delegate : CalendarViewDelegate?
     var item : Int = 1 //Defecto
     
-    let detalleHoraView : DetalleHoraView = {
+    let horaView : DetalleHoraView = {
         let view = DetalleHoraView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let semanaView : SemanaView = {
         let view = SemanaView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        navigationItem.title = "TimeSummary"
+        navigationItem.title = "Scheduler"
         navigationController?.navigationBar.isTranslucent = false
         setupConstraintMenu()
         
         self.view.addSubview(semanaView)
-        
+        self.semanaView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        self.semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        self.semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
+        self.semanaView.delegate = self
         self.delegate = semanaView
-        semanaView.translatesAutoresizingMaskIntoConstraints = false
-        semanaView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
-        semanaView.delegate = self
-       
         
         let vFecha = UIView()
         self.view.addSubview(vFecha)
@@ -78,21 +69,22 @@ class SchedulerViewController: UIViewController, IViewHora {
         vFecha.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
         
         vFecha.addSubview(self.mLblTextFecha)
-        self.mLblTextFecha.translatesAutoresizingMaskIntoConstraints = false
         self.mLblTextFecha.centerXAnchor.constraint(equalTo: vFecha.centerXAnchor).isActive = true
         self.mLblTextFecha.centerYAnchor.constraint(equalTo: vFecha.centerYAnchor).isActive = true
-        self.mLblTextFecha.trailingAnchor.constraint(equalTo:  vFecha.trailingAnchor).isActive = true
+        self.mLblTextFecha.trailingAnchor.constraint(equalTo:vFecha.trailingAnchor).isActive = true
         self.mLblTextFecha.leadingAnchor.constraint(equalTo: vFecha.leadingAnchor).isActive = true
+        self.mLblTextFecha.topAnchor.constraint(equalTo:vFecha.topAnchor).isActive = true
+        self.mLblTextFecha.bottomAnchor.constraint(equalTo:vFecha.bottomAnchor).isActive = true
         
         self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: self.semanaView, attribute: .bottom, multiplier: 1, constant: 0))
         
-        self.view.addSubview(self.detalleHoraView)
-        self.detalleHoraView.translatesAutoresizingMaskIntoConstraints = false
-        self.detalleHoraView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        self.detalleHoraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        self.detalleHoraView.delegate = self
+        self.view.addSubview(self.horaView)
+        self.horaView.translatesAutoresizingMaskIntoConstraints = false
+        self.horaView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.horaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        self.horaView.delegate = self
         
-        self.view.addConstraint(NSLayoutConstraint(item: self.detalleHoraView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.horaView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
        
         self.view.bringSubview(toFront: vMenu)
         
@@ -136,6 +128,26 @@ class SchedulerViewController: UIViewController, IViewHora {
         btnConfig.setTitle("Ajustes", for: .normal)
         btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
         btnConfig.setTitleColor(UIColor.black, for: .normal)
+        
+        let btnSalir : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnSalir)
+        btnSalir.translatesAutoresizingMaskIntoConstraints = false
+        btnSalir.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
+        btnSalir.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
+        btnSalir.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnSalir.setTitle("Salir", for: .normal)
+        btnSalir.addTarget(self, action: #selector(salir), for: .touchUpInside)
+        btnSalir.setTitleColor(UIColor.black, for: .normal)
+        
+        vMenu.addConstraint(NSLayoutConstraint(item: btnSalir, attribute: .top, relatedBy: .equal, toItem: btnConfig, attribute:.bottom, multiplier: 1, constant: 0))
+    }
+    
+    @objc func salir()
+    {
+        SessionLocal.shared.usuario = nil
+        SessionLocal.shared.token = ""
+        SessionLocal.shared.expiredAt = nil
+        performSegue(withIdentifier: "irLoginSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -151,6 +163,7 @@ class SchedulerViewController: UIViewController, IViewHora {
                     controller.model = model
                     controller.item = self.item
                 }
+            
             case "ajustesSegue":
                 if let id = sender
                 {
@@ -158,17 +171,25 @@ class SchedulerViewController: UIViewController, IViewHora {
                     isSlideMenuHidden = !isSlideMenuHidden
                     let controller  = segue.destination as! AjustesViewController
                     controller.idAbogado = id as! Int
+                    let backItem = UIBarButtonItem()
+                    backItem.title = ""
+                    navigationItem.backBarButtonItem = backItem
                 }
-            default:
+            
+            case "irLoginSegue":
+                let controller = segue.destination as! LoginViewController
+                controller.salir = true
+            
+        default:
                 print("default")
         }
     }
     
     func setList(horas: [Hora])
     {
-        self.detalleHoraView.objects = horas
+        self.horaView.objects = horas
         DispatchQueue.main.async {
-            self.detalleHoraView.collectionView.reloadData()
+            self.horaView.collectionView.reloadData()
         }
     }
     

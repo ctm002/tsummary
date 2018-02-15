@@ -26,13 +26,13 @@ class SemanaView: UIView, IListViewSemana
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        addSubview(collectionView)
+        addSubview(self.collectionView)
         self.collectionView.register(DetalleDiaCell.self, forCellWithReuseIdentifier: cellId1)
         self.collectionView.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         var contraints: [NSLayoutConstraint]  = [NSLayoutConstraint]()
         contraints.append(self.collectionView.topAnchor.constraint(equalTo: self.topAnchor))
-        contraints.append( self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0))
+        contraints.append(self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0))
         contraints.append(self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:0))
         contraints.append(self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0))
         contraints.append(self.collectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor))

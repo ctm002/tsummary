@@ -5,12 +5,11 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     let cellId1 : String = "cellId1"
     weak var delegate: DetalleHoraViewDelegate?
     
-    
     lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
-        cv.contentInset =  UIEdgeInsets(top:0, left: 0, bottom: 0, right:0)
+        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.dataSource = self
         cv.delegate = self
         return cv
@@ -18,9 +17,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(collectionView)
+        addSubview(self.collectionView)
         self.collectionView.register(DetalleHoraCell.self, forCellWithReuseIdentifier: cellId1)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0).isActive = true
         self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:0).isActive = true

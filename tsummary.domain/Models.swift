@@ -11,6 +11,7 @@ public class Usuario
         self.mIMEI=""
         self.mDefault=0
         self.mPerfil = ""
+        self.mIdUsuario = 0
     }
     
     private var mId : Int32
@@ -37,6 +38,18 @@ public class Usuario
     private var mPerfil: String
     var perfil : String { get { return self.mPerfil } set { self.mPerfil = newValue }}
     
+    private var mIdUsuario : Int
+    var idUsuario : Int
+    {
+        get
+        {
+            return self.mIdUsuario
+        }
+        set
+        {
+            self.mIdUsuario = newValue
+        }
+    }
 }
 
 public class Cliente

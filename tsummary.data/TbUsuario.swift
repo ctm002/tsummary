@@ -73,7 +73,7 @@ public class TbUsuario
             
             
             var consulta : String = """
-                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario
                 from Usuario where 1=1
                 """
             
@@ -102,7 +102,7 @@ public class TbUsuario
             var sessionLocal: SessionLocal!
             if sqlite3_step(statement) == SQLITE_ROW
             {
-                sessionLocal = getSessionLocalFromRecord(&statement)
+                sessionLocal = self.getSessionLocalFromRecord(&statement)
             }
             
             if sqlite3_finalize(statement) != SQLITE_OK
@@ -132,7 +132,7 @@ public class TbUsuario
             
             
             var consulta : String = """
-                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password
+                select Id
                 from Usuario where 1=1
                 """
             
@@ -223,6 +223,9 @@ public class TbUsuario
             usuario.password = password
         }
         
+        let idUsuario : Int32 = sqlite3_column_int(statement, 9)
+        usuario.idUsuario = Int(idUsuario)
+        
         SessionLocal.shared.usuario = usuario
         return SessionLocal.shared
     }
@@ -258,6 +261,7 @@ public class TbUsuario
                 Perfil text,
                 Token text,
                 ExpiredAt text,
+                IdUsuario integer
                 [Default] integer)
             """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -268,74 +272,84 @@ public class TbUsuario
     func guardar(sessionLocal: SessionLocal) -> Bool
     {
         do {
-            try open()
-            var statement: OpaquePointer?
             
-            if sqlite3_prepare_v2(db, """
-                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt)
-                values (?, ?, ?, ?, ?, ?, ?, ?)
+            if let usuario = sessionLocal.usuario
+            {
+                try open()
+                var statement: OpaquePointer?
+                
+                if sqlite3_prepare_v2(db, """
+                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """
-                , -1, &statement, nil) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error preparing insert: \(errmsg)")
+                    , -1, &statement, nil) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("error preparing insert: \(errmsg)")
+                }
+
+                if sqlite3_bind_text(statement, 1, usuario.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding nombre: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 2, usuario.grupo, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding grupo: \(errmsg)")
+                }
+                
+                if sqlite3_bind_int(statement, 3, Int32(usuario.id)) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding id: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 4, usuario.imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding imei: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 5, usuario.loginName, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding username: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 6, usuario.password, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding password: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 7, sessionLocal.token, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding token: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 8, Utils.toStringFromDate(sessionLocal.expiredAt!), -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding expiredAt: \(errmsg)")
+                }
+                
+                let idIsuario : Int = usuario.idUsuario
+                if sqlite3_bind_int(statement, 9, Int32(idIsuario)) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding idUsuario: \(errmsg)")
+                }
+                
+                if sqlite3_step(statement) != SQLITE_DONE{
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("fallo al insertar en la tabla usuario: \(errmsg)")
+                }
+                
+                if sqlite3_finalize(statement) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("error finalizing prepared statement: \(errmsg)")
+                }
+                
+                statement = nil
+                close()
+                return true
             }
-            
-            if sqlite3_bind_text(statement, 1, sessionLocal.usuario?.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding nombre: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 2, sessionLocal.usuario?.grupo, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding grupo: \(errmsg)")
-            }
-            
-            let id = sessionLocal.usuario?.id as! Int32
-            if sqlite3_bind_int(statement, 3, Int32(id)) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding id: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 4, sessionLocal.usuario?.imei, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding imei: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 5, sessionLocal.usuario?.loginName, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding username: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 6, sessionLocal.usuario?.password, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding password: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 7, sessionLocal.token, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding token: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 8, Utils.toStringFromDate(sessionLocal.expiredAt!), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding expiredAt: \(errmsg)")
-            }
-            
-            if sqlite3_step(statement) != SQLITE_DONE{
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("fallo al insertar en la tabla usuario: \(errmsg)")
-            }
-            
-            if sqlite3_finalize(statement) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error finalizing prepared statement: \(errmsg)")
-            }
-            
-            statement = nil
-            close()
-            return true
         }
-        catch {
+        catch
+        {
             print("Error:\(error)")
         }
         return false

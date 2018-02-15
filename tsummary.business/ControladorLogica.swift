@@ -141,7 +141,7 @@ public class ControladorLogica
     {
         ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
             let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
-            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!) && $0.estado==1}
+            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
             if proyectosNuevos != nil
             {
                 let result = DataStore.proyectos.guardar(proyectosNuevos!)
@@ -207,7 +207,7 @@ public class ControladorLogica
     func guardar(_ session: SessionLocal) -> Bool
     {
         let exists = DataStore.usuarios.existsSessionLocal(loginName: (session.usuario?.loginName)!)
-        if exists != nil
+        if exists
         {
             return DataStore.usuarios.actualizar(sessionLocal: session)
         }
@@ -221,7 +221,12 @@ public class ControladorLogica
     {
         return DataStore.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: codigo,fecha: fecha)
     }
-
+    
+    func getImage(id: Int)
+    {
+    
+    }
+    
     func eliminarDatos()
     {
         DataStore.horas.eliminar()

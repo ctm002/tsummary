@@ -37,58 +37,66 @@ class ApiClient: NSObject
             {
                 callback(nil)
             }
-            
-            if (data != nil)
+            else
             {
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-//                print(responseString)
-                if (responseString == "")
+                if (data != nil)
                 {
-                    callback(nil)
-                }
-                else
-                {
-                    do
+                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    if (responseString == "")
                     {
-                        let usuario: Usuario = Usuario()
-                        let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
-                        
-                        let jwt = try decode(jwt: jsonwt.token)
-                        
-                        let cNombre = jwt.claim(name: "Nombre")
-                        if let nombre = cNombre.string{
-                            usuario.nombre=nombre
-                        }
-                        
-                        let cPerfil = jwt.claim(name: "Perfil")
-                        if let perfil = cPerfil.string{
-                            usuario.perfil = perfil
-                        }
-                        
-                        let cIdAbogado = jwt.claim(name: "AboId")
-                        if let idAbogado = cIdAbogado.integer {
-                            usuario.id = Int32(idAbogado)
-                        }
-                        
-                        let cGrupo = jwt.claim(name: "Grupo")
-                        if let grupo = cGrupo.string
-                        {
-                            usuario.grupo = grupo
-                        }
-                        
-
-                        usuario.password = password
-                        usuario.imei = imei
-                        usuario.loginName = userName
-                        
-                        SessionLocal.shared.expiredAt = jwt.expiresAt
-                        SessionLocal.shared.token = jsonwt.token
-                        SessionLocal.shared.usuario = usuario
-                        callback(SessionLocal.shared)
+                        callback(nil)
                     }
-                    catch
+                    else
                     {
-                        print("Error:\(error)")
+                        do
+                        {
+                            //print(responseString)
+                            
+                            let usuario: Usuario = Usuario()
+                            let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
+                            
+                            let jwt = try decode(jwt: jsonwt.token)
+                            
+                            let cNombre = jwt.claim(name: "Nombre")
+                            if let nombre = cNombre.string{
+                                usuario.nombre=nombre
+                            }
+                            
+                            let cPerfil = jwt.claim(name: "Perfil")
+                            if let perfil = cPerfil.string{
+                                usuario.perfil = perfil
+                            }
+                            
+                            let cIdAbogado = jwt.claim(name: "AboId")
+                            if let idAbogado = cIdAbogado.integer {
+                                usuario.id = Int32(idAbogado)
+                            }
+                            
+                            let cGrupo = jwt.claim(name: "Grupo")
+                            if let grupo = cGrupo.string
+                            {
+                                usuario.grupo = grupo
+                            }
+                            
+                            let cIdUsuario = jwt.claim(name: "IdUsuario")
+                            if let idUsuario = cIdUsuario.integer
+                            {
+                                usuario.idUsuario = idUsuario
+                            }
+
+                            usuario.password = password
+                            usuario.imei = imei
+                            usuario.loginName = userName
+                            
+                            SessionLocal.shared.expiredAt = jwt.expiresAt
+                            SessionLocal.shared.token = jsonwt.token
+                            SessionLocal.shared.usuario = usuario
+                            callback(SessionLocal.shared)
+                        }
+                        catch
+                        {
+                            print("Error:\(error)")
+                        }
                     }
                 }
             }
@@ -368,7 +376,32 @@ class ApiClient: NSObject
         }
         catch
         {
-            
+            print("\(error)")
         }
+    }
+    
+    func getImagePerfil(idUsuario: Int)
+    {
+        let urlSession: URLSession = URLSession.shared
+        let url = URL(string: self.strURL + "api/abogado/getImage")
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer " + SessionLocal.shared.token!, forHTTPHeaderField: "Authorization")
+        
+        let postData: String = "{\"IdUsuario\":\(idUsuario)}"
+        request.httpBody = postData.data(using:.utf8)
+        
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if(error != nil)
+            {
+                return
+            }
+            //let result = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            //print(result)
+        })
+        task.resume()
+
+        
     }
 }

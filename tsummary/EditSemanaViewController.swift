@@ -1,14 +1,6 @@
-//
-//  SemanaViewController.swift
-//  tsummary
-//
-//  Created by OTRO on 02-02-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import UIKit
 
-class SemanaViewController: UIViewController {
+class EditSemanaViewController: UIViewController {
 
     
     @IBOutlet weak var txtCantSemanas: UITextField!
@@ -22,19 +14,20 @@ class SemanaViewController: UIViewController {
         txtCantSemanas.text = String(cantidadSemanas)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ajustesSegue"
         {
-            //let controller = segue.destination as! AjustesViewController
+            let controller = segue.destination as! AjustesViewController
+            //let backItem = UIBarButtonItem()
+            //backItem.title = ""
+            //navigationItem.backBarButtonItem = backItem
         }
     }
+    */
     
     @IBAction func btnGuardar_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "ajustesSegue", sender: "")
+        //self.performSegue(withIdentifier: "ajustesSegue", sender: "")
+     navigationController?.popViewController(animated: false)
     }
 }
