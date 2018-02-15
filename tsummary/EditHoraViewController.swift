@@ -183,6 +183,15 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     @IBAction func btnGuardar_Click(_ sender: UIButton)
     {
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        self.view.addSubview(activityView)
+        activityView.center = self.view.center
+        activityView.color  = UIColor.blue
+        activityView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        activityView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        activityView.startAnimating()
         presenterHora!.guardar()
     }
     
@@ -194,6 +203,16 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         
         alert.addAction(UIAlertAction(title: "Ok", style: .default,
             handler: { (action: UIAlertAction!) in
+                
+                let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+                self.view.addSubview(activityView)
+                activityView.center = self.view.center
+                activityView.color  = UIColor.red
+                activityView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+                activityView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+                activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+                activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                activityView.startAnimating()
                 self.presenterHora!.eliminar()
             }
         ))
