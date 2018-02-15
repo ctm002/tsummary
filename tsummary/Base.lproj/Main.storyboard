@@ -205,7 +205,7 @@
         <!--Horas-->
         <scene sceneID="9Hx-Om-1df">
             <objects>
-                <viewController restorationIdentifier="HoraViewController" storyboardIdentifier="HoraViewController" title="Horas" id="znN-7t-mT3" customClass="HoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="HoraViewController" storyboardIdentifier="HoraViewController" title="Horas" id="znN-7t-mT3" customClass="EditHoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c98-Qw-kIv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -159,7 +159,7 @@ class SchedulerViewController: UIViewController, IViewHora {
                 if let model = sender
                 {
                     let model = model as! ModelController
-                    let controller = segue.destination as! HoraViewController
+                    let controller = segue.destination as! EditHoraViewController
                     controller.model = model
                     controller.item = self.item
                 }
