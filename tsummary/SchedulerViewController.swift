@@ -44,6 +44,8 @@ class SchedulerViewController: UIViewController, IViewHora {
         return view
     }()
     
+    var anchoMenu : CGFloat = 0
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -109,49 +111,97 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     fileprivate func setupConstraintMenu()
     {
+        
+        self.anchoMenu = view.frame.width / 2
+        
         self.view.addSubview(vMenu)
         vMenu.translatesAutoresizingMaskIntoConstraints = false
         vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
         vMenu.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: 0).isActive = true
-        vMenu.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-        sideMenuConstraint = vMenu.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant:-self.view.frame.width)
+        vMenu.widthAnchor.constraint(equalToConstant: self.anchoMenu).isActive = true
+        sideMenuConstraint = vMenu.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: -self.anchoMenu)
         sideMenuConstraint.isActive = true
         vMenu.backgroundColor = UIColor.white
         
-        let btnConfig : UIButton = UIButton(frame: vMenu.frame)
-        vMenu.addSubview(btnConfig)
-        btnConfig.translatesAutoresizingMaskIntoConstraints = false
-        btnConfig.topAnchor.constraint(equalTo: vMenu.topAnchor, constant: 0).isActive = true
-        btnConfig.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
-        btnConfig.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
-        btnConfig.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        btnConfig.setTitle("Ajustes", for: .normal)
-        btnConfig.addTarget(self, action: #selector(mostrarAjustes), for: .touchUpInside)
-        btnConfig.setTitleColor(UIColor.black, for: .normal)
+        let btnPerfil : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnPerfil)
+        btnPerfil.translatesAutoresizingMaskIntoConstraints = false
+        btnPerfil.topAnchor.constraint(equalTo: vMenu.topAnchor, constant: 20).isActive = true
+        btnPerfil.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 10).isActive = true
+        btnPerfil.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: -10).isActive = true
+        btnPerfil.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnPerfil.setTitle("Ver tu perfil", for: .normal)
+        btnPerfil.addTarget(self, action: #selector(mostrarPerfil), for: .touchUpInside)
+        btnPerfil.setTitleColor(UIColor.black, for: .normal)
+        btnPerfil.contentHorizontalAlignment = .left
         
-        let btnSalir : UIButton = UIButton(frame: vMenu.frame)
-        vMenu.addSubview(btnSalir)
-        btnSalir.translatesAutoresizingMaskIntoConstraints = false
-        btnSalir.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 0).isActive = true
-        btnSalir.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: 0).isActive = true
-        btnSalir.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        btnSalir.setTitle("Salir", for: .normal)
-        btnSalir.addTarget(self, action: #selector(salir), for: .touchUpInside)
-        btnSalir.setTitleColor(UIColor.black, for: .normal)
+        let btnSincronizar : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnSincronizar)
+        btnSincronizar.translatesAutoresizingMaskIntoConstraints = false
+        btnSincronizar.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 10).isActive = true
+        btnSincronizar.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: -10).isActive = true
+        btnSincronizar.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnSincronizar.setTitle("Sincronizar", for: .normal)
+        btnSincronizar.addTarget(self, action: #selector(sincronizar), for: .touchUpInside)
+        btnSincronizar.setTitleColor(UIColor.black, for: .normal)
+        btnSincronizar.contentHorizontalAlignment = .left
         
-        vMenu.addConstraint(NSLayoutConstraint(item: btnSalir, attribute: .top, relatedBy: .equal, toItem: btnConfig, attribute:.bottom, multiplier: 1, constant: 0))
+        vMenu.addConstraint(NSLayoutConstraint(item: btnSincronizar, attribute: .top, relatedBy: .equal, toItem: btnPerfil, attribute:.bottom, multiplier: 1, constant: 10))
+        
+        
+        let btnAjustes : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnAjustes)
+        btnAjustes.translatesAutoresizingMaskIntoConstraints = false
+        btnAjustes.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 10).isActive = true
+        btnAjustes.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: -10).isActive = true
+        btnAjustes.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnAjustes.setTitle("Ajustes", for: .normal)
+        btnAjustes.addTarget(self, action: #selector(ajustes), for: .touchUpInside)
+        btnAjustes.setTitleColor(UIColor.black, for: .normal)
+        btnAjustes.contentHorizontalAlignment = .left
+        
+        vMenu.addConstraint(NSLayoutConstraint(item: btnAjustes, attribute: .top, relatedBy: .equal, toItem: btnSincronizar, attribute:.bottom, multiplier: 1, constant: 10))
+        
+        
+        let btnCerrarSesion : UIButton = UIButton(frame: vMenu.frame)
+        vMenu.addSubview(btnCerrarSesion)
+        btnCerrarSesion.translatesAutoresizingMaskIntoConstraints = false
+        btnCerrarSesion.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 10).isActive = true
+        btnCerrarSesion.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: -10).isActive = true
+        btnCerrarSesion.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        btnCerrarSesion.setTitle("Cerrar sesión", for: .normal)
+        btnCerrarSesion.addTarget(self, action: #selector(salir), for: .touchUpInside)
+        btnCerrarSesion.setTitleColor(UIColor.black, for: .normal)
+        btnCerrarSesion.contentHorizontalAlignment = .left
+        
+        vMenu.addConstraint(NSLayoutConstraint(item: btnCerrarSesion, attribute: .top, relatedBy: .equal, toItem: btnAjustes, attribute:.bottom, multiplier: 1, constant: 10))
+    }
+    
+    @objc func mostrarPerfil()
+    {
+        self.performSegue(withIdentifier: "perfilIrSegue", sender: self.idAbogado)
+    }
+    
+    @objc func sincronizar()
+    {
+        self.performSegue(withIdentifier: "sincIrSegue", sender: self.idAbogado)
+    }
+    
+    @objc func ajustes()
+    {
+        self.performSegue(withIdentifier: "ajustesIrSegue", sender: self.idAbogado)
     }
     
     @objc func salir()
     {
-        SessionLocal.shared.usuario = nil
-        SessionLocal.shared.token = ""
-        SessionLocal.shared.expiredAt = nil
         performSegue(withIdentifier: "irLoginSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
+        sideMenuConstraint.constant = -self.anchoMenu
+        isSlideMenuHidden = !isSlideMenuHidden
+        
         let identifier : String = segue.identifier!
         switch identifier
         {
@@ -164,12 +214,10 @@ class SchedulerViewController: UIViewController, IViewHora {
                     controller.item = self.item
                 }
             
-            case "ajustesSegue":
+            case "perfilIrSegue":
                 if let id = sender
                 {
-                    sideMenuConstraint.constant = -self.view.frame.width
-                    isSlideMenuHidden = !isSlideMenuHidden
-                    let controller  = segue.destination as! AjustesViewController
+                    let controller  = segue.destination as! PerfilViewController
                     controller.idAbogado = id as! Int
                     let backItem = UIBarButtonItem()
                     backItem.title = ""
@@ -177,10 +225,28 @@ class SchedulerViewController: UIViewController, IViewHora {
                 }
             
             case "irLoginSegue":
+                SessionLocal.shared.usuario = nil
+                SessionLocal.shared.token = ""
+                SessionLocal.shared.expiredAt = nil
+                
                 let controller = segue.destination as! LoginViewController
-                controller.salir = true
+                controller.entrar = true
             
-        default:
+            case "sincIrSegue" :
+                if let id = sender
+                {
+                    let controller = segue.destination as! SincViewController
+                    controller.idAbogado = id as! Int
+                }
+            
+            case "ajuestesIrSegue":
+                if let id = sender
+                {
+                    let controller = segue.destination as! AjustesViewController
+                    controller.idAbogado = id as! Int
+                }
+            
+            default:
                 print("default")
         }
     }
@@ -194,7 +260,8 @@ class SchedulerViewController: UIViewController, IViewHora {
     }
     
     private var mIdAbogado : Int = 0
-    var idAbogado : Int {
+    var idAbogado : Int
+    {
         get {
             return self.mIdAbogado
         }
@@ -204,7 +271,8 @@ class SchedulerViewController: UIViewController, IViewHora {
     }
     
     var mFechaHoraIngreso: String = ""
-    var fechaHoraIngreso : String {
+    var fechaHoraIngreso : String
+    {
         get {
             return self.mFechaHoraIngreso
         }
@@ -251,15 +319,11 @@ class SchedulerViewController: UIViewController, IViewHora {
         }
         else
         {
-            sideMenuConstraint.constant = -self.view.frame.width
+            sideMenuConstraint.constant = -self.anchoMenu
         }
         isSlideMenuHidden = !isSlideMenuHidden
     }
-    
-    @objc func mostrarAjustes()
-    {
-        self.performSegue(withIdentifier: "ajustesSegue", sender: self.idAbogado)
-    }
+
 }
 
 extension SchedulerViewController: DetalleHoraViewDelegate

@@ -50,8 +50,6 @@ class ApiClient: NSObject
                     {
                         do
                         {
-                            //print(responseString)
-                            
                             let usuario: Usuario = Usuario()
                             let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
                             
@@ -91,6 +89,7 @@ class ApiClient: NSObject
                             SessionLocal.shared.expiredAt = jwt.expiresAt
                             SessionLocal.shared.token = jsonwt.token
                             SessionLocal.shared.usuario = usuario
+                            
                             callback(SessionLocal.shared)
                         }
                         catch
@@ -380,7 +379,7 @@ class ApiClient: NSObject
         }
     }
     
-    func getImagePerfil(idUsuario: Int)
+    func obtImagePerfilById(id: Int, callback: @escaping (String) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "api/abogado/getImage")
@@ -388,8 +387,7 @@ class ApiClient: NSObject
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("bearer " + SessionLocal.shared.token!, forHTTPHeaderField: "Authorization")
-        
-        let postData: String = "{\"IdUsuario\":\(idUsuario)}"
+        let postData: String = "{\"IdUsuario\":\(id)}"
         request.httpBody = postData.data(using:.utf8)
         
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
@@ -397,11 +395,10 @@ class ApiClient: NSObject
             {
                 return
             }
-            //let result = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-            //print(result)
+            let result = data!.base64EncodedString(options: .endLineWithLineFeed)
+            callback(result)
         })
         task.resume()
-
-        
     }
+
 }

@@ -8,9 +8,9 @@ class LoginViewController: UIViewController
     @IBOutlet weak var btnRegistrar: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var btnEliminar: UIButton!
-    @IBOutlet weak var lblIMEI: UILabel!
+    @IBOutlet weak var lblVersionSoftware: UILabel!
     var codigo: Int32 = 0
-    public var salir: Bool = false
+    public var entrar: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class LoginViewController: UIViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if !salir
+        if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
             autentificar(getUIDevice())
@@ -40,7 +40,8 @@ class LoginViewController: UIViewController
         }
         
         self.txtIMEI.isHidden = true
-        self.lblIMEI.isHidden = true
+        self.lblVersionSoftware.isHidden = false
+        lblVersionSoftware.text = "Versión: 1.0"
         self.btnEliminar.isHidden = true
     }
     

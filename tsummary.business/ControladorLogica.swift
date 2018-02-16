@@ -222,9 +222,21 @@ public class ControladorLogica
         return DataStore.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: codigo,fecha: fecha)
     }
     
-    func getImage(id: Int)
+    func descargarImagenByIdUsuario(id: Int, callback: @escaping (String)-> Void)
     {
+        ApiClient.instance.obtImagePerfilById(id: id, callback: {(string64) in
+            callback(string64)
+        })
+    }
     
+    func actualizarFoto(id: Int32, string64: String) -> Bool
+    {
+       return DataStore.usuarios.actualizar(id: id, data: string64)
+    }
+    
+    func obtUsuarioById(id: Int) -> Usuario?
+    {
+        return DataStore.usuarios.obtUsuarioById(id: id)
     }
     
     func eliminarDatos()
@@ -240,4 +252,5 @@ public class ControladorLogica
         DataStore.proyectos.dropTable()
         DataStore.usuarios.dropTable()
     }
+
 }

@@ -98,11 +98,9 @@ public class TbProyecto
                 var statement: OpaquePointer?
                 
                 if sqlite3_prepare_v2(db, """
-                    if not exists (select 1 from ClienteProyecto where prod_id=?)
-                    begin
-                        insert into ClienteProyecto(pro_id, pro_nombre, cli_nom, pro_idioma)
-                        values (?, ?, ?, ?)
-                    end
+                    insert or ignore into ClienteProyecto(pro_id, pro_nombre, cli_nom, pro_idioma)
+                    values (?, ?, ?, ?)
+                   
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)

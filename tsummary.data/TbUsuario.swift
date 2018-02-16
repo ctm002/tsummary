@@ -32,7 +32,6 @@ public class TbUsuario
         }
     }
     
-    
     func initialize()
     {
         do
@@ -119,7 +118,6 @@ public class TbUsuario
         }
         return nil
     }
-    
     
     func existsSessionLocal(loginName:String) -> Bool
     {
@@ -261,7 +259,8 @@ public class TbUsuario
                 Perfil text,
                 Token text,
                 ExpiredAt text,
-                IdUsuario integer
+                IdUsuario integer,
+                Image text,
                 [Default] integer)
             """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -271,7 +270,8 @@ public class TbUsuario
 
     func guardar(sessionLocal: SessionLocal) -> Bool
     {
-        do {
+        do
+        {
             
             if let usuario = sessionLocal.usuario
             {
@@ -420,7 +420,48 @@ public class TbUsuario
         }
         return false
     }
-    
+
+    func actualizar(id: Int32, data: String) -> Bool
+    {
+        do {
+            try open()
+            var statement: OpaquePointer?
+            
+            if sqlite3_prepare_v2(db, """
+                    update usuario set Image=?
+                    where Id=?
+                """
+                , -1, &statement, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing update: \(errmsg)")
+            }
+            
+
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding Id: \(errmsg)")
+            }
+            
+            if sqlite3_step(statement) != SQLITE_DONE{
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("fallo al actualizar en la tabla usuario: \(errmsg)")
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            
+            statement = nil
+            close()
+            return true
+        }
+        catch
+        {
+            print("Error:\(error)")
+        }
+        return false
+    }
     
     func eliminar()
     {
@@ -439,4 +480,87 @@ public class TbUsuario
             print("\(error)")
         }
     }
+
+    func obtUsuarioById(id: Int) -> Usuario?
+    {
+        do
+        {
+            try open()
+            
+            var condicion : String = ""
+            var statement: OpaquePointer?
+            
+            
+            var consulta : String = """
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image
+                from Usuario where Id=\(id)
+                """
+            
+            if sqlite3_prepare_v2(db, consulta, -1, &statement, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing select: \(errmsg)")
+            }
+            
+            var usuario: Usuario!
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
+                usuario = Usuario()
+                let id : Int32 = sqlite3_column_int(statement, 0)
+                usuario.id  = id
+                
+                if let csString = sqlite3_column_text(statement,1)
+                {
+                    let nombre : String = String(cString: csString)
+                    usuario.nombre = nombre
+                }
+                
+                if let csString = sqlite3_column_text(statement,2)
+                {
+                    let grupo : String = String(cString: csString)
+                    usuario.grupo = grupo
+                }
+                
+                if let csString = sqlite3_column_text(statement,3)
+                {
+                    let loginName : String = String(cString: csString)
+                    usuario.loginName = loginName
+                }
+                
+                if let csString = sqlite3_column_text(statement,4)
+                {
+                    let imei : String = String(cString: csString)
+                    usuario.imei = imei
+                }
+                
+                if let csString = sqlite3_column_text(statement,5)
+                {
+                    let perfil : String = String(cString: csString)
+                    usuario.perfil = perfil
+                }
+                
+                let idUsuario : Int32 = sqlite3_column_int(statement, 6)
+                usuario.idUsuario = Int(idUsuario)
+            
+                if let csString = sqlite3_column_text(statement,7)
+                {
+                    let image : String = String(cString: csString)
+                    usuario.data = image
+                }
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return usuario
+        }
+        catch
+        {
+            print("\(error)")
+        }
+        return nil
+    }
+
 }

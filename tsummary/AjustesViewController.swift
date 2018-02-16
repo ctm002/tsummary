@@ -9,24 +9,25 @@ public class AjustesViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var photoPerfil: UIImageView!
     
     var configuraciones: [Int:[String: String]] =  [
-        0: ["key": "Nombres", "value": SessionLocal.shared.usuario!.nombre!],
+        0: ["key": "Cantidad de Semanas", "value": SessionLocal.shared.usuario!.nombre!],
         1: ["key": "Telefono", "value": ""],
         2: ["key": "Correo", "value" : "cariola@cariola.cl"],
         3: ["key": "Grupo" , "value" : SessionLocal.shared.usuario!.grupo!],
-        4: ["key": "Id", "value" : String(SessionLocal.shared.usuario!.id)],
-        5: ["key": "Semana", "value" : "10"],]
+        4: ["key": "Id", "value" : String(SessionLocal.shared.usuario!.id)],]
     
     override public func viewDidLoad()
     {
         super.viewDidLoad()
         navigationItem.title = "Ajustes"
         
+        /*
         tableView.dataSource = self
         tableView.delegate = self
         
         photoPerfil.layer.cornerRadius = 100
         photoPerfil.layer.masksToBounds = true
         photoPerfil.image = UIImage(named: "231")
+         */
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -46,12 +47,6 @@ public class AjustesViewController: UIViewController, UITableViewDelegate, UITab
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let item : [String: String] = self.configuraciones[indexPath.row]!
-        if item["key"] == "Semana"
-        {
-            let viewController = storyboard?.instantiateViewController(withIdentifier: "EditSemanaViewController") as! EditSemanaViewController
-            viewController.cantidadSemanas = 10
-            self.navigationController?.pushViewController(viewController, animated: false)
-        }
     }
     
     @objc func dismissKeyboard()

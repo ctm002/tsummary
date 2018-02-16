@@ -54,6 +54,7 @@ struct HoraJSON
     let data: String
 }
 
+/*
 struct Data {
     let tim_correl : Int32
     let pro_id : Int32
@@ -65,7 +66,7 @@ struct Data {
     let offLine: Bool
     let fechaInsert: String
 }
-
+*/
 struct DataSend : Codable{
     let Fecha: String
     let Lista: [HoraTS]

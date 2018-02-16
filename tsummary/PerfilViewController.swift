@@ -1,0 +1,98 @@
+import UIKit
+import Foundation
+
+class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var photoPerfil: UIImageView!
+    
+    public var idAbogado: Int!
+    var datos = [Int:[String: String]]()
+    
+    override public func viewDidLoad()
+    {
+        super.viewDidLoad()
+        navigationItem.title = "Perfil"
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        photoPerfil.layer.cornerRadius = 90
+        photoPerfil.layer.masksToBounds = true
+        
+        let id : Int32 = (SessionLocal.shared.usuario?.id)!
+        if let u : Usuario = ControladorLogica.instance.obtUsuarioById(id: Int(id))
+        {
+            
+            if u.data == ""
+            {
+                self.activityIndicator.startAnimating()
+                let idUsuario : Int = (SessionLocal.shared.usuario?.idUsuario)!
+                ControladorLogica.instance.descargarImagenByIdUsuario(id: idUsuario, callback: { (dataString64: String) in
+                    let resp: Bool = ControladorLogica.instance.actualizarFoto(id: id, string64: dataString64)
+                    if resp
+                    {
+                        let data = Data(base64Encoded: dataString64, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                        DispatchQueue.main.async
+                        {
+                            self.photoPerfil.image = UIImage(data: data!)!
+                            self.activityIndicator.stopAnimating()
+                        }
+                    }
+                    
+                })
+                
+            }
+            else
+            {
+                self.activityIndicator.startAnimating()
+                let data = Data(base64Encoded: u.data, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                DispatchQueue.main.async
+                {
+                    self.photoPerfil.image = UIImage(data: data!)!
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+        
+            self.datos[0] = ["key":"Nombres", "value" : u.nombre!]
+            self.datos[1] = ["key":"Perfil", "value" : u.perfil]
+            self.datos[2] = ["key":"Grupo", "value" : u.grupo!]
+            self.datos[3] = ["key":"Nombre de Usuario", "value" : u.loginName!]
+            self.datos[4] = ["key":"Id", "value" : String(u.id)]
+            self.datos[5] = ["key":"IdUsuario", "value" : String(u.idUsuario)]
+            self.datos[6] = ["key":"Correo", "value" : "cariola@gmail.com"]
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for:indexPath)
+        let datos : [String: String] = self.datos[indexPath.row]!
+        cell.textLabel?.text = datos["key"]
+        cell.detailTextLabel?.text = datos["value"]
+        return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return datos.count
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let item : [String: String] = self.datos[indexPath.row]!
+        //        if item["key"] == "Semana"
+        //        {
+        //            let viewController = storyboard?.instantiateViewController(withIdentifier: "EditSemanaViewController") as! EditSemanaViewController
+        //            viewController.cantidadSemanas = 10
+        //            self.navigationController?.pushViewController(viewController, animated: false)
+        //        }
+    }
+    
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
+
+}

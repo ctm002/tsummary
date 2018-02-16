@@ -12,31 +12,61 @@ public class Usuario
         self.mDefault=0
         self.mPerfil = ""
         self.mIdUsuario = 0
+        self.mData = ""
     }
     
     private var mId : Int32
-    var id : Int32  { get{ return self.mId } set{ self.mId=newValue }}
+    var id : Int32
+    {
+        get{ return self.mId } set{ self.mId=newValue }
+    }
     
     private var mNombre: String?
-    var nombre : String? { get{ return self.mNombre} set {self.mNombre=newValue }}
+    var nombre : String?
+    {
+        get{ return self.mNombre} set {self.mNombre=newValue }
+        
+    }
     
     private var mGrupo:String?
-    var grupo : String? { get {return self.mGrupo } set{ self.mGrupo=newValue }}
+    var grupo : String?
+    {
+        get {return self.mGrupo } set{ self.mGrupo=newValue }
+        
+    }
     
     private var mLoginName:String?
-    var loginName : String? {  get{ return self.mLoginName } set { self.mLoginName=newValue }}
+    var loginName : String?
+    {
+        get{ return self.mLoginName } set { self.mLoginName=newValue }
+    }
     
     private var mPassword:String?
-    var password : String? { get {return self.mPassword } set { self.mPassword = newValue }}
+    var password : String?
+    {
+        get {return self.mPassword } set { self.mPassword = newValue }
+    }
     
     private var mIMEI:String?
-    var imei : String?  { get { return self.mIMEI } set { self.mIMEI = newValue }}
+    var imei : String?
+    {
+        get { return self.mIMEI } set { self.mIMEI = newValue }
+    }
     
     private var mDefault:Int?
-    var defaults : Int?  { return self.mDefault }
+    var defaults : Int?
+    {
+        return self.mDefault
+        
+    }
     
     private var mPerfil: String
-    var perfil : String { get { return self.mPerfil } set { self.mPerfil = newValue }}
+    var perfil : String
+    {
+        get
+        { return self.mPerfil } set { self.mPerfil = newValue }
+        
+    }
     
     private var mIdUsuario : Int
     var idUsuario : Int
@@ -48,6 +78,19 @@ public class Usuario
         set
         {
             self.mIdUsuario = newValue
+        }
+    }
+
+    private var mData: String
+    var data : String
+    {
+        get
+        {
+            return self.mData
+        }
+        set
+        {
+            self.mData = newValue
         }
     }
 }
@@ -86,7 +129,6 @@ public class Cliente
         }
     }
 }
-
 
 public class ClienteProyecto
 {

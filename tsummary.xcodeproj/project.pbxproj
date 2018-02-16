@@ -41,6 +41,8 @@
 		2F8DFC6620211CFE00814A34 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DFC6320211CFE00814A34 /* Extends.swift */; };
 		2F966D782020A06A001DE17F /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F966D772020A06A001DE17F /* Models.swift */; };
 		2F9C6EC82035E57400F8C713 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC72035E57400F8C713 /* LoginViewController.swift */; };
+		2F9C6ECA2036336300F8C713 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
+		2F9C6ECC2036445100F8C713 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
@@ -105,6 +107,8 @@
 		2F8DFC6320211CFE00814A34 /* Extends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
 		2F966D772020A06A001DE17F /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		2F9C6EC72035E57400F8C713 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		2F9C6EC92036336300F8C713 /* SincViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SincViewController.swift; sourceTree = "<group>"; };
+		2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilViewController.swift; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		2FCF2959201140E6006FD735 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 				2F057E8E2028A27500CA6C02 /* ModelController.swift */,
 				2F316728202E181000BDC87B /* DetalleHoraView.swift */,
 				2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */,
+				2F9C6EC92036336300F8C713 /* SincViewController.swift */,
+				2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -297,11 +303,11 @@
 		DEF3B6001FD57CAC00437BD7 /* tsummary.data */ = {
 			isa = PBXGroup;
 			children = (
+				DE7D25911FE0639E003B0F4C /* DataStore.swift */,
 				2F7AE3A220051A0600CB0492 /* TbProyecto.swift */,
 				2F7AE3A0200519EA00CB0492 /* TbHora.swift */,
-				DE7D25911FE0639E003B0F4C /* DataStore.swift */,
-				2FCF295720110274006FD735 /* ApiClient.swift */,
 				DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */,
+				2FCF295720110274006FD735 /* ApiClient.swift */,
 				2FCF2959201140E6006FD735 /* Utils.swift */,
 				2F057E8A202503F900CA6C02 /* Reachability.swift */,
 			);
@@ -509,9 +515,11 @@
 				DE1EF4AF1FD98A8C00CD60A8 /* DetalleDiaCell.swift in Sources */,
 				2F966D782020A06A001DE17F /* Models.swift in Sources */,
 				DEF3B6041FD57D9400437BD7 /* TbUsuario.swift in Sources */,
+				2F9C6ECC2036445100F8C713 /* PerfilViewController.swift in Sources */,
 				2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */,
 				2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */,
 				2F057E8F2028A27500CA6C02 /* ModelController.swift in Sources */,
+				2F9C6ECA2036336300F8C713 /* SincViewController.swift in Sources */,
 				2F3AD82F2032079A00C0BA30 /* SemanaCell.swift in Sources */,
 				2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */,
 				2F31672D202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */,
