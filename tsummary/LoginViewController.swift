@@ -9,8 +9,12 @@ class LoginViewController: UIViewController
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var btnEliminar: UIButton!
     @IBOutlet weak var lblVersionSoftware: UILabel!
+    
     var codigo: Int32 = 0
     public var entrar: Bool = false
+    private var isConnected : Bool = false
+    public var fDesde : String = "20180101"
+    public var fHasta : String = "20181231"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +30,33 @@ class LoginViewController: UIViewController
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         setDataDefaults()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        statusManager()
+    }
+    
+    @objc func statusManager()
+    {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+            case .unreachable:
+                self.isConnected = false
+            case .wifi, .wwan:
+                self.isConnected = true
+        }
+        
+        print("Reachability TSummary")
+        print("Status:", status)
+        print("HostName:", Network.reachability?.hostname ?? "nil")
+        print("Reachable:", Network.reachability?.isReachable ?? "nil")
+        print("Wifi:", Network.reachability?.isReachableViaWiFi ?? "nil")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            autentificar(getUIDevice())
+            //autentificar(getUIDevice())
         }
         else
         {
@@ -43,6 +67,19 @@ class LoginViewController: UIViewController
         self.lblVersionSoftware.isHidden = false
         lblVersionSoftware.text = "Versión: 1.0"
         self.btnEliminar.isHidden = true
+    }
+    
+    fileprivate func mostrarMensaje(mensaje: String = "")
+    {
+        let alert = UIAlertController(title: "Alerta",
+                                      message: mensaje,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                print("Ok")
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     func autentificar(_ imei: String)
@@ -60,21 +97,28 @@ class LoginViewController: UIViewController
                 let user = sessionLocal?.usuario?.loginName
                 let password = sessionLocal?.usuario?.password
                 
-                ApiClient.instance.registrar(
-                    imei: imei,
-                    userName: user,
-                    password: password,
-                    callback:{ (sessionLocal : SessionLocal?) in
-                        if let session = sessionLocal
-                        {
-                            let resp = self.guardar(session)
-                            if resp
+                if self.isConnected
+                {
+                    ApiClient.instance.registrar(
+                        imei: imei,
+                        userName: user,
+                        password: password,
+                        callback: { (sessionLocal : SessionLocal?) in
+                            if let session = sessionLocal
                             {
-                                self.sincronizar(session)
+                                let resp = self.guardar(session)
+                                if resp
+                                {
+                                    self.sincronizar(session)
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                }
+                else
+                {
+                    self.mostrarMensaje(mensaje: "Sin Acceso a internet")
+                }
             }
         }
     }
@@ -123,30 +167,39 @@ class LoginViewController: UIViewController
                     let password = txtPassword.text!
                     let imei = txtIMEI.text!
                     
-                    self.btnRegistrar.isEnabled = false
-                    self.activity.startAnimating()
-                    ApiClient.instance.registrar(
-                        imei: imei,
-                        userName: user,
-                        password: password,
-                        callback: { (sessionLocal: SessionLocal?) -> Void in
-                            if let session = sessionLocal
-                            {
-                                let resp = self.guardar(session)
-                                if resp
+
+                    if self.isConnected
+                    {
+                        self.btnRegistrar.isEnabled = false
+                        self.activity.startAnimating()
+                        
+                        ApiClient.instance.registrar(
+                            imei: imei,
+                            userName: user,
+                            password: password,
+                            callback: { (sessionLocal: SessionLocal?) -> Void in
+                                if let session = sessionLocal
                                 {
-                                    self.descargar(session)
+                                    let resp = self.guardar(session)
+                                    if resp
+                                    {
+                                        self.descargar(session)
+                                    }
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        self.btnRegistrar.isEnabled = true
+                                        self.activity.stopAnimating()
+                                    }
                                 }
                             }
-                            else
-                            {
-                                DispatchQueue.main.async {
-                                    self.btnRegistrar.isEnabled = true
-                                    self.activity.stopAnimating()
-                                }
-                            }
-                        }
-                    )
+                        )
+                    }
+                    else
+                    {
+                        self.mostrarMensaje(mensaje: "Sin Acceso a internet")
+                    }
                 }
             }
         }
@@ -162,10 +215,8 @@ class LoginViewController: UIViewController
         if let u = session.usuario
         {
             self.codigo = u.id
-            if Reachability.isConnectedToNetwork()
+            if self.isConnected
             {
-                let fDesde : String =  "20180101"
-                let fHasta : String =  "20181231"
                 ControladorLogica.instance.descargar(
                     session: session,
                     fDesde: fDesde,
@@ -175,7 +226,7 @@ class LoginViewController: UIViewController
             }
             else
             {
-                self.redireccionar(estado: true)
+                self.mostrarMensaje()
             }
         }
     }
@@ -185,7 +236,7 @@ class LoginViewController: UIViewController
         if let u = session.usuario
         {
             self.codigo = u.id
-            if Reachability.isConnectedToNetwork()
+            if self.isConnected
             {
                 self.sincronizar(session, callback: self.redireccionar)
             }
@@ -235,4 +286,5 @@ class LoginViewController: UIViewController
         controller.idAbogado = sender as! Int
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
+
 }

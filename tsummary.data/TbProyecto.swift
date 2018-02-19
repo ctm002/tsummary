@@ -39,7 +39,7 @@ public class TbProyecto
         db = nil
     }
     
-    public func dropTable() -> Bool
+    public func dropTable()
     {
         do
         {
@@ -49,7 +49,6 @@ public class TbProyecto
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error creating table: \(errmsg)")
-                return false
             }
             close()
         }
@@ -57,10 +56,9 @@ public class TbProyecto
         {
             print("\(error)")
         }
-        return false
     }
     
-    public func createTableIfNotExists() -> Bool
+    public func createTableIfNotExists()
     {
         do
         {
@@ -76,16 +74,13 @@ public class TbProyecto
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error creating table: \(errmsg)")
-                return false
             }
             close()
-            return true
         }
         catch
         {
             print("\(error)")
         }
-        return false
     }
     
     public func guardar(_ proyectos: [ClienteProyecto])-> Bool

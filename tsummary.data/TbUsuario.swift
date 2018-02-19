@@ -228,7 +228,7 @@ public class TbUsuario
         return SessionLocal.shared
     }
     
-    func dropTable()->Bool
+    func dropTable()
     {
         do
         {
@@ -236,7 +236,6 @@ public class TbUsuario
             if sqlite3_exec(db, "drop table Usuario", nil, nil, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error dropping table: \(errmsg)")
-                return false
             }
             close()
         }
@@ -244,7 +243,6 @@ public class TbUsuario
         {
             print("\(error)")
         }
-        return true
     }
     
     func createTableIfNoExists() throws
@@ -395,8 +393,7 @@ public class TbUsuario
                 print("failure binding expiredAt: \(errmsg)")
             }
             
-            let id = sessionLocal.usuario?.id as! Int32
-            if sqlite3_bind_int(statement, 6, Int32(id)) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 6, (sessionLocal.usuario?.id)!) != SQLITE_OK{
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding id: \(errmsg)")
             }
@@ -487,16 +484,13 @@ public class TbUsuario
         {
             try open()
             
-            var condicion : String = ""
             var statement: OpaquePointer?
-            
-            
-            var consulta : String = """
+            let query : String = """
                 select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image
                 from Usuario where Id=\(id)
                 """
             
-            if sqlite3_prepare_v2(db, consulta, -1, &statement, nil) != SQLITE_OK {
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing select: \(errmsg)")
             }

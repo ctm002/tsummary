@@ -17,6 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //ControladorLogica.instance.eliminarDatos()
         //ControladorLogica.instance.borrarTablas()
+        
+        do {
+            Network.reachability = try Reachability(hostname: "docroom.cariola.cl")
+            do {
+                try Network.reachability?.start()
+            } catch let error as Network.Error {
+                print(error)
+            } catch {
+                print(error)
+            }
+        } catch {
+            print(error)
+        }
+        
+        
         return true
     }
 

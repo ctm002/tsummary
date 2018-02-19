@@ -43,6 +43,9 @@
 		2F9C6EC82035E57400F8C713 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC72035E57400F8C713 /* LoginViewController.swift */; };
 		2F9C6ECA2036336300F8C713 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
 		2F9C6ECC2036445100F8C713 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
+		2F9C6ED020376F2100F8C713 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECF20376F2100F8C713 /* ViewController.swift */; };
+		2F9C6ED120376F2100F8C713 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECF20376F2100F8C713 /* ViewController.swift */; };
+		2F9C6ED220376F2100F8C713 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECF20376F2100F8C713 /* ViewController.swift */; };
 		2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */; };
 		2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
@@ -109,6 +112,7 @@
 		2F9C6EC72035E57400F8C713 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2F9C6EC92036336300F8C713 /* SincViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SincViewController.swift; sourceTree = "<group>"; };
 		2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilViewController.swift; sourceTree = "<group>"; };
+		2F9C6ECF20376F2100F8C713 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2FC8A4731FEAAA2900EEAEC9 /* PresenterProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProyecto.swift; sourceTree = "<group>"; };
 		2FCF295720110274006FD735 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		2FCF2959201140E6006FD735 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */,
 				2F9C6EC92036336300F8C713 /* SincViewController.swift */,
 				2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */,
+				2F9C6ECF20376F2100F8C713 /* ViewController.swift */,
 			);
 			path = tsummary;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9C6ED020376F2100F8C713 /* ViewController.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				2F316729202E181000BDC87B /* DetalleHoraView.swift in Sources */,
 				2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */,
@@ -543,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9C6ED120376F2100F8C713 /* ViewController.swift in Sources */,
 				2F057E902028A27500CA6C02 /* ModelController.swift in Sources */,
 				2F8DFC612020CFCF00814A34 /* EditHoraViewController.swift in Sources */,
 				2F31672A202E181000BDC87B /* DetalleHoraView.swift in Sources */,
@@ -564,6 +571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9C6ED220376F2100F8C713 /* ViewController.swift in Sources */,
 				2F057E912028A27500CA6C02 /* ModelController.swift in Sources */,
 				2F8DFC622020CFCF00814A34 /* EditHoraViewController.swift in Sources */,
 				2F31672B202E181000BDC87B /* DetalleHoraView.swift in Sources */,

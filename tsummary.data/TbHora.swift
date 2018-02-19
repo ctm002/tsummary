@@ -71,7 +71,7 @@ public class TbHora
         db = nil
     }
     
-    public func dropTable() -> Bool
+    public func dropTable()
     {
         do
         {
@@ -81,7 +81,6 @@ public class TbHora
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error creating table: \(errmsg)")
-                return false
             }
             close()
         }
@@ -89,7 +88,6 @@ public class TbHora
         {
             print("\(error)")
         }
-        return false
     }
     
     func eliminar(_ horas: [Hora]) -> Bool

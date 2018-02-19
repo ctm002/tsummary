@@ -10,7 +10,7 @@ public class ControladorLogica
         var result: Response!
         if let hora = DataStore.horas.getById(id)
         {
-            if Reachability.isConnectedToNetwork()
+            if  true//Reachability.isConnectedToNetwork()
             {
                 ApiClient.instance.eliminar(hora: hora,
                     responseOK: { (hora) -> Void in
@@ -87,7 +87,7 @@ public class ControladorLogica
     {
         var result: Response!
 
-        if Reachability.isConnectedToNetwork()
+        if  true //Reachability.isConnectedToNetwork()
         {
             ApiClient.instance.guardar(hora: hora
             , responseOK: { (hora) -> Void in
@@ -145,7 +145,10 @@ public class ControladorLogica
             if proyectosNuevos != nil
             {
                 let result = DataStore.proyectos.guardar(proyectosNuevos!)
-                print("proyectos descargados")
+                if result
+                {
+                    print("proyectos descargados")
+                }
             }
             self.sincronizarHoras(session, retorno)
         })
@@ -192,6 +195,10 @@ public class ControladorLogica
                     if hrsRemotas != nil
                     {
                         let result : Bool = DataStore.horas.guardar(hrsRemotas!)
+                        if (result)
+                        {
+                            print("Los datos fueron guardados correctamente")
+                        }
                     }
                 })
             }
