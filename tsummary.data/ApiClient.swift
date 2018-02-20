@@ -10,8 +10,8 @@ class ApiClient: NSObject
     
     static let instance : ApiClient = ApiClient(userName:"carlos_tapia", password:"Car.2711")
     
-    init(userName:String, password: String) {
-        
+    init(userName:String, password: String)
+    {
         self.username = userName
         self.password = password
     }
@@ -29,12 +29,11 @@ class ApiClient: NSObject
         postData.append("\"imei\":\"" + imei! + "\"," );
         postData.append("\"password\":\"" + password! + "\"}");
         request.httpBody = postData.data(using: String.Encoding.utf8);
-        
-        
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
             if(error != nil)
             {
+                print(error!.localizedDescription)
                 callback(nil)
             }
             else
@@ -81,7 +80,7 @@ class ApiClient: NSObject
                             {
                                 usuario.idUsuario = idUsuario
                             }
-
+                            
                             usuario.password = password
                             usuario.imei = imei
                             usuario.loginName = userName

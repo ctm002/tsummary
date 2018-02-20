@@ -6,7 +6,6 @@ class SemanaView: UIView, IListViewSemana
     var cellId1 = "cellId1"
     var presenterSemana: PresenterSemana!
     let cantDias: Int = 14
-    //var fecha : String = ""
     var cellPrevious: DetalleDiaCell!
     var fechaHoraIngreso: String = ""
     var item : Int = -1
@@ -49,9 +48,9 @@ class SemanaView: UIView, IListViewSemana
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setList(semanas: [Dia])
+    func setList(semana: [Dia])
     {
-        self.objects = semanas
+        self.objects = semana
     }
     
     func scrollToNextCell()
@@ -119,7 +118,6 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
     {
         return 0
     }
-    
     
     @objc func handleTap(gestureRecognizer: UITapGestureRecognizer)
     {

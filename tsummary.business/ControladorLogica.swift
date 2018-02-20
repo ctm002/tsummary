@@ -2,15 +2,31 @@ import Foundation
 public class ControladorLogica
 {
     static let instance = ControladorLogica()
+    private var isConnected : Bool = false
     
-    init() {}
+    init() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.statusManager), name: .flagsChanged, object: Network.reachability)
+        self.statusManager()
+    }
+    
+    @objc func statusManager()
+    {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            self.isConnected = false
+        case .wifi, .wwan:
+            self.isConnected = true
+        }
+    }
     
     func eliminarById(_ id: Int32,  callback: @escaping (Response) -> Void)
     {
         var result: Response!
         if let hora = DataStore.horas.getById(id)
         {
-            if  true//Reachability.isConnectedToNetwork()
+            if self.isConnected
             {
                 ApiClient.instance.eliminar(hora: hora,
                     responseOK: { (hora) -> Void in
@@ -63,31 +79,34 @@ public class ControladorLogica
     
     func descargar(session: SessionLocal , fDesde: String, fHasta: String, redirect: @escaping (Bool)->Void)
     {
-        ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
-            if let proyectos = proyectosRemotos
-            {
-                let resp = DataStore.proyectos.guardar(proyectos)
-                if resp
+        if self.isConnected
+        {
+            ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
+                if let proyectos = proyectosRemotos
                 {
-                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta,
-                        callback:{(hrsRemotas)->Void in
-                            if let horas = hrsRemotas
-                            {
-                                let resp : Bool = DataStore.horas.guardar(horas)
-                                redirect(resp)
+                    let resp = DataStore.proyectos.guardar(proyectos)
+                    if resp
+                    {
+                        ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta,
+                            callback:{(hrsRemotas)->Void in
+                                if let horas = hrsRemotas
+                                {
+                                    let resp : Bool = DataStore.horas.guardar(horas)
+                                    redirect(resp)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     
     func guardar(hora: Hora, callback: @escaping (Response) -> Void)
     {
         var result: Response!
 
-        if  true //Reachability.isConnectedToNetwork()
+        if  self.isConnected
         {
             ApiClient.instance.guardar(hora: hora
             , responseOK: { (hora) -> Void in
@@ -139,68 +158,74 @@ public class ControladorLogica
     
     private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
-        ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
-            let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
-            let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
-            if proyectosNuevos != nil
-            {
-                let result = DataStore.proyectos.guardar(proyectosNuevos!)
-                if result
+        if self.isConnected
+        {
+            ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
+                let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
+                let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
+                if proyectosNuevos != nil
                 {
-                    print("proyectos descargados")
+                    let result = DataStore.proyectos.guardar(proyectosNuevos!)
+                    if result
+                    {
+                        print("proyectos descargados")
+                    }
                 }
-            }
-            self.sincronizarHoras(session, retorno)
-        })
+                self.sincronizarHoras(session, retorno)
+            })
+        }
     }
     
     private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
-        let codigo : String = String(describing: session.usuario?.id)
-        let fDesde : String =  "20180101" //Utils.toStringFromDate(Date(),"yyyyMMdd")
-        let fHasta : String =  "20181231" //Utils.toStringFromDate(Date(),"yyyyMMdd")
-        
-        if let horas : [Hora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
+        if self.isConnected
         {
-            if horas.count > 0
+            let codigo : String = String(describing: session.usuario?.id)
+            let fDesde : String = Utils.toStringFromDate(Calendario.instance.fechaInicio,"yyyyMMdd")
+            let fHasta : String = Utils.toStringFromDate(Calendario.instance.fechaTermino, "yyyyMMdd")
+            
+            if let horas : [Hora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
             {
-                var aHorasTS : [HoraTS] = [HoraTS]()
-                for h in horas
+                if horas.count > 0
                 {
-                    let horaTS = HoraTS(
-                        tim_correl: h.tim_correl,
-                        pro_id: h.proyecto.id,
-                        tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso),
-                        tim_asunto: h.asunto,
-                        tim_horas: h.horasTrabajadas,
-                        tim_minutos: h.minutosTrabajados,
-                        abo_id: h.abogadoId,
-                        OffLine: h.offline,
-                        FechaInsert: Utils.toStringFromDate(h.fechaInsert!),
-                        Estado: h.estado.rawValue)
-                    
-                    aHorasTS.append(horaTS)
-                }
-                
-                let dataSend = DataSend(
-                    Fecha: Utils.toStringFromDate(Date()),
-                    Lista: aHorasTS)
-                
-                ApiClient.instance.sincronizar(session, dataSend)
-                
-                DataStore.horas.eliminar()
-                
-                ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
-                , callback:{(hrsRemotas)->Void in
-                    if hrsRemotas != nil
+                    var aHorasTS : [HoraTS] = [HoraTS]()
+                    for h in horas
                     {
-                        let result : Bool = DataStore.horas.guardar(hrsRemotas!)
-                        if (result)
-                        {
-                            print("Los datos fueron guardados correctamente")
-                        }
+                        let horaTS = HoraTS(
+                            tim_correl: h.tim_correl,
+                            pro_id: h.proyecto.id,
+                            tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso),
+                            tim_asunto: h.asunto,
+                            tim_horas: h.horasTrabajadas,
+                            tim_minutos: h.minutosTrabajados,
+                            abo_id: h.abogadoId,
+                            OffLine: h.offline,
+                            FechaInsert: Utils.toStringFromDate(h.fechaInsert!),
+                            Estado: h.estado.rawValue)
+                        
+                        aHorasTS.append(horaTS)
                     }
-                })
+                    
+                    let dataSend = DataSend(
+                        Fecha: Utils.toStringFromDate(Date()),
+                        Lista: aHorasTS)
+                    
+                    ApiClient.instance.sincronizar(session, dataSend)
+                    
+                    DataStore.horas.eliminar()
+                    
+                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
+                    , callback:{(hrsRemotas)->Void in
+                        if hrsRemotas != nil
+                        {
+                            let result : Bool = DataStore.horas.guardar(hrsRemotas!)
+                            if (result)
+                            {
+                                print("Los datos fueron guardados correctamente")
+                            }
+                        }
+                    })
+                }
             }
         }
         retorno(true)
@@ -231,9 +256,12 @@ public class ControladorLogica
     
     func descargarImagenByIdUsuario(id: Int, callback: @escaping (String)-> Void)
     {
-        ApiClient.instance.obtImagePerfilById(id: id, callback: {(string64) in
-            callback(string64)
-        })
+        if self.isConnected
+        {
+            ApiClient.instance.obtImagePerfilById(id: id, callback: {(string64) in
+                callback(string64)
+            })
+        }
     }
     
     func actualizarFoto(id: Int32, string64: String) -> Bool
@@ -259,5 +287,4 @@ public class ControladorLogica
         DataStore.proyectos.dropTable()
         DataStore.usuarios.dropTable()
     }
-
 }

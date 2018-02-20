@@ -13,8 +13,8 @@ class LoginViewController: UIViewController
     var codigo: Int32 = 0
     public var entrar: Bool = false
     private var isConnected : Bool = false
-    public var fDesde : String = "20180101"
-    public var fHasta : String = "20181231"
+    public var fDesde : String = ""
+    public var fHasta : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,10 @@ class LoginViewController: UIViewController
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         setDataDefaults()
+        
+        
+        self.fDesde = Utils.toStringFromDate(Calendario.instance.fechaInicio, "yyyyMMdd")
+        self.fHasta = Utils.toStringFromDate(Calendario.instance.fechaTermino, "yyyyMMdd")
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         statusManager()
@@ -131,9 +135,9 @@ class LoginViewController: UIViewController
     
     func getUIDevice() -> String
     {
-        return "863166032574597" //UIDevice.current.identifierForVendor!.uuidString
+        return UIDevice.current.identifierForVendor!.uuidString
     }
-    
+    		
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -188,7 +192,8 @@ class LoginViewController: UIViewController
                                 }
                                 else
                                 {
-                                    DispatchQueue.main.async {
+                                    DispatchQueue.main.async
+                                    {
                                         self.btnRegistrar.isEnabled = true
                                         self.activity.stopAnimating()
                                     }

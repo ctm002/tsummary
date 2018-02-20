@@ -5,7 +5,8 @@ class SchedulerViewController: UIViewController, IViewHora {
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
     
-    var mLblTextFecha: UILabel = {
+    var mLblTextFecha: UILabel =
+    {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor.white
@@ -32,13 +33,15 @@ class SchedulerViewController: UIViewController, IViewHora {
     var delegate : CalendarViewDelegate?
     var item : Int = 1 //Defecto
     
-    let horaView : DetalleHoraView = {
+    let horaView : DetalleHoraView =
+    {
         let view = DetalleHoraView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let semanaView : SemanaView = {
+    let semanaView : SemanaView =
+    {
         let view = SemanaView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -111,9 +114,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     fileprivate func setupConstraintMenu()
     {
-        
         self.anchoMenu = view.frame.width / 2
-        
         self.view.addSubview(vMenu)
         vMenu.translatesAutoresizingMaskIntoConstraints = false
         vMenu.topAnchor.constraint(equalTo: self.view.topAnchor, constant:0).isActive = true
@@ -146,8 +147,15 @@ class SchedulerViewController: UIViewController, IViewHora {
         btnSincronizar.setTitleColor(UIColor.black, for: .normal)
         btnSincronizar.contentHorizontalAlignment = .left
         
-        vMenu.addConstraint(NSLayoutConstraint(item: btnSincronizar, attribute: .top, relatedBy: .equal, toItem: btnPerfil, attribute:.bottom, multiplier: 1, constant: 10))
-        
+        vMenu.addConstraint(NSLayoutConstraint(
+            item: btnSincronizar,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: btnPerfil,
+            attribute:.bottom,
+            multiplier: 1,
+            constant: 10)
+        )
         
         let btnAjustes : UIButton = UIButton(frame: vMenu.frame)
         vMenu.addSubview(btnAjustes)
@@ -160,8 +168,15 @@ class SchedulerViewController: UIViewController, IViewHora {
         btnAjustes.setTitleColor(UIColor.black, for: .normal)
         btnAjustes.contentHorizontalAlignment = .left
         
-        vMenu.addConstraint(NSLayoutConstraint(item: btnAjustes, attribute: .top, relatedBy: .equal, toItem: btnSincronizar, attribute:.bottom, multiplier: 1, constant: 10))
-        
+        vMenu.addConstraint(NSLayoutConstraint(
+            item: btnAjustes,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: btnSincronizar,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 10)
+        )
         
         let btnCerrarSesion : UIButton = UIButton(frame: vMenu.frame)
         vMenu.addSubview(btnCerrarSesion)
@@ -174,7 +189,15 @@ class SchedulerViewController: UIViewController, IViewHora {
         btnCerrarSesion.setTitleColor(UIColor.black, for: .normal)
         btnCerrarSesion.contentHorizontalAlignment = .left
         
-        vMenu.addConstraint(NSLayoutConstraint(item: btnCerrarSesion, attribute: .top, relatedBy: .equal, toItem: btnAjustes, attribute:.bottom, multiplier: 1, constant: 10))
+        vMenu.addConstraint(NSLayoutConstraint(
+            item: btnCerrarSesion,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: btnAjustes,
+            attribute:.bottom,
+            multiplier: 1,
+            constant: 10)
+        )
     }
     
     @objc func mostrarPerfil()
