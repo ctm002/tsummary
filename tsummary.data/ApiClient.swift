@@ -1,14 +1,14 @@
 import Foundation
 import JWTDecode
 
-class ApiClient: NSObject
+class ApiClient
 {
     private var strURL : String = "https://docroom.cariola.cl/"
-    private var  username: String
-    private var  password: String
+    private var  username: String!
+    private var  password: String!
     private var credential: URLCredential!
     
-    static let instance : ApiClient = ApiClient(userName:"carlos_tapia", password:"Car.2711")
+    static let instance : ApiClient = ApiClient()
     
     init(userName:String, password: String)
     {
@@ -16,7 +16,9 @@ class ApiClient: NSObject
         self.password = password
     }
     
-    func registrar(imei:String?,userName:String?,password:String?, callback: @escaping (SessionLocal?) -> Void)
+    init(){}
+    
+    func registrar(imei:String?, userName:String?, password:String?, callback: @escaping (SessionLocal?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "tokenmobile")

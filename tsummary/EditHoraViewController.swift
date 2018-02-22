@@ -19,18 +19,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     var item : Int = -1
     
     private var mModel: ModelController!
-    
     var model : ModelController { get { return self.mModel } set { self.mModel = newValue } }
-    
-    var minutosTotales: Int
-    {
-        get
-        {
-            var minutos : Int = 0
-            minutos = Int(txtHoras.text!)!*60 + Int(txtMinutos.text!)!
-            return minutos
-        }
-    }
     
     @IBAction func stepper1(_ sender: UIStepper)
     {
@@ -165,24 +154,27 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     {
         if response.result
         {
-            let alert = UIAlertController(title: "TSummary", message: response.mensaje, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Acceptar", style: .default, handler: { (action: UIAlertAction!) in
-                self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: self.model)
-            }))
-            self.present(alert, animated: true, completion: nil)
+            mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
         }
         else
         {
-            let alert = UIAlertController(title: "Alerta", message: response.mensaje, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { (action: UIAlertAction!) in
-                self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: self.model)
-            }))
-            self.present(alert, animated: true, completion: nil)
+            mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
         }
+    }
+    
+    func mostrarMensaje(titulo: String, mensaje: String )
+    {
+        let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { (action: UIAlertAction!) in
+            self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: self.model)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func btnGuardar_Click(_ sender: UIButton)
     {
+        btnGuardar.isEnabled = false
         let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         self.view.addSubview(activityView)
         activityView.center = self.view.center
@@ -193,6 +185,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
         presenterHora!.guardar()
+        btnGuardar.isEnabled = true
     }
     
     @IBAction func btnEliminar_Click(_ sender: UIButton)
@@ -224,7 +217,8 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func btnCancelar_Click(_ sender: Any) {
+    @IBAction func btnCancelar_Click(_ sender: Any)
+    {
         self.navigationController?.popViewController(animated: true)
     }
     

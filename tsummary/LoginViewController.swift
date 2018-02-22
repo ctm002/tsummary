@@ -69,7 +69,7 @@ class LoginViewController: UIViewController
         
         self.txtIMEI.isHidden = true
         self.lblVersionSoftware.isHidden = false
-        lblVersionSoftware.text = "Versión: 1.0"
+        lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build:\(Bundle.main.buildVersionNumber!)"
         self.btnEliminar.isHidden = true
     }
     
@@ -170,8 +170,6 @@ class LoginViewController: UIViewController
                     let user = txtUserName.text!
                     let password = txtPassword.text!
                     let imei = txtIMEI.text!
-                    
-
                     if self.isConnected
                     {
                         self.btnRegistrar.isEnabled = false
@@ -203,10 +201,15 @@ class LoginViewController: UIViewController
                     }
                     else
                     {
-                        self.mostrarMensaje(mensaje: "Sin Acceso a internet")
+                        self.mostrarMensaje(mensaje: "Sin acceso a internet")
                     }
                 }
             }
+        }
+        
+        if let msje = mensaje
+        {
+            mostrarMensaje(mensaje: msje)
         }
     }
     
@@ -231,7 +234,7 @@ class LoginViewController: UIViewController
             }
             else
             {
-                self.mostrarMensaje()
+                self.mostrarMensaje(mensaje: "Sin acceso a internet")
             }
         }
     }
@@ -291,5 +294,4 @@ class LoginViewController: UIViewController
         controller.idAbogado = sender as! Int
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
-
 }

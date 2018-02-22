@@ -106,7 +106,7 @@ public class ControladorLogica
     {
         var result: Response!
 
-        if  self.isConnected
+        if self.isConnected
         {
             ApiClient.instance.guardar(hora: hora
             , responseOK: { (hora) -> Void in
@@ -159,7 +159,7 @@ public class ControladorLogica
     private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
     {
         if self.isConnected
-        {
+        {	
             ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
                 let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
                 let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}

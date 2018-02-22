@@ -1,36 +1,40 @@
-//
-//  SincronizarViewController.swift
-//  tsummary
-//
-//  Created by OTRO on 15-02-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import UIKit
 
 class SincViewController: UIViewController {
 
     var idAbogado: Int = 0
     
-
+    @IBOutlet weak var btnSincronizar: UIButton!
+    
     @IBAction func btnSincronizar(_ sender: Any)
     {
-        /*
-        Solo testing
-        if Reachability.isConnectedToNetwork()
-        {
-            ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
-                print("procesando datos...")
-            })
+        //Solo testing
+        btnSincronizar.isEnabled =  false
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        self.view.addSubview(activityView)
+        activityView.center = self.view.center
+        activityView.color  = UIColor.red
+        activityView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        activityView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        activityView.startAnimating()
+        ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
+            self.redirect()
+        })
+    }
+    
+    func redirect()
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.btnSincronizar.isEnabled = true
+            self.performSegue(withIdentifier: "sincVolverSegue", sender: nil)
         }
-         */
-        self.performSegue(withIdentifier: "sincVolverSegue", sender: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Sincronizar"
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,18 +42,9 @@ class SincViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    
         let viewController = segue.destination as! SchedulerViewController
         viewController.idAbogado = self.idAbogado
+        viewController.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
-    
-
 }
