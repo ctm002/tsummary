@@ -48,19 +48,13 @@ class LoginViewController: UIViewController
             case .wifi, .wwan:
                 self.isConnected = true
         }
-        
-        print("Reachability TSummary")
-        print("Status:", status)
-        print("HostName:", Network.reachability?.hostname ?? "nil")
-        print("Reachable:", Network.reachability?.isReachable ?? "nil")
-        print("Wifi:", Network.reachability?.isReachableViaWiFi ?? "nil")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            //autentificar(getUIDevice())
+            autentificar(getUIDevice())
         }
         else
         {
