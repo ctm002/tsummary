@@ -18,7 +18,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         tableView.delegate = self
         
-        photoPerfil.layer.cornerRadius = 90
+        photoPerfil.layer.cornerRadius = photoPerfil.frame.height / 2
         photoPerfil.layer.masksToBounds = true
         
         let id : Int32 = (SessionLocal.shared.usuario?.id)!

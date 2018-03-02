@@ -87,6 +87,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.horaView.translatesAutoresizingMaskIntoConstraints = false
         self.horaView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         self.horaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        //self.horaView.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
         self.horaView.delegate = self
         
         self.view.addConstraint(NSLayoutConstraint(item: self.horaView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
@@ -374,4 +375,9 @@ extension SchedulerViewController: ListHorasViewDelegate
 protocol CalendarViewDelegate: class
 {
     func selected(fecha: String)
+}
+
+protocol ListHorasViewDelegate: class
+{
+    func selectDay(fecha: String, item: Int)
 }

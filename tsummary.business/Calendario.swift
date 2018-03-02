@@ -59,7 +59,7 @@ class Calendario
 
         var semana:[Dia] = [Dia]()
         var fecha: Date? = self.mFechaInicio
-        for i in 0..<self.mCantidadDias {
+        for _ in 0..<self.mCantidadDias {
             let dia = Dia()
             formatter.dateFormat = "EE"
             dia.nombre = formatter.string(from: fecha!)

@@ -24,12 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do
             {
                 try Network.reachability?.start()
-            } catch let error as Network.Error {
-                print(error)
-            } catch {
+            }
+            catch let error as Network.Error
+            {
                 print(error)
             }
-        } catch {
+            catch
+            {
+                print(error)
+            }
+        }
+        catch
+        {
             print(error)
         }
         return true

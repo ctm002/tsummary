@@ -29,6 +29,8 @@ class SemanaView: UIView, IListViewSemana
         self.collectionView.register(DetalleDiaCell.self, forCellWithReuseIdentifier: cellId1)
         self.collectionView.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        
         var contraints: [NSLayoutConstraint]  = [NSLayoutConstraint]()
         contraints.append(self.collectionView.topAnchor.constraint(equalTo: self.topAnchor))
         contraints.append(self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0))

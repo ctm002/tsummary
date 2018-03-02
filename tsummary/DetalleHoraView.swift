@@ -7,6 +7,9 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     
     lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
+        layout.scrollDirection  = .vertical
+        layout.headerReferenceSize = .zero
+        layout.footerReferenceSize = .zero
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +26,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:0).isActive = true
         self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:0).isActive = true
         self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        self.collectionView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        //self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -56,7 +61,20 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             gesture.numberOfTouchesRequired = 1
             cell.isUserInteractionEnabled = true
             cell.addGestureRecognizer(gesture)
+            
+//            cell.contentView.layer.cornerRadius = 2.0
+//            cell.contentView.layer.borderWidth = 1.0
+//            cell.contentView.layer.borderColor = UIColor.clear.cgColor
+//            cell.contentView.layer.masksToBounds = true
+//            
+//            cell.layer.shadowColor = UIColor.lightGray.cgColor
+//            cell.layer.shadowOffset = CGSize(width:0,height: 2.0)
+//            cell.layer.shadowRadius = 2.0
+//            cell.layer.shadowOpacity = 1.0
+//            cell.layer.masksToBounds = false
+//            cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
         }
+        
         return cell
     }
     
@@ -83,14 +101,16 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.width, height: 150)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: self.frame.width-10, height: 150)
     }
+
 }
 
 protocol DetalleHoraViewDelegate: class

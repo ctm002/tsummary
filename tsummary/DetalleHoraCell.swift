@@ -3,7 +3,7 @@ import UIKit
 
 class DetalleHoraCell: UICollectionViewCell {
     var mostrar: Bool = false
-    var delta : CGFloat = 0
+    var delta : CGFloat = 2.0
     
     var lblCliente: UILabel =
     {
@@ -61,6 +61,20 @@ class DetalleHoraCell: UICollectionViewCell {
     
     func setupViews()
     {
+        self.contentView.layer.cornerRadius = 2.0
+        self.contentView.layer.borderWidth = 1.0
+        self.contentView.layer.borderColor = UIColor.clear.cgColor
+            //UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1).cgColor // UIColor.clear.cgColor //UIColor.yellow.cgColor //
+        self.contentView.layer.masksToBounds = true
+
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowOffset = CGSize(width:0,height: 2.0)
+        self.layer.shadowRadius = 2.0
+        self.layer.shadowOpacity = 1.0
+        self.layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
+
+        
         self.addSubview(lblCliente)
         self.addSubview(lblHora)
         self.addSubview(lblProyecto)
@@ -68,7 +82,7 @@ class DetalleHoraCell: UICollectionViewCell {
         self.addSubview(lblFechaIngreso)
         
         lblCliente.textAlignment = .left
-        lblCliente.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        lblCliente.topAnchor.constraint(equalTo: self.topAnchor, constant: delta).isActive = true
         lblCliente.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: delta).isActive = true
         lblCliente.numberOfLines = 0
         lblCliente.backgroundColor = mostrar ? UIColor.yellow : UIColor.white
@@ -76,15 +90,15 @@ class DetalleHoraCell: UICollectionViewCell {
         lblHora.textAlignment = .center
         lblHora.widthAnchor.constraint(equalToConstant: 80).isActive = true
         lblHora.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        lblHora.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        lblHora.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: delta).isActive = true
+        lblHora.topAnchor.constraint(equalTo: self.topAnchor, constant: delta).isActive = true
+        lblHora.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -delta).isActive = true
         lblHora.backgroundColor = mostrar ?  UIColor.brown : UIColor.white
         
         
         lblProyecto.textAlignment = .left
         lblProyecto.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: delta).isActive = true
-        lblProyecto.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: delta).isActive = true
-        lblProyecto.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        lblProyecto.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -delta).isActive = true
+        //lblProyecto.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         lblProyecto.heightAnchor.constraint(equalToConstant: 20).isActive = true
         lblProyecto.numberOfLines = 0
         lblProyecto.backgroundColor = mostrar ?  UIColor.purple : UIColor.white
@@ -92,15 +106,15 @@ class DetalleHoraCell: UICollectionViewCell {
 
         lblAsunto.textAlignment = .left
         lblAsunto.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: delta).isActive = true
-        lblAsunto.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: delta).isActive = true
+        lblAsunto.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -delta).isActive = true
         lblAsunto.numberOfLines = 0
         lblAsunto.backgroundColor = mostrar ? UIColor.blue : UIColor.white
         
         lblFechaIngreso.textAlignment = .left
         lblFechaIngreso.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: delta).isActive = true
-        lblFechaIngreso.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: delta).isActive = true
+        lblFechaIngreso.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -delta).isActive = true
         lblFechaIngreso.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        lblFechaIngreso.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        lblFechaIngreso.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -delta).isActive = true
         lblFechaIngreso.backgroundColor = mostrar ? UIColor.green : UIColor.white
         
         self.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
@@ -114,5 +128,6 @@ class DetalleHoraCell: UICollectionViewCell {
         self.addConstraint(NSLayoutConstraint(item: lblAsunto, attribute: .top, relatedBy: .equal, toItem: lblProyecto, attribute: .bottom, multiplier: 1, constant: 0))
         
         self.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
+        
     }
 }
