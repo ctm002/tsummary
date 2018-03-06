@@ -5,7 +5,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     let cellId1 : String = "cellId1"
     weak var delegate: DetalleHoraViewDelegate?
     
-    lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView =
+    {
         let layout  = UICollectionViewFlowLayout()
         layout.scrollDirection  = .vertical
         layout.headerReferenceSize = .zero
@@ -61,18 +62,6 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             gesture.numberOfTouchesRequired = 1
             cell.isUserInteractionEnabled = true
             cell.addGestureRecognizer(gesture)
-            
-//            cell.contentView.layer.cornerRadius = 2.0
-//            cell.contentView.layer.borderWidth = 1.0
-//            cell.contentView.layer.borderColor = UIColor.clear.cgColor
-//            cell.contentView.layer.masksToBounds = true
-//            
-//            cell.layer.shadowColor = UIColor.lightGray.cgColor
-//            cell.layer.shadowOffset = CGSize(width:0,height: 2.0)
-//            cell.layer.shadowRadius = 2.0
-//            cell.layer.shadowOpacity = 1.0
-//            cell.layer.masksToBounds = false
-//            cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
         }
         
         return cell

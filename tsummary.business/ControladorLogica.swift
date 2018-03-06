@@ -226,6 +226,22 @@ public class ControladorLogica
                         }
                     })
                 }
+                else
+                {
+                    DataStore.horas.eliminar()
+                    
+                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
+                        , callback:{(hrsRemotas)->Void in
+                            if hrsRemotas != nil
+                            {
+                                let result : Bool = DataStore.horas.guardar(hrsRemotas!)
+                                if (result)
+                                {
+                                    print("Los datos fueron guardados correctamente")
+                                }
+                            }
+                    })
+                }
             }
         }
         retorno(true)

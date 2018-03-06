@@ -20,15 +20,6 @@ public class AjustesViewController: UIViewController, UITableViewDelegate, UITab
     {
         super.viewDidLoad()
         navigationItem.title = "Ajustes"
-        
-        /*
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        photoPerfil.layer.cornerRadius = 100
-        photoPerfil.layer.masksToBounds = true
-        photoPerfil.image = UIImage(named: "231")
-         */
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell

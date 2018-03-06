@@ -277,8 +277,8 @@ public class TbUsuario
                 var statement: OpaquePointer?
                 
                 if sqlite3_prepare_v2(db, """
-                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario)
-                values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -329,6 +329,11 @@ public class TbUsuario
                 if sqlite3_bind_int(statement, 9, Int32(idIsuario)) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding idUsuario: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 10, usuario.perfil, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding perfil: \(errmsg)")
                 }
                 
                 if sqlite3_step(statement) != SQLITE_DONE{

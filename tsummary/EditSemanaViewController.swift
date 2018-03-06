@@ -18,8 +18,17 @@ class EditSemanaViewController: UIViewController {
         guard let fetchedValue = SwiftyPlistManager.shared.fetchValue(for: "newKey", fromPlistWithName: "Data") else { return }
         
         print("\(fetchedValue)")
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
-
+    
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
+    
     /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ajustesSegue"

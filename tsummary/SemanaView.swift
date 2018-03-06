@@ -6,7 +6,8 @@ class SemanaView: UIView, IListViewSemana
     var cellId1 = "cellId1"
     var presenterSemana: PresenterSemana!
     let cantDias: Int = 14
-    var cellPrevious: DetalleDiaCell!
+    var previous: DetalleDiaCell!
+    var current: DetalleDiaCell!
     var fechaHoraIngreso: String = ""
     var item : Int = -1
     
@@ -29,7 +30,7 @@ class SemanaView: UIView, IListViewSemana
         self.collectionView.register(DetalleDiaCell.self, forCellWithReuseIdentifier: cellId1)
         self.collectionView.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-
+        self.collectionView.allowsMultipleSelection = false
         
         var contraints: [NSLayoutConstraint]  = [NSLayoutConstraint]()
         contraints.append(self.collectionView.topAnchor.constraint(equalTo: self.topAnchor))
@@ -96,7 +97,7 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         if self.fechaHoraIngreso == self.objects[indexPath.item].fecha
         {
             cell.isSelected = true
-            cellPrevious = cell
+            self.current = cell
         }
         return cell
     }
@@ -125,20 +126,11 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
     {
         if let cell = gestureRecognizer.view as? DetalleDiaCell {
             
-            if cellPrevious == nil
-            {
-                cellPrevious = cell
-            }
-            else
-            {
-                if (cellPrevious.indexPath != cell.indexPath)
-                {
-                    cellPrevious.isSelected = false
-                    cellPrevious = cell
-                }
-            }
-            
+            self.previous = self.current
+            self.previous.isSelected = false
+
             cell.isSelected = true
+            self.current = cell
             
             if let nro = cell.lblNro.text
             {
@@ -149,14 +141,30 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         }
     }
     
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
     {
         let x = scrollView.contentOffset.x
         let w = scrollView.bounds.size.width
         let currentPage = Int(ceil(x/w))
         self.item = currentPage
-        print("\(currentPage)")
+        if (self.item == 1 || self.item == 2)
+        {
+            print("\(self.item)")
+            deselect()
+        }
+    }
+ 
+    func deselect()
+    {
+        for cell in self.collectionView.visibleCells {
+            if let c = cell as? DetalleDiaCell
+            {
+                if c.indexPath == self.previous.indexPath
+                {
+                    c.isSelected = false
+                }
+            }
+        }
     }
 }
 
