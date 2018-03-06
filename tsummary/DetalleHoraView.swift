@@ -19,7 +19,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         return cv
     }()
     
-    override init(frame: CGRect) {
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
         addSubview(self.collectionView)
         self.collectionView.register(DetalleHoraCell.self, forCellWithReuseIdentifier: cellId1)
@@ -44,8 +45,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! DetalleHoraCell
         if let hrs = self.objects {
             cell.lblCliente.text = hrs[indexPath.row].proyecto.nombreCliente
@@ -54,6 +55,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             cell.lblAsunto.text = hrs[indexPath.row].asunto
             cell.IdHora = hrs[indexPath.row].id
             cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
+            cell.imgEstado.image = hrs[indexPath.row].modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
 
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
                 target: self,

@@ -1,23 +1,16 @@
 import UIKit
-//import SwiftyPlistManager
 
+class EditAjustesViewController: UIViewController {
 
-
-class EditSemanaViewController: UIViewController {
-
-    
     @IBOutlet weak var txtNombreServidor: UITextField!
-    
-    var cantidadSemanas: Int!
+    public var idAbogado: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Ajustes"
         
         SwiftyPlistManager.shared.start(plistNames: ["Data"], logging: true)
-    
         guard let fetchedValue = SwiftyPlistManager.shared.fetchValue(for: "newKey", fromPlistWithName: "Data") else { return }
-        
-        print("\(fetchedValue)")
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -42,14 +35,15 @@ class EditSemanaViewController: UIViewController {
     */
     
     @IBAction func btnGuardar_OnClick(_ sender: Any) {
-        //self.performSegue(withIdentifier: "ajustesSegue", sender: "")
-        //navigationController?.popViewController(animated: false)
-    
-        SwiftyPlistManager.shared.save(txtNombreServidor.text!, forKey: "newKey", toPlistWithName: "Data") { (err) in
-            if err == nil {
+
+        SwiftyPlistManager.shared.save(txtNombreServidor.text!, forKey: "newKey", toPlistWithName: "Data")
+        { (err) in
+            if err == nil
+            {
+                //self.performSegue(withIdentifier: "ajustesSegue", sender: "")
+                //navigationController?.popViewController(animated: false)
                 print("Value successfully saved into plist.")
             }
         }
-        
     }
 }

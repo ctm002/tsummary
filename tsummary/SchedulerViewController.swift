@@ -266,7 +266,7 @@ class SchedulerViewController: UIViewController, IViewHora {
             case "ajuestesIrSegue":
                 if let id = sender
                 {
-                    let controller = segue.destination as! AjustesViewController
+                    let controller = segue.destination as! EditAjustesViewController
                     controller.idAbogado = id as! Int
                 }
             

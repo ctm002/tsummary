@@ -9,7 +9,6 @@ class SincViewController: UIViewController {
     
     @IBAction func btnSincronizar(_ sender: Any)
     {
-        //Solo testing
         btnSincronizar.isEnabled =  false
         let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         self.view.addSubview(activityView)

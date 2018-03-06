@@ -50,6 +50,15 @@ class DetalleHoraCell: UICollectionViewCell {
         return lbl
     }()
     
+    var  imgEstado : UIImageView = {
+        let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.clipsToBounds = true
+        img.contentMode = .scaleToFill
+        return img
+    }()
+    
+    
     var IdHora: Int32 = 0
     
     var containerViews : UIView =
@@ -92,12 +101,12 @@ class DetalleHoraCell: UICollectionViewCell {
         self.containerViews.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         self.containerViews.backgroundColor = UIColor.white
         
-        
         self.containerViews.addSubview(lblCliente)
         self.containerViews.addSubview(lblHora)
         self.containerViews.addSubview(lblProyecto)
         self.containerViews.addSubview(lblAsunto)
         self.containerViews.addSubview(lblFechaIngreso)
+        self.containerViews.addSubview(imgEstado)
         
         lblCliente.textAlignment = .left
         lblCliente.topAnchor.constraint(equalTo: self.containerViews.topAnchor, constant: delta).isActive = true
@@ -127,10 +136,14 @@ class DetalleHoraCell: UICollectionViewCell {
         
         lblFechaIngreso.textAlignment = .left
         lblFechaIngreso.leadingAnchor.constraint(equalTo: self.containerViews.leadingAnchor, constant: delta).isActive = true
-        lblFechaIngreso.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
-        lblFechaIngreso.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        //lblFechaIngreso.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
+        lblFechaIngreso.heightAnchor.constraint(equalToConstant: 30).isActive = true
         lblFechaIngreso.bottomAnchor.constraint(equalTo: self.containerViews.bottomAnchor, constant: -delta).isActive = true
         lblFechaIngreso.backgroundColor = mostrar ? UIColor.green : UIColor.white
+        
+        imgEstado.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
+        imgEstado.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        imgEstado.backgroundColor = mostrar ? UIColor.cyan : UIColor.white
         
         self.containerViews.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
         
@@ -144,5 +157,12 @@ class DetalleHoraCell: UICollectionViewCell {
         
         self.containerViews.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
         
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .height, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .height, multiplier: 1, constant: 0))
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .trailing, relatedBy: .equal, toItem: imgEstado, attribute: .leading, multiplier: 1, constant: 0))
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .leading, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .trailing, multiplier: 1, constant: 0))
     }
 }

@@ -16,7 +16,8 @@ public class TbUsuario
     var db: OpaquePointer?
     var fileURL: URL
     
-    init() {
+    init()
+    {
         do
         {
             fileURL = try! FileManager.default.url(

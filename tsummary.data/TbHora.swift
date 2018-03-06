@@ -766,7 +766,10 @@ public class TbHora
         
         if let csString = sqlite3_column_text(record, 8)
         {
-            hora.fechaHoraIngreso = Utils.toDateFromString(String(cString: csString))!
+            if let h = Utils.toDateFromString(String(cString: csString))
+            {
+                hora.fechaHoraIngreso = h
+            }
         }
         
         if let csString = sqlite3_column_text(record, 9)
@@ -784,7 +787,10 @@ public class TbHora
         
         if let csString = sqlite3_column_text(record, 12)
         {
-            hora.fechaInsert = Utils.toDateFromString(String(cString: csString))
+            if let h = Utils.toDateFromString(String(cString: csString))
+            {
+                hora.fechaInsert = h
+            }
         }
         
         let estado : Int32 = sqlite3_column_int(record, 14)

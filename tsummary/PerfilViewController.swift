@@ -82,12 +82,6 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let item : [String: String] = self.datos[indexPath.row]!
-        //        if item["key"] == "Semana"
-        //        {
-        //            let viewController = storyboard?.instantiateViewController(withIdentifier: "EditSemanaViewController") as! EditSemanaViewController
-        //            viewController.cantidadSemanas = 10
-        //            self.navigationController?.pushViewController(viewController, animated: false)
-        //        }
     }
     
     @objc func dismissKeyboard()
