@@ -40,9 +40,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             self.activityIndicator.stopAnimating()
                         }
                     }
-                    
                 })
-                
             }
             else
             {
@@ -79,14 +77,8 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return datos.count
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-        let item : [String: String] = self.datos[indexPath.row]!
-    }
-    
     @objc func dismissKeyboard()
     {
         view.endEditing(true)
     }
-
 }

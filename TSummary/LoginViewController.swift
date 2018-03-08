@@ -1,7 +1,6 @@
 import UIKit
 class LoginViewController: UIViewController
 {
-
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var txtIMEI: UITextField!
@@ -30,6 +29,7 @@ class LoginViewController: UIViewController
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         setDataDefaults()
+        
         
         
         self.fDesde = Utils.toStringFromDate(Calendario.instance.fechaInicio, "yyyyMMdd")

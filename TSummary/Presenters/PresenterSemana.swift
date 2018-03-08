@@ -3,21 +3,17 @@ import Foundation
 public class PresenterSemana
 {
     private var mView : IListViewSemana!
-    private var mFecha: Date!
-    private var mCantidadDias: Int = 0
+    
     
     public init()
     {
         self.mView = nil
-        self.mCantidadDias = 14
-        self.mFecha = Date()
     }
     
-    init(view: IListViewSemana, cantidadDeDias cantidad: Int)
+    
+    init(view: IListViewSemana)
     {
         self.mView = view
-        self.mCantidadDias = cantidad
-        self.mFecha = Date()
     }
     
     public func mostrar()

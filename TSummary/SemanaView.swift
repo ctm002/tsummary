@@ -42,7 +42,7 @@ class SemanaView: UIView, IListViewSemana
         NSLayoutConstraint.activate(contraints)
         self.addConstraints(contraints)
         
-        presenterSemana = PresenterSemana(view: self, cantidadDeDias: self.cantDias)
+        presenterSemana = PresenterSemana(view: self)
         presenterSemana.mostrar()
     }
     

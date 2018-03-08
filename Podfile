@@ -6,15 +6,18 @@ target 'tsummary' do
   use_frameworks!
   pod "SearchTextField"
   pod 'JWTDecode', '~> 2.1'
+end 
 
-#target 'tsummaryTests' do
-#inherit! :search_paths
-    # Pods for testing
-    # end
-
-# target 'tsummaryUITests' do
-#   inherit! :search_paths
-    # Pods for testing
-    # end
-
+target 'tsummaryTests' do
+    use_frameworks!
+    pod "SearchTextField"
+    pod 'JWTDecode', '~> 2.1'
 end
+
+target 'tsummaryUITests' do
+    use_frameworks!
+    pod "SearchTextField"
+    pod 'JWTDecode', '~> 2.1'
+end
+
+

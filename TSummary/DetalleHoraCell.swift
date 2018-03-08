@@ -136,7 +136,6 @@ class DetalleHoraCell: UICollectionViewCell {
         
         lblFechaIngreso.textAlignment = .left
         lblFechaIngreso.leadingAnchor.constraint(equalTo: self.containerViews.leadingAnchor, constant: delta).isActive = true
-        //lblFechaIngreso.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
         lblFechaIngreso.heightAnchor.constraint(equalToConstant: 30).isActive = true
         lblFechaIngreso.bottomAnchor.constraint(equalTo: self.containerViews.bottomAnchor, constant: -delta).isActive = true
         lblFechaIngreso.backgroundColor = mostrar ? UIColor.green : UIColor.white
