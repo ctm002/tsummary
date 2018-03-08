@@ -147,8 +147,6 @@
 		2F8240762051E01800F20971 /* JWTDecode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JWTDecode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8240782051E01E00F20971 /* JWTDecode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JWTDecode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F82407A2051E02200F20971 /* JWTDecode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JWTDecode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F8C72BA200D058600FFD00A /* presenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presenterTests.swift; sourceTree = "<group>"; };
-		2F8C72BC200D058600FFD00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F8DFC5B2020CF1000814A34 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		2F8DFC5F2020CFCF00814A34 /* EditHoraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditHoraViewController.swift; path = tsummary/EditHoraViewController.swift; sourceTree = SOURCE_ROOT; };
 		2F8DFC6320211CFE00814A34 /* Extends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
@@ -255,15 +253,6 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
-		2F8C72B9200D058600FFD00A /* presenterTests */ = {
-			isa = PBXGroup;
-			children = (
-				2F8C72BA200D058600FFD00A /* presenterTests.swift */,
-				2F8C72BC200D058600FFD00A /* Info.plist */,
-			);
-			path = presenterTests;
-			sourceTree = "<group>";
-		};
 		7308A227C9EFB69E13811868 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,9 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				DE0E047A1FD0B16D00AE0D7F /* TSummary */,
-				DE0E048F1FD0B16E00AE0D7F /* tsummaryTests */,
-				DE0E049A1FD0B16E00AE0D7F /* tsummaryUITests */,
-				2F8C72B9200D058600FFD00A /* presenterTests */,
+				DE0E048F1FD0B16E00AE0D7F /* TSummaryTests */,
+				DE0E049A1FD0B16E00AE0D7F /* TSummaryUITests */,
 				DE0E04791FD0B16D00AE0D7F /* Products */,
 				7308A227C9EFB69E13811868 /* Frameworks */,
 				1A6B9F8EFC3536F0B3559067 /* Pods */,
@@ -334,22 +322,22 @@
 			path = TSummary;
 			sourceTree = "<group>";
 		};
-		DE0E048F1FD0B16E00AE0D7F /* tsummaryTests */ = {
+		DE0E048F1FD0B16E00AE0D7F /* TSummaryTests */ = {
 			isa = PBXGroup;
 			children = (
 				DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */,
 				DE0E04921FD0B16E00AE0D7F /* Info.plist */,
 			);
-			path = tsummaryTests;
+			path = TSummaryTests;
 			sourceTree = "<group>";
 		};
-		DE0E049A1FD0B16E00AE0D7F /* tsummaryUITests */ = {
+		DE0E049A1FD0B16E00AE0D7F /* TSummaryUITests */ = {
 			isa = PBXGroup;
 			children = (
 				DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */,
 				DE0E049D1FD0B16E00AE0D7F /* Info.plist */,
 			);
-			path = tsummaryUITests;
+			path = TSummaryUITests;
 			sourceTree = "<group>";
 		};
 		DE7D25821FDEC068003B0F4C /* Presenters */ = {
