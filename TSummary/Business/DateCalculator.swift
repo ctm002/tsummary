@@ -57,8 +57,8 @@ class DateCalculator
     
     private func calcFechas(now: Date)
     {
-        self.mFechaTermino = calcularFechaInicio(now: now)
         self.mFechaInicio = calcularFechaInicio(now: now)
+        self.mFechaTermino = calcularFechaTermino(now: now)
     }
     
     func obtDias() -> [Dia]

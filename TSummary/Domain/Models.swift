@@ -1,4 +1,5 @@
 import Foundation
+
 public class Usuario
 {
     init()
@@ -228,7 +229,7 @@ enum Estado: Int
     case antiguo = 3
 }
 
-public class Hora
+public class RegistroHora
 {
     init()
     {
@@ -237,12 +238,12 @@ public class Hora
         self.mHoras = 0
         self.mMinutos = 0
         self.mAbogadoId = 0
-        self.mEsModificable = false
+        self.mModificable = false
         self.mOffLine = false
         self.mFechaHoraIngreso = Date()
         self.mId = 0
         self.mEstado = .nuevo
-        self.mproyectoId = 0
+        self.mProyectoId = 0
         self.proyecto = ClienteProyecto()
         self.fechaInsert = nil
     }
@@ -287,8 +288,8 @@ public class Hora
         }
     }
     
-    private var mFechaHoraIngreso: Date
-    var fechaHoraIngreso: Date
+    private var mFechaHoraIngreso: Date?
+    var fechaHoraIngreso: Date?
     {
         get
         {
@@ -300,14 +301,15 @@ public class Hora
         }
     }
     
-    var tim_fecha_ing_hh_mm: String
+    var fechaHoraIngresoToHHmm : String
     {
         get
         {
-            let strFechaIng : String =  Utils.toStringFromDate(self.mFechaHoraIngreso, "HH:mm")
+            let strFechaIng : String =  Utils.toStringFromDate(self.mFechaHoraIngreso!, "HH:mm")
             return strFechaIng
         }
     }
+    
     
     private var mAsunto: String
     var asunto: String
@@ -362,16 +364,16 @@ public class Hora
         }
     }
     
-    private var mEsModificable: Bool
+    private var mModificable: Bool
     var modificable: Bool
     {
         get
         {
-            return self.mEsModificable
+            return self.mModificable
         }
         set
         {
-            self.mEsModificable = newValue
+            self.mModificable = newValue
         }
     }
     
@@ -388,16 +390,16 @@ public class Hora
         }
     }
     
-    private var mproyectoId:Int32
+    private var mProyectoId:Int32
     var proyectoId: Int32
     {
         get
         {
-            return self.mproyectoId
+            return self.mProyectoId
         }
         set
         {
-            self.mproyectoId = newValue
+            self.mProyectoId = newValue
         }
     }
     
@@ -425,6 +427,23 @@ public class Hora
         {
             self.mFechaInsert = newValue
         }
+    }
+    
+    public func isValid() -> Bool
+    {
+        if self.mCorrelativo == 0 { return false }
+        
+        if self.mHoras == 0  { return false }
+        
+        if self.mMinutos == 0 { return false }
+        
+        if self.asunto == "" { return false }
+        
+        if self.mFechaHoraIngreso  == nil { return false }
+        
+        if self.mProyectoId == 0 { return false }
+        
+        return true
     }
 }
 
@@ -481,5 +500,5 @@ public class CabeceraHora
 {
     var estado: Int!
     var mensaje: String!
-    var data : [Hora]!
+    var data : [RegistroHora]!
 }

@@ -9,8 +9,7 @@ class EditAjustesViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Ajustes"
         
-        SwiftyPlistManager.shared.start(plistNames: ["Data"], logging: true)
-        guard let fetchedValue = SwiftyPlistManager.shared.fetchValue(for: "newKey", fromPlistWithName: "Data") else { return }
+        txtNombreServidor.text = FileConfig.instance.fetch(key: "newValue")
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -22,28 +21,11 @@ class EditAjustesViewController: UIViewController {
         view.endEditing(true)
     }
     
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ajustesSegue"
-        {
-            let controller = segue.destination as! AjustesViewController
-            //let backItem = UIBarButtonItem()
-            //backItem.title = ""
-            //navigationItem.backBarButtonItem = backItem
-        }
-    }
-    */
-    
-    @IBAction func btnGuardar_OnClick(_ sender: Any) {
-
-        SwiftyPlistManager.shared.save(txtNombreServidor.text!, forKey: "newKey", toPlistWithName: "Data")
-        { (err) in
-            if err == nil
-            {
-                //self.performSegue(withIdentifier: "ajustesSegue", sender: "")
-                //navigationController?.popViewController(animated: false)
+    @IBAction func btnGuardar_OnClick(_ sender: Any)
+    {
+        FileConfig.instance.saveWith(key: "newValue", value: txtNombreServidor.text!, result: { (value: Bool) in
                 print("Value successfully saved into plist.")
             }
-        }
+        )
     }
 }

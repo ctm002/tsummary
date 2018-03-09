@@ -1,7 +1,7 @@
 import UIKit
 class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout
 {
-    var objects : [Hora]!
+    var objects : [RegistroHora]!
     let cellId1 : String = "cellId1"
     weak var delegate: DetalleHoraViewDelegate?
     
@@ -54,7 +54,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].horasTrabajadas) + ":" + String(format: "%02d",  hrs[indexPath.row].minutosTrabajados)
             cell.lblAsunto.text = hrs[indexPath.row].asunto
             cell.IdHora = hrs[indexPath.row].id
-            cell.lblFechaIngreso.text = hrs[indexPath.row].tim_fecha_ing_hh_mm
+            cell.lblFechaIngreso.text = hrs[indexPath.row].fechaHoraIngresoToHHmm
             cell.imgEstado.image = hrs[indexPath.row].modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
 
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -77,7 +77,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
                 let model = ModelController(
                     id: detalleHora.id,
                     abogadoId: detalleHora.abogadoId,
-                    fechaHoraIngreso: detalleHora.fechaHoraIngreso,
+                    fechaHoraIngreso: detalleHora.fechaHoraIngreso!,
                     idProyecto: detalleHora.proyecto.id,
                     nombreProyecto: detalleHora.proyecto.nombre,
                     nombreCliente: detalleHora.proyecto.nombreCliente,

@@ -141,16 +141,17 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         }
     }
     
-    func setResponse(_ response: Response)
-    {
-        if response.result
+    private var mResponse : Response!
+    public var response : Response {
+        set
         {
-            mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
+            self.mResponse = newValue
         }
-        else
+        get
         {
-            mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
+            return self.mResponse
         }
+
     }
     
     func mostrarMensaje(titulo: String, mensaje: String )
@@ -163,7 +164,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func btnGuardar_Click(_ sender: UIButton)
+    @IBAction func btnGuardar_Click(_ sender: UIButton?)
     {
         btnGuardar.isEnabled = false
         let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -175,11 +176,21 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
+        
         presenterHora!.guardar()
+        
+        if response.result
+        {
+            mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
+        }
+        else
+        {
+            mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
+        }
         btnGuardar.isEnabled = true
     }
     
-    @IBAction func btnEliminar_Click(_ sender: UIButton)
+    @IBAction func btnEliminar_Click(_ sender: UIButton?)
     {
         let alert = UIAlertController(title: "Alerta",
                                       message: "Está seguro de eliminar el registro?",

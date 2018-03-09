@@ -102,7 +102,7 @@ public class ControladorLogica
         }
     }
     
-    func guardar(hora: Hora, callback: @escaping (Response) -> Void)
+    func guardar(hora: RegistroHora, callback: @escaping (Response) -> Void)
     {
         var result: Response!
 
@@ -184,7 +184,7 @@ public class ControladorLogica
             let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
             let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
-            if let horas : [Hora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
+            if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
             {
                 if horas.count > 0
                 {
@@ -194,7 +194,7 @@ public class ControladorLogica
                         let horaTS = HoraTS(
                             tim_correl: h.tim_correl,
                             pro_id: h.proyecto.id,
-                            tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso),
+                            tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso!),
                             tim_asunto: h.asunto,
                             tim_horas: h.horasTrabajadas,
                             tim_minutos: h.minutosTrabajados,
@@ -265,7 +265,7 @@ public class ControladorLogica
         }
     }
     
-    func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [Hora]?
+    func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [RegistroHora]?
     {
         return DataStore.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: codigo,fecha: fecha)
     }

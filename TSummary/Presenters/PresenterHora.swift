@@ -33,7 +33,7 @@ public class PresenterHora
 
         let id: Int32  = self.mEditViewHora!.idHora
         
-        var detalle : Hora
+        var detalle : RegistroHora
         if let detalleDB = DataStore.horas.getById(id)
         {
             detalle = detalleDB
@@ -41,7 +41,7 @@ public class PresenterHora
         }
         else
         {
-            detalle = Hora()
+            detalle = RegistroHora()
             detalle.tim_correl = 0
             detalle.estado = .nuevo
             detalle.modificable = true
@@ -64,7 +64,7 @@ public class PresenterHora
         detalle.fechaInsert = Date()
         
         ControladorLogica.instance.guardar(hora: detalle, callback: {(response: Response) in
-            self.mEditViewHora.setResponse(response)
+            self.mEditViewHora.response = response
         })
     }
     
@@ -72,7 +72,7 @@ public class PresenterHora
     {
         let id: Int32  = self.mEditViewHora!.idHora
         ControladorLogica.instance.eliminarById(id, callback: { (response:Response) in
-                self.mEditViewHora.setResponse(response)
+                self.mEditViewHora.response = response
         })
     }
 }

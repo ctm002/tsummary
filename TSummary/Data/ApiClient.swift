@@ -104,7 +104,7 @@ class ApiClient
         task.resume()
     }
     
-    func obtListDetalleHorasByCodAbogado(_ session: SessionLocal,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([Hora]?) -> Void)
+    func obtListDetalleHorasByCodAbogado(_ session: SessionLocal,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([RegistroHora]?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "api/Horas/GetHorasByParameters")
@@ -140,12 +140,12 @@ class ApiClient
                         let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
                         if (responseString != "")
                         {
-                            var horas = [Hora]()
+                            var horas = [RegistroHora]()
                             let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
                             let aJSON = dataJSON["data"] as! [AnyObject]
                             for item in aJSON
                             {
-                                let hora = Hora()
+                                let hora = RegistroHora()
                                 hora.proyecto.id = item["pro_id"] as! Int32
                                 hora.tim_correl = item["tim_correl"] as! Int32
                                 hora.horasTrabajadas = item["tim_horas"] as! Int
@@ -241,7 +241,7 @@ class ApiClient
         }
     }
     
-    func guardar(hora: Hora, responseOK: @escaping (Hora) -> Void,  responseError: @escaping (Hora) -> Void)
+    func guardar(hora: RegistroHora, responseOK: @escaping (RegistroHora) -> Void,  responseError: @escaping (RegistroHora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let sURL = "\(self.strURL)api/HorasMobile"
@@ -254,7 +254,7 @@ class ApiClient
         let horaTS = HoraTS(
             tim_correl : hora.tim_correl,
             pro_id : hora.proyecto.id,
-            tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraIngreso),
+            tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraIngreso!),
             tim_asunto : hora.asunto,
             tim_horas : hora.horasTrabajadas,
             tim_minutos : hora.minutosTrabajados,
@@ -306,7 +306,7 @@ class ApiClient
         }
     }
     
-    func eliminar(hora: Hora, responseOK: @escaping (Hora) -> Void, responseError: @escaping (Hora) -> Void)
+    func eliminar(hora: RegistroHora, responseOK: @escaping (RegistroHora) -> Void, responseError: @escaping (RegistroHora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "api/Horas/" + String(hora.tim_correl))

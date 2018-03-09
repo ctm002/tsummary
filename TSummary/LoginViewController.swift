@@ -30,8 +30,6 @@ class LoginViewController: UIViewController
         view.addGestureRecognizer(tap)
         setDataDefaults()
         
-        
-        
         self.fDesde = Utils.toStringFromDate(DateCalculator.instance.fechaInicio, "yyyyMMdd")
         self.fHasta = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
         

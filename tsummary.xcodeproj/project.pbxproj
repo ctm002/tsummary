@@ -24,9 +24,13 @@
 		2F31672F202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
 		2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
 		2F442E092052AC1A0075F0C5 /* DateCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */; };
+		2F442E0B2052D2D60075F0C5 /* FileConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E0A2052D2D60075F0C5 /* FileConfig.swift */; };
+		2F442E0C2052D2DD0075F0C5 /* FileConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E0A2052D2D60075F0C5 /* FileConfig.swift */; };
+		2F442E0D2052D2DE0075F0C5 /* FileConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E0A2052D2D60075F0C5 /* FileConfig.swift */; };
+		2F442E0F2052D3110075F0C5 /* FileConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E0E2052D3110075F0C5 /* FileConfigTests.swift */; };
+		2F442E1320530B000075F0C5 /* RegistroHoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */; };
 		2F531767203B16A10085253C /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
-		2F535F6E204F0C0E00B365AD /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
@@ -49,7 +53,6 @@
 		2F8240892051EDC800F20971 /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F82408A2051EDC800F20971 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
 		2F82408B2051EDC800F20971 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
-		2F82408C2051EDC800F20971 /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */; };
 		2F82408D2051EDD900F20971 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F82408E2051EDD900F20971 /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F82408F2051EDD900F20971 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* DataStore.swift */; };
@@ -62,7 +65,6 @@
 		2F8240962051EDD900F20971 /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F8240972051EDD900F20971 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
 		2F8240982051EDD900F20971 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
-		2F8240992051EDD900F20971 /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */; };
 		2F82409A2051EE4400F20971 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* DataStore.swift */; };
 		2F82409B2051EE4400F20971 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
 		2F82409C2051EE4400F20971 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
@@ -100,7 +102,7 @@
 		DE0E04831FD0B16D00AE0D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE0E04821FD0B16D00AE0D7F /* Assets.xcassets */; };
 		DE0E04861FD0B16D00AE0D7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E04841FD0B16D00AE0D7F /* LaunchScreen.storyboard */; };
 		DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */; };
-		DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */; };
+		DE0E049C1FD0B16E00AE0D7F /* EditHoraViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E049B1FD0B16E00AE0D7F /* EditHoraViewControllerTests.swift */; };
 		DE1EF4AF1FD98A8C00CD60A8 /* DetalleDiaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */; };
 		DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
@@ -137,9 +139,11 @@
 		2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleHoraCell.swift; sourceTree = "<group>"; };
 		2F3AD82C2032031F00C0BA30 /* SemanaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanaView.swift; sourceTree = "<group>"; };
 		2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculatorTests.swift; sourceTree = "<group>"; };
+		2F442E0A2052D2D60075F0C5 /* FileConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConfig.swift; sourceTree = "<group>"; };
+		2F442E0E2052D3110075F0C5 /* FileConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConfigTests.swift; sourceTree = "<group>"; };
+		2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroHoraTests.swift; sourceTree = "<group>"; };
 		2F531766203B16A10085253C /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 		2F535F672049D6BF00B365AD /* DetalleHoraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleHoraView.swift; sourceTree = "<group>"; };
-		2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjustesViewController.swift; sourceTree = "<group>"; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
@@ -177,7 +181,7 @@
 		DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tsummaryTests.swift; sourceTree = "<group>"; };
 		DE0E04921FD0B16E00AE0D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE0E04971FD0B16E00AE0D7F /* tsummaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tsummaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tsummaryUITests.swift; sourceTree = "<group>"; };
+		DE0E049B1FD0B16E00AE0D7F /* EditHoraViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHoraViewControllerTests.swift; sourceTree = "<group>"; };
 		DE0E049D1FD0B16E00AE0D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleDiaCell.swift; sourceTree = "<group>"; };
 		DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterSemana.swift; sourceTree = "<group>"; };
@@ -259,8 +263,17 @@
 			isa = PBXGroup;
 			children = (
 				2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */,
+				2F442E0E2052D3110075F0C5 /* FileConfigTests.swift */,
 			);
 			name = Business;
+			sourceTree = "<group>";
+		};
+		2F442E1120530ADB0075F0C5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */,
+			);
+			name = Domain;
 			sourceTree = "<group>";
 		};
 		7308A227C9EFB69E13811868 /* Frameworks */ = {
@@ -326,8 +339,6 @@
 				2F9C6EC92036336300F8C713 /* SincViewController.swift */,
 				2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */,
 				2FB63B7A203F71D900A0CF54 /* Data.plist */,
-				2FB63B7E203F7CCA00A0CF54 /* SwiftyPlistManager.swift */,
-				2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */,
 			);
 			path = TSummary;
 			sourceTree = "<group>";
@@ -335,6 +346,7 @@
 		DE0E048F1FD0B16E00AE0D7F /* TSummaryTests */ = {
 			isa = PBXGroup;
 			children = (
+				2F442E1120530ADB0075F0C5 /* Domain */,
 				2F442E072052AB9E0075F0C5 /* Business */,
 				DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */,
 				DE0E04921FD0B16E00AE0D7F /* Info.plist */,
@@ -345,7 +357,7 @@
 		DE0E049A1FD0B16E00AE0D7F /* TSummaryUITests */ = {
 			isa = PBXGroup;
 			children = (
-				DE0E049B1FD0B16E00AE0D7F /* tsummaryUITests.swift */,
+				DE0E049B1FD0B16E00AE0D7F /* EditHoraViewControllerTests.swift */,
 				DE0E049D1FD0B16E00AE0D7F /* Info.plist */,
 			);
 			path = TSummaryUITests;
@@ -372,8 +384,10 @@
 		DE7D25901FE0626E003B0F4C /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				2F442E0A2052D2D60075F0C5 /* FileConfig.swift */,
 				2F7AE39E2005097400CB0492 /* ControladorLogica.swift */,
 				2F531766203B16A10085253C /* DateCalculator.swift */,
+				2FB63B7E203F7CCA00A0CF54 /* SwiftyPlistManager.swift */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -687,6 +701,7 @@
 				2FB63B7F203F7CCA00A0CF54 /* SwiftyPlistManager.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */,
+				2F442E0B2052D2D60075F0C5 /* FileConfig.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,
 				2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */,
 				2F8DFC5C2020CF1000814A34 /* Structs.swift in Sources */,
@@ -700,7 +715,6 @@
 				2F9C6ECA2036336300F8C713 /* SincViewController.swift in Sources */,
 				2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */,
 				2F31672D202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */,
-				2F535F6E204F0C0E00B365AD /* AjustesViewController.swift in Sources */,
 				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
 				2F057E932028B0F500CA6C02 /* SchedulerViewController.swift in Sources */,
 				DE7D25921FE0639E003B0F4C /* DataStore.swift in Sources */,
@@ -728,13 +742,15 @@
 				2F8240912051EDD900F20971 /* TbHora.swift in Sources */,
 				2F8240922051EDD900F20971 /* TbUsuario.swift in Sources */,
 				2F8240932051EDD900F20971 /* LoginViewController.swift in Sources */,
+				2F442E0C2052D2DD0075F0C5 /* FileConfig.swift in Sources */,
+				2F442E0F2052D3110075F0C5 /* FileConfigTests.swift in Sources */,
 				2F8240942051EDD900F20971 /* SemanaView.swift in Sources */,
 				2F8240952051EDD900F20971 /* DetalleDiaCell.swift in Sources */,
 				2F8240962051EDD900F20971 /* DetalleHoraView.swift in Sources */,
 				2F8240972051EDD900F20971 /* SincViewController.swift in Sources */,
 				2F8240982051EDD900F20971 /* PerfilViewController.swift in Sources */,
-				2F8240992051EDD900F20971 /* AjustesViewController.swift in Sources */,
 				2F8240802051ED6600F20971 /* PresenterHora.swift in Sources */,
+				2F442E1320530B000075F0C5 /* RegistroHoraTests.swift in Sources */,
 				2F82407E2051ED2800F20971 /* PresenterProyecto.swift in Sources */,
 				2F82407D2051ECE100F20971 /* Models.swift in Sources */,
 				2F82407B2051E78900F20971 /* SwiftyPlistManager.swift in Sources */,
@@ -766,6 +782,7 @@
 				2F8240822051EDC800F20971 /* Models.swift in Sources */,
 				2F8240832051EDC800F20971 /* ControladorLogica.swift in Sources */,
 				2F8240842051EDC800F20971 /* DateCalculator.swift in Sources */,
+				2F442E0D2052D2DE0075F0C5 /* FileConfig.swift in Sources */,
 				2F8240852051EDC800F20971 /* AppDelegate.swift in Sources */,
 				2F8240862051EDC800F20971 /* LoginViewController.swift in Sources */,
 				2F8240872051EDC800F20971 /* SemanaView.swift in Sources */,
@@ -773,7 +790,6 @@
 				2F8240892051EDC800F20971 /* DetalleHoraView.swift in Sources */,
 				2F82408A2051EDC800F20971 /* SincViewController.swift in Sources */,
 				2F82408B2051EDC800F20971 /* PerfilViewController.swift in Sources */,
-				2F82408C2051EDC800F20971 /* AjustesViewController.swift in Sources */,
 				2F8240812051ED6B00F20971 /* PresenterHora.swift in Sources */,
 				2F82407F2051ED3000F20971 /* PresenterProyecto.swift in Sources */,
 				2F82407C2051E79600F20971 /* SwiftyPlistManager.swift in Sources */,
@@ -789,7 +805,7 @@
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
 				2FCBE620200D385A005B6E8E /* PresenterSemana.swift in Sources */,
 				2F057E8D202503F900CA6C02 /* Reachability.swift in Sources */,
-				DE0E049C1FD0B16E00AE0D7F /* tsummaryUITests.swift in Sources */,
+				DE0E049C1FD0B16E00AE0D7F /* EditHoraViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

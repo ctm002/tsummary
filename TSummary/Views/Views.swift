@@ -7,7 +7,7 @@ protocol IListViewSemana {
 protocol IViewHora {
     var idAbogado : Int { get set }
     var fechaHoraIngreso : String { get set }
-    func setList(horas: [Hora])
+    func setList(horas: [RegistroHora])
 }
 
 
@@ -27,6 +27,6 @@ protocol IEditViewHora {
     var minutos : Int { get set }
     var asunto : String { get set }
     var timCorrelativo : Int32 { get set }
+    var response : Response { get set}
     func setNombreProyecto(_ model : ModelController)
-    func setResponse(_ response: Response)
 }

@@ -22,7 +22,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     var presenterSemana: PresenterSemana!
     var presenterHora: PresenterHora!
     var semana : [Dia]!
-    var horas : [Hora]!
+    var horas : [RegistroHora]!
     
     let cantDias: Int = 14
     let diasBySemana: CGFloat = 7
@@ -275,7 +275,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         }
     }
     
-    func setList(horas: [Hora])
+    func setList(horas: [RegistroHora])
     {
         self.horaView.objects = horas
         DispatchQueue.main.async {
