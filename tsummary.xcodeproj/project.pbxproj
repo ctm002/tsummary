@@ -23,7 +23,8 @@
 		2F31672E202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
 		2F31672F202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
 		2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
-		2F531767203B16A10085253C /* Calendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* Calendario.swift */; };
+		2F442E092052AC1A0075F0C5 /* DateCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */; };
+		2F531767203B16A10085253C /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F535F6E204F0C0E00B365AD /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
@@ -40,7 +41,7 @@
 		2F8240812051ED6B00F20971 /* PresenterHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterHora.swift */; };
 		2F8240822051EDC800F20971 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F966D772020A06A001DE17F /* Models.swift */; };
 		2F8240832051EDC800F20971 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
-		2F8240842051EDC800F20971 /* Calendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* Calendario.swift */; };
+		2F8240842051EDC800F20971 /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F8240852051EDC800F20971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		2F8240862051EDC800F20971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC72035E57400F8C713 /* LoginViewController.swift */; };
 		2F8240872051EDC800F20971 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
@@ -50,7 +51,7 @@
 		2F82408B2051EDC800F20971 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
 		2F82408C2051EDC800F20971 /* AjustesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */; };
 		2F82408D2051EDD900F20971 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
-		2F82408E2051EDD900F20971 /* Calendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* Calendario.swift */; };
+		2F82408E2051EDD900F20971 /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F82408F2051EDD900F20971 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25911FE0639E003B0F4C /* DataStore.swift */; };
 		2F8240902051EDD900F20971 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
 		2F8240912051EDD900F20971 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
@@ -135,7 +136,8 @@
 		2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerViewController.swift; sourceTree = "<group>"; };
 		2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleHoraCell.swift; sourceTree = "<group>"; };
 		2F3AD82C2032031F00C0BA30 /* SemanaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanaView.swift; sourceTree = "<group>"; };
-		2F531766203B16A10085253C /* Calendario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendario.swift; sourceTree = "<group>"; };
+		2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculatorTests.swift; sourceTree = "<group>"; };
+		2F531766203B16A10085253C /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 		2F535F672049D6BF00B365AD /* DetalleHoraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleHoraView.swift; sourceTree = "<group>"; };
 		2F535F6D204F0C0E00B365AD /* AjustesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjustesViewController.swift; sourceTree = "<group>"; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
@@ -229,17 +231,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		2F82409F2051F03500F20971 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				2F8DFC6320211CFE00814A34 /* Extends.swift */,
-				2F8DFC5B2020CF1000814A34 /* Structs.swift */,
-				2F966D772020A06A001DE17F /* Models.swift */,
-			);
-			name = Domain;
-			sourceTree = "<group>";
-		};
-		2F8240A02051F05000F20971 /* Data */ = {
+		2F442E052052AB1E0075F0C5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				DE7D25911FE0639E003B0F4C /* DataStore.swift */,
@@ -250,7 +242,25 @@
 				2FCF2959201140E6006FD735 /* Utils.swift */,
 				2F057E8A202503F900CA6C02 /* Reachability.swift */,
 			);
-			name = Data;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2F442E062052AB470075F0C5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2F8DFC6320211CFE00814A34 /* Extends.swift */,
+				2F8DFC5B2020CF1000814A34 /* Structs.swift */,
+				2F966D772020A06A001DE17F /* Models.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		2F442E072052AB9E0075F0C5 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */,
+			);
+			name = Business;
 			sourceTree = "<group>";
 		};
 		7308A227C9EFB69E13811868 /* Frameworks */ = {
@@ -294,8 +304,8 @@
 		DE0E047A1FD0B16D00AE0D7F /* TSummary */ = {
 			isa = PBXGroup;
 			children = (
-				2F8240A02051F05000F20971 /* Data */,
-				2F82409F2051F03500F20971 /* Domain */,
+				2F442E062052AB470075F0C5 /* Domain */,
+				2F442E052052AB1E0075F0C5 /* Data */,
 				DE7D25901FE0626E003B0F4C /* Business */,
 				DE7D25851FDEC0F2003B0F4C /* Views */,
 				DE7D25821FDEC068003B0F4C /* Presenters */,
@@ -325,6 +335,7 @@
 		DE0E048F1FD0B16E00AE0D7F /* TSummaryTests */ = {
 			isa = PBXGroup;
 			children = (
+				2F442E072052AB9E0075F0C5 /* Business */,
 				DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */,
 				DE0E04921FD0B16E00AE0D7F /* Info.plist */,
 			);
@@ -362,7 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				2F7AE39E2005097400CB0492 /* ControladorLogica.swift */,
-				2F531766203B16A10085253C /* Calendario.swift */,
+				2F531766203B16A10085253C /* DateCalculator.swift */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -697,7 +708,7 @@
 				2F057E8B202503F900CA6C02 /* Reachability.swift in Sources */,
 				2F8DFC602020CFCF00814A34 /* EditHoraViewController.swift in Sources */,
 				2F057E872024E6B000CA6C02 /* EditAjustesViewController.swift in Sources */,
-				2F531767203B16A10085253C /* Calendario.swift in Sources */,
+				2F531767203B16A10085253C /* DateCalculator.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
 				2F8DFC6420211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295820110274006FD735 /* ApiClient.swift in Sources */,
@@ -711,7 +722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F82408D2051EDD900F20971 /* ControladorLogica.swift in Sources */,
-				2F82408E2051EDD900F20971 /* Calendario.swift in Sources */,
+				2F82408E2051EDD900F20971 /* DateCalculator.swift in Sources */,
 				2F82408F2051EDD900F20971 /* DataStore.swift in Sources */,
 				2F8240902051EDD900F20971 /* TbProyecto.swift in Sources */,
 				2F8240912051EDD900F20971 /* TbHora.swift in Sources */,
@@ -739,6 +750,7 @@
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
 				2FCBE61F200D314F005B6E8E /* PresenterSemana.swift in Sources */,
 				2F057E8C202503F900CA6C02 /* Reachability.swift in Sources */,
+				2F442E092052AC1A0075F0C5 /* DateCalculatorTests.swift in Sources */,
 				DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,7 +765,7 @@
 				2F82409D2051EE4400F20971 /* TbUsuario.swift in Sources */,
 				2F8240822051EDC800F20971 /* Models.swift in Sources */,
 				2F8240832051EDC800F20971 /* ControladorLogica.swift in Sources */,
-				2F8240842051EDC800F20971 /* Calendario.swift in Sources */,
+				2F8240842051EDC800F20971 /* DateCalculator.swift in Sources */,
 				2F8240852051EDC800F20971 /* AppDelegate.swift in Sources */,
 				2F8240862051EDC800F20971 /* LoginViewController.swift in Sources */,
 				2F8240872051EDC800F20971 /* SemanaView.swift in Sources */,

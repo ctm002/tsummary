@@ -32,8 +32,8 @@ class LoginViewController: UIViewController
         
         
         
-        self.fDesde = Utils.toStringFromDate(Calendario.instance.fechaInicio, "yyyyMMdd")
-        self.fHasta = Utils.toStringFromDate(Calendario.instance.fechaTermino, "yyyyMMdd")
+        self.fDesde = Utils.toStringFromDate(DateCalculator.instance.fechaInicio, "yyyyMMdd")
+        self.fHasta = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         statusManager()

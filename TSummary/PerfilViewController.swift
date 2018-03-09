@@ -30,7 +30,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.activityIndicator.startAnimating()
                 let idUsuario : Int = (SessionLocal.shared.usuario?.idUsuario)!
                 ControladorLogica.instance.descargarImagenByIdUsuario(id: idUsuario, callback: { (dataString64: String) in
-                    let resp: Bool = ControladorLogica.instance.actualizarFoto(id: id, string64: dataString64)
+                    let resp: Bool = ControladorLogica.instance.actualizarImagen(id: id, string64: dataString64)
                     if resp
                     {
                         let data = Data(base64Encoded: dataString64, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)

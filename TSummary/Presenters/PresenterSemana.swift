@@ -18,7 +18,7 @@ public class PresenterSemana
     
     public func mostrar()
     {
-        let semana: [Dia] = Calendario.instance.obtDias()
+        let semana: [Dia] = DateCalculator.instance.obtDias()
         self.mView.setList(semana: semana)
     }
 }

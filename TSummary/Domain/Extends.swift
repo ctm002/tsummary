@@ -28,3 +28,17 @@ extension Bundle {
         return infoDictionary?["CFBundleVersion"] as? String
     }
 }
+
+internal extension DateComponents {
+    mutating func to12am() {
+        self.hour = 0
+        self.minute = 0
+        self.second = 0
+    }
+    
+    mutating func to12pm(){
+        self.hour = 23
+        self.minute = 59
+        self.second = 59
+    }
+}

@@ -181,8 +181,8 @@ public class ControladorLogica
         if self.isConnected
         {
             let codigo : String = String(describing: session.usuario?.id)
-            let fDesde : String = Utils.toStringFromDate(Calendario.instance.fechaInicio,"yyyyMMdd")
-            let fHasta : String = Utils.toStringFromDate(Calendario.instance.fechaTermino, "yyyyMMdd")
+            let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
+            let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
             if let horas : [Hora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
             {
@@ -280,7 +280,7 @@ public class ControladorLogica
         }
     }
     
-    func actualizarFoto(id: Int32, string64: String) -> Bool
+    func actualizarImagen(id: Int32, string64: String) -> Bool
     {
        return DataStore.usuarios.actualizar(id: id, data: string64)
     }
