@@ -15,7 +15,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
-    var presenterHora : PresenterHora?
+    var presenterHora : PresenterRegistroHora?
     var item : Int = -1
     
     private var mModel: ModelController!
@@ -36,12 +36,14 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     func setList(proyectos: [ClienteProyecto])
     {
         self.mProyectos = proyectos
-        let proyectosItems: [SearchTextFieldItemExt] = proyectos.map {
+        let proyectosItems: [SearchTextFieldItemExt] = proyectos.map
+        {
             SearchTextFieldItemExt( title: $0.nombre, subtitle: $0.nombreCliente, id: $0.id)
         }
         
         mySearchTextField.filterItems(proyectosItems)
-        mySearchTextField.itemSelectionHandler = {
+        mySearchTextField.itemSelectionHandler =
+        {
             filteredResults, itemPosition in
             let itemSelected = filteredResults[itemPosition] as! SearchTextFieldItemExt
             self.mySearchTextField.text = itemSelected.title + " " + itemSelected.subtitle!
@@ -54,7 +56,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         self.presenterProyecto = PresenterProyecto(self)
-        self.presenterHora = PresenterHora(self)
+        self.presenterHora = PresenterRegistroHora(self)
         
         setupSearchTextField()
         
@@ -146,6 +148,15 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         set
         {
             self.mResponse = newValue
+            
+            if self.mResponse.result
+            {
+                mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
+            }
+            else
+            {
+                mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
+            }
         }
         get
         {
@@ -176,17 +187,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
-        
         presenterHora!.guardar()
-        
-        if response.result
-        {
-            mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
-        }
-        else
-        {
-            mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
-        }
         btnGuardar.isEnabled = true
     }
     

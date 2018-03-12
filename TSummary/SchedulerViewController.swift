@@ -20,7 +20,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
     var presenterSemana: PresenterSemana!
-    var presenterHora: PresenterHora!
+    var presenterHora: PresenterRegistroHora!
     var semana : [Dia]!
     var horas : [RegistroHora]!
     
@@ -94,7 +94,7 @@ class SchedulerViewController: UIViewController, IViewHora {
        
         self.view.bringSubview(toFront: vMenu)
         
-        self.presenterHora = PresenterHora(self)
+        self.presenterHora = PresenterRegistroHora(self)
     }
     
     override func viewWillAppear(_ animated: Bool)

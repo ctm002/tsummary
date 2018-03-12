@@ -159,13 +159,14 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         for cell in self.collectionView.visibleCells {
             if let c = cell as? DetalleDiaCell
             {
-                if c.indexPath == self.previous.indexPath
+                if self.previous != nil && c.indexPath == self.previous.indexPath
                 {
                     c.isSelected = false
                 }
             }
         }
     }
+
 }
 
 extension SemanaView : ListHorasViewDelegate
