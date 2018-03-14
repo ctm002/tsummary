@@ -77,7 +77,7 @@ public class ControladorLogica
         }
     }
     
-    func descargar(session: SessionLocal , fDesde: String, fHasta: String, redirect: @escaping (Bool)->Void)
+    func descargar(session: SessionLocal , fDesde: String, fHasta: String, redirect: @escaping (Response)->Void)
     {
         if self.isConnected
         {
@@ -92,11 +92,19 @@ public class ControladorLogica
                                 if let horas = hrsRemotas
                                 {
                                     let resp : Bool = DataStore.horas.guardar(horas)
-                                    redirect(resp)
                                 }
+                                redirect(Response(estado: 1, mensaje: "", result: true))
                             }
                         )
                     }
+                    else
+                    {
+                        redirect(Response(estado: 1, mensaje: "Los proyectos no se guardaron localmente", result: false))
+                    }
+                }
+                else
+                {
+                    redirect(Response(estado: 1, mensaje: "No se pudieron descargar los proyectos desde el webservice", result: false))
                 }
             })
         }
@@ -151,32 +159,43 @@ public class ControladorLogica
         }
     }
     
-    func sincronizar(_ session: SessionLocal,_ callback: @escaping (Bool) -> Void)
+    func sincronizar(_ session: SessionLocal,_ callback: @escaping (Response) -> Void)
     {
         self.sincronizarProyectos(session, callback)
     }
     
-    private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Response) -> Void)
     {
         if self.isConnected
         {	
             ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
-                let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
-                let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
-                if proyectosNuevos != nil
+                if proyectosRemotos != nil
                 {
-                    let result = DataStore.proyectos.guardar(proyectosNuevos!)
-                    if result
+                    let proyectosLocalesIds = DataStore.proyectos.obtListProyectos()?.map { $0.id }
+                    let proyectosNuevos = proyectosRemotos?.filter {!((proyectosLocalesIds?.contains($0.id))!)}
+                    if proyectosNuevos != nil
                     {
-                        print("proyectos descargados")
+                        let result = DataStore.proyectos.guardar(proyectosNuevos!)
+                        if result
+                        {
+                            print("proyectos descargados")
+                        }
                     }
+                    self.sincronizarHoras(session, retorno)
                 }
-                self.sincronizarHoras(session, retorno)
+                else
+                {
+                    retorno(Response(estado: 1, mensaje: "No se pudieron descargar los proyectos desde el webservice", result: false))
+                }
             })
+        }
+        else
+        {
+            retorno(Response(estado: 1, mensaje: "Sin conexion a internet", result: false))
         }
     }
     
-    private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Bool) -> Void)
+    private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Response) -> Void)
     {
         if self.isConnected
         {
@@ -212,7 +231,7 @@ public class ControladorLogica
                     
                     ApiClient.instance.sincronizar(session, dataSend)
                     
-                    DataStore.horas.eliminar()
+                    DataStore.horas.eliminarByCodAbogado((session.usuario?.id)!)
                     
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
                     , callback:{(hrsRemotas)->Void in
@@ -228,7 +247,7 @@ public class ControladorLogica
                 }
                 else
                 {
-                    DataStore.horas.eliminar()
+                    DataStore.horas.eliminarByCodAbogado((session.usuario?.id)!)
                     
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
                         , callback:{(hrsRemotas)->Void in
@@ -244,7 +263,7 @@ public class ControladorLogica
                 }
             }
         }
-        retorno(true)
+        retorno(Response(estado: 1, mensaje: "", result: true))
     }
     
     func obtSessionLocal(loginName: String = "", password: String = "", imei: String = "") -> SessionLocal?
@@ -277,6 +296,10 @@ public class ControladorLogica
             ApiClient.instance.obtImagePerfilById(id: id, callback: {(string64) in
                 callback(string64)
             })
+        }
+        else
+        {
+            callback("")
         }
     }
     

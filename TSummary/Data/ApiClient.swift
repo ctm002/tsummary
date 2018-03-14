@@ -18,7 +18,7 @@ class ApiClient
     
     init(){}
     
-    func registrar(imei:String?, userName:String?, password:String?, callback: @escaping (SessionLocal?) -> Void)
+    func registrar(imei:String?, userName:String?, password:String?, callback: @escaping (AnyObject?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "tokenmobile")
@@ -35,8 +35,7 @@ class ApiClient
             
             if(error != nil)
             {
-                print(error!.localizedDescription)
-                callback(nil)
+                callback(error?.localizedDescription as AnyObject)
             }
             else
             {
@@ -55,7 +54,7 @@ class ApiClient
                             let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
                             if jsonwt.estado == 2
                             {
-                               callback(nil)
+                               callback(jsonwt.mensaje as AnyObject)
                             }
                             else
                             {
@@ -121,7 +120,7 @@ class ApiClient
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "api/Horas/GetHorasByParameters")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -206,7 +205,7 @@ class ApiClient
             let urlSession: URLSession = URLSession.shared
             let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogadoMob"
             let url = URL(string: sURL)
-            let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+            let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
@@ -299,7 +298,7 @@ class ApiClient
             let strJSON = String(data: jsonData, encoding: .utf8)!
             var postData: String = ""
             postData.append(strJSON)
-            request.httpBody = jsonData // postData.data(using: .utf8)
+            request.httpBody = jsonData
             
             let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 if(error != nil)
@@ -378,7 +377,9 @@ class ApiClient
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "/api/HorasMobile/Sincronizar")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        
+        //set what ever time you want in seconds 120 mean 2 min , 240 mean 4 min
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("bearer " + SessionLocal.shared.token!, forHTTPHeaderField: "Authorization")
@@ -413,7 +414,7 @@ class ApiClient
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "api/abogado/getImage")
-        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60000)
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 120)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("bearer " + SessionLocal.shared.token!, forHTTPHeaderField: "Authorization")
@@ -423,10 +424,14 @@ class ApiClient
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if(error != nil)
             {
+                callback("")
                 return
             }
-            let result = data!.base64EncodedString(options: .endLineWithLineFeed)
-            callback(result)
+            else
+            {
+                let result = data!.base64EncodedString(options: .endLineWithLineFeed)
+                callback(result)
+            }
         })
         task.resume()
     }

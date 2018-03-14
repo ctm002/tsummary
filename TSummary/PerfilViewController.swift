@@ -20,23 +20,34 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         photoPerfil.layer.cornerRadius = photoPerfil.frame.height / 2
         photoPerfil.layer.masksToBounds = true
+        self.activityIndicator.hidesWhenStopped = true
         
         let id : Int32 = (SessionLocal.shared.usuario?.id)!
         if let u : Usuario = ControladorLogica.instance.obtUsuarioById(id: Int(id))
         {
-            
             if u.data == ""
             {
                 self.activityIndicator.startAnimating()
                 let idUsuario : Int = (SessionLocal.shared.usuario?.idUsuario)!
                 ControladorLogica.instance.descargarImagenByIdUsuario(id: idUsuario, callback: { (dataString64: String) in
-                    let resp: Bool = ControladorLogica.instance.actualizarImagen(id: id, string64: dataString64)
-                    if resp
+                    if (dataString64 != "")
                     {
-                        let data = Data(base64Encoded: dataString64, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                        let resp: Bool = ControladorLogica.instance.actualizarImagen(id: id, string64: dataString64)
+                        if resp
+                        {
+                            let data = Data(base64Encoded: dataString64, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                            DispatchQueue.main.async
+                            {
+                                self.photoPerfil.image = UIImage(data: data!)!
+                                self.activityIndicator.stopAnimating()
+                            }
+                        }
+                    }
+                    else
+                    {
                         DispatchQueue.main.async
                         {
-                            self.photoPerfil.image = UIImage(data: data!)!
+                            self.photoPerfil.image = nil
                             self.activityIndicator.stopAnimating()
                         }
                     }

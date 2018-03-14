@@ -188,12 +188,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     {
         self.performSegue(withIdentifier: "sincIrSegue", sender: self.idAbogado)
     }
-    
-    @objc func ajustes()
-    {
-        self.performSegue(withIdentifier: "ajustesIrSegue", sender: self.idAbogado)
-    }
-    
+
     @objc func salir()
     {
         performSegue(withIdentifier: "irLoginSegue", sender: nil)

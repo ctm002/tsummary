@@ -56,7 +56,8 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             cell.IdHora = hrs[indexPath.row].id
             cell.lblFechaIngreso.text = hrs[indexPath.row].fechaHoraIngresoToHHmm
             cell.imgEstado.image = hrs[indexPath.row].modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
-
+            cell.imgSinc.image = hrs[indexPath.row].offline ? #imageLiteral(resourceName: "sincronizar") : nil
+            
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
                 target: self,
                 action: #selector(selectedItemTableView))

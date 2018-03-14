@@ -924,6 +924,24 @@ public class TbHora
         return nil
     }
     
+    func eliminarByCodAbogado(_ codigo: Int32)
+    {
+        do
+        {
+            try open()
+            if sqlite3_exec(db, "delete from Horas abo_id=\(codigo)", nil, nil, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error deleting table: \(errmsg)")
+            }
+            close()
+        }
+        catch
+        {
+            print("\(error)")
+        }
+    }
+
     func eliminar()
     {
         do
@@ -941,7 +959,7 @@ public class TbHora
             print("\(error)")
         }
     }
-
+    
     func eliminar(codigo: String, fechaDesde: String, fechaHasta: String) -> Bool
     {
         do

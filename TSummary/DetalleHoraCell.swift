@@ -59,6 +59,14 @@ class DetalleHoraCell: UICollectionViewCell {
     }()
     
     
+    var  imgSinc : UIImageView = {
+        let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.clipsToBounds = true
+        img.contentMode = .scaleToFill
+        return img
+    }()
+    
     var IdHora: Int32 = 0
     
     var containerViews : UIView =
@@ -106,6 +114,7 @@ class DetalleHoraCell: UICollectionViewCell {
         self.containerViews.addSubview(lblProyecto)
         self.containerViews.addSubview(lblAsunto)
         self.containerViews.addSubview(lblFechaIngreso)
+        self.containerViews.addSubview(imgSinc)
         self.containerViews.addSubview(imgEstado)
         
         lblCliente.textAlignment = .left
@@ -140,9 +149,12 @@ class DetalleHoraCell: UICollectionViewCell {
         lblFechaIngreso.bottomAnchor.constraint(equalTo: self.containerViews.bottomAnchor, constant: -delta).isActive = true
         lblFechaIngreso.backgroundColor = mostrar ? UIColor.green : UIColor.white
         
-        imgEstado.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
+        imgSinc.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        imgSinc.backgroundColor = mostrar ? UIColor.green : UIColor.white
+       
         imgEstado.widthAnchor.constraint(equalToConstant: 30).isActive = true
         imgEstado.backgroundColor = mostrar ? UIColor.cyan : UIColor.white
+        imgEstado.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
         
         self.containerViews.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
         
@@ -156,12 +168,21 @@ class DetalleHoraCell: UICollectionViewCell {
         
         self.containerViews.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
         
+        self.containerViews.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .trailing, relatedBy: .equal, toItem: imgSinc, attribute: .leading, multiplier: 1, constant: 0))
+        
         self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
         
-        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .height, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .height, multiplier: 1, constant: 0))
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .height, relatedBy: .equal, toItem: imgSinc, attribute: .height, multiplier: 1, constant: 0))
         
-        self.containerViews.addConstraint(NSLayoutConstraint(item: lblFechaIngreso, attribute: .trailing, relatedBy: .equal, toItem: imgEstado, attribute: .leading, multiplier: 1, constant: 0))
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .leading, relatedBy: .equal, toItem: imgSinc, attribute: .trailing, multiplier: 1, constant: 0))
         
-        self.containerViews.addConstraint(NSLayoutConstraint(item: imgEstado, attribute: .leading, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .trailing, multiplier: 1, constant: 0))
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgSinc, attribute: .top, relatedBy: .equal, toItem: lblAsunto, attribute: .bottom, multiplier: 1, constant: 0))
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgSinc, attribute: .height, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .height, multiplier: 1, constant: 0))
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: imgSinc, attribute: .leading, relatedBy: .equal, toItem: lblFechaIngreso, attribute: .trailing, multiplier: 1, constant: 0))
+        
+         self.containerViews.addConstraint(NSLayoutConstraint(item: imgSinc, attribute: .trailing, relatedBy: .equal, toItem: imgEstado, attribute: .leading, multiplier: 1, constant: 0))
+        
     }
 }

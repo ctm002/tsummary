@@ -52,6 +52,7 @@ class LoginViewController: UIViewController
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
+            btnRegistrar.isEnabled = false
             autentificar(getUIDevice())
         }
         else
@@ -61,7 +62,7 @@ class LoginViewController: UIViewController
         
         self.txtIMEI.isHidden = true
         self.lblVersionSoftware.isHidden = false
-        lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build:\(Bundle.main.buildVersionNumber!)"
+        lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
         self.btnEliminar.isHidden = true
     }
     
@@ -82,9 +83,10 @@ class LoginViewController: UIViewController
     {
         if let session = ControladorLogica.instance.obtSessionLocal(imei: imei)
         {
+            self.activity.startAnimating()
+            
             if (!session.isExpired())
             {
-                self.activity.startAnimating()
                 self.sincronizar(session)
             }
             else
@@ -99,8 +101,8 @@ class LoginViewController: UIViewController
                         imei: imei,
                         userName: user,
                         password: password,
-                        callback: { (sessionLocal : SessionLocal?) in
-                            if let session = sessionLocal
+                        callback: { (sessionLocal : AnyObject?) in
+                            if let session = sessionLocal as? SessionLocal
                             {
                                 let resp = self.guardar(session)
                                 if resp
@@ -108,14 +110,28 @@ class LoginViewController: UIViewController
                                     self.sincronizar(session)
                                 }
                             }
+                            else
+                            {
+                                self.refresh(mensaje: (sessionLocal as! String))
+                            }
                         }
                     )
                 }
                 else
                 {
-                    self.mostrarMensaje(mensaje: "Sin Acceso a internet")
+                    self.refresh(mensaje: "Sin conexión a internet")
                 }
             }
+        }
+    }
+    
+    func refresh(mensaje: String)
+    {
+        DispatchQueue.main.async
+        {
+            self.activity.stopAnimating()
+            self.mostrarMensaje(mensaje: mensaje)
+            self.btnRegistrar.isEnabled = true
         }
     }
     
@@ -145,7 +161,7 @@ class LoginViewController: UIViewController
         var mensaje : String!
         
         if txtUserName.text?.isEmpty ?? false {
-            mensaje = "loginName vacio"
+            mensaje = "Nombre de usuario vacio"
         }
         else
         {
@@ -171,8 +187,8 @@ class LoginViewController: UIViewController
                             imei: imei,
                             userName: user,
                             password: password,
-                            callback: { (sessionLocal: SessionLocal?) -> Void in
-                                if let session = sessionLocal
+                            callback: { (sessionLocal: AnyObject?) -> Void in
+                                if let session = sessionLocal as? SessionLocal
                                 {
                                     let resp = self.guardar(session)
                                     if resp
@@ -182,20 +198,14 @@ class LoginViewController: UIViewController
                                 }
                                 else
                                 {
-                                    DispatchQueue.main.async
-                                    {
-                                        self.btnRegistrar.isEnabled = true
-                                        self.activity.stopAnimating()
-                                        self.mostrarMensaje(mensaje: "Usuario incorrecto!")
-                                        
-                                    }
+                                    self.refresh(mensaje: (sessionLocal as! String))
                                 }
                             }
                         )
                     }
                     else
                     {
-                        self.mostrarMensaje(mensaje: "Sin acceso a internet")
+                        self.refresh(mensaje: "Sin acceso a internet")
                     }
                 }
             }
@@ -207,7 +217,7 @@ class LoginViewController: UIViewController
         }
     }
     
-    func guardar(_ session: SessionLocal) -> Bool
+    private func guardar(_ session: SessionLocal) -> Bool
     {
         return ControladorLogica.instance.guardar(session)
     }
@@ -240,23 +250,18 @@ class LoginViewController: UIViewController
             self.codigo = u.id
             if self.isConnected
             {
-                self.sincronizar(session, callback: self.redireccionar)
+                 ControladorLogica.instance.sincronizar(session, self.redireccionar)
             }
             else
             {
-                self.redireccionar(estado: true)
+                redireccionar(response: Response(estado: 1, mensaje: "", result: true))
             }
         }
     }
     
-    func sincronizar(_ session: SessionLocal, callback: @escaping (Bool) -> Void)
+    func redireccionar(response : Response)
     {
-        ControladorLogica.instance.sincronizar(session, callback)
-    }
-    
-    func redireccionar(estado: Bool)
-    {
-        if (estado)
+        if (response.result)
         {
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
@@ -265,6 +270,14 @@ class LoginViewController: UIViewController
                 {
                     self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.codigo)
                 }
+            }
+        }
+        else
+        {
+            DispatchQueue.main.async
+            {
+                self.btnRegistrar.isEnabled = true
+                self.activity.stopAnimating()
             }
         }
     }

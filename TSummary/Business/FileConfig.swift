@@ -1,17 +1,10 @@
-//
-//  FileManager.swift
-//  tsummary
-//
-//  Created by OTRO on 09-03-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import Foundation
 public class FileConfig
 {
     static let instance = FileConfig()
     
-    init() {
+    init()
+    {
         SwiftyPlistManager.shared.start(plistNames: ["Data"], logging: true)
     }
     
@@ -29,10 +22,11 @@ public class FileConfig
             }
         }
     }
-    
+
     func fetch(key: String) -> String
     {
         guard let fetchedValue: String = SwiftyPlistManager.shared.fetchValue(for: key, fromPlistWithName: "Data") as! String else { return ""}
         return fetchedValue
     }
+
 }

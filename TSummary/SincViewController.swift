@@ -19,9 +19,38 @@ class SincViewController: UIViewController {
         activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
-        ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Bool) -> Void in
-            self.redirect()
+        
+        ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Response) -> Void in
+            if (resp.result)
+            {
+                FileConfig.instance.saveWith(key: "fechaSinc",
+                    value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
+                    result: { (value: Bool) in
+                        print("Value successfully saved into plist.")
+                })
+                self.redirect()
+            }
+            else
+            {
+                self.mostrarMensaje("Sin conexion para la sincronización")
+                self.btnSincronizar.isEnabled =  true
+                activityView.stopAnimating()
+            }
         })
+    }
+    
+    
+    fileprivate func mostrarMensaje(_ mensaje: String = "")
+    {
+        let alert = UIAlertController(title: "Alerta",
+                                      message: mensaje,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            print("Ok")
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     func redirect()
@@ -36,7 +65,9 @@ class SincViewController: UIViewController {
     {
         super.viewDidLoad()
         navigationItem.title = "Sincronizar"
-        lblTextUltSinc.text = Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss")
+        
+        let fechaSincronizada = FileConfig.instance.fetch(key: "fechaSinc")
+        lblTextUltSinc.text = "Ult Sinc: \(fechaSincronizada)"
     }
 
     override func didReceiveMemoryWarning()
@@ -50,4 +81,5 @@ class SincViewController: UIViewController {
         viewController.idAbogado = self.idAbogado
         viewController.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
     }
+
 }

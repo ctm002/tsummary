@@ -38,7 +38,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         self.mProyectos = proyectos
         let proyectosItems: [SearchTextFieldItemExt] = proyectos.map
         {
-            SearchTextFieldItemExt( title: $0.nombre, subtitle: $0.nombreCliente, id: $0.id)
+            SearchTextFieldItemExt(title: $0.nombreCliente, subtitle:$0.nombre, id: $0.id)
         }
         
         mySearchTextField.filterItems(proyectosItems)
