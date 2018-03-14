@@ -32,16 +32,20 @@ class SincViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         navigationItem.title = "Sincronizar"
+        lblTextUltSinc.text = Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss")
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         let viewController = segue.destination as! SchedulerViewController
         viewController.idAbogado = self.idAbogado
         viewController.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")

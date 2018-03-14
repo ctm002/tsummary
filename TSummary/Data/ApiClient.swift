@@ -53,45 +53,52 @@ class ApiClient
                         {
                             let usuario: Usuario = Usuario()
                             let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
-                            
-                            let jwt = try decode(jwt: jsonwt.token)
-                            
-                            let cNombre = jwt.claim(name: "Nombre")
-                            if let nombre = cNombre.string{
-                                usuario.nombre=nombre
-                            }
-                            
-                            let cPerfil = jwt.claim(name: "Perfil")
-                            if let perfil = cPerfil.string{
-                                usuario.perfil = perfil
-                            }
-                            
-                            let cIdAbogado = jwt.claim(name: "AboId")
-                            if let idAbogado = cIdAbogado.integer {
-                                usuario.id = Int32(idAbogado)
-                            }
-                            
-                            let cGrupo = jwt.claim(name: "Grupo")
-                            if let grupo = cGrupo.string
+                            if jsonwt.estado == 2
                             {
-                                usuario.grupo = grupo
+                               callback(nil)
                             }
-                            
-                            let cIdUsuario = jwt.claim(name: "IdUsuario")
-                            if let idUsuario = cIdUsuario.integer
+                            else
                             {
-                                usuario.idUsuario = idUsuario
+                                let jwt = try decode(jwt: jsonwt.token)
+                                
+                                let cNombre = jwt.claim(name: "Nombre")
+                                if let nombre = cNombre.string{
+                                    usuario.nombre=nombre
+                                }
+                                
+                                let cPerfil = jwt.claim(name: "Perfil")
+                                if let perfil = cPerfil.string{
+                                    usuario.perfil = perfil
+                                }
+                                
+                                let cIdAbogado = jwt.claim(name: "AboId")
+                                if let idAbogado = cIdAbogado.integer {
+                                    usuario.id = Int32(idAbogado)
+                                }
+                                
+                                let cGrupo = jwt.claim(name: "Grupo")
+                                if let grupo = cGrupo.string
+                                {
+                                    usuario.grupo = grupo
+                                }
+                                
+                                let cIdUsuario = jwt.claim(name: "IdUsuario")
+                                if let idUsuario = cIdUsuario.integer
+                                {
+                                    usuario.idUsuario = idUsuario
+                                }
+                                
+                                usuario.password = password
+                                usuario.imei = imei
+                                usuario.loginName = userName
+                                
+                                SessionLocal.shared.expiredAt = jwt.expiresAt
+                                SessionLocal.shared.token = jsonwt.token
+                                SessionLocal.shared.usuario = usuario
+                                
+                                callback(SessionLocal.shared)
                             }
                             
-                            usuario.password = password
-                            usuario.imei = imei
-                            usuario.loginName = userName
-                            
-                            SessionLocal.shared.expiredAt = jwt.expiresAt
-                            SessionLocal.shared.token = jsonwt.token
-                            SessionLocal.shared.usuario = usuario
-                            
-                            callback(SessionLocal.shared)
                         }
                         catch
                         {
@@ -137,31 +144,39 @@ class ApiClient
                 {
                     do
                     {
-                        let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                        if (responseString != "")
+                        let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                        if (responseString == "")
                         {
-                            var horas = [RegistroHora]()
-                            let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
-                            let aJSON = dataJSON["data"] as! [AnyObject]
-                            for item in aJSON
-                            {
-                                let hora = RegistroHora()
-                                hora.proyecto.id = item["pro_id"] as! Int32
-                                hora.tim_correl = item["tim_correl"] as! Int32
-                                hora.horasTrabajadas = item["tim_horas"] as! Int
-                                hora.minutosTrabajados = item["tim_minutos"] as! Int
-                                hora.asunto = item["tim_asunto"] as! String
-                                hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
-                                hora.abogadoId = item["abo_id"] as! Int
-                                hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
-                                hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
-                                horas.append(hora)
-                            }
-                            callback(horas)
+                            callback(nil)
                         }
                         else
                         {
-                            callback(nil)
+                            var horas = [RegistroHora]()
+                            let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
+                            let estado = dataJSON["estado"] as? Int
+                            if (estado != nil && estado == 1)
+                            {
+                                let aJSON = dataJSON["data"] as! [AnyObject]
+                                for item in aJSON
+                                {
+                                    let hora = RegistroHora()
+                                    hora.proyecto.id = item["pro_id"] as! Int32
+                                    hora.tim_correl = item["tim_correl"] as! Int32
+                                    hora.horasTrabajadas = item["tim_horas"] as! Int
+                                    hora.minutosTrabajados = item["tim_minutos"] as! Int
+                                    hora.asunto = item["tim_asunto"] as! String
+                                    hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
+                                    hora.abogadoId = item["abo_id"] as! Int
+                                    hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
+                                    hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
+                                    horas.append(hora)
+                                }
+                                callback(horas)
+                            }
+                            else
+                            {
+                                callback(nil)
+                            }
                         }
                     }
                     catch
@@ -216,19 +231,27 @@ class ApiClient
                         {
                             var proyectos = [ClienteProyecto]()
                             let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
-                            let aJSON = dataJSON["data"] as! [AnyObject]
-                            for item in aJSON
+                            let estado = dataJSON["estado"] as? Int
+                            if estado != nil && estado == 1
                             {
-                                let proyecto = ClienteProyecto()
-                                proyecto.id = item["pro_id"] as! Int32
-                                proyecto.codigoCliente = item["cli_cod"] as! Int
-                                proyecto.nombreCliente = item["nombreCliente"] as! String
-                                proyecto.nombre = item["nombreProyecto"] as! String
-                                proyecto.idiomaCliente = item["idioma"] as! String
-                                proyecto.estado = item["estado"] as! Int
-                                proyectos.append(proyecto)
+                                let aJSON = dataJSON["data"] as! [AnyObject]
+                                for item in aJSON
+                                {
+                                    let proyecto = ClienteProyecto()
+                                    proyecto.id = item["pro_id"] as! Int32
+                                    proyecto.codigoCliente = item["cli_cod"] as! Int
+                                    proyecto.nombreCliente = item["nombreCliente"] as! String
+                                    proyecto.nombre = item["nombreProyecto"] as! String
+                                    proyecto.idiomaCliente = item["idioma"] as! String
+                                    proyecto.estado = item["estado"] as! Int
+                                    proyectos.append(proyecto)
+                                }
+                                callback(proyectos)
                             }
-                            callback(proyectos)
+                            else
+                            {
+                                callback(nil)
+                            }
                         }
                         catch
                         {

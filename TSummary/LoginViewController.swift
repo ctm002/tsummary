@@ -121,8 +121,8 @@ class LoginViewController: UIViewController
     
     func setDataDefaults()
     {
-        self.txtPassword.text = "Car.2711"
-        self.txtUserName.text = "Carlos_Tapia"
+        self.txtPassword.text = ""
+        self.txtUserName.text = ""
     }
     
     func getUIDevice() -> String
@@ -186,6 +186,8 @@ class LoginViewController: UIViewController
                                     {
                                         self.btnRegistrar.isEnabled = true
                                         self.activity.stopAnimating()
+                                        self.mostrarMensaje(mensaje: "Usuario incorrecto!")
+                                        
                                     }
                                 }
                             }
@@ -259,7 +261,10 @@ class LoginViewController: UIViewController
             DispatchQueue.main.async {
                 self.btnRegistrar.isEnabled = true
                 self.activity.stopAnimating()
-                self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.codigo)
+                if self.codigo != 0
+                {
+                    self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.codigo)
+                }
             }
         }
     }

@@ -9,7 +9,9 @@
 import Foundation
 struct JWT: Decodable
 {
-    let token:String
+    let estado: Int
+    let mensaje: String
+    let token: String
 }
 
 struct User: Decodable
@@ -28,7 +30,8 @@ class SessionLocal {
     var token: String?
     var expiredAt: Date?
     
-    class var shared: SessionLocal {
+    class var shared: SessionLocal
+    {
         struct Static {
             static let instance = SessionLocal()
         }
