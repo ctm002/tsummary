@@ -14,6 +14,7 @@ public class Usuario
         self.mPerfil = ""
         self.mIdUsuario = 0
         self.mData = ""
+        self.mEmail = ""
     }
     
     private var mId : Int32
@@ -93,6 +94,13 @@ public class Usuario
         {
             self.mData = newValue
         }
+    }
+    
+    private var mEmail: String
+    var email: String
+    {
+        get { return mEmail }
+        set { mEmail = newValue }
     }
 }
 

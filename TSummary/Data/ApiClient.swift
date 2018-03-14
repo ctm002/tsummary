@@ -88,6 +88,12 @@ class ApiClient
                                     usuario.idUsuario = idUsuario
                                 }
                                 
+                                let cEmail = jwt.claim(name: "Email")
+                                if let email = cEmail.string
+                                {
+                                    usuario.email = email
+                                }
+                                
                                 usuario.password = password
                                 usuario.imei = imei
                                 usuario.loginName = userName

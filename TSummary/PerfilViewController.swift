@@ -57,9 +57,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.datos[1] = ["key":"Perfil", "value" : u.perfil]
             self.datos[2] = ["key":"Grupo", "value" : u.grupo!]
             self.datos[3] = ["key":"Nombre de Usuario", "value" : u.loginName!]
-            self.datos[4] = ["key":"Id", "value" : String(u.id)]
-            self.datos[5] = ["key":"IdUsuario", "value" : String(u.idUsuario)]
-            self.datos[6] = ["key":"Correo", "value" : "cariola@gmail.com"]
+            self.datos[4] = ["key":"Correo", "value" : u.email]
         }
     }
     

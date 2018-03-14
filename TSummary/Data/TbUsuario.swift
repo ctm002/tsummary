@@ -73,7 +73,7 @@ public class TbUsuario
             
             
             var consulta : String = """
-                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario, Email
                 from Usuario where 1=1
                 """
             
@@ -260,7 +260,8 @@ public class TbUsuario
                 ExpiredAt text,
                 IdUsuario integer,
                 Image text,
-                [Default] integer)
+                [Default] integer,
+                Email text)
             """, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error creating table: \(errmsg)")
@@ -278,8 +279,8 @@ public class TbUsuario
                 var statement: OpaquePointer?
                 
                 if sqlite3_prepare_v2(db, """
-                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil)
-                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil, Email)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -335,6 +336,11 @@ public class TbUsuario
                 if sqlite3_bind_text(statement, 10, usuario.perfil, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding perfil: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 11, usuario.email, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding email: \(errmsg)")
                 }
                 
                 if sqlite3_step(statement) != SQLITE_DONE{
@@ -492,7 +498,7 @@ public class TbUsuario
             
             var statement: OpaquePointer?
             let query : String = """
-                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image, Email
                 from Usuario where Id=\(id)
                 """
             
@@ -545,6 +551,12 @@ public class TbUsuario
                 {
                     let image : String = String(cString: csString)
                     usuario.data = image
+                }
+                
+                if let csString = sqlite3_column_text(statement,8)
+                {
+                    let email : String = String(cString: csString)
+                    usuario.email = email
                 }
             }
             

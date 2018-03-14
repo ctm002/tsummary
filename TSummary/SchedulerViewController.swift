@@ -157,27 +157,6 @@ class SchedulerViewController: UIViewController, IViewHora {
             constant: 10)
         )
         
-        let btnAjustes : UIButton = UIButton(frame: vMenu.frame)
-        vMenu.addSubview(btnAjustes)
-        btnAjustes.translatesAutoresizingMaskIntoConstraints = false
-        btnAjustes.leadingAnchor.constraint(equalTo: vMenu.leadingAnchor, constant: 10).isActive = true
-        btnAjustes.trailingAnchor.constraint(equalTo: vMenu.trailingAnchor, constant: -10).isActive = true
-        btnAjustes.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        btnAjustes.setTitle("Ajustes", for: .normal)
-        btnAjustes.addTarget(self, action: #selector(ajustes), for: .touchUpInside)
-        btnAjustes.setTitleColor(UIColor.black, for: .normal)
-        btnAjustes.contentHorizontalAlignment = .left
-        
-        vMenu.addConstraint(NSLayoutConstraint(
-            item: btnAjustes,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: btnSincronizar,
-            attribute: .bottom,
-            multiplier: 1,
-            constant: 10)
-        )
-        
         let btnCerrarSesion : UIButton = UIButton(frame: vMenu.frame)
         vMenu.addSubview(btnCerrarSesion)
         btnCerrarSesion.translatesAutoresizingMaskIntoConstraints = false
@@ -193,7 +172,7 @@ class SchedulerViewController: UIViewController, IViewHora {
             item: btnCerrarSesion,
             attribute: .top,
             relatedBy: .equal,
-            toItem: btnAjustes,
+            toItem: btnSincronizar,
             attribute:.bottom,
             multiplier: 1,
             constant: 10)
