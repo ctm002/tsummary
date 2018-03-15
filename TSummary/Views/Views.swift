@@ -5,14 +5,14 @@ protocol IListViewSemana {
 }
 
 protocol IViewHora {
-    var idAbogado : Int { get set }
+    var idAbogado : Int32 { get set }
     var fechaHoraIngreso : String { get set }
     func setList(horas: [RegistroHora])
 }
 
 
 protocol IListViewProyecto {
-    var idAbogado : Int { get set }
+    var idAbogado : Int32 { get set }
     func setList(proyectos: [ClienteProyecto])
 }
 
@@ -22,7 +22,7 @@ protocol IEditViewHora {
     var idHora : Int32 { get set }
     var proyectoId : Int32 { get set }
     var fechaHoraIngreso : Date { get set }
-    var idAbogado : Int { get set }
+    var idAbogado : Int32 { get set }
     var horas : Int { get set }
     var minutos : Int { get set }
     var asunto : String { get set }

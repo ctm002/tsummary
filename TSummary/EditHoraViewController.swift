@@ -16,7 +16,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
     var presenterHora : PresenterRegistroHora?
-    var item : Int = -1
+    var indexSemana : Int = -1
     
     private var mModel: ModelController!
     var model : ModelController { get { return self.mModel } set { self.mModel = newValue } }
@@ -229,8 +229,9 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     {
         let controller : SchedulerViewController = segue.destination as! SchedulerViewController
         controller.idAbogado = self.idAbogado
-        controller.item = self.item
         controller.fechaHoraIngreso = Utils.toStringFromDate(self.fechaHoraIngreso, "yyyy-MM-dd")
+        controller.indexSemana = self.indexSemana
+        controller.realoadRegistroHoras()
     }
     
     //Inicio propiedades-------------------------------------------------
@@ -307,8 +308,8 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         }
     }
     
-    private var mIdAbogado : Int = 0
-    var idAbogado : Int
+    private var mIdAbogado : Int32 = 0
+    var idAbogado : Int32
     {
         get
         {

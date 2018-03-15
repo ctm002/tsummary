@@ -4,6 +4,11 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     var sideMenuConstraint: NSLayoutConstraint!
     var isSlideMenuHidden = true
+    var anchoMenu : CGFloat = 0
+    
+    var indexSemana : Int = 1
+    var idAbogado : Int32 = 0
+    var fechaHoraIngreso : String = ""
     
     var mLblTextFecha: UILabel =
     {
@@ -15,25 +20,20 @@ class SchedulerViewController: UIViewController, IViewHora {
         return lbl
     }()
     
-    var cellPrevious: DetalleDiaCell!
     var screenSize: CGRect!
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
     var presenterSemana: PresenterSemana!
-    var presenterHora: PresenterRegistroHora!
-    var semana : [Dia]!
-    var horas : [RegistroHora]!
     
-    let cantDias: Int = 14
-    let diasBySemana: CGFloat = 7
-    let cellId1 = "cellId1"
-    let cellId2 = "cellId2"
+    lazy var presenterHora: PresenterRegistroHora = {
+        var p =  PresenterRegistroHora(self)
+        return p
+    }()
+    
     let vCalendario = UIView()
     let vMenu = UIView()
-    var delegate : CalendarViewDelegate?
-    var item : Int = 1 //Defecto
     
-    let horaView : DetalleHoraView =
+   let detalleHoraView : DetalleHoraView =
     {
         let view = DetalleHoraView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         return view
     }()
     
-    var anchoMenu : CGFloat = 0
+    var delegate : CalendarViewDelegate?
     
     override func viewDidLoad()
     {
@@ -61,9 +61,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         self.semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
-        self.semanaView.delegate = self
-        self.delegate = semanaView
-        
+
         let vFecha = UIView()
         self.view.addSubview(vFecha)
         vFecha.translatesAutoresizingMaskIntoConstraints = false
@@ -83,32 +81,42 @@ class SchedulerViewController: UIViewController, IViewHora {
         
         self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: self.semanaView, attribute: .bottom, multiplier: 1, constant: 0))
         
-        self.view.addSubview(self.horaView)
-        self.horaView.translatesAutoresizingMaskIntoConstraints = false
-        self.horaView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        self.horaView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        self.horaView.delegate = self
+        self.view.addSubview(self.detalleHoraView)
+        self.detalleHoraView.translatesAutoresizingMaskIntoConstraints = false
+        self.detalleHoraView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.detalleHoraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        self.detalleHoraView.delegate = self
         
-        self.view.addConstraint(NSLayoutConstraint(item: self.horaView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.detalleHoraView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
        
         self.view.bringSubview(toFront: vMenu)
         
-        self.presenterHora = PresenterRegistroHora(self)
+        //self.presenterHora = PresenterRegistroHora(self)
+        
+        self.semanaView.delegate = self
+        self.delegate = semanaView
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.delegate?.selected(fecha: self.fechaHoraIngreso)
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
-        self.presenterHora.buscarHoras()
+        self.delegate?.selected(fecha: self.fechaHoraIngreso)
         
-        if (self.item == 0)
+        if (self.indexSemana == 0)
         {
             self.semanaView.scrollToPreviousCell()
         }
         else
         {
             self.semanaView.scrollToNextCell()
+        }
+    }
+    
+    func realoadRegistroHoras()
+    {
+        if let horas = ControladorLogica.instance.getListDetalleHorasByIdAbogadoAndFecha(self.idAbogado, self.fechaHoraIngreso)
+        {
+            setList(horas: horas)
         }
     }
     
@@ -208,7 +216,7 @@ class SchedulerViewController: UIViewController, IViewHora {
                     let model = model as! ModelController
                     let controller = segue.destination as! EditHoraViewController
                     controller.model = model
-                    controller.item = self.item
+                    controller.indexSemana = self.indexSemana
                 }
             
             case "perfilIrSegue":
@@ -230,17 +238,17 @@ class SchedulerViewController: UIViewController, IViewHora {
                 controller.entrar = true
             
             case "sincIrSegue" :
-                if let id = sender
+                if let id = sender as? Int32
                 {
                     let controller = segue.destination as! SincViewController
-                    controller.idAbogado = id as! Int
+                    controller.idAbogado = id
                 }
             
-            case "ajuestesIrSegue":
-                if let id = sender
+            case "ajustesIrSegue":
+                if let id = sender as? Int32
                 {
                     let controller = segue.destination as! EditAjustesViewController
-                    controller.idAbogado = id as! Int
+                    controller.idAbogado = id
                 }
             
             default:
@@ -250,31 +258,9 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     func setList(horas: [RegistroHora])
     {
-        self.horaView.objects = horas
+        self.detalleHoraView.objects = horas
         DispatchQueue.main.async {
-            self.horaView.collectionView.reloadData()
-        }
-    }
-    
-    private var mIdAbogado : Int = 0
-    var idAbogado : Int
-    {
-        get {
-            return self.mIdAbogado
-        }
-        set {
-            self.mIdAbogado = newValue
-        }
-    }
-    
-    var mFechaHoraIngreso: String = ""
-    var fechaHoraIngreso : String
-    {
-        get {
-            return self.mFechaHoraIngreso
-        }
-        set {
-            self.mFechaHoraIngreso = newValue
+            self.detalleHoraView.collectionView.reloadData()
         }
     }
     
@@ -336,7 +322,7 @@ extension SchedulerViewController: ListHorasViewDelegate
     func selectDay(fecha: String, item: Int) {
         
         self.fechaHoraIngreso = fecha
-        self.item = item
+        self.indexSemana = item
         
         DispatchQueue.main.async {
             self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)

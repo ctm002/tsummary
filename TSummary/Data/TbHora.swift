@@ -219,7 +219,7 @@ public class TbHora
                     print("failure binding tim_minutos: \(errmsg)")
                 }
                 
-                let aboId : Int = hora.abogadoId
+                let aboId : Int32 = hora.abogadoId
                 if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -359,7 +359,7 @@ public class TbHora
                     print("failure binding tim_minutos: \(errmsg)")
                 }
                 
-                let aboId : Int = hora.abogadoId
+                let aboId : Int32 = hora.abogadoId
                 if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -679,7 +679,7 @@ public class TbHora
         hora.minutosTrabajados = Int(minutos)
         
         let aboId : Int32 = sqlite3_column_int(record, 5)
-        hora.abogadoId = Int(aboId)
+        hora.abogadoId = aboId
         
         let modificable : Int32 = sqlite3_column_int(record, 6)
         hora.modificable = modificable == 1 ? true: false
@@ -791,7 +791,7 @@ public class TbHora
         return nil
     }
     
-    public func getListDetalleHorasOffline(id: Int32) -> [RegistroHora]?
+    public func getListDetalleHorasByIdAbogadoAndEstadoOffline(id: Int32) -> [RegistroHora]?
     {
         let query : String = """
             select
@@ -853,12 +853,12 @@ public class TbHora
         return nil
     }
     
-    func eliminarByCodAbogado(_ codigo: Int32)
+    func eliminarByIdAbogado(_ id: Int32)
     {
         do
         {
             try open()
-            if sqlite3_exec(db, "delete from Horas where abo_id=\(codigo)", nil, nil, nil) != SQLITE_OK
+            if sqlite3_exec(db, "delete from Horas where abo_id=\(id)", nil, nil, nil) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error deleting table: \(errmsg)")

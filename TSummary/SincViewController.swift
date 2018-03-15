@@ -2,7 +2,7 @@ import UIKit
 
 class SincViewController: UIViewController {
 
-    var idAbogado: Int = 0
+    var idAbogado: Int32 = 0
     
     @IBOutlet weak var lblTextUltSinc: UILabel!
     @IBOutlet weak var btnSincronizar: UIButton!

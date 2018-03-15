@@ -73,21 +73,21 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? DetalleHoraCell {
-            if let detalleHora = DataStore.horas.getById(cell.IdHora)
+            if let registroHora = DataStore.horas.getById(cell.IdHora)
             {
                 let model = ModelController(
-                    id: detalleHora.id,
-                    abogadoId: detalleHora.abogadoId,
-                    fechaHoraIngreso: detalleHora.fechaHoraIngreso!,
-                    idProyecto: detalleHora.proyecto.id,
-                    nombreProyecto: detalleHora.proyecto.nombre,
-                    nombreCliente: detalleHora.proyecto.nombreCliente,
-                    horas: detalleHora.horasTrabajadas,
-                    minutos: detalleHora.minutosTrabajados,
-                    asunto: detalleHora.asunto,
-                    correlativo: detalleHora.tim_correl,
-                    modificable : detalleHora.modificable,
-                    offline : detalleHora.offline)
+                    id: registroHora.id,
+                    abogadoId: registroHora.abogadoId,
+                    fechaHoraIngreso: registroHora.fechaHoraIngreso!,
+                    idProyecto: registroHora.proyecto.id,
+                    nombreProyecto: registroHora.proyecto.nombre,
+                    nombreCliente: registroHora.proyecto.nombreCliente,
+                    horas: registroHora.horasTrabajadas,
+                    minutos: registroHora.minutosTrabajados,
+                    asunto: registroHora.asunto,
+                    correlativo: registroHora.tim_correl,
+                    modificable : registroHora.modificable,
+                    offline : registroHora.offline)
                 self.delegate?.editViewController(model: model)
             }
         }

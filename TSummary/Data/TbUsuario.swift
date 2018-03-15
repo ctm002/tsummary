@@ -62,7 +62,7 @@ public class TbUsuario
         db = nil
     }
     
-    func obtSessionLocal(imei:String = "", loginName:String = "", password: String = "") -> SessionLocal?
+    func obtSessionLocal(imei:String = "", userName:String = "", password: String = "", defecto: Int = -1) -> SessionLocal?
     {
         do
         {
@@ -73,22 +73,27 @@ public class TbUsuario
             
             var consulta : String = """
                 select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario, Email
-                from Usuario where 1=1 AND [Default] = 1
+                from Usuario where 1=1
                 """
             
-            if (loginName != "")
+            if (userName != "")
             {
-                condicion =  condicion + " and LoginName='" + loginName + "'"
+                condicion =  condicion + " AND LoginName='" + userName + "'"
             }
             
             if (password != "")
             {
-                condicion =  condicion + " and Password='" + password + "'"
+                condicion =  condicion + " AND Password='" + password + "'"
             }
             
             if (imei != "")
             {
-                condicion =  condicion + " and IMEI='" + imei + "'"
+                condicion =  condicion + " AND IMEI='" + imei + "'"
+            }
+            
+            if (defecto != -1)
+            {
+                condicion =  condicion + " AND [Default] = \(defecto)"
             }
             
             consulta = consulta + condicion

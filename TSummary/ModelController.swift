@@ -10,7 +10,7 @@ import Foundation
 struct ModelController
 {
     var id : Int32
-    var idAbogado : Int
+    var idAbogado : Int32
     var fechaHoraIngreso : Date
     var idProyecto : Int32
     var nombreProyecto : String
@@ -22,7 +22,7 @@ struct ModelController
     var modificable : Bool
     var offline : Bool
     
-    init(id: Int32, abogadoId: Int, fechaHoraIngreso: Date)
+    init(id: Int32, abogadoId: Int32, fechaHoraIngreso: Date)
     {
         self.id = id
         self.idAbogado = abogadoId
@@ -38,7 +38,7 @@ struct ModelController
         self.nombreCliente = ""
     }
     
-    init(id: Int32, abogadoId: Int, fechaHoraIngreso: Date,
+    init(id: Int32, abogadoId: Int32, fechaHoraIngreso: Date,
          idProyecto: Int32, nombreProyecto: String, nombreCliente: String, horas: Int, minutos: Int,
          asunto: String, correlativo : Int32, modificable: Bool, offline: Bool) {
         

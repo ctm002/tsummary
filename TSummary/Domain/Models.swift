@@ -359,8 +359,8 @@ public class RegistroHora
         }
     }
     
-    private var mAbogadoId:Int
-    var abogadoId: Int
+    private var mAbogadoId:Int32
+    var abogadoId: Int32
     {
         get
         {

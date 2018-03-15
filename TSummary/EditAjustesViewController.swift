@@ -3,7 +3,7 @@ import UIKit
 class EditAjustesViewController: UIViewController {
 
     @IBOutlet weak var txtNombreServidor: UITextField!
-    public var idAbogado: Int!
+    public var idAbogado: Int32 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()

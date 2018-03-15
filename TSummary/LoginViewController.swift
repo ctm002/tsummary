@@ -53,10 +53,11 @@ class LoginViewController: UIViewController
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            autentificar(getUIDevice())
+            autentificar(imei: getUIDevice(), defecto: 1)
         }
         else
         {
+            self.txtIMEI.text = getUIDevice()
             btnRegistrar.setTitle("Entrar", for: .normal)
         }
         
@@ -79,9 +80,14 @@ class LoginViewController: UIViewController
         self.present(alert, animated: true, completion: nil)
     }
     
-    func autentificar(_ imei: String)
+    func getSessionBy(imei: String, userName: String, password: String, defecto: Int = -1) -> SessionLocal?
     {
-        if let session = ControladorLogica.instance.obtSessionLocal(imei: imei)
+        return ControladorLogica.instance.obtSessionLocal(userName: userName, password: password, imei: imei, defecto: defecto)
+    }
+    
+    func autentificar(imei: String, userName: String = "", password: String="", defecto: Int = -1)
+    {
+        if let session = getSessionBy(imei: imei, userName: userName, password: password, defecto: defecto)
         {
             btnRegistrar.isEnabled = false
             self.activity.startAnimating()
@@ -92,9 +98,8 @@ class LoginViewController: UIViewController
             }
             else
             {
-                let sessionLocal = ControladorLogica.instance.obtSessionLocal()
-                let user = sessionLocal?.usuario?.loginName
-                let password = sessionLocal?.usuario?.password
+                let user = session.usuario?.loginName
+                let password = session.usuario?.password
                 
                 if self.isConnected
                 {
@@ -154,67 +159,80 @@ class LoginViewController: UIViewController
     
     @IBAction func registrar(_ sender: Any)
     {
-        registrar()
+        if (btnRegistrar.titleLabel?.text == "Registrar")
+        {
+            registrar()
+        }
+        else
+        {
+            let userName = txtUserName.text!
+            let password = txtPassword.text!
+            let imei = txtIMEI.text!
+            if let s = getSessionBy(imei: imei, userName: userName, password: password)
+            {
+                self.autentificar(imei: imei, userName: userName, password: password, defecto: (s.usuario?.defaults)!)
+            }
+            else
+            {
+                registrar()
+            }
+        }
+    }
+    
+    func isValidInput() -> Bool
+    {
+        var mensaje : String = ""
+        if txtUserName.text?.isEmpty ?? false {
+            mensaje = "Nombre de usuario vacio"
+        }
+
+        if txtPassword.text?.isEmpty ?? false {
+            mensaje = mensaje + "\n" + "contraseña vacia"
+        }
+    
+        if self.txtIMEI.text?.isEmpty ?? false {
+            mensaje = mensaje + "\n" + "imei vacio"
+        }
+        
+        return (mensaje == "")
     }
     
     fileprivate func registrar()
     {
-        var mensaje : String!
-        
-        if txtUserName.text?.isEmpty ?? false {
-            mensaje = "Nombre de usuario vacio"
-        }
-        else
+        if isValidInput()
         {
-            if txtPassword.text?.isEmpty ?? false {
-                mensaje = mensaje + "\n" + "contraseña vacia"
+            let user = txtUserName.text!
+            let password = txtPassword.text!
+            let imei = txtIMEI.text!
+            if self.isConnected
+            {
+                self.btnRegistrar.isEnabled = false
+                self.activity.startAnimating()
+                
+                ApiClient.instance.registrar(
+                    imei: imei,
+                    userName: user,
+                    password: password,
+                    callback: { (sessionLocal: AnyObject?) -> Void in
+                        if let session = sessionLocal as? SessionLocal
+                        {
+                            let resp = self.guardar(session)
+                            if resp
+                            {
+                                self.descargar(session)
+                            }
+                        }
+                        else
+                        {
+                            self.refresh(mensaje: (sessionLocal as! String))
+                        }
+                    }
+                )
             }
             else
             {
-                if self.txtIMEI.text?.isEmpty ?? false {
-                    mensaje = mensaje + "\n" + "imei vacio"
-                }
-                else
-                {
-                    let user = txtUserName.text!
-                    let password = txtPassword.text!
-                    let imei = txtIMEI.text!
-                    if self.isConnected
-                    {
-                        self.btnRegistrar.isEnabled = false
-                        self.activity.startAnimating()
-                        
-                        ApiClient.instance.registrar(
-                            imei: imei,
-                            userName: user,
-                            password: password,
-                            callback: { (sessionLocal: AnyObject?) -> Void in
-                                if let session = sessionLocal as? SessionLocal
-                                {
-                                    let resp = self.guardar(session)
-                                    if resp
-                                    {
-                                        self.descargar(session)
-                                    }
-                                }
-                                else
-                                {
-                                    self.refresh(mensaje: (sessionLocal as! String))
-                                }
-                            }
-                        )
-                    }
-                    else
-                    {
-                        self.refresh(mensaje: "Sin acceso a internet")
-                    }
-                }
+                self.refresh(mensaje: "Sin acceso a internet")
             }
-        }
-        
-        if let msje = mensaje
-        {
-            mostrarMensaje(mensaje: msje)
         }
     }
     
@@ -302,7 +320,9 @@ class LoginViewController: UIViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         let controller = segue.destination as! SchedulerViewController
-        controller.idAbogado = sender as! Int
+        controller.idAbogado = sender as! Int32
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        controller.indexSemana = 1
+        controller.realoadRegistroHoras()
     }
 }

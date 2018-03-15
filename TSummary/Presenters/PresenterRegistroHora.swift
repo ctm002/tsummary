@@ -56,7 +56,7 @@ public class PresenterRegistroHora
         
         registro.proyecto.id = Int32(proyectoId)
         registro.fechaHoraIngreso = fechaIngreso
-        registro.abogadoId = Int(idAbogado)
+        registro.abogadoId = idAbogado
         registro.asunto = asunto
         registro.horasTrabajadas = Int(cantHoras)
         registro.minutosTrabajados = Int(cantMinutos)

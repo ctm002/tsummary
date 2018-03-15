@@ -171,7 +171,7 @@ class ApiClient
                                     hora.minutosTrabajados = item["tim_minutos"] as! Int
                                     hora.asunto = item["tim_asunto"] as! String
                                     hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
-                                    hora.abogadoId = item["abo_id"] as! Int
+                                    hora.abogadoId = item["abo_id"] as! Int32
                                     hora.offline = false
                                     hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
                                     hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!

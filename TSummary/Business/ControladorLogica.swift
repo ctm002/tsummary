@@ -94,10 +94,13 @@ public class ControladorLogica
                                     let resp : Bool = DataStore.horas.guardar(horas)
                                     if(resp)
                                     {
-                                        print("datos descargados correctamente")
+                                        redirect(Response(estado: 1, mensaje: "los datos fueron descargados y almacenados correctamente", result: true))
                                     }
                                 }
-                                redirect(Response(estado: 1, mensaje: "", result: true))
+                                else
+                                {
+                                    redirect(Response(estado: 1, mensaje: "Los datos no fueron descargados", result: true))
+                                }
                             }
                         )
                     }
@@ -189,7 +192,7 @@ public class ControladorLogica
                 }
                 else
                 {
-                    retorno(Response(estado: 1, mensaje: "No se pudieron descargar los proyectos desde el webservice", result: false))
+                    retorno(Response(estado: 1, mensaje: "Error al descargar los proyectos desde el webservice", result: false))
                 }
             })
         }
@@ -207,7 +210,7 @@ public class ControladorLogica
             let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
             let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
-            if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasOffline(id: idAbogado)
+            if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasByIdAbogadoAndEstadoOffline(id: idAbogado)
             {
                 if horas.count > 0
                 {
@@ -235,7 +238,7 @@ public class ControladorLogica
                     
                     ApiClient.instance.sincronizar(session, dataSend)
                     
-                    DataStore.horas.eliminarByCodAbogado((session.usuario?.id)!)
+                    DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
                     
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
                     , callback:{(hrsRemotas)->Void in
@@ -244,14 +247,14 @@ public class ControladorLogica
                             let result : Bool = DataStore.horas.guardar(hrsRemotas!)
                             if (result)
                             {
-                                print("Los datos fueron guardados correctamente")
+                                retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
                             }
                         }
                     })
                 }
                 else
                 {
-                    DataStore.horas.eliminarByCodAbogado((session.usuario?.id)!)
+                    DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
                     
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
                         , callback:{(hrsRemotas)->Void in
@@ -260,7 +263,7 @@ public class ControladorLogica
                                 let result : Bool = DataStore.horas.guardar(hrsRemotas!)
                                 if (result)
                                 {
-                                    print("Los datos fueron guardados correctamente")
+                                    retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
                                 }
                             }
                     })
@@ -270,9 +273,9 @@ public class ControladorLogica
         retorno(Response(estado: 1, mensaje: "", result: true))
     }
     
-    func obtSessionLocal(loginName: String = "", password: String = "", imei: String = "") -> SessionLocal?
+    func obtSessionLocal(userName: String = "", password: String = "", imei: String = "", defecto: Int = -1) -> SessionLocal?
     {
-        return DataStore.usuarios.obtSessionLocal(imei: imei, loginName: loginName, password: password)
+        return DataStore.usuarios.obtSessionLocal(imei: imei, userName: userName, password: password)
     }
     
     func guardar(_ session: SessionLocal) -> Bool
@@ -330,4 +333,5 @@ public class ControladorLogica
         DataStore.proyectos.dropTable()
         DataStore.usuarios.dropTable()
     }
+
 }

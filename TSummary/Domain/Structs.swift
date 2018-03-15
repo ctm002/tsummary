@@ -70,7 +70,7 @@ struct HoraTS : Codable
     let tim_asunto: String
     let tim_horas : Int
     let tim_minutos : Int
-    let abo_id : Int
+    let abo_id : Int32
     let OffLine : Bool
     let FechaInsert : String
     let Estado : Int
