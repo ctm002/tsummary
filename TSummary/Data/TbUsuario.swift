@@ -71,10 +71,9 @@ public class TbUsuario
             var condicion : String = ""
             var statement: OpaquePointer?
             
-            
             var consulta : String = """
                 select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario, Email
-                from Usuario where 1=1
+                from Usuario where 1=1 AND [Default] = 1
                 """
             
             if (loginName != "")
@@ -272,15 +271,14 @@ public class TbUsuario
     {
         do
         {
-            
             if let usuario = sessionLocal.usuario
             {
                 try open()
                 var statement: OpaquePointer?
                 
                 if sqlite3_prepare_v2(db, """
-                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil, Email)
-                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil, Email, [Default])
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)

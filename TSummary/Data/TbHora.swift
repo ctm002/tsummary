@@ -556,7 +556,8 @@ public class TbHora
                 p.pro_nombre,
                 p.cli_nom,
                 h.hora_id,
-                h.fecha_ult_mod
+                h.fecha_ult_mod,
+                h.estado
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
@@ -594,83 +595,6 @@ public class TbHora
         }
         catch
         {
-            close()
-        }
-        return nil
-    }
-    
-    public func obtListHorasByCodAbogado(_ codigo: String,_ fechaDesde: String,_ fechaHasta: String) -> [RegistroHora]?
-    {
-        do
-        {
-            let query : String = """
-                select
-                    h.tim_correl,
-                    h.pro_id,
-                    h.tim_asunto,
-                    h.tim_horas,
-                    h.tim_minutos,
-                    h.abo_id,
-                    h.modificable,
-                    h.offline,
-                    h.tim_fecha_ing,
-                    p.pro_nombre,
-                    p.cli_nom,
-                    h.hora_id,
-                    h.fecha_ult_mod
-                from
-                    Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
-                where
-                    h.abo_id=?
-                    AND (strftime('%Y-%m-%d',h.tim_fecha_ing)>=? AND strftime('%Y-%m-%d',h.tim_fecha_ing)<=?)
-                    
-            """
-            
-            try open()
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
-            {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error preparing get list horas: \(errmsg)")
-            }
-            
-            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK
-            {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding abo_id: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 2, fechaDesde, -1, SQLITE_TRANSIENT) != SQLITE_OK
-            {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding fecha desde: \(errmsg)")
-            }
-            
-            if sqlite3_bind_text(statement, 3, fechaHasta, -1, SQLITE_TRANSIENT) != SQLITE_OK
-            {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding fecha hasta: \(errmsg)")
-            }
-            
-            
-            var horas = [RegistroHora]()
-            while sqlite3_step(statement) == SQLITE_ROW
-            {
-                let hora = getHoraFromRecord(&statement)
-                horas.append(hora)
-            }
-            
-            if sqlite3_finalize(statement) != SQLITE_OK
-            {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error finalizing prepared statement: \(errmsg)")
-            }
-            close()
-            return horas.count > 0 ? horas : nil
-        }
-        catch
-        {
-            print("Error: getListHorasByCodAbogado")
             close()
         }
         return nil
@@ -736,7 +660,6 @@ public class TbHora
     private func getHoraFromRecord(_ record: inout OpaquePointer?) -> RegistroHora
     {
         let hora = RegistroHora()
-        
         let tim_correl : Int32 = sqlite3_column_int(record, 0)
         hora.tim_correl = tim_correl
         
@@ -793,12 +716,12 @@ public class TbHora
             }
         }
         
-        let estado : Int32 = sqlite3_column_int(record, 14)
+        let estado : Int32 = sqlite3_column_int(record, 13)
         hora.estado = Estado(rawValue: Int(estado))!
         return hora
     }
     
-    public func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [RegistroHora]?
+    public func getListDetalleHorasByIdAbogadoAndFecha(_ id: Int32, _ fecha: String) -> [RegistroHora]?
     {
         let query : String = """
             select
@@ -814,12 +737,12 @@ public class TbHora
                 p.pro_nombre,
                 p.cli_nom,
                 h.hora_id,
-                h.fecha_ult_mod
+                h.fecha_ult_mod,
+                h.estado
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
-                h.estado != 2
-                AND abo_id=?
+                h.estado!=2 AND h.abo_id=?
                 AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
             order by h.tim_fecha_ing asc
         """
@@ -833,7 +756,7 @@ public class TbHora
                 print("error preparing get list horas: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 1, Int32(codigo)!) != SQLITE_OK
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding abo_id: \(errmsg)")
@@ -868,7 +791,7 @@ public class TbHora
         return nil
     }
     
-    public func getListDetalleHorasOffline(codigo: String) -> [RegistroHora]?
+    public func getListDetalleHorasOffline(id: Int32) -> [RegistroHora]?
     {
         let query : String = """
             select
@@ -889,7 +812,7 @@ public class TbHora
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
-                h.offline = 1
+                h.offline = 1 and h.abo_id=?
         """
         do
         {
@@ -899,6 +822,12 @@ public class TbHora
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing get list horas: \(errmsg)")
+            }
+            
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding abo_id: \(errmsg)")
             }
             
             var horas = [RegistroHora]()
@@ -929,7 +858,7 @@ public class TbHora
         do
         {
             try open()
-            if sqlite3_exec(db, "delete from Horas abo_id=\(codigo)", nil, nil, nil) != SQLITE_OK
+            if sqlite3_exec(db, "delete from Horas where abo_id=\(codigo)", nil, nil, nil) != SQLITE_OK
             {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error deleting table: \(errmsg)")

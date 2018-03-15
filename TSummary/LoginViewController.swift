@@ -48,11 +48,11 @@ class LoginViewController: UIViewController
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            btnRegistrar.isEnabled = false
             autentificar(getUIDevice())
         }
         else
@@ -83,6 +83,7 @@ class LoginViewController: UIViewController
     {
         if let session = ControladorLogica.instance.obtSessionLocal(imei: imei)
         {
+            btnRegistrar.isEnabled = false
             self.activity.startAnimating()
             
             if (!session.isExpired())

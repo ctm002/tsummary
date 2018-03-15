@@ -92,6 +92,10 @@ public class ControladorLogica
                                 if let horas = hrsRemotas
                                 {
                                     let resp : Bool = DataStore.horas.guardar(horas)
+                                    if(resp)
+                                    {
+                                        print("datos descargados correctamente")
+                                    }
                                 }
                                 redirect(Response(estado: 1, mensaje: "", result: true))
                             }
@@ -199,11 +203,11 @@ public class ControladorLogica
     {
         if self.isConnected
         {
-            let codigo : String = String(describing: session.usuario?.id)
+            let idAbogado : Int32 = (session.usuario?.id)!
             let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
             let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
-            if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasOffline(codigo: codigo)
+            if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasOffline(id: idAbogado)
             {
                 if horas.count > 0
                 {
@@ -284,9 +288,9 @@ public class ControladorLogica
         }
     }
     
-    func getListDetalleHorasByCodAbogadoAndFecha(codigo: String, fecha: String) -> [RegistroHora]?
+    func getListDetalleHorasByIdAbogadoAndFecha(_ id: Int32, _ fecha: String) -> [RegistroHora]?
     {
-        return DataStore.horas.getListDetalleHorasByCodAbogadoAndFecha(codigo: codigo,fecha: fecha)
+        return DataStore.horas.getListDetalleHorasByIdAbogadoAndFecha(id, fecha)
     }
     
     func descargarImagenByIdUsuario(id: Int, callback: @escaping (String)-> Void)

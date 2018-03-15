@@ -44,7 +44,7 @@ class ApiClient
                     let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                     if (responseString == "")
                     {
-                        callback(nil)
+                        callback("Consulta sin resultados" as AnyObject)
                     }
                     else
                     {
@@ -52,7 +52,7 @@ class ApiClient
                         {
                             let usuario: Usuario = Usuario()
                             let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
-                            if jsonwt.estado == 2
+                            if (jsonwt.estado == 2)
                             {
                                callback(jsonwt.mensaje as AnyObject)
                             }
@@ -172,6 +172,7 @@ class ApiClient
                                     hora.asunto = item["tim_asunto"] as! String
                                     hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
                                     hora.abogadoId = item["abo_id"] as! Int
+                                    hora.offline = false
                                     hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
                                     hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
                                     horas.append(hora)

@@ -21,8 +21,8 @@ public class PresenterRegistroHora
     func buscarHoras()
     {
         let fecha : String =  self.mView!.fechaHoraIngreso
-        let codigo : Int = self.mView!.idAbogado
-        if let hrs = ControladorLogica.instance.getListDetalleHorasByCodAbogadoAndFecha(codigo: String(codigo),fecha: fecha)
+        let id : Int32 = Int32(self.mView!.idAbogado)
+        if let hrs = ControladorLogica.instance.getListDetalleHorasByIdAbogadoAndFecha(id, fecha)
         {
             self.mView?.setList(horas: hrs)
         }
