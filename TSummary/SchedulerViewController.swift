@@ -33,8 +33,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     let vCalendario = UIView()
     let vMenu = UIView()
     
-    @IBOutlet var loadingView: UIView!
-    
+   
     let containerRegistroHorasView : DetalleHoraView =
     {
         let view = DetalleHoraView()
@@ -56,11 +55,13 @@ class SchedulerViewController: UIViewController, IViewHora {
         super.viewDidLoad()
         navigationItem.title = "Scheduler"
         navigationController?.navigationBar.isTranslucent = false
-        showLoadingScreen()
-        //setupConstraintsMenu()
-        //setupConstrainsContainers()
-        //self.containerSemanasView.delegate = self
-        //self.delegate = containerSemanasView
+        
+        self.setupConstraintsMenu()
+        self.setupConstrainsContainers()
+        self.containerSemanasView.delegate = self
+        self.delegate = self.containerSemanasView
+        self.delegate?.selected(fecha: self.fechaHoraIngreso)
+        self.showSemana()
     }
 
     func showSemana() {
@@ -74,30 +75,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         }
     }
     
-    func showLoadingScreen()
-    {
-        loadingView.bounds.size.width = view.bounds.width - 25
-        loadingView.bounds.size.height = view.bounds.height - 40
-        self.loadingView.alpha = 0
-        self.loadingView.center = view.center
-        self.loadingView.tag = 100
-        view.addSubview(loadingView)
-        
-        UIView.animate(withDuration: 5, delay: 0.2, options: [], animations: {
-                self.loadingView.alpha = 1
-            }
-        ){ (sussess) in
-            let viewWithTag = self.view.viewWithTag(100)
-            viewWithTag?.removeFromSuperview()
-            
-            self.setupConstraintsMenu()
-            self.setupConstrainsContainers()
-            self.containerSemanasView.delegate = self
-            self.delegate = self.containerSemanasView
-            self.delegate?.selected(fecha: self.fechaHoraIngreso)
-            self.showSemana()
-        }
-    }
+
     
     func setupConstrainsContainers()
     {

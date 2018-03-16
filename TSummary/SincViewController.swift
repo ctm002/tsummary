@@ -80,6 +80,8 @@ class SincViewController: UIViewController {
         let viewController = segue.destination as! SchedulerViewController
         viewController.idAbogado = self.idAbogado
         viewController.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        viewController.indexSemana = 1
+        viewController.reloadRegistroHoras()
     }
 
 }

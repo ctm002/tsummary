@@ -8,7 +8,7 @@ class LoginViewController: UIViewController
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var btnEliminar: UIButton!
     @IBOutlet weak var lblVersionSoftware: UILabel!
-    
+
     var idAbogado: Int32 = 0
     public var entrar: Bool = false
     private var isConnected : Bool = false
@@ -37,23 +37,13 @@ class LoginViewController: UIViewController
         statusManager()
     }
     
-    @objc func statusManager()
-    {
-        guard let status = Network.reachability?.status else { return }
-        switch status {
-            case .unreachable:
-                self.isConnected = false
-            case .wifi, .wwan:
-                self.isConnected = true
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            autentificar(imei: getUIDevice(), defecto: 1)
+            //showLoadingScreen()
+            self.autentificar(imei: self.getUIDevice(), defecto: 1)
         }
         else
         {
@@ -65,6 +55,37 @@ class LoginViewController: UIViewController
         self.lblVersionSoftware.isHidden = false
         lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
         self.btnEliminar.isHidden = true
+    }
+    
+    @objc func statusManager()
+    {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+            case .unreachable:
+                self.isConnected = false
+            case .wifi, .wwan:
+                self.isConnected = true
+        }
+    }
+    
+    func showLoadingScreen()
+    {
+        /*
+        loadingView.bounds.size.width = view.bounds.width - 25
+        loadingView.bounds.size.height = view.bounds.height - 40
+        self.loadingView.alpha = 0
+        self.loadingView.center = view.center
+        self.loadingView.tag = 100
+        view.addSubview(loadingView)
+        
+        UIView.animate(withDuration: 5, delay: 0.0, options: [], animations: {
+            self.loadingView.alpha = 1
+        }
+        ){ (sussess) in
+            let viewWithTag = self.view.viewWithTag(100)
+            viewWithTag?.removeFromSuperview()
+        }
+         */
     }
     
     fileprivate func mostrarMensaje(mensaje: String = "")
@@ -91,7 +112,6 @@ class LoginViewController: UIViewController
         {
             btnRegistrar.isEnabled = false
             self.activity.startAnimating()
-            
             if (!session.isExpired())
             {
                 self.sincronizar(session)
@@ -165,16 +185,20 @@ class LoginViewController: UIViewController
         }
         else
         {
-            let userName = txtUserName.text!
-            let password = txtPassword.text!
-            let imei = txtIMEI.text!
-            if let s = getSessionBy(imei: imei, userName: userName, password: password)
+            
+            if isValidInput()
             {
-                self.autentificar(imei: imei, userName: userName, password: password, defecto: (s.usuario?.defaults)!)
-            }
-            else
-            {
-                registrar()
+                let userName = txtUserName.text!
+                let password = txtPassword.text!
+                let imei = txtIMEI.text!
+                if let s = getSessionBy(imei: imei, userName: userName, password: password)
+                {
+                    self.autentificar(imei: imei, userName: userName, password: password, defecto: (s.usuario?.defaults)!)
+                }
+                else
+                {
+                    registrar()
+                }
             }
         }
     }
@@ -273,7 +297,7 @@ class LoginViewController: UIViewController
             }
             else
             {
-                redireccionar(response: Response(estado: 1, mensaje: "", result: true))
+                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true))
             }
         }
     }
@@ -282,8 +306,8 @@ class LoginViewController: UIViewController
     {
         if (response.result)
         {
-            
-            DispatchQueue.main.sync(execute: {
+            DispatchQueue.main.async(execute:
+                {
                     self.btnRegistrar.isEnabled = true
                     self.activity.stopAnimating()
                 
@@ -326,7 +350,6 @@ class LoginViewController: UIViewController
         controller.idAbogado = sender as! Int32
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         controller.indexSemana = 1
-        //controller.showSemana()
         controller.reloadRegistroHoras()
     }
 }

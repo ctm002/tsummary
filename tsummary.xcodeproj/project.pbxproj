@@ -31,7 +31,8 @@
 		2F442E1320530B000075F0C5 /* RegistroHoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */; };
 		2F531767203B16A10085253C /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
-		2F6E79C5205BF0E0009B7A1F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E79C4205BF0E0009B7A1F /* TestViewController.swift */; };
+		2F6E79C7205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */; };
+		2F6E79C9205C2091009B7A1F /* ShowSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
@@ -145,7 +146,8 @@
 		2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroHoraTests.swift; sourceTree = "<group>"; };
 		2F531766203B16A10085253C /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 		2F535F672049D6BF00B365AD /* DetalleHoraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleHoraView.swift; sourceTree = "<group>"; };
-		2F6E79C4205BF0E0009B7A1F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg"; sourceTree = "<group>"; };
+		2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSplashScreen.swift; sourceTree = "<group>"; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		DE0E047A1FD0B16D00AE0D7F /* TSummary */ = {
 			isa = PBXGroup;
 			children = (
+				2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */,
 				2F442E062052AB470075F0C5 /* Domain */,
 				2F442E052052AB1E0075F0C5 /* Data */,
 				DE7D25901FE0626E003B0F4C /* Business */,
@@ -341,7 +344,7 @@
 				2F9C6EC92036336300F8C713 /* SincViewController.swift */,
 				2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */,
 				2FB63B7A203F71D900A0CF54 /* Data.plist */,
-				2F6E79C4205BF0E0009B7A1F /* TestViewController.swift */,
+				2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */,
 			);
 			path = TSummary;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 			files = (
 				2FB63B7B203F71D900A0CF54 /* Data.plist in Resources */,
 				DE0E04861FD0B16D00AE0D7F /* LaunchScreen.storyboard in Resources */,
+				2F6E79C7205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg in Resources */,
 				DE0E04831FD0B16D00AE0D7F /* Assets.xcassets in Resources */,
 				DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */,
 			);
@@ -704,6 +708,7 @@
 				2FB63B7F203F7CCA00A0CF54 /* SwiftyPlistManager.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */,
+				2F6E79C9205C2091009B7A1F /* ShowSplashScreen.swift in Sources */,
 				2F442E0B2052D2D60075F0C5 /* FileConfig.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,
 				2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */,
@@ -724,7 +729,6 @@
 				2F9C6EC82035E57400F8C713 /* LoginViewController.swift in Sources */,
 				2F057E8B202503F900CA6C02 /* Reachability.swift in Sources */,
 				2F8DFC602020CFCF00814A34 /* EditHoraViewController.swift in Sources */,
-				2F6E79C5205BF0E0009B7A1F /* TestViewController.swift in Sources */,
 				2F057E872024E6B000CA6C02 /* EditAjustesViewController.swift in Sources */,
 				2F531767203B16A10085253C /* DateCalculator.swift in Sources */,
 				DE0E047C1FD0B16D00AE0D7F /* AppDelegate.swift in Sources */,
