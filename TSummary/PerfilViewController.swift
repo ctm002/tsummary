@@ -47,7 +47,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     {
                         DispatchQueue.main.async
                         {
-                            self.photoPerfil.image = nil
+                            self.photoPerfil.image = #imageLiteral(resourceName: "usuarioDefecto")
                             self.activityIndicator.stopAnimating()
                         }
                     }
