@@ -25,22 +25,24 @@ class SchedulerViewController: UIViewController, IViewHora {
     var screenHeight: CGFloat!
     var presenterSemana: PresenterSemana!
     
-    lazy var presenterHora: PresenterRegistroHora = {
-        var p =  PresenterRegistroHora(self)
+    lazy var presenterHora: PresenterRegistroHoras = {
+        var p =  PresenterRegistroHoras(self)
         return p
     }()
     
     let vCalendario = UIView()
     let vMenu = UIView()
     
-   let detalleHoraView : DetalleHoraView =
+    @IBOutlet var loadingView: UIView!
+    
+    let containerRegistroHorasView : DetalleHoraView =
     {
         let view = DetalleHoraView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let semanaView : SemanaView =
+    let containerSemanasView : SemanaView =
     {
         let view = SemanaView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,14 +56,57 @@ class SchedulerViewController: UIViewController, IViewHora {
         super.viewDidLoad()
         navigationItem.title = "Scheduler"
         navigationController?.navigationBar.isTranslucent = false
-        setupConstraintMenu()
-        
-        self.view.addSubview(semanaView)
-        self.semanaView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        self.semanaView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.semanaView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        self.semanaView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
+        showLoadingScreen()
+        //setupConstraintsMenu()
+        //setupConstrainsContainers()
+        //self.containerSemanasView.delegate = self
+        //self.delegate = containerSemanasView
+    }
 
+    func showSemana() {
+        if (self.indexSemana == 0)
+        {
+            self.containerSemanasView.scrollToPreviousCell()
+        }
+        else
+        {
+            self.containerSemanasView.scrollToNextCell()
+        }
+    }
+    
+    func showLoadingScreen()
+    {
+        loadingView.bounds.size.width = view.bounds.width - 25
+        loadingView.bounds.size.height = view.bounds.height - 40
+        self.loadingView.alpha = 0
+        self.loadingView.center = view.center
+        self.loadingView.tag = 100
+        view.addSubview(loadingView)
+        
+        UIView.animate(withDuration: 5, delay: 0.2, options: [], animations: {
+                self.loadingView.alpha = 1
+            }
+        ){ (sussess) in
+            let viewWithTag = self.view.viewWithTag(100)
+            viewWithTag?.removeFromSuperview()
+            
+            self.setupConstraintsMenu()
+            self.setupConstrainsContainers()
+            self.containerSemanasView.delegate = self
+            self.delegate = self.containerSemanasView
+            self.delegate?.selected(fecha: self.fechaHoraIngreso)
+            self.showSemana()
+        }
+    }
+    
+    func setupConstrainsContainers()
+    {
+        self.view.addSubview(containerSemanasView)
+        self.containerSemanasView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        self.containerSemanasView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.containerSemanasView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        self.containerSemanasView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -0).isActive = true
+        
         let vFecha = UIView()
         self.view.addSubview(vFecha)
         vFecha.translatesAutoresizingMaskIntoConstraints = false
@@ -79,40 +124,26 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.mLblTextFecha.topAnchor.constraint(equalTo:vFecha.topAnchor).isActive = true
         self.mLblTextFecha.bottomAnchor.constraint(equalTo:vFecha.bottomAnchor).isActive = true
         
-        self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: self.semanaView, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item:vFecha, attribute: .top, relatedBy: .equal, toItem: self.containerSemanasView, attribute: .bottom, multiplier: 1, constant: 0))
         
-        self.view.addSubview(self.detalleHoraView)
-        self.detalleHoraView.translatesAutoresizingMaskIntoConstraints = false
-        self.detalleHoraView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        self.detalleHoraView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        self.detalleHoraView.delegate = self
+        self.view.addSubview(self.containerRegistroHorasView)
+        self.containerRegistroHorasView.translatesAutoresizingMaskIntoConstraints = false
+        self.containerRegistroHorasView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.containerRegistroHorasView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        self.containerRegistroHorasView.delegate = self
         
-        self.view.addConstraint(NSLayoutConstraint(item: self.detalleHoraView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
-       
+        self.view.addConstraint(NSLayoutConstraint(item: self.containerRegistroHorasView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
+        
         self.view.bringSubview(toFront: vMenu)
-        
-        //self.presenterHora = PresenterRegistroHora(self)
-        
-        self.semanaView.delegate = self
-        self.delegate = semanaView
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
-        self.delegate?.selected(fecha: self.fechaHoraIngreso)
         
-        if (self.indexSemana == 0)
-        {
-            self.semanaView.scrollToPreviousCell()
-        }
-        else
-        {
-            self.semanaView.scrollToNextCell()
-        }
     }
     
-    func realoadRegistroHoras()
+    func reloadRegistroHoras()
     {
         if let horas = ControladorLogica.instance.getListDetalleHorasByIdAbogadoAndFecha(self.idAbogado, self.fechaHoraIngreso)
         {
@@ -120,7 +151,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         }
     }
     
-    fileprivate func setupConstraintMenu()
+    fileprivate func setupConstraintsMenu()
     {
         self.anchoMenu = view.frame.width / 2
         self.view.addSubview(vMenu)
@@ -244,13 +275,6 @@ class SchedulerViewController: UIViewController, IViewHora {
                     controller.idAbogado = id
                 }
             
-            case "ajustesIrSegue":
-                if let id = sender as? Int32
-                {
-                    let controller = segue.destination as! EditAjustesViewController
-                    controller.idAbogado = id
-                }
-            
             default:
                 print("default")
         }
@@ -258,9 +282,9 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     func setList(horas: [RegistroHora])
     {
-        self.detalleHoraView.objects = horas
+        self.containerRegistroHorasView.objects = horas
         DispatchQueue.main.async {
-            self.detalleHoraView.collectionView.reloadData()
+            self.containerRegistroHorasView.collectionView.reloadData()
         }
     }
     

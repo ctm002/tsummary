@@ -9,7 +9,7 @@ class SemanaView: UIView, IListViewSemana
     var previous: DetalleDiaCell!
     var current: DetalleDiaCell!
     var fechaHoraIngreso: String = ""
-    var item : Int = -1
+    var indexSemana : Int = -1
     
     weak var delegate : ListHorasViewDelegate?
     
@@ -58,7 +58,7 @@ class SemanaView: UIView, IListViewSemana
     
     func scrollToNextCell()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
             let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
         
             let contentOffset = self.collectionView.contentOffset
@@ -69,7 +69,7 @@ class SemanaView: UIView, IListViewSemana
     
     func scrollToPreviousCell()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
             let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
             let contentOffset = self.collectionView.contentOffset;
             self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false);
@@ -136,7 +136,7 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             {
                 let dias: [Dia] =  self.objects.filter {$0.nro == Int(nro)!}
                 self.fechaHoraIngreso = dias[0].fecha
-                delegate?.selectDay(fecha: self.fechaHoraIngreso, item: self.item)
+                delegate?.selectDay(fecha: self.fechaHoraIngreso, item: self.indexSemana)
             }
         }
     }
@@ -146,10 +146,10 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         let x = scrollView.contentOffset.x
         let w = scrollView.bounds.size.width
         let currentPage = Int(ceil(x/w))
-        self.item = currentPage
-        if (self.item == 1 || self.item == 2)
+        self.indexSemana = currentPage
+        if (self.indexSemana == 1 || self.indexSemana == 2)
         {
-            print("\(self.item)")
+            print("\(self.indexSemana)")
             deselect()
         }
     }

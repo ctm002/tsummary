@@ -9,7 +9,7 @@ class LoginViewController: UIViewController
     @IBOutlet weak var btnEliminar: UIButton!
     @IBOutlet weak var lblVersionSoftware: UILabel!
     
-    var codigo: Int32 = 0
+    var idAbogado: Int32 = 0
     public var entrar: Bool = false
     private var isConnected : Bool = false
     public var fDesde : String = ""
@@ -245,7 +245,7 @@ class LoginViewController: UIViewController
     {
         if let u = session.usuario
         {
-            self.codigo = u.id
+            self.idAbogado = u.id
             if self.isConnected
             {
                 ControladorLogica.instance.descargar(
@@ -266,10 +266,10 @@ class LoginViewController: UIViewController
     {
         if let u = session.usuario
         {
-            self.codigo = u.id
+            self.idAbogado = u.id
             if self.isConnected
             {
-                 ControladorLogica.instance.sincronizar(session, self.redireccionar)
+                ControladorLogica.instance.sincronizar(session, self.redireccionar)
             }
             else
             {
@@ -282,14 +282,17 @@ class LoginViewController: UIViewController
     {
         if (response.result)
         {
-            DispatchQueue.main.async {
-                self.btnRegistrar.isEnabled = true
-                self.activity.stopAnimating()
-                if self.codigo != 0
-                {
-                    self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.codigo)
+            
+            DispatchQueue.main.sync(execute: {
+                    self.btnRegistrar.isEnabled = true
+                    self.activity.stopAnimating()
+                
+                    if self.idAbogado != 0
+                    {
+                        self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.idAbogado)
+                    }
                 }
-            }
+            )
         }
         else
         {
@@ -323,6 +326,7 @@ class LoginViewController: UIViewController
         controller.idAbogado = sender as! Int32
         controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         controller.indexSemana = 1
-        controller.realoadRegistroHoras()
+        //controller.showSemana()
+        controller.reloadRegistroHoras()
     }
 }

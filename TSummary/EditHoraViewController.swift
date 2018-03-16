@@ -15,7 +15,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
-    var presenterHora : PresenterRegistroHora?
+    var presenterHora : PresenterRegistroHoras?
     var indexSemana : Int = -1
     
     private var mModel: ModelController!
@@ -56,7 +56,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         super.viewDidLoad()
         navigationItem.title = "TimeSummary"
         self.presenterProyecto = PresenterProyecto(self)
-        self.presenterHora = PresenterRegistroHora(self)
+        self.presenterHora = PresenterRegistroHoras(self)
         
         setupSearchTextField()
         
@@ -231,7 +231,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         controller.idAbogado = self.idAbogado
         controller.fechaHoraIngreso = Utils.toStringFromDate(self.fechaHoraIngreso, "yyyy-MM-dd")
         controller.indexSemana = self.indexSemana
-        controller.realoadRegistroHoras()
+        controller.reloadRegistroHoras()
     }
     
     //Inicio propiedades-------------------------------------------------

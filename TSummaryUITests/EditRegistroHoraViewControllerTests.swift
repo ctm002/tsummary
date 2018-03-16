@@ -17,8 +17,7 @@ class EditRegistroHoraViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         editRegistroViewController = EditHoraViewController()
-        editRegistroViewController.view.layoutIfNeeded()
-        
+        //editRegistroViewController.view.layoutIfNeeded()
         continueAfterFailure = true
         app = XCUIApplication()
         app.launch()

@@ -249,6 +249,14 @@ public class ControladorLogica
                             {
                                 retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
                             }
+                            else
+                            {
+                                retorno(Response(estado: 1, mensaje: "", result: true))
+                            }
+                        }
+                        else
+                        {
+                            retorno(Response(estado: 1, mensaje: "", result: true))
                         }
                     })
                 }
@@ -265,12 +273,20 @@ public class ControladorLogica
                                 {
                                     retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
                                 }
+                                else
+                                {
+                                    retorno(Response(estado: 1, mensaje: "Las horas no fueron guardadas correctamente desde el webservices", result: true))
+                                }
+                            }
+                            else
+                            {
+                               retorno(Response(estado: 1, mensaje: "Las horas no fueron recuperadas desde el webservices", result: true))
                             }
                     })
                 }
             }
         }
-        retorno(Response(estado: 1, mensaje: "", result: true))
+        
     }
     
     func obtSessionLocal(userName: String = "", password: String = "", imei: String = "", defecto: Int = -1) -> SessionLocal?

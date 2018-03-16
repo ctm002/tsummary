@@ -1,6 +1,6 @@
 import Foundation
 
-public class PresenterRegistroHora
+public class PresenterRegistroHoras
 {
     private var mView: IViewHora?
     private var mEditViewRegistroHora:IEditViewHora!

@@ -166,12 +166,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-245" y="231"/>
+            <point key="canvasLocation" x="-1114" y="214"/>
         </scene>
         <!--Scheduler-->
         <scene sceneID="Ndw-sZ-PlT">
             <objects>
-                <viewController storyboardIdentifier="SchedulerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yMH-3P-hXD" userLabel="Scheduler" customClass="SchedulerViewController" customModule="tsummary" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SchedulerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yMH-3P-hXD" userLabel="Scheduler" customClass="SchedulerViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1qO-hA-AGD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -191,16 +191,33 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="loadingView" destination="4tf-6M-E7h" id="lco-7C-aFr"/>
                         <segue destination="znN-7t-mT3" kind="show" identifier="editarHoraSegue" id="ryv-5X-GbU"/>
                         <segue destination="jtA-U1-yZL" kind="show" identifier="perfilIrSegue" id="M6q-sA-UmN"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="irLoginSegue" id="FHh-Uo-wwA"/>
                         <segue destination="vks-oX-qAY" kind="show" identifier="sincIrSegue" id="7f4-nt-B5b"/>
-                        <segue destination="3ju-4K-1ob" kind="show" identifier="ajustesIrSegue" id="vvQ-MZ-mHF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view alpha="0.0" contentMode="scaleToFill" id="4tf-6M-E7h" userLabel="LoadingView">
+                    <rect key="frame" x="0.0" y="0.0" width="368" height="611"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_cariola" translatesAutoresizingMaskIntoConstraints="NO" id="3Ry-Wi-arY">
+                            <rect key="frame" x="0.0" y="20" width="368" height="591"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="WKP-dz-iVG" firstAttribute="trailing" secondItem="3Ry-Wi-arY" secondAttribute="trailing" id="Dk6-Gk-KiQ"/>
+                        <constraint firstItem="3Ry-Wi-arY" firstAttribute="top" secondItem="WKP-dz-iVG" secondAttribute="top" id="jwf-8f-E5c"/>
+                        <constraint firstItem="WKP-dz-iVG" firstAttribute="bottom" secondItem="3Ry-Wi-arY" secondAttribute="bottom" id="ovs-Hn-RNe"/>
+                        <constraint firstItem="3Ry-Wi-arY" firstAttribute="leading" secondItem="WKP-dz-iVG" secondAttribute="leading" id="w0W-mU-gMJ"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="WKP-dz-iVG"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="446" y="260"/>
+            <point key="canvasLocation" x="34" y="-652"/>
         </scene>
         <!--Registrar Horas-->
         <scene sceneID="9Hx-Om-1df">
@@ -431,59 +448,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1775" y="-881"/>
-        </scene>
-        <!--Ajustes-->
-        <scene sceneID="XTu-qs-jGN">
-            <objects>
-                <viewController storyboardIdentifier="AjustesViewController" id="3ju-4K-1ob" userLabel="Ajustes" customClass="EditAjustesViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="a7c-VB-eYP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-XO-8FD" userLabel="txtServidor">
-                                <rect key="frame" x="158.5" y="40" width="200" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="ztK-rv-iIX"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Fi-M9-4Py">
-                                <rect key="frame" x="158.5" y="78" width="56.5" height="30"/>
-                                <state key="normal" title="Guardar"/>
-                                <connections>
-                                    <action selector="btnGuardar_OnClick:" destination="3ju-4K-1ob" eventType="touchUpInside" id="g6v-vL-al2"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Servidor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frs-pC-ngh" userLabel="lblServidor">
-                                <rect key="frame" x="10" y="48" width="132.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="cVI-XO-8FD" firstAttribute="baseline" secondItem="Frs-pC-ngh" secondAttribute="baseline" constant="-5" id="6u1-1l-FAA"/>
-                            <constraint firstItem="9Fi-M9-4Py" firstAttribute="top" secondItem="cVI-XO-8FD" secondAttribute="bottom" constant="8" symbolic="YES" id="8VA-JM-QnL"/>
-                            <constraint firstItem="9Fi-M9-4Py" firstAttribute="leading" secondItem="cVI-XO-8FD" secondAttribute="leading" id="9dO-1X-w33"/>
-                            <constraint firstItem="cVI-XO-8FD" firstAttribute="leading" secondItem="Frs-pC-ngh" secondAttribute="trailing" constant="16" id="QPT-Ar-BtP"/>
-                            <constraint firstItem="cVI-XO-8FD" firstAttribute="top" secondItem="a7c-VB-eYP" secondAttribute="topMargin" constant="20" id="RmQ-GY-MFV"/>
-                            <constraint firstItem="Frs-pC-ngh" firstAttribute="leading" secondItem="hO8-M6-YEO" secondAttribute="leading" constant="10" id="nZj-It-Nx7"/>
-                            <constraint firstItem="hO8-M6-YEO" firstAttribute="trailing" secondItem="9Fi-M9-4Py" secondAttribute="trailing" constant="160" id="wKb-Yl-l2g"/>
-                            <constraint firstItem="hO8-M6-YEO" firstAttribute="trailing" secondItem="cVI-XO-8FD" secondAttribute="trailing" constant="16.5" id="zZ7-i0-RRY"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="hO8-M6-YEO"/>
-                    </view>
-                    <connections>
-                        <outlet property="txtNombreServidor" destination="cVI-XO-8FD" id="sfR-KK-Cyj"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QxF-zP-xCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-295" y="-881"/>
+            <point key="canvasLocation" x="1087" y="-642"/>
         </scene>
         <!--Ver Perfil-->
         <scene sceneID="ADk-QW-Dnw">
@@ -570,7 +535,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xL0-WQ-qJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1364" y="259.52023988005999"/>
+            <point key="canvasLocation" x="33" y="256"/>
         </scene>
         <!--Sinc View Controller-->
         <scene sceneID="tU5-i9-kWB">
@@ -620,7 +585,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ga-8x-zGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="1030"/>
+            <point key="canvasLocation" x="-1058" y="-653"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Efl-d8-r5r">
@@ -638,10 +603,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btj-Uh-Hyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1409" y="260"/>
+            <point key="canvasLocation" x="-1847" y="-651"/>
         </scene>
     </scenes>
     <resources>
+        <image name="logo_cariola" width="2419" height="1133"/>
         <image name="menu" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
