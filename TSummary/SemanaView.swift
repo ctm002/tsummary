@@ -2,10 +2,10 @@ import UIKit
 
 class SemanaView: UIView, IListViewSemana
 {
+
     var objects :  [Dia]!
     var cellId1 = "cellId1"
     var presenterSemana: PresenterSemana!
-    let cantDias: Int = 14
     var previous: DetalleDiaCell!
     var current: DetalleDiaCell!
     var fechaHoraIngreso: String = ""
@@ -43,7 +43,7 @@ class SemanaView: UIView, IListViewSemana
         self.addConstraints(contraints)
         
         presenterSemana = PresenterSemana(view: self)
-        presenterSemana.mostrar()
+        //presenterSemana.mostrar()
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -51,30 +51,66 @@ class SemanaView: UIView, IListViewSemana
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func reloadData()
+    {
+        let dias : [Dia] = DateCalculator.instance.obtDias()
+        setList(semana: dias)
+    }
+    
     func setList(semana: [Dia])
     {
         self.objects = semana
     }
     
-    func scrollToNextCell()
+    func scrollToNext()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
-        
             let contentOffset = self.collectionView.contentOffset
-            
-            self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false);
+            self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false)
+            }
+    }
+    
+    func scrollToPrevious()
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
+            let contentOffset = self.collectionView.contentOffset;
+            self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false)
+        }
+    }
+
+    private func getDay(value: Int) -> Date
+    {
+        let locale = Locale(identifier: "es_CL")
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        calendar.locale = locale
+        let fechaCurrent = Utils.toDateFromString(self.fechaHoraIngreso, "yyyy-MM-dd")
+        let fechaNew: Date = calendar.date(byAdding: Calendar.Component.day, value: value, to: fechaCurrent!)!
+        return fechaNew
+    }
+    
+    func nextDay()
+    {
+        let newDate = getDay(value: 1)
+        if (newDate <= DateCalculator.instance.fechaTermino)
+        {
+            self.select(fecha: Utils.toStringFromDate(newDate, "yyyy-MM-dd"))
+            self.delegate?.selectDay(fecha: self.fechaHoraIngreso, indexSemana: self.indexSemana)
         }
     }
     
-    func scrollToPreviousCell()
+    func prevDay()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
-            let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
-            let contentOffset = self.collectionView.contentOffset;
-            self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false);
+        let newDate = getDay(value: -1)
+        if (newDate >= DateCalculator.instance.fechaInicio)
+        {
+            self.select(fecha: Utils.toStringFromDate(newDate, "yyyy-MM-dd"))
+            self.delegate?.selectDay(fecha: self.fechaHoraIngreso, indexSemana: self.indexSemana)
         }
     }
+
 }
 
 extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
@@ -85,25 +121,33 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId1, for: indexPath) as! DetalleDiaCell
         cell.lblDia.text = self.objects[indexPath.item].nombre
         cell.lblNro.text = String(self.objects[indexPath.item].nro)
+        cell.isUserInteractionEnabled = true
+        cell.indexPath = indexPath.item
+        self.objects[indexPath.item].indexPath = indexPath
         
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         gesture.numberOfTapsRequired = 1
         gesture.numberOfTouchesRequired = 1
-        cell.isUserInteractionEnabled = true
-        cell.indexPath = indexPath.item
         cell.addGestureRecognizer(gesture)
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+        
+        
         if self.fechaHoraIngreso == self.objects[indexPath.item].fecha
         {
             cell.isSelected = true
             self.current = cell
         }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
+        if objects == nil
+        {
+            return 0
+        }
         return objects.count
     }
     
@@ -134,10 +178,25 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             
             if let nro = cell.lblNro.text
             {
-                let dias: [Dia] =  self.objects.filter {$0.nro == Int(nro)!}
-                self.fechaHoraIngreso = dias[0].fecha
-                delegate?.selectDay(fecha: self.fechaHoraIngreso, item: self.indexSemana)
+                let dias: [Dia] = self.objects.filter {$0.nro == Int(nro)!}
+                let dia : Dia = dias[0]
+                
+                self.indexSemana = dia.indexSemana
+                self.fechaHoraIngreso = dia.fecha
+                delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
             }
+        }
+    }
+    
+    func swapSemana()
+    {
+        if (self.indexSemana == 0)
+        {
+            self.scrollToPrevious()
+        }
+        else
+        {
+            self.scrollToNext()
         }
     }
     
@@ -147,14 +206,13 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         let w = scrollView.bounds.size.width
         let currentPage = Int(ceil(x/w))
         self.indexSemana = currentPage
-        if (self.indexSemana == 1 || self.indexSemana == 2)
+        if (self.indexSemana == 0 || self.indexSemana == 1)
         {
-            print("\(self.indexSemana)")
             deselect()
         }
     }
- 
-    func deselect()
+    
+    private func deselect()
     {
         for cell in self.collectionView.visibleCells {
             if let c = cell as? DetalleDiaCell
@@ -166,22 +224,62 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             }
         }
     }
-
-}
-
-extension SemanaView : ListHorasViewDelegate
-{
-    func selectDay(fecha: String, item: Int)
+    
+    public func moveScroll(_ indexSemana: Int)
     {
-        delegate?.selectDay(fecha:fecha, item: item)
+        let cellSize = CGSize(width: self.frame.width, height: self.frame.height)
+        let contentOffset = self.collectionView.contentOffset
+        var width : CGFloat = 0
+        if indexSemana == 1
+        {
+            width = cellSize.width
+        }
+        let rect = CGRect(x: 0 + width, y: contentOffset.y, width: cellSize.width, height: cellSize.height)
+        self.collectionView.scrollRectToVisible(rect, animated: false)
     }
-}
-
-extension SemanaView : CalendarViewDelegate
-{
-    func selected(fecha: String)
+    
+    fileprivate func selectedItem(_ index: Int) {
+        let indexPath = IndexPath(item: index, section: 0)
+        self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
+        self.collectionView.reloadItems(at: [indexPath])
+    }
+    
+    func select(fecha: String)
     {
-        self.fechaHoraIngreso = fecha
+        if self.current != nil
+        {
+            self.current.isSelected = false
+            if let dia = searchDay(fecha)
+            {
+                self.indexSemana = dia.indexSemana
+                self.fechaHoraIngreso = dia.fecha
+                moveScroll(self.indexSemana)
+                selectedItem(dia.index)
+                delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+            }
+        }
     }
-}
+    
+    func selectInitial()
+    {
+        if let dia = searchDay(self.fechaHoraIngreso)
+        {
+            self.indexSemana = dia.indexSemana
+            self.fechaHoraIngreso = dia.fecha
+            self.swapSemana()
+            delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+        }
+    }
+    
+    func searchDay(_ fecha: String) -> Dia?
+    {
+        let found : [Dia] = self.objects.filter { $0.fecha ==  fecha }
+        if found.count == 1
+        {
+            let dia : Dia = found[0]
+            return dia
+        }
+        return nil
+    }
 
+}

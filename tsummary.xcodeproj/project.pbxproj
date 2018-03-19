@@ -31,7 +31,7 @@
 		2F442E1320530B000075F0C5 /* RegistroHoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */; };
 		2F531767203B16A10085253C /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
-		2F6E79C7205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */; };
+		2F6E79C7205C1D07009B7A1F /* LogoCariola.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F6E79C6205C1D07009B7A1F /* LogoCariola.jpg */; };
 		2F6E79C9205C2091009B7A1F /* ShowSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
@@ -146,7 +146,7 @@
 		2F442E1220530B000075F0C5 /* RegistroHoraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroHoraTests.swift; sourceTree = "<group>"; };
 		2F531766203B16A10085253C /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 		2F535F672049D6BF00B365AD /* DetalleHoraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleHoraView.swift; sourceTree = "<group>"; };
-		2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg"; sourceTree = "<group>"; };
+		2F6E79C6205C1D07009B7A1F /* LogoCariola.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LogoCariola.jpg; sourceTree = "<group>"; };
 		2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSplashScreen.swift; sourceTree = "<group>"; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		DE0E047A1FD0B16D00AE0D7F /* TSummary */ = {
 			isa = PBXGroup;
 			children = (
-				2F6E79C6205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg */,
+				2F6E79C6205C1D07009B7A1F /* LogoCariola.jpg */,
 				2F442E062052AB470075F0C5 /* Domain */,
 				2F442E052052AB1E0075F0C5 /* Data */,
 				DE7D25901FE0626E003B0F4C /* Business */,
@@ -516,7 +516,7 @@
 			files = (
 				2FB63B7B203F71D900A0CF54 /* Data.plist in Resources */,
 				DE0E04861FD0B16D00AE0D7F /* LaunchScreen.storyboard in Resources */,
-				2F6E79C7205C1D07009B7A1F /* Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg in Resources */,
+				2F6E79C7205C1D07009B7A1F /* LogoCariola.jpg in Resources */,
 				DE0E04831FD0B16D00AE0D7F /* Assets.xcassets in Resources */,
 				DE0E04811FD0B16D00AE0D7F /* Main.storyboard in Resources */,
 			);

@@ -33,7 +33,6 @@ class SchedulerViewController: UIViewController, IViewHora {
     let vCalendario = UIView()
     let vMenu = UIView()
     
-   
     let containerRegistroHorasView : DetalleHoraView =
     {
         let view = DetalleHoraView()
@@ -41,41 +40,57 @@ class SchedulerViewController: UIViewController, IViewHora {
         return view
     }()
     
-    let containerSemanasView : SemanaView =
+    lazy var containerSemanasView : SemanaView =
     {
         let view = SemanaView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
         return view
     }()
-    
-    var delegate : CalendarViewDelegate?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         navigationItem.title = "Scheduler"
         navigationController?.navigationBar.isTranslucent = false
-        
         self.setupConstraintsMenu()
         self.setupConstrainsContainers()
-        self.containerSemanasView.delegate = self
-        self.delegate = self.containerSemanasView
-        self.delegate?.selected(fecha: self.fechaHoraIngreso)
-        self.showSemana()
+        
+        self.containerSemanasView.fechaHoraIngreso = self.fechaHoraIngreso
+        self.containerSemanasView.indexSemana = self.indexSemana
+        self.containerSemanasView.reloadData()
+        self.containerSemanasView.selectInitial()
     }
-
-    func showSemana() {
-        if (self.indexSemana == 0)
-        {
-            self.containerSemanasView.scrollToPreviousCell()
-        }
-        else
-        {
-            self.containerSemanasView.scrollToNextCell()
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
+        
+    }
+    
+    @objc func viewSwipe(gesture: UIGestureRecognizer)
+    {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                prevDay()
+            case UISwipeGestureRecognizerDirection.left:
+                nextDay()
+            default:
+                break
+            }
         }
     }
     
-
+    func nextDay()
+    {
+        self.containerSemanasView.nextDay()
+    }
+    
+    func prevDay()
+    {
+        self.containerSemanasView.prevDay()
+    }
     
     func setupConstrainsContainers()
     {
@@ -113,12 +128,15 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.view.addConstraint(NSLayoutConstraint(item: self.containerRegistroHorasView, attribute: .top, relatedBy: .equal, toItem: vFecha, attribute: .bottom, multiplier: 1, constant: 0))
         
         self.view.bringSubview(toFront: vMenu)
-    }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
         
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(viewSwipe))
+        swipeLeft.direction = .left
+        self.containerRegistroHorasView.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(viewSwipe))
+        swipeRight.direction = .right
+        self.containerRegistroHorasView.addGestureRecognizer(swipeRight)
     }
     
     func reloadRegistroHoras()
@@ -321,24 +339,20 @@ extension SchedulerViewController: DetalleHoraViewDelegate
 
 extension SchedulerViewController: ListHorasViewDelegate
 {
-    func selectDay(fecha: String, item: Int) {
+    func selectDay(fecha: String, indexSemana: Int) {
         
         self.fechaHoraIngreso = fecha
-        self.indexSemana = item
-        
+        self.indexSemana = indexSemana
+
         DispatchQueue.main.async {
             self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
         }
-        self.presenterHora.buscarHoras()
+        
+        self.reloadRegistroHoras()
     }
-}
-
-protocol CalendarViewDelegate: class
-{
-    func selected(fecha: String)
 }
 
 protocol ListHorasViewDelegate: class
 {
-    func selectDay(fecha: String, item: Int)
+    func selectDay(fecha: String, indexSemana: Int)
 }

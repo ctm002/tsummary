@@ -68,13 +68,16 @@ class DateCalculator
 
         var semana:[Dia] = [Dia]()
         var fecha: Date? = self.mFechaInicio
-        for _ in 0..<self.mCantidadDias {
+        
+        for i in 0..<self.mCantidadDias {
             let dia = Dia()
             formatter.dateFormat = "EE"
             dia.nombre = formatter.string(from: fecha!)
             dia.nro = calendar.component(Calendar.Component.day, from: fecha!)
             formatter.dateFormat = "yyyy-MM-dd"
             dia.fecha = formatter.string(from: fecha!)
+            dia.index = i //(i%7) as Int
+            dia.indexSemana = (i/7) as Int
             semana.append(dia)
             fecha = calendar.date(byAdding: Calendar.Component.day, value: 1, to: fecha!)
         }

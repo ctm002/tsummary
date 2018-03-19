@@ -347,8 +347,9 @@ class LoginViewController: UIViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         let controller = segue.destination as! SchedulerViewController
+        let fecha = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
         controller.idAbogado = sender as! Int32
-        controller.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        controller.fechaHoraIngreso = fecha
         controller.indexSemana = 1
         controller.reloadRegistroHoras()
     }

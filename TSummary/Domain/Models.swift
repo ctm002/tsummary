@@ -502,6 +502,12 @@ public class Dia
             self.mFecha=newValue
         }
     }
+    
+    var index : Int = 0
+    
+    var indexSemana : Int = 0
+    
+    var indexPath : IndexPath!
 }
 
 public class CabeceraHora

@@ -595,7 +595,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="93R-hG-CKJ" userLabel="Logo">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoCariola.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="93R-hG-CKJ" userLabel="Logo">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </imageView>
                         </subviews>
@@ -618,7 +618,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo Cariola_Alta Resolucion_Cuadricular_Digital.jpg" width="2419" height="1133"/>
+        <image name="LogoCariola.jpg" width="2419" height="1133"/>
         <image name="menu" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
