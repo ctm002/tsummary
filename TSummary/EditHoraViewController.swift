@@ -222,7 +222,9 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     @IBAction func btnCancelar_Click(_ sender: Any)
     {
-        self.navigationController?.popViewController(animated: true)
+        //self.navigationController?.popViewController(animated: true)
+        self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: nil)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

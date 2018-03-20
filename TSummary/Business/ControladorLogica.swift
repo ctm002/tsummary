@@ -101,6 +101,12 @@ public class ControladorLogica
                                 {
                                     redirect(Response(estado: 1, mensaje: "Los datos no fueron descargados", result: true))
                                 }
+                                
+                                FileConfig.instance.saveWith(
+                                    key: "fechaSinc",
+                                    value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
+                                    result: { (value: Bool) in
+                                })
                             }
                         )
                     }
@@ -284,6 +290,13 @@ public class ControladorLogica
                             }
                     })
                 }
+                
+                //Last Sinc
+                FileConfig.instance.saveWith(
+                    key: "fechaSinc",
+                    value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
+                    result: { (value: Bool) in
+                })
             }
         }
         

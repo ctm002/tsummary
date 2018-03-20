@@ -26,7 +26,7 @@ class SemanaView: UIView, IListViewSemana
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        addSubview(self.collectionView)
+        self.addSubview(self.collectionView)
         self.collectionView.register(DetalleDiaCell.self, forCellWithReuseIdentifier: cellId1)
         self.collectionView.backgroundColor = UIColor(red:0.19, green:0.25, blue:0.62, alpha:1.0)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +51,6 @@ class SemanaView: UIView, IListViewSemana
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func reloadData()
     {
         let dias : [Dia] = DateCalculator.instance.obtDias()
@@ -69,7 +68,7 @@ class SemanaView: UIView, IListViewSemana
             let cellSize = CGSize(width: self.frame.width, height: self.frame.height);
             let contentOffset = self.collectionView.contentOffset
             self.collectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width, y: contentOffset.y, width: cellSize.width, height: cellSize.height), animated: false)
-            }
+        }
     }
     
     func scrollToPrevious()
@@ -132,13 +131,11 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
         
-        
         if self.fechaHoraIngreso == self.objects[indexPath.item].fecha
         {
             cell.isSelected = true
             self.current = cell
         }
-        
         return cell
     }
     
@@ -225,12 +222,12 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         }
     }
     
-    public func moveScroll(_ indexSemana: Int)
+    public func moveScroll(_ pIndexSemana: Int)
     {
         let cellSize = CGSize(width: self.frame.width, height: self.frame.height)
         let contentOffset = self.collectionView.contentOffset
         var width : CGFloat = 0
-        if indexSemana == 1
+        if pIndexSemana == 1
         {
             width = cellSize.width
         }
@@ -253,9 +250,33 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             {
                 self.indexSemana = dia.indexSemana
                 self.fechaHoraIngreso = dia.fecha
-                moveScroll(self.indexSemana)
+                moveScroll(dia.indexSemana)
                 selectedItem(dia.index)
                 delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+                
+                /*
+                let item = dia.index
+                let indexPath : IndexPath = IndexPath.init(item: item, section: 0)
+                if self.indexSemana == 0
+                {
+                    self.collectionView.scrollToItem(
+                        at: IndexPath.init(item: 0, section: 0),
+                        at: UICollectionViewScrollPosition.init(rawValue: 0),
+                        animated: false)
+                }
+                else
+                {
+                    let lastItemIndex = self.collectionView.numberOfItems(inSection: 0) - 1
+                    let indexPathLast : IndexPath = IndexPath.init(item: lastItemIndex, section: 0)
+                    self.collectionView.scrollToItem(
+                        at: indexPathLast,
+                        at: UICollectionViewScrollPosition.init(rawValue: 0) ,
+                        animated: false)
+                }
+                
+                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.init(rawValue: 0))
+                self.collectionView.reloadItems(at: [indexPath])
+                */
             }
         }
     }
@@ -264,12 +285,37 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
     {
         if let dia = searchDay(self.fechaHoraIngreso)
         {
+            /*
             self.indexSemana = dia.indexSemana
             self.fechaHoraIngreso = dia.fecha
             self.swapSemana()
             delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+            */
+            
+            
+            let lastItemIndex = self.collectionView.numberOfItems(inSection: 0) - 1
+            let indexPathLast : IndexPath = IndexPath.init(item: lastItemIndex, section: 0)
+            self.collectionView.scrollToItem(at: indexPathLast, at: UICollectionViewScrollPosition.init(rawValue: 0) , animated: false)
+
+            let indexPath: IndexPath =  IndexPath.init(item: dia.index, section: 0)
+            self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.init(rawValue: 0))
+            //self.current = self.collectionView.visibleCells[(dia.index%7) as Int] as! DetalleDiaCell
+            self.current = self.collectionView.cellForItem(at: IndexPath.init(item:(dia.index%7) as Int, section: 0)) as! DetalleDiaCell
+            print(current)
         }
     }
+    
+    /*
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.current = collectionView.cellForItem(at: indexPath) as! DetalleDiaCell
+        self.current.isSelected = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        self.current = collectionView.cellForItem(at: indexPath) as! DetalleDiaCell
+        self.current.isSelected = true
+    }
+    */
     
     func searchDay(_ fecha: String) -> Dia?
     {

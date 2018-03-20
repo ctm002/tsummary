@@ -42,6 +42,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     lazy var containerSemanasView : SemanaView =
     {
+        //let view = SemanaView.init(frame: self.view.frame)
         let view = SemanaView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
@@ -59,13 +60,18 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.containerSemanasView.fechaHoraIngreso = self.fechaHoraIngreso
         self.containerSemanasView.indexSemana = self.indexSemana
         self.containerSemanasView.reloadData()
-        self.containerSemanasView.selectInitial()
+        
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
-        
+        self.view.layoutIfNeeded()
+        self.containerSemanasView.selectInitial()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        //self.containerSemanasView.selectInitial()
     }
     
     @objc func viewSwipe(gesture: UIGestureRecognizer)
