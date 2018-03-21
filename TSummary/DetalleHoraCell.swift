@@ -10,7 +10,8 @@ class DetalleHoraCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
+        //lbl.font = UIFont.boldSystemFont(ofSize: 14)
+        lbl.font = UIFont(name: "Verdana-Bold", size: 13)
         return lbl
     }()
     
@@ -18,8 +19,9 @@ class DetalleHoraCell: UICollectionViewCell {
     {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.textColor = UIColor(red:0.46, green:0.46, blue:0.46, alpha:1.0)
-        lbl.font = UIFont.boldSystemFont(ofSize: 13)
+        lbl.textColor =  UIColor.darkGray
+        //lbl.font = UIFont.boldSystemFont(ofSize: 14)
+        lbl.font = UIFont(name:"Verdana-Bold", size: 13)
         return lbl
     }()
     
@@ -28,7 +30,7 @@ class DetalleHoraCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
+        lbl.font =  UIFont.systemFont(ofSize:14) //UIFont.boldSystemFont(ofSize: 16)
         return lbl
     }()
     
@@ -36,8 +38,9 @@ class DetalleHoraCell: UICollectionViewCell {
     {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.textColor = UIColor(red:0.46, green:0.46, blue:0.46, alpha:1.0)
-        lbl.font = UIFont.boldSystemFont(ofSize: 13)
+        lbl.textColor =  UIColor.gray //UIColor(red:0.46, green:0.46, blue:0.46, alpha:1.0)
+        //lbl.font = UIFont.boldSystemFont(ofSize: 13)
+        lbl.font = UIFont(name: "Helvetica", size: 14)
         return lbl
     }()
     
@@ -57,7 +60,6 @@ class DetalleHoraCell: UICollectionViewCell {
         img.contentMode = .scaleToFill
         return img
     }()
-    
     
     var  imgSinc : UIImageView = {
         let img = UIImageView()
@@ -122,10 +124,14 @@ class DetalleHoraCell: UICollectionViewCell {
         lblCliente.leadingAnchor.constraint(equalTo: self.containerViews.leadingAnchor, constant: delta).isActive = true
         lblCliente.numberOfLines = 0
         lblCliente.backgroundColor = mostrar ? UIColor.yellow : UIColor.white
+        //lblCliente.lineBreakMode = .byWordWrapping
+        //lblCliente.minimumScaleFactor = 0.5
+        //lblCliente.adjustsFontSizeToFitWidth = true
         
-        lblHora.textAlignment = .center
-        lblHora.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        lblHora.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        lblHora.textAlignment = .right
+        lblHora.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        //lblHora.heightAnchor.constraint(equalToConstant: 40).isActive = true
         lblHora.topAnchor.constraint(equalTo: self.containerViews.topAnchor, constant: delta).isActive = true
         lblHora.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
         lblHora.backgroundColor = mostrar ?  UIColor.brown : UIColor.white
@@ -137,7 +143,7 @@ class DetalleHoraCell: UICollectionViewCell {
         lblProyecto.numberOfLines = 0
         lblProyecto.backgroundColor = mostrar ?  UIColor.purple : UIColor.white
         
-        lblAsunto.textAlignment = .left
+        lblAsunto.textAlignment = .justified
         lblAsunto.leadingAnchor.constraint(equalTo: self.containerViews.leadingAnchor, constant: delta).isActive = true
         lblAsunto.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
         lblAsunto.numberOfLines = 0
@@ -156,7 +162,11 @@ class DetalleHoraCell: UICollectionViewCell {
         imgEstado.backgroundColor = mostrar ? UIColor.cyan : UIColor.white
         imgEstado.trailingAnchor.constraint(equalTo: self.containerViews.trailingAnchor, constant: -delta).isActive = true
         
-        self.containerViews.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
+//        self.containerViews.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .height, relatedBy: .equal, toItem: lblHora, attribute: .height, multiplier: 1, constant: 0))
+        
+        
+        self.containerViews.addConstraint(NSLayoutConstraint(item: lblHora, attribute: .height, relatedBy: .equal, toItem: lblCliente, attribute: .height, multiplier: 1, constant: 0))
+        
         
         self.containerViews.addConstraint(NSLayoutConstraint(item: lblCliente, attribute: .trailing, relatedBy: .equal, toItem: lblHora, attribute: .leading, multiplier: 1, constant: 0))
         

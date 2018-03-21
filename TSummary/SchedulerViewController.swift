@@ -70,10 +70,6 @@ class SchedulerViewController: UIViewController, IViewHora {
         self.containerSemanasView.selectInitial()
     }
     
-    override func viewDidLayoutSubviews() {
-        //self.containerSemanasView.selectInitial()
-    }
-    
     @objc func viewSwipe(gesture: UIGestureRecognizer)
     {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {

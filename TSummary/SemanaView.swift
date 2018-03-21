@@ -285,14 +285,12 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
     {
         if let dia = searchDay(self.fechaHoraIngreso)
         {
-            /*
             self.indexSemana = dia.indexSemana
             self.fechaHoraIngreso = dia.fecha
             self.swapSemana()
             delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
-            */
-            
-            
+ 
+            /*
             let lastItemIndex = self.collectionView.numberOfItems(inSection: 0) - 1
             let indexPathLast : IndexPath = IndexPath.init(item: lastItemIndex, section: 0)
             self.collectionView.scrollToItem(at: indexPathLast, at: UICollectionViewScrollPosition.init(rawValue: 0) , animated: false)
@@ -302,20 +300,9 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             //self.current = self.collectionView.visibleCells[(dia.index%7) as Int] as! DetalleDiaCell
             self.current = self.collectionView.cellForItem(at: IndexPath.init(item:(dia.index%7) as Int, section: 0)) as! DetalleDiaCell
             print(current)
+             */
         }
     }
-    
-    /*
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.current = collectionView.cellForItem(at: indexPath) as! DetalleDiaCell
-        self.current.isSelected = true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        self.current = collectionView.cellForItem(at: indexPath) as! DetalleDiaCell
-        self.current.isSelected = true
-    }
-    */
     
     func searchDay(_ fecha: String) -> Dia?
     {

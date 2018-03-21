@@ -7,7 +7,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     
     lazy var collectionView: UICollectionView =
     {
-        let layout  = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection  = .vertical
         layout.headerReferenceSize = .zero
         layout.footerReferenceSize = .zero
@@ -49,14 +49,27 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId1, for: indexPath) as! DetalleHoraCell
         if let hrs = self.objects {
-            cell.lblCliente.text = hrs[indexPath.row].proyecto.nombreCliente
-            cell.lblProyecto.text = hrs[indexPath.row].proyecto.nombre
-            cell.lblHora.text =  String(format: "%02d", hrs[indexPath.row].horasTrabajadas) + ":" + String(format: "%02d",  hrs[indexPath.row].minutosTrabajados)
-            cell.lblAsunto.text = hrs[indexPath.row].asunto
-            cell.IdHora = hrs[indexPath.row].id
-            cell.lblFechaIngreso.text = hrs[indexPath.row].fechaHoraIngresoToHHmm
-            cell.imgEstado.image = hrs[indexPath.row].modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
-            cell.imgSinc.image = hrs[indexPath.row].offline ? #imageLiteral(resourceName: "sincronizar") : nil
+            
+            let registro = hrs[indexPath.row]
+            
+            /*
+            let attributedText = NSMutableAttributedString(string: registro.proyecto.nombreCliente.uppercased(), attributes:
+                [NSAttributedStringKey.font: UIFont(name:"Verdana-Bold", size: 13),
+                 NSAttributedStringKey.foregroundColor: UIColor.black])
+            
+            attributedText.append(NSAttributedString(string: "\n\(registro.proyecto.nombre.uppercased())", attributes:
+                [NSAttributedStringKey.font: UIFont(name:"Verdana-Bold", size: 13),
+                 NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
+            */
+            
+            cell.lblCliente.text =  registro.proyecto.nombreCliente.uppercased()
+            cell.lblProyecto.text = registro.proyecto.nombre.uppercased()
+            cell.lblHora.text =  String(format: "%02d", registro.horasTrabajadas) + ":" + String(format: "%02d",  registro.minutosTrabajados)
+            cell.lblAsunto.text = registro.asunto
+            cell.IdHora = registro.id
+            cell.lblFechaIngreso.text = registro.fechaHoraIngresoToHHmm
+            cell.imgEstado.image = registro.modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
+            cell.imgSinc.image = registro.offline ? #imageLiteral(resourceName: "sincronizar") : nil
             
             let gesture: UITapGestureRecognizer = UITapGestureRecognizer(
                 target: self,

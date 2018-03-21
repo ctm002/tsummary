@@ -39,7 +39,6 @@ class SincViewController: UIViewController {
         })
     }
     
-    
     fileprivate func mostrarMensaje(_ mensaje: String = "")
     {
         let alert = UIAlertController(title: "Alerta",

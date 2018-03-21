@@ -123,6 +123,19 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     {
         btnEliminar.isEnabled = estado
         btnGuardar.isEnabled = estado
+        
+        btnGuardar.isHidden = !estado
+        btnEliminar.isHidden = !estado
+        
+        mySearchTextField.isEnabled = estado
+        txtAsunto.isEditable = estado
+        datePickerFechaIngreso.isEnabled = estado
+        
+        txtHoras.isEnabled = estado
+        txtMinutos.isEnabled = estado
+        
+        stepper1.isEnabled = estado
+        stepper2.isEnabled = estado
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int
