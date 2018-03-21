@@ -54,10 +54,10 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        navigationItem.title = "TimeSummary"
+        navigationItem.title =  Utils.toStringFromDate(model.fechaHoraIngreso, "dd MMMM yyyy")
         self.presenterProyecto = PresenterProyecto(self)
         self.presenterHora = PresenterRegistroHoras(self)
-        
+    
         setupSearchTextField()
         
         txtHoras.text = "00"
@@ -112,6 +112,9 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
             NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 12),
         ]
         mySearchTextField.forceRightToLeft = false
+        
+        mySearchTextField.clearsOnBeginEditing = false
+        mySearchTextField.clearButtonMode = .whileEditing
     }
     
     @objc func dismissKeyboard()

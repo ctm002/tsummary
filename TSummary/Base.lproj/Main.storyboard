@@ -298,7 +298,7 @@
                                                     <constraint firstItem="QJ0-q9-IVi" firstAttribute="top" secondItem="BlV-7v-yCP" secondAttribute="bottom" constant="5" id="zdV-iN-ZoL"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hora de Ingreso" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSj-5g-pQF" userLabel="LblHoraDeIngreso">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hora de Inicio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSj-5g-pQF" userLabel="LblHoraDeIngreso">
                                                 <rect key="frame" x="20" y="348" width="335" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="SAP-kv-RQC"/>
@@ -622,7 +622,7 @@
         <image name="menu" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XTX-ii-BgD"/>
+        <segue reference="aro-B7-O2a"/>
         <segue reference="maT-UB-5oE"/>
     </inferredMetricsTieBreakers>
 </document>
