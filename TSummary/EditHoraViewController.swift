@@ -1,7 +1,7 @@
 import UIKit
 import SearchTextField
 
-class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora {
+class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora, UITextFieldDelegate{
 
     @IBOutlet weak var mySearchTextField: SearchTextField!
     @IBOutlet weak var txtHoras: UITextField!
@@ -62,6 +62,10 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         
         txtHoras.text = "00"
         txtMinutos.text = "00"
+        txtHoras.delegate = self
+        txtMinutos.delegate = self
+        txtHoras.keyboardType = .numberPad
+        txtMinutos.keyboardType = .numberPad
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -80,6 +84,15 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         {
             bloquearBotones(model.modificable)
         }
+    }
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 2
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
     }
     
     func loadData()
