@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X9M-Ic-Hri">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tey-mf-7vs">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -161,12 +161,12 @@
                         <outlet property="txtIMEI" destination="tWp-L7-hha" id="u2U-G3-f89"/>
                         <outlet property="txtPassword" destination="9Ra-NN-cdP" id="nFk-WF-UMA"/>
                         <outlet property="txtUserName" destination="zfH-ik-7kJ" id="lrZ-JG-6Rc"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="irSchedulerSegue" id="PtU-1Z-97W"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="irLoginSchedulerSegue" id="PtU-1Z-97W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1847" y="701"/>
+            <point key="canvasLocation" x="-1567" y="712"/>
         </scene>
         <!--Scheduler-->
         <scene sceneID="Ndw-sZ-PlT">
@@ -191,15 +191,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="znN-7t-mT3" kind="show" identifier="editarHoraSegue" id="ryv-5X-GbU"/>
-                        <segue destination="jtA-U1-yZL" kind="show" identifier="perfilIrSegue" id="M6q-sA-UmN"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="irLoginSegue" id="FHh-Uo-wwA"/>
-                        <segue destination="vks-oX-qAY" kind="show" identifier="sincIrSegue" id="7f4-nt-B5b"/>
+                        <segue destination="znN-7t-mT3" kind="show" identifier="irSchedulerEditarHoraSegue" id="ryv-5X-GbU"/>
+                        <segue destination="jtA-U1-yZL" kind="show" identifier="irSchedulerPerfilSegue" id="M6q-sA-UmN"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="irSchedulerLoginSegue" id="FHh-Uo-wwA"/>
+                        <segue destination="vks-oX-qAY" kind="show" identifier="irSchedulerSincronizarSegue" id="7f4-nt-B5b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEJ-Dp-LyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-84" y="116"/>
+            <point key="canvasLocation" x="414" y="222"/>
         </scene>
         <!--Registrar Horas-->
         <scene sceneID="9Hx-Om-1df">
@@ -425,12 +425,12 @@
                         <outlet property="txtAsunto" destination="g4w-FI-Qgq" id="Jcv-3R-Ihc"/>
                         <outlet property="txtHoras" destination="BlV-7v-yCP" id="p8t-t8-B8P"/>
                         <outlet property="txtMinutos" destination="ehf-np-szz" id="eCc-ZU-hqh"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="volverSchedulerHoraSegue" id="aro-B7-O2a"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="irEditarHoraSchedulerSegue" id="aro-B7-O2a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1087" y="-642"/>
+            <point key="canvasLocation" x="1199" y="-549"/>
         </scene>
         <!--Ver Perfil-->
         <scene sceneID="ADk-QW-Dnw">
@@ -441,7 +441,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6d-b7-NNH">
-                                <rect key="frame" x="16" y="20" width="343" height="200"/>
+                                <rect key="frame" x="16" y="64" width="343" height="200"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NpI-BV-WCQ">
                                         <rect key="frame" x="161.5" y="90" width="20" height="20"/>
@@ -465,7 +465,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="STV-hD-HLc">
-                                <rect key="frame" x="20" y="244" width="335" height="403"/>
+                                <rect key="frame" x="20" y="288" width="335" height="359"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="7F4-sO-v1v" detailTextLabel="UnZ-X5-hWr" style="IBUITableViewCellStyleSubtitle" id="AKH-o5-J2y">
@@ -517,12 +517,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xL0-WQ-qJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1086" y="116"/>
+            <point key="canvasLocation" x="1105" y="994"/>
         </scene>
         <!--Sinc View Controller-->
         <scene sceneID="tU5-i9-kWB">
             <objects>
-                <viewController id="vks-oX-qAY" customClass="SincViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="Sincronizar" storyboardIdentifier="Sincronizar" id="vks-oX-qAY" customClass="SincViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MMY-9z-emf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -562,12 +562,12 @@
                     <connections>
                         <outlet property="btnSincronizar" destination="X9s-Ze-MhF" id="oly-0U-Whf"/>
                         <outlet property="lblTextUltSinc" destination="vW8-r0-6lr" id="UbJ-fV-8mj"/>
-                        <segue destination="yMH-3P-hXD" kind="show" identifier="sincVolverSegue" id="XTX-ii-BgD"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="irSincronizarSchedulerSegue" id="XTX-ii-BgD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ga-8x-zGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1058" y="-653"/>
+            <point key="canvasLocation" x="-366" y="994"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Efl-d8-r5r">
@@ -580,12 +580,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="maT-UB-5oE"/>
+                        <segue destination="X9M-Ic-Hri" kind="relationship" relationship="rootViewController" id="G0k-AW-qLS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btj-Uh-Hyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2799" y="700"/>
+            <point key="canvasLocation" x="-2353" y="712"/>
         </scene>
         <!--Show Splash Screen-->
         <scene sceneID="pnJ-HY-wSJ">
@@ -596,25 +596,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoCariola.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="93R-hG-CKJ" userLabel="Logo">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="iqh-OI-Q6r" userLabel="lblProgress">
+                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="93R-hG-CKJ" firstAttribute="top" secondItem="UDv-zk-0yY" secondAttribute="top" id="1pt-BU-8OS"/>
                             <constraint firstItem="93R-hG-CKJ" firstAttribute="bottom" secondItem="UDv-zk-0yY" secondAttribute="bottom" id="H3q-hT-wZ3"/>
                             <constraint firstItem="93R-hG-CKJ" firstAttribute="leading" secondItem="UDv-zk-0yY" secondAttribute="leading" id="JAA-9p-B0n"/>
+                            <constraint firstItem="iqh-OI-Q6r" firstAttribute="trailing" secondItem="UDv-zk-0yY" secondAttribute="trailing" id="Y1z-Ib-KgL"/>
                             <constraint firstItem="93R-hG-CKJ" firstAttribute="trailing" secondItem="UDv-zk-0yY" secondAttribute="trailing" id="l85-jt-QjC"/>
+                            <constraint firstItem="iqh-OI-Q6r" firstAttribute="leading" secondItem="UDv-zk-0yY" secondAttribute="leading" id="rNP-cf-Qzz"/>
+                            <constraint firstItem="UDv-zk-0yY" firstAttribute="bottom" secondItem="iqh-OI-Q6r" secondAttribute="bottom" id="sZb-yP-leO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UDv-zk-0yY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="8YS-dG-mVw"/>
                     <connections>
-                        <segue destination="Tey-mf-7vs" kind="show" identifier="showSplashScreen" id="TL2-j1-ahB"/>
+                        <outlet property="lblProgress" destination="iqh-OI-Q6r" id="MCm-O9-JNw"/>
+                        <segue destination="yMH-3P-hXD" kind="show" identifier="irSplashScreenSchedulerSegue" id="Q8k-vK-DdC"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="irSplashScreenLoginSegue" id="KDF-H2-8sn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dn0-49-hjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2799" y="-127"/>
+            <point key="canvasLocation" x="-1567" y="-77"/>
         </scene>
     </scenes>
     <resources>
@@ -622,7 +634,7 @@
         <image name="menu" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aro-B7-O2a"/>
-        <segue reference="maT-UB-5oE"/>
+        <segue reference="Q8k-vK-DdC"/>
+        <segue reference="KDF-H2-8sn"/>
     </inferredMetricsTieBreakers>
 </document>

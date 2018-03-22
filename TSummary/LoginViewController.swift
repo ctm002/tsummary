@@ -15,7 +15,8 @@ class LoginViewController: UIViewController
     public var fDesde : String = ""
     public var fHasta : String = ""
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         self.activity.center = self.view.center
         navigationItem.title = "Login"
@@ -50,7 +51,7 @@ class LoginViewController: UIViewController
             self.txtIMEI.text = getUIDevice()
             btnRegistrar.setTitle("Entrar", for: .normal)
         }
-        
+        self.navigationItem.setHidesBackButton(true, animated: false)
         self.txtIMEI.isHidden = true
         self.lblVersionSoftware.isHidden = false
         lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
@@ -297,7 +298,7 @@ class LoginViewController: UIViewController
             }
             else
             {
-                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true))
+                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true, redirect: false))
             }
         }
     }
@@ -313,7 +314,7 @@ class LoginViewController: UIViewController
                 
                     if self.idAbogado != 0
                     {
-                        self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.idAbogado)
+                        self.performSegue(withIdentifier: "irLoginSchedulerSegue", sender: self.idAbogado)
                     }
                 }
             )

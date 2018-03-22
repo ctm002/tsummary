@@ -52,16 +52,6 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             
             let registro = hrs[indexPath.row]
             
-            /*
-            let attributedText = NSMutableAttributedString(string: registro.proyecto.nombreCliente.uppercased(), attributes:
-                [NSAttributedStringKey.font: UIFont(name:"Verdana-Bold", size: 13),
-                 NSAttributedStringKey.foregroundColor: UIColor.black])
-            
-            attributedText.append(NSAttributedString(string: "\n\(registro.proyecto.nombre.uppercased())", attributes:
-                [NSAttributedStringKey.font: UIFont(name:"Verdana-Bold", size: 13),
-                 NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
-            */
-            
             cell.lblCliente.text =  registro.proyecto.nombreCliente.uppercased()
             cell.lblProyecto.text = registro.proyecto.nombre.uppercased()
             cell.lblHora.text =  String(format: "%02d", registro.horasTrabajadas) + ":" + String(format: "%02d",  registro.minutosTrabajados)
@@ -91,7 +81,7 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
                 let model = ModelController(
                     id: registroHora.id,
                     abogadoId: registroHora.abogadoId,
-                    fechaHoraIngreso: registroHora.fechaHoraIngreso!,
+                    fechaHoraIngreso: registroHora.fechaHoraInicio!,
                     idProyecto: registroHora.proyecto.id,
                     nombreProyecto: registroHora.proyecto.nombre,
                     nombreCliente: registroHora.proyecto.nombreCliente,

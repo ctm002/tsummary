@@ -35,11 +35,11 @@ public class ControladorLogica
                         let rowAffected = DataStore.horas.eliminar(hora)
                         if rowAffected
                         {
-                            result = Response(estado: 3, mensaje: "Se elimino remotamente y localmente", result: true)
+                            result = Response(estado: 3, mensaje: "Se elimino remotamente y localmente", result: true, redirect: true)
                         }
                         else
                         {
-                            result = Response(estado: 2, mensaje: "Se elimino remotamente pero no localmente", result: false)
+                            result = Response(estado: 2, mensaje: "Se elimino remotamente pero no localmente", result: false, redirect:false)
                         }
                         callback(result)
                     },
@@ -49,11 +49,11 @@ public class ControladorLogica
                         let rowAffected = DataStore.horas.eliminar(hora)
                         if rowAffected
                         {
-                            result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente",  result: false)
+                            result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente",  result: false, redirect:false)
                         }
                         else
                         {
-                            result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false)
+                            result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false, redirect:false)
                         }
                         callback(result)
                     }
@@ -66,11 +66,11 @@ public class ControladorLogica
                 let rowAffected = DataStore.horas.eliminar(hora)
                 if (rowAffected)
                 {
-                    result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente", result: false)
+                    result = Response(estado: 1, mensaje: "No se elimino remotamente pero si localmente", result: false, redirect:false)
                 }
                 else
                 {
-                    result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false)
+                    result = Response(estado: 0, mensaje: "No se elimino remotamente ni localmente", result: false, redirect:false)
                 }
                 callback(result)
             }
@@ -94,12 +94,12 @@ public class ControladorLogica
                                     let resp : Bool = DataStore.horas.guardar(horas)
                                     if(resp)
                                     {
-                                        redirect(Response(estado: 1, mensaje: "los datos fueron descargados y almacenados correctamente", result: true))
+                                        redirect(Response(estado: 1, mensaje: "los datos fueron descargados y almacenados correctamente", result: true, redirect: true))
                                     }
                                 }
                                 else
                                 {
-                                    redirect(Response(estado: 1, mensaje: "Los datos no fueron descargados", result: true))
+                                    redirect(Response(estado: 1, mensaje: "Los datos no fueron descargados", result: true, redirect: true))
                                 }
                                 
                                 FileConfig.instance.saveWith(
@@ -112,12 +112,12 @@ public class ControladorLogica
                     }
                     else
                     {
-                        redirect(Response(estado: 1, mensaje: "Los proyectos no se guardaron localmente", result: false))
+                        redirect(Response(estado: 1, mensaje: "Los proyectos no se guardaron localmente", result: false, redirect:false))
                     }
                 }
                 else
                 {
-                    redirect(Response(estado: 1, mensaje: "No se pudieron descargar los proyectos desde el webservice", result: false))
+                    redirect(Response(estado: 1, mensaje: "No se pudieron descargar los proyectos desde el webservice", result: false, redirect:false))
                 }
             })
         }
@@ -136,11 +136,11 @@ public class ControladorLogica
                 let rowAffected = DataStore.horas.guardar(hora)
                 if rowAffected
                 {
-                    result = Response(estado: 0, mensaje: "Se guardo remotamente y localmente", result: true)
+                    result = Response(estado: 0, mensaje: "Se guardo remotamente y localmente", result: true, redirect: true)
                 }
                 else
                 {
-                    result = Response(estado: 0, mensaje: "Se guardo remotamente pero no localmente", result: false)
+                    result = Response(estado: 0, mensaje: "Se guardo remotamente pero no localmente", result: false, redirect:true)
                 }
                 callback(result)
                 
@@ -148,11 +148,11 @@ public class ControladorLogica
                 let rowAffected = DataStore.horas.guardar(hora)
                 if rowAffected
                 {
-                    result = Response(estado: 0, mensaje: "No se guardo remotamente pero si localmente", result: false)
+                    result = Response(estado: 0, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect: true)
                 }
                 else
                 {
-                    result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false)
+                    result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect: true)
                 }
                 callback(result)
             })
@@ -162,11 +162,11 @@ public class ControladorLogica
             let rowAffected = DataStore.horas.guardar(hora)
             if rowAffected
             {
-                result = Response(estado: 1, mensaje: "No se guardo remotamente pero si localmente", result: false)
+                result = Response(estado: 1, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect:false)
             }
             else
             {
-                result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false)
+                result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect:false)
             }
            callback(result)
         }
@@ -180,7 +180,9 @@ public class ControladorLogica
     private func sincronizarProyectos(_ session: SessionLocal,_ retorno: @escaping (Response) -> Void)
     {
         if self.isConnected
-        {	
+        {
+            retorno(Response(estado: 1, mensaje: "Consultando proyectos...", result: false, redirect:false))
+            
             ApiClient.instance.obtListProyectosByCodAbogado(session, callback: { (proyectosRemotos) -> Void in
                 if proyectosRemotos != nil
                 {
@@ -191,42 +193,48 @@ public class ControladorLogica
                         let result = DataStore.proyectos.guardar(proyectosNuevos!)
                         if result
                         {
-                            print("proyectos descargados")
+                            retorno(Response(estado: 1, mensaje: "Proyectos descargados", result: false, redirect:false))
                         }
                     }
+                    retorno(Response(estado: 1, mensaje: "Consultando horas...", result: false, redirect:false))
                     self.sincronizarHoras(session, retorno)
                 }
                 else
                 {
-                    retorno(Response(estado: 1, mensaje: "Error al descargar los proyectos desde el webservice", result: false))
+                    retorno(Response(estado: 1, mensaje: "Error al descargar los proyectos desde el webservice", result: false, redirect:false))
                 }
             })
         }
         else
         {
-            retorno(Response(estado: 1, mensaje: "Sin conexion a internet", result: false))
+            var response = Response(estado: 1, mensaje: "Sin conexion a internet", result: false, redirect:false)
+            response.setRedirect(true)
+            retorno(response)
         }
     }
     
     private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Response) -> Void)
     {
+        
         if self.isConnected
         {
             let idAbogado : Int32 = (session.usuario?.id)!
             let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
             let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
+            retorno(Response(estado: 1, mensaje: "Buscando horas offline", result: false, redirect:false))
             if let horas : [RegistroHora] = DataStore.horas.getListDetalleHorasByIdAbogadoAndEstadoOffline(id: idAbogado)
             {
                 if horas.count > 0
                 {
+                    retorno(Response(estado: 1, mensaje: "Obteniendo horas offline", result: false, redirect:false))
                     var aHorasTS : [HoraTS] = [HoraTS]()
                     for h in horas
                     {
                         let horaTS = HoraTS(
                             tim_correl: h.tim_correl,
                             pro_id: h.proyecto.id,
-                            tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraIngreso!),
+                            tim_fecha_ing: Utils.toStringFromDate(h.fechaHoraInicio!),
                             tim_asunto: h.asunto,
                             tim_horas: h.horasTrabajadas,
                             tim_minutos: h.minutosTrabajados,
@@ -242,64 +250,70 @@ public class ControladorLogica
                         Fecha: Utils.toStringFromDate(Date()),
                         Lista: aHorasTS)
                     
+                    retorno(Response(estado: 1, mensaje: "Sincronizando horas offline", result: false, redirect:false))
                     ApiClient.instance.sincronizar(session, dataSend)
                     
                     DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
                     
-                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
-                    , callback:{(hrsRemotas)->Void in
+                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback: {(hrsRemotas)->Void in
                         if hrsRemotas != nil
                         {
                             let result : Bool = DataStore.horas.guardar(hrsRemotas!)
                             if (result)
                             {
-                                retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
+                                retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true, redirect: true))
                             }
                             else
                             {
-                                retorno(Response(estado: 1, mensaje: "", result: true))
+                                retorno(Response(estado: 1, mensaje: "Las horas no fueron guardadas correctamente desde el webservices", result: true, redirect: true))
                             }
                         }
                         else
                         {
-                            retorno(Response(estado: 1, mensaje: "", result: true))
+                            retorno(Response(estado: 1, mensaje: "Las horas no fueron recuperadas desde el webservices", result: true, redirect: true))
                         }
+                        
+                        //Last Sinc
+                        FileConfig.instance.saveWith(
+                            key: "fechaSinc",
+                            value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
+                            result: { (value: Bool) in
+                        })
                     })
                 }
                 else
                 {
+                    retorno(Response(estado: 1, mensaje: "Eliminado horas localmente", result: false, redirect:false))
                     DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
-                    
-                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta
-                        , callback:{(hrsRemotas)->Void in
-                            if hrsRemotas != nil
+                    retorno(Response(estado: 1, mensaje: "Obteniendo horas desde el servidor", result: false, redirect:false))
+                    ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback: {(hrsRemotas)->Void in
+                        if hrsRemotas != nil
+                        {
+                            let result : Bool = DataStore.horas.guardar(hrsRemotas!)
+                            if (result)
                             {
-                                let result : Bool = DataStore.horas.guardar(hrsRemotas!)
-                                if (result)
-                                {
-                                    retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true))
-                                }
-                                else
-                                {
-                                    retorno(Response(estado: 1, mensaje: "Las horas no fueron guardadas correctamente desde el webservices", result: true))
-                                }
+                                retorno(Response(estado: 1, mensaje: "Los horas fueron guardados correctamente", result: true, redirect: true))
                             }
                             else
                             {
-                               retorno(Response(estado: 1, mensaje: "Las horas no fueron recuperadas desde el webservices", result: true))
+                                retorno(Response(estado: 1, mensaje: "Las horas no fueron guardadas correctamente desde el webservices", result: true, redirect: true))
                             }
+                        }
+                        else
+                        {
+                            retorno(Response(estado: 1, mensaje: "Las horas no fueron recuperadas desde el webservices", result: true, redirect: true))
+                        }
+                        
+                        //Last Sinc
+                        FileConfig.instance.saveWith(
+                            key: "fechaSinc",
+                            value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
+                            result: { (value: Bool) in
+                        })
                     })
                 }
-                
-                //Last Sinc
-                FileConfig.instance.saveWith(
-                    key: "fechaSinc",
-                    value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
-                    result: { (value: Bool) in
-                })
             }
         }
-        
     }
     
     func obtSessionLocal(userName: String = "", password: String = "", imei: String = "", defecto: Int = -1) -> SessionLocal?

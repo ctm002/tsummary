@@ -135,7 +135,9 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
         {
             cell.isSelected = true
             self.current = cell
+            self.previous = cell
         }
+        
         return cell
     }
     
@@ -167,20 +169,23 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
     {
         if let cell = gestureRecognizer.view as? DetalleDiaCell {
             
-            self.previous = self.current
-            self.previous.isSelected = false
-
-            cell.isSelected = true
-            self.current = cell
-            
-            if let nro = cell.lblNro.text
+            if self.previous != nil
             {
-                let dias: [Dia] = self.objects.filter {$0.nro == Int(nro)!}
-                let dia : Dia = dias[0]
+                self.previous = self.current
+                self.previous.isSelected = false
+
+                cell.isSelected = true
+                self.current = cell
                 
-                self.indexSemana = dia.indexSemana
-                self.fechaHoraIngreso = dia.fecha
-                delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+                if let nro = cell.lblNro.text
+                {
+                    let dias: [Dia] = self.objects.filter {$0.nro == Int(nro)!}
+                    let dia : Dia = dias[0]
+                    
+                    self.indexSemana = dia.indexSemana
+                    self.fechaHoraIngreso = dia.fecha
+                    delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
+                }
             }
         }
     }

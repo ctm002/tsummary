@@ -81,6 +81,12 @@ struct Response
     let estado: Int
     let mensaje: String
     let result : Bool
+    var redirect: Bool = false
+    
+    mutating func setRedirect(_ estado: Bool)
+    {
+        redirect = estado
+    }
 }
 
 

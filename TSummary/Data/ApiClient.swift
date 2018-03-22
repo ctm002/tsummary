@@ -173,8 +173,9 @@ class ApiClient
                                     hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
                                     hora.abogadoId = item["abo_id"] as! Int32
                                     hora.offline = false
-                                    hora.fechaHoraIngreso = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
+                                    hora.fechaHoraInicio = Utils.toDateFromString(item["fechaInicio"] as! String, "yyyy-MM-dd'T'HH:mm:ss")!
                                     hora.fechaInsert = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
+                                    hora.fechaUpdate = Utils.toDateFromString((item["tim_fecha_insert"] as! String), "yyyy-MM-dd'T'HH:mm:ss")!
                                     horas.append(hora)
                                 }
                                 callback(horas)
@@ -283,7 +284,7 @@ class ApiClient
         let horaTS = HoraTS(
             tim_correl : hora.tim_correl,
             pro_id : hora.proyecto.id,
-            tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraIngreso!),
+            tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraInicio!),
             tim_asunto : hora.asunto,
             tim_horas : hora.horasTrabajadas,
             tim_minutos : hora.minutosTrabajados,

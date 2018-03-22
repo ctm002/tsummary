@@ -248,12 +248,13 @@ public class RegistroHora
         self.mAbogadoId = 0
         self.mModificable = false
         self.mOffLine = false
-        self.mFechaHoraIngreso = Date()
+        self.mFechaHoraInicio = Date()
         self.mId = 0
         self.mEstado = .nuevo
         self.mProyectoId = 0
         self.proyecto = ClienteProyecto()
         self.fechaInsert = nil
+        self.fechaUpdate = nil
     }
     
     private var mEstado: Estado
@@ -296,16 +297,16 @@ public class RegistroHora
         }
     }
     
-    private var mFechaHoraIngreso: Date?
-    var fechaHoraIngreso: Date?
+    private var mFechaHoraInicio: Date?
+    var fechaHoraInicio: Date?
     {
         get
         {
-            return self.mFechaHoraIngreso
+            return self.mFechaHoraInicio
         }
         set
         {
-            self.mFechaHoraIngreso = newValue
+            self.mFechaHoraInicio = newValue
         }
     }
     
@@ -313,7 +314,7 @@ public class RegistroHora
     {
         get
         {
-            let strFechaIng : String =  Utils.toStringFromDate(self.mFechaHoraIngreso!, "HH:mm")
+            let strFechaIng : String =  Utils.toStringFromDate(self.mFechaHoraInicio!, "HH:mm")
             return strFechaIng
         }
     }
@@ -437,6 +438,19 @@ public class RegistroHora
         }
     }
     
+    private var mFechaUpdate: Date?
+    var fechaUpdate: Date?
+    {
+        get
+        {
+            return self.mFechaUpdate
+        }
+        set
+        {
+            self.mFechaUpdate = newValue
+        }
+    }
+    
     public func isValid() -> Bool
     {
         if self.mCorrelativo == 0 { return false }
@@ -447,7 +461,7 @@ public class RegistroHora
         
         if self.asunto == "" { return false }
         
-        if self.mFechaHoraIngreso  == nil { return false }
+        if self.mFechaHoraInicio  == nil { return false }
         
         if self.mProyectoId == 0 { return false }
         

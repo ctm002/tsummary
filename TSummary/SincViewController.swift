@@ -56,7 +56,7 @@ class SincViewController: UIViewController {
     {
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             self.btnSincronizar.isEnabled = true
-            self.performSegue(withIdentifier: "sincVolverSegue", sender: nil)
+            self.performSegue(withIdentifier: "irSincronizarSchedulerSegue", sender: nil)
         }
     }
     

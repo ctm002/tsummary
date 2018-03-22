@@ -218,17 +218,17 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     @objc func mostrarPerfil()
     {
-        self.performSegue(withIdentifier: "perfilIrSegue", sender: self.idAbogado)
+        self.performSegue(withIdentifier: "irSchedulerPerfilSegue", sender: self.idAbogado)
     }
     
     @objc func sincronizar()
     {
-        self.performSegue(withIdentifier: "sincIrSegue", sender: self.idAbogado)
+        self.performSegue(withIdentifier: "irSchedulerSincronizarSegue", sender: self.idAbogado)
     }
 
     @objc func salir()
     {
-        performSegue(withIdentifier: "irLoginSegue", sender: nil)
+        performSegue(withIdentifier: "irSchedulerLoginSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -239,7 +239,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         let identifier : String = segue.identifier!
         switch identifier
         {
-            case "editarHoraSegue":
+            case "irSchedulerEditarHoraSegue":
                 if let model = sender
                 {
                     let model = model as! ModelController
@@ -248,25 +248,24 @@ class SchedulerViewController: UIViewController, IViewHora {
                     controller.indexSemana = self.indexSemana
                 }
             
-            case "perfilIrSegue":
-                if let id = sender
+            case "irSchedulerPerfilSegue":
+                if let id = sender as? Int32
                 {
                     let controller  = segue.destination as! PerfilViewController
-                    controller.idAbogado = id as! Int
+                    controller.idAbogado = id
                     let backItem = UIBarButtonItem()
                     backItem.title = ""
                     navigationItem.backBarButtonItem = backItem
                 }
             
-            case "irLoginSegue":
+            case "irSchedulerLoginSegue":
                 SessionLocal.shared.usuario = nil
                 SessionLocal.shared.token = ""
                 SessionLocal.shared.expiredAt = nil
-                
                 let controller = segue.destination as! LoginViewController
                 controller.entrar = true
             
-            case "sincIrSegue" :
+            case "irSchedulerSincronizarSegue" :
                 if let id = sender as? Int32
                 {
                     let controller = segue.destination as! SincViewController
@@ -313,7 +312,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     @IBAction func add(_ sender: Any)
     {
         let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraIngreso : self.getFechaHoraActual())
-        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
+        self.performSegue(withIdentifier: "irSchedulerEditarHoraSegue", sender: model)
     }
     
     @IBAction func menuBtnPresed(_ sender: UIBarButtonItem)
@@ -335,7 +334,7 @@ extension SchedulerViewController: DetalleHoraViewDelegate
 {
     func editViewController(model: ModelController)
     {
-        self.performSegue(withIdentifier: "editarHoraSegue", sender: model)
+        self.performSegue(withIdentifier: "irSchedulerEditarHoraSegue", sender: model)
     }
 }
 
@@ -349,7 +348,6 @@ extension SchedulerViewController: ListHorasViewDelegate
         DispatchQueue.main.async {
             self.mLblTextFecha.text = self.formatearFecha(fecha: self.fechaHoraIngreso)
         }
-        
         self.reloadRegistroHoras()
     }
 }
