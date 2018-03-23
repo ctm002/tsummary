@@ -6,35 +6,57 @@ class SincViewController: UIViewController {
     
     @IBOutlet weak var lblTextUltSinc: UILabel!
     @IBOutlet weak var btnSincronizar: UIButton!
+    @IBOutlet weak var lblProgress: UILabel!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    var cancel : Bool = true
     
     @IBAction func btnSincronizar(_ sender: Any)
     {
         btnSincronizar.isEnabled =  false
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        self.view.addSubview(activityView)
-        activityView.center = self.view.center
-        activityView.color  = UIColor.red
-        activityView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        activityView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
         
-        ControladorLogica.instance.sincronizar(SessionLocal.shared, { (resp: Response) -> Void in
-            if (resp.result)
+        ControladorLogica.instance.sincronizar(SessionLocal.shared, { (response: Response) in
+            
+            self.mostrar(mensaje: response.mensaje)
+            
+            if (response.redirect)
             {
-                FileConfig.instance.saveWith(key: "fechaSinc",
-                    value: Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss"),
-                    result: { (value: Bool) in
-                        print("Value successfully saved into plist.")
-                })
-                self.redirect()
+                if (response.result)
+                {
+                    self.cancel = true
+                    let now = Utils.toStringFromDate(Date(), "yyyy-MM-dd HH:mm:ss")
+                    FileConfig.instance.saveWith(key: "fechaSinc",
+                         value: now,
+                         result: { (value: Bool) in
+                            print("value successfully saved into plist.")
+                    })
+                    
+                    DispatchQueue.main.async {
+                        self.btnSincronizar.isEnabled =  true
+                        self.activityView.stopAnimating()
+                        self.mostrar(mensaje: "")
+                        self.lblTextUltSinc.text = "Ult Sinc: \(now)"
+                    }
+                }
+                else
+                {
+                    self.cancel = false
+                    DispatchQueue.main.async {
+                        self.btnSincronizar.isEnabled =  true
+                        self.activityView.stopAnimating()
+                        self.mostrarMensaje("Error en la sincronización")
+                    }
+                }
             }
-            else
+        })
+    }
+    
+    func mostrar(mensaje: String)
+    {
+        DispatchQueue.global().async(execute: {
+            DispatchQueue.main.sync
             {
-                self.mostrarMensaje("Sin conexion para la sincronización")
-                self.btnSincronizar.isEnabled =  true
-                activityView.stopAnimating()
+                self.lblProgress.text = mensaje
             }
         })
     }
@@ -54,9 +76,9 @@ class SincViewController: UIViewController {
     
     func redirect()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.async {
             self.btnSincronizar.isEnabled = true
-            self.performSegue(withIdentifier: "irSincronizarSchedulerSegue", sender: nil)
+            self.performSegue(withIdentifier: "irSincronizarSchedulerSegue", sender: self.idAbogado)
         }
     }
     
@@ -66,7 +88,10 @@ class SincViewController: UIViewController {
         navigationItem.title = "Sincronizar"
         
         let fechaSincronizada = FileConfig.instance.fetch(key: "fechaSinc")
-        lblTextUltSinc.text = "Ult Sinc: \(fechaSincronizada)"
+        lblTextUltSinc.text = "Ult Sin: \(fechaSincronizada)"
+    
+        self.activityView.isHidden = true
+        self.activityView.hidesWhenStopped = true
     }
 
     override func didReceiveMemoryWarning()
@@ -74,6 +99,7 @@ class SincViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         let viewController = segue.destination as! SchedulerViewController
@@ -83,4 +109,8 @@ class SincViewController: UIViewController {
         viewController.reloadRegistroHoras()
     }
 
-}
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return self.cancel
+    }
+    */
+ }

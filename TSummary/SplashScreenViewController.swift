@@ -1,6 +1,6 @@
 import UIKit
 
-class ShowSplashScreen: UIViewController {
+class SplashScreenViewController: UIViewController {
 
     private var isConnected : Bool = false
     var idAbogado : Int32 = 0
@@ -189,4 +189,5 @@ class ShowSplashScreen: UIViewController {
                 print("")
         }
     }
+
 }

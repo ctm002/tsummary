@@ -25,7 +25,7 @@ public class FileConfig
 
     func fetch(key: String) -> String
     {
-        guard let fetchedValue: String = SwiftyPlistManager.shared.fetchValue(for: key, fromPlistWithName: "Data") as! String else { return ""}
+        guard let fetchedValue: String = SwiftyPlistManager.shared.fetchValue(for: key, fromPlistWithName: "Data") as? String else { return ""}
         return fetchedValue
     }
 

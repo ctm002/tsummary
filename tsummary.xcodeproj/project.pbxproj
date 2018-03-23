@@ -16,9 +16,6 @@
 		2F057E932028B0F500CA6C02 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */; };
 		2F057E942028B0F500CA6C02 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */; };
 		2F057E952028B0F500CA6C02 /* SchedulerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */; };
-		2F31672D202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
-		2F31672E202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
-		2F31672F202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */; };
 		2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
 		2F442E092052AC1A0075F0C5 /* DateCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */; };
 		2F442E0B2052D2D60075F0C5 /* FileConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F442E0A2052D2D60075F0C5 /* FileConfig.swift */; };
@@ -29,7 +26,7 @@
 		2F531767203B16A10085253C /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F531766203B16A10085253C /* DateCalculator.swift */; };
 		2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F6E79C7205C1D07009B7A1F /* LogoCariola.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F6E79C6205C1D07009B7A1F /* LogoCariola.jpg */; };
-		2F6E79C9205C2091009B7A1F /* ShowSplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */; };
+		2F6E79C9205C2091009B7A1F /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E79C8205C2091009B7A1F /* SplashScreenViewController.swift */; };
 		2F7AE39F2005097400CB0492 /* ControladorLogica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE39E2005097400CB0492 /* ControladorLogica.swift */; };
 		2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A0200519EA00CB0492 /* TbHora.swift */; };
 		2F7AE3A320051A0600CB0492 /* TbProyecto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7AE3A220051A0600CB0492 /* TbProyecto.swift */; };
@@ -48,7 +45,6 @@
 		2F8240852051EDC800F20971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E047B1FD0B16D00AE0D7F /* AppDelegate.swift */; };
 		2F8240862051EDC800F20971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC72035E57400F8C713 /* LoginViewController.swift */; };
 		2F8240872051EDC800F20971 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
-		2F8240882051EDC800F20971 /* DetalleDiaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */; };
 		2F8240892051EDC800F20971 /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F82408A2051EDC800F20971 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
 		2F82408B2051EDC800F20971 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
@@ -60,7 +56,6 @@
 		2F8240922051EDD900F20971 /* TbUsuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3B6031FD57D9400437BD7 /* TbUsuario.swift */; };
 		2F8240932051EDD900F20971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC72035E57400F8C713 /* LoginViewController.swift */; };
 		2F8240942051EDD900F20971 /* SemanaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3AD82C2032031F00C0BA30 /* SemanaView.swift */; };
-		2F8240952051EDD900F20971 /* DetalleDiaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */; };
 		2F8240962051EDD900F20971 /* DetalleHoraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F535F672049D6BF00B365AD /* DetalleHoraView.swift */; };
 		2F8240972051EDD900F20971 /* SincViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6EC92036336300F8C713 /* SincViewController.swift */; };
 		2F8240982051EDD900F20971 /* PerfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */; };
@@ -102,7 +97,6 @@
 		DE0E04861FD0B16D00AE0D7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0E04841FD0B16D00AE0D7F /* LaunchScreen.storyboard */; };
 		DE0E04911FD0B16E00AE0D7F /* tsummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E04901FD0B16E00AE0D7F /* tsummaryTests.swift */; };
 		DE0E049C1FD0B16E00AE0D7F /* EditRegistroHoraViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E049B1FD0B16E00AE0D7F /* EditRegistroHoraViewControllerTests.swift */; };
-		DE1EF4AF1FD98A8C00CD60A8 /* DetalleDiaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */; };
 		DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */; };
 		DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D25861FDEDFC5003B0F4C /* Views.swift */; };
 		DE7D258F1FE02F60003B0F4C /* PresenterRegistroHoras.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D258E1FE02F60003B0F4C /* PresenterRegistroHoras.swift */; };
@@ -134,7 +128,6 @@
 		2F057E8A202503F900CA6C02 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2F057E8E2028A27500CA6C02 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerViewController.swift; sourceTree = "<group>"; };
-		2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleHoraCell.swift; sourceTree = "<group>"; };
 		2F3AD82C2032031F00C0BA30 /* SemanaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanaView.swift; sourceTree = "<group>"; };
 		2F442E082052AC1A0075F0C5 /* DateCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculatorTests.swift; sourceTree = "<group>"; };
 		2F442E0A2052D2D60075F0C5 /* FileConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConfig.swift; sourceTree = "<group>"; };
@@ -143,7 +136,7 @@
 		2F531766203B16A10085253C /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 		2F535F672049D6BF00B365AD /* DetalleHoraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalleHoraView.swift; sourceTree = "<group>"; };
 		2F6E79C6205C1D07009B7A1F /* LogoCariola.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LogoCariola.jpg; sourceTree = "<group>"; };
-		2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSplashScreen.swift; sourceTree = "<group>"; };
+		2F6E79C8205C2091009B7A1F /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		2F7AE39E2005097400CB0492 /* ControladorLogica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControladorLogica.swift; sourceTree = "<group>"; };
 		2F7AE3A0200519EA00CB0492 /* TbHora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbHora.swift; sourceTree = "<group>"; };
 		2F7AE3A220051A0600CB0492 /* TbProyecto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TbProyecto.swift; sourceTree = "<group>"; };
@@ -183,7 +176,6 @@
 		DE0E04971FD0B16E00AE0D7F /* tsummaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tsummaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0E049B1FD0B16E00AE0D7F /* EditRegistroHoraViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRegistroHoraViewControllerTests.swift; sourceTree = "<group>"; };
 		DE0E049D1FD0B16E00AE0D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleDiaCell.swift; sourceTree = "<group>"; };
 		DE7D25831FDEC09E003B0F4C /* PresenterSemana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterSemana.swift; sourceTree = "<group>"; };
 		DE7D25861FDEDFC5003B0F4C /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		DE7D258E1FE02F60003B0F4C /* PresenterRegistroHoras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterRegistroHoras.swift; sourceTree = "<group>"; };
@@ -332,14 +324,12 @@
 				2F8DFC5F2020CFCF00814A34 /* EditHoraViewController.swift */,
 				2F057E922028B0F400CA6C02 /* SchedulerViewController.swift */,
 				2F3AD82C2032031F00C0BA30 /* SemanaView.swift */,
-				DE1EF4AE1FD98A8C00CD60A8 /* DetalleDiaCell.swift */,
 				2F535F672049D6BF00B365AD /* DetalleHoraView.swift */,
-				2F31672C202E3BAC00BDC87B /* DetalleHoraCell.swift */,
-				2F057E8E2028A27500CA6C02 /* ModelController.swift */,
 				2F9C6EC92036336300F8C713 /* SincViewController.swift */,
 				2F9C6ECB2036445000F8C713 /* PerfilViewController.swift */,
 				2FB63B7A203F71D900A0CF54 /* Data.plist */,
-				2F6E79C8205C2091009B7A1F /* ShowSplashScreen.swift */,
+				2F6E79C8205C2091009B7A1F /* SplashScreenViewController.swift */,
+				2F057E8E2028A27500CA6C02 /* ModelController.swift */,
 			);
 			path = TSummary;
 			sourceTree = "<group>";
@@ -703,12 +693,11 @@
 				2FB63B7F203F7CCA00A0CF54 /* SwiftyPlistManager.swift in Sources */,
 				DE7D25871FDEDFC5003B0F4C /* Views.swift in Sources */,
 				2F3AD82D2032031F00C0BA30 /* SemanaView.swift in Sources */,
-				2F6E79C9205C2091009B7A1F /* ShowSplashScreen.swift in Sources */,
+				2F6E79C9205C2091009B7A1F /* SplashScreenViewController.swift in Sources */,
 				2F442E0B2052D2D60075F0C5 /* FileConfig.swift in Sources */,
 				2FC8A4741FEAAA2900EEAEC9 /* PresenterProyecto.swift in Sources */,
 				2F535F682049D6BF00B365AD /* DetalleHoraView.swift in Sources */,
 				2F8DFC5C2020CF1000814A34 /* Structs.swift in Sources */,
-				DE1EF4AF1FD98A8C00CD60A8 /* DetalleDiaCell.swift in Sources */,
 				2F966D782020A06A001DE17F /* Models.swift in Sources */,
 				DEF3B6041FD57D9400437BD7 /* TbUsuario.swift in Sources */,
 				2F9C6ECC2036445100F8C713 /* PerfilViewController.swift in Sources */,
@@ -717,7 +706,6 @@
 				2F057E8F2028A27500CA6C02 /* ModelController.swift in Sources */,
 				2F9C6ECA2036336300F8C713 /* SincViewController.swift in Sources */,
 				2F7AE3A1200519EA00CB0492 /* TbHora.swift in Sources */,
-				2F31672D202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */,
 				DE7D25841FDEC09E003B0F4C /* PresenterSemana.swift in Sources */,
 				2F057E932028B0F500CA6C02 /* SchedulerViewController.swift in Sources */,
 				DE7D25921FE0639E003B0F4C /* DataStore.swift in Sources */,
@@ -747,7 +735,6 @@
 				2F442E0C2052D2DD0075F0C5 /* FileConfig.swift in Sources */,
 				2F442E0F2052D3110075F0C5 /* FileConfigTests.swift in Sources */,
 				2F8240942051EDD900F20971 /* SemanaView.swift in Sources */,
-				2F8240952051EDD900F20971 /* DetalleDiaCell.swift in Sources */,
 				2F8240962051EDD900F20971 /* DetalleHoraView.swift in Sources */,
 				2F8240972051EDD900F20971 /* SincViewController.swift in Sources */,
 				2F8240982051EDD900F20971 /* PerfilViewController.swift in Sources */,
@@ -761,7 +748,6 @@
 				2F82CEAE203C564D00012D7B /* ApiClient.swift in Sources */,
 				2F057E942028B0F500CA6C02 /* SchedulerViewController.swift in Sources */,
 				2F8DFC5D2020CF1000814A34 /* Structs.swift in Sources */,
-				2F31672E202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */,
 				2F8DFC6520211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295B201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE621200D3B98005B6E8E /* Views.swift in Sources */,
@@ -787,7 +773,6 @@
 				2F8240852051EDC800F20971 /* AppDelegate.swift in Sources */,
 				2F8240862051EDC800F20971 /* LoginViewController.swift in Sources */,
 				2F8240872051EDC800F20971 /* SemanaView.swift in Sources */,
-				2F8240882051EDC800F20971 /* DetalleDiaCell.swift in Sources */,
 				2F8240892051EDC800F20971 /* DetalleHoraView.swift in Sources */,
 				2F82408A2051EDC800F20971 /* SincViewController.swift in Sources */,
 				2F82408B2051EDC800F20971 /* PerfilViewController.swift in Sources */,
@@ -799,7 +784,6 @@
 				2F82CEAF203C564E00012D7B /* ApiClient.swift in Sources */,
 				2F057E952028B0F500CA6C02 /* SchedulerViewController.swift in Sources */,
 				2F8DFC5E2020CF1000814A34 /* Structs.swift in Sources */,
-				2F31672F202E3BAC00BDC87B /* DetalleHoraCell.swift in Sources */,
 				2F8DFC6620211CFE00814A34 /* Extends.swift in Sources */,
 				2FCF295C201140E6006FD735 /* Utils.swift in Sources */,
 				2FCBE622200D3BA0005B6E8E /* Views.swift in Sources */,
