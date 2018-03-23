@@ -7,9 +7,9 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var photoPerfil: UIImageView!
     
-    public var idAbogado: Int!
+    public var idAbogado: Int32 = 0
     var datos = [Int:[String: String]]()
-    
+
     override public func viewDidLoad()
     {
         super.viewDidLoad()
@@ -89,6 +89,15 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc func dismissKeyboard()
     {
         view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let viewController = segue.destination as! SchedulerViewController
+        viewController.idAbogado = self.idAbogado
+        viewController.fechaHoraIngreso = Utils.toStringFromDate(Date(), "yyyy-MM-dd")
+        viewController.indexSemana = 1
+        viewController.reloadRegistroHoras()
     }
 
 }

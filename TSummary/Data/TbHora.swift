@@ -39,7 +39,8 @@ public class TbHora
                     offline integer,
                     tim_fecha_ing datetime,
                     estado integer,
-                    fecha_ult_mod datetime)
+                    fecha_ult_mod datetime,
+                    fecha_hora_inicio datetime)
             """
             if sqlite3_exec(db, sql, nil, nil, nil) != SQLITE_OK
             {
@@ -164,8 +165,10 @@ public class TbHora
                         offline,
                         tim_fecha_ing,
                         estado,
-                        fecha_ult_mod)
+                        fecha_ult_mod,
+                        fecha_hora_inicio)
                     values (
+                        ?,
                         ?,
                         ?,
                         ?,
@@ -193,7 +196,7 @@ public class TbHora
                 }
                 
                 let prodId : Int32 = Int32(hora.proyecto.id)
-                if sqlite3_bind_int(statement, 2,  prodId) != SQLITE_OK
+                if sqlite3_bind_int(statement, 2, prodId) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding pro_id: \(errmsg)")
@@ -220,7 +223,7 @@ public class TbHora
                 }
                 
                 let aboId : Int32 = hora.abogadoId
-                if sqlite3_bind_int(statement, 6,  Int32(aboId)) != SQLITE_OK
+                if sqlite3_bind_int(statement, 6, Int32(aboId)) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding abo_id: \(errmsg)")
@@ -240,7 +243,7 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 9, Utils.toStringFromDate(hora.fechaHoraIngreso!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 9, Utils.toStringFromDate(hora.fechaInsert!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding fecha_insert: \(errmsg)")
@@ -253,10 +256,16 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 11, Utils.toStringFromDate(hora.fechaInsert!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 11, Utils.toStringFromDate(hora.fechaUpdate!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_insert: \(errmsg)")
+                    print("failure binding fecha_update: \(errmsg)")
+                }
+                
+                if sqlite3_bind_text(statement, 12, Utils.toStringFromDate(hora.fechaHoraInicio!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding fecha_hora_inicio: \(errmsg)")
                 }
                 
                 if sqlite3_step(statement) != SQLITE_DONE
@@ -304,8 +313,9 @@ public class TbHora
                         offline,
                         tim_fecha_ing,
                         estado,
-                        fecha_ult_mod)
+                        fecha_hora_inicio)
                     values (
+                        ?,
                         ?,
                         ?,
                         ?,
@@ -380,10 +390,10 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 9, Utils.toStringFromDate(hora.fechaHoraIngreso!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 9, Utils.toStringFromDate(hora.fechaInsert!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_ing: \(errmsg)")
+                    print("failure binding fecha_insert: \(errmsg)")
                 }
                 
                 let estado : Int32 = Int32(hora.estado.rawValue)
@@ -393,10 +403,10 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 11, Utils.toStringFromDate(hora.fechaInsert!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 11, Utils.toStringFromDate(hora.fechaHoraInicio!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_insert: \(errmsg)")
+                    print("failure binding fecha_hora_inicio: \(errmsg)")
                 }
                 
                 if sqlite3_step(statement) != SQLITE_DONE
@@ -426,7 +436,7 @@ public class TbHora
                     abo_id=?,
                     modificable=?,
                     offline=?,
-                    tim_fecha_ing=?,
+                    fecha_hora_inicio=?,
                     estado=?,
                     fecha_ult_mod=?
                 where
@@ -488,10 +498,10 @@ public class TbHora
                     print("failure binding offline: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 8, Utils.toStringFromDate(hora.fechaHoraIngreso!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 8, Utils.toStringFromDate(hora.fechaHoraInicio!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_insert: \(errmsg)")
+                    print("failure binding fecha_hora_inicio: \(errmsg)")
                 }
                 
                 let estado: Int32 = Int32(hora.estado.rawValue)
@@ -501,10 +511,10 @@ public class TbHora
                     print("failure binding estado: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 10, Utils.toStringFromDate(hora.fechaInsert!), -1, SQLITE_TRANSIENT) != SQLITE_OK
+                if sqlite3_bind_text(statement, 10, Utils.toStringFromDate(hora.fechaUpdate!), -1, SQLITE_TRANSIENT) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
-                    print("failure binding fecha_insert: \(errmsg)")
+                    print("failure binding fecha_update: \(errmsg)")
                 }
                 
                 let id: Int32 = hora.id
@@ -691,7 +701,7 @@ public class TbHora
         {
             if let h = Utils.toDateFromString(String(cString: csString))
             {
-                hora.fechaHoraIngreso = h
+                hora.fechaInsert = h
             }
         }
         
@@ -712,12 +722,21 @@ public class TbHora
         {
             if let h = Utils.toDateFromString(String(cString: csString))
             {
-                hora.fechaInsert = h
+                hora.fechaUpdate = h
             }
         }
         
         let estado : Int32 = sqlite3_column_int(record, 13)
         hora.estado = Estado(rawValue: Int(estado))!
+        
+        if let csString = sqlite3_column_text(record, 14)
+        {
+            if let h = Utils.toDateFromString(String(cString: csString))
+            {
+                hora.fechaHoraInicio = h
+            }
+        }
+        
         return hora
     }
     
@@ -738,13 +757,15 @@ public class TbHora
                 p.cli_nom,
                 h.hora_id,
                 h.fecha_ult_mod,
-                h.estado
+                h.estado,
+                h.fecha_hora_inicio
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
-                h.estado!=2 AND h.abo_id=?
-                AND strftime('%Y-%m-%d',h.tim_fecha_ing)=?
-            order by h.tim_fecha_ing asc
+                h.estado!=2
+                AND h.abo_id=?
+                AND strftime('%Y-%m-%d',h.fecha_hora_inicio)=?
+            order by h.fecha_hora_inicio asc
         """
         do
         {

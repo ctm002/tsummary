@@ -7,7 +7,7 @@ class LoginViewController: UIViewController
     @IBOutlet weak var btnRegistrar: UIButton!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var btnEliminar: UIButton!
-    @IBOutlet weak var lblVersionSoftware: UILabel!
+    @IBOutlet weak var lblVerApp: UILabel!
 
     var idAbogado: Int32 = 0
     public var entrar: Bool = false
@@ -15,10 +15,11 @@ class LoginViewController: UIViewController
     public var fDesde : String = ""
     public var fHasta : String = ""
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        self.activity.center = self.view.center
-        navigationItem.title = "Login"
+        //self.activity.center = self.view.center
+        navigationItem.title = "TSummary"
         navigationItem.hidesBackButton = true
         
         self.txtPassword.isSecureTextEntry = true
@@ -50,10 +51,10 @@ class LoginViewController: UIViewController
             self.txtIMEI.text = getUIDevice()
             btnRegistrar.setTitle("Entrar", for: .normal)
         }
-        
+        self.navigationItem.setHidesBackButton(true, animated: false)
         self.txtIMEI.isHidden = true
-        self.lblVersionSoftware.isHidden = false
-        lblVersionSoftware.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
+        self.lblVerApp.isHidden = false
+        self.lblVerApp.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
         self.btnEliminar.isHidden = true
     }
     
@@ -66,26 +67,6 @@ class LoginViewController: UIViewController
             case .wifi, .wwan:
                 self.isConnected = true
         }
-    }
-    
-    func showLoadingScreen()
-    {
-        /*
-        loadingView.bounds.size.width = view.bounds.width - 25
-        loadingView.bounds.size.height = view.bounds.height - 40
-        self.loadingView.alpha = 0
-        self.loadingView.center = view.center
-        self.loadingView.tag = 100
-        view.addSubview(loadingView)
-        
-        UIView.animate(withDuration: 5, delay: 0.0, options: [], animations: {
-            self.loadingView.alpha = 1
-        }
-        ){ (sussess) in
-            let viewWithTag = self.view.viewWithTag(100)
-            viewWithTag?.removeFromSuperview()
-        }
-         */
     }
     
     fileprivate func mostrarMensaje(mensaje: String = "")
@@ -200,6 +181,10 @@ class LoginViewController: UIViewController
                     registrar()
                 }
             }
+            else
+            {
+               self.mostrarMensaje(mensaje: "Ingreso incorrecto!")
+            }
         }
     }
     
@@ -297,7 +282,7 @@ class LoginViewController: UIViewController
             }
             else
             {
-                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true))
+                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true, redirect: false))
             }
         }
     }
@@ -313,7 +298,7 @@ class LoginViewController: UIViewController
                 
                     if self.idAbogado != 0
                     {
-                        self.performSegue(withIdentifier: "irSchedulerSegue", sender: self.idAbogado)
+                        self.performSegue(withIdentifier: "irLoginSchedulerSegue", sender: self.idAbogado)
                     }
                 }
             )

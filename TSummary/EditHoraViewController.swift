@@ -4,8 +4,6 @@ import SearchTextField
 class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora, UITextFieldDelegate{
 
     @IBOutlet weak var mySearchTextField: SearchTextField!
-    @IBOutlet weak var txtHoras: UITextField!
-    @IBOutlet weak var txtMinutos: UITextField!
     @IBOutlet weak var txtAsunto: UITextView!
     @IBOutlet var btnEliminar: UIButton!
     @IBOutlet weak var stepper1: UIStepper!
@@ -173,7 +171,8 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     }
     
     private var mResponse : Response!
-    public var response : Response {
+    public var response : Response
+    {
         set
         {
             self.mResponse = newValue
@@ -199,7 +198,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
         
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { (action: UIAlertAction!) in
-            self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: self.model)
+            self.performSegue(withIdentifier: "irEditarHoraSchedulerSegue", sender: self.model)
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -251,9 +250,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     @IBAction func btnCancelar_Click(_ sender: Any)
     {
-        //self.navigationController?.popViewController(animated: true)
-        self.performSegue(withIdentifier: "volverSchedulerHoraSegue", sender: nil)
-        
+        self.performSegue(withIdentifier: "irEditarHoraSchedulerSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

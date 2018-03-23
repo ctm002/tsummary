@@ -48,20 +48,21 @@ public class PresenterRegistroHoras
         }
         
         let proyectoId = self.mEditViewRegistroHora!.proyectoId
-        let fechaIngreso = self.mEditViewRegistroHora!.fechaHoraIngreso
+        let fechaHoraInicio = self.mEditViewRegistroHora!.fechaHoraIngreso
         let idAbogado = self.mEditViewRegistroHora!.idAbogado
         let asunto = self.mEditViewRegistroHora!.asunto
         let cantHoras = self.mEditViewRegistroHora!.horas
         let cantMinutos = self.mEditViewRegistroHora!.minutos
-        
         registro.proyecto.id = Int32(proyectoId)
-        registro.fechaHoraIngreso = fechaIngreso
+        registro.fechaHoraInicio = fechaHoraInicio
+        registro.fechaInsert = Date()
         registro.abogadoId = idAbogado
         registro.asunto = asunto
         registro.horasTrabajadas = Int(cantHoras)
         registro.minutosTrabajados = Int(cantMinutos)
         registro.offline = true
         registro.fechaInsert = Date()
+        registro.fechaUpdate = Date()
         
         ControladorLogica.instance.guardar(hora: registro, callback: {(response: Response) in
             self.mEditViewRegistroHora.response = response
