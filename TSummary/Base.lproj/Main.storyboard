@@ -456,7 +456,7 @@
                                                 <rect key="frame" x="20" y="404" width="335" height="40"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jV0-uq-jEk" userLabel="BtnEliminar">
-                                                        <rect key="frame" x="20" y="8" width="143.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="8" width="163.5" height="30"/>
                                                         <color key="backgroundColor" red="0.99951261280000003" green="0.49290078879999999" blue="0.47539675240000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                         <state key="normal" title="Eliminar">
@@ -467,7 +467,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgn-v0-re4" userLabel="BtnGuardar">
-                                                        <rect key="frame" x="171.5" y="8" width="143.5" height="30"/>
+                                                        <rect key="frame" x="171.5" y="8" width="163.5" height="30"/>
                                                         <color key="backgroundColor" red="0.2666666667" green="0.54117647059999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                         <state key="normal" title="Guardar">
@@ -481,8 +481,8 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="Vgn-v0-re4" firstAttribute="bottom" secondItem="jV0-uq-jEk" secondAttribute="bottom" id="DS2-fL-X1F"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Vgn-v0-re4" secondAttribute="trailing" constant="20" symbolic="YES" id="HsX-6W-xgR"/>
-                                                    <constraint firstItem="jV0-uq-jEk" firstAttribute="leading" secondItem="diw-ex-AgM" secondAttribute="leading" constant="20" symbolic="YES" id="WGD-ZV-QCg"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Vgn-v0-re4" secondAttribute="trailing" id="HsX-6W-xgR"/>
+                                                    <constraint firstItem="jV0-uq-jEk" firstAttribute="leading" secondItem="diw-ex-AgM" secondAttribute="leading" id="WGD-ZV-QCg"/>
                                                     <constraint firstItem="Vgn-v0-re4" firstAttribute="leading" secondItem="jV0-uq-jEk" secondAttribute="trailing" constant="8" symbolic="YES" id="gT6-vp-fgW"/>
                                                     <constraint firstItem="Vgn-v0-re4" firstAttribute="width" secondItem="jV0-uq-jEk" secondAttribute="width" id="nWt-hM-Jd0"/>
                                                     <constraint firstItem="jV0-uq-jEk" firstAttribute="top" secondItem="diw-ex-AgM" secondAttribute="topMargin" id="sYw-PK-bma"/>
