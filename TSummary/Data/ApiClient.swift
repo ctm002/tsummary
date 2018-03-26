@@ -167,8 +167,8 @@ class ApiClient
                                     let hora = RegistroHora()
                                     hora.proyecto.id = item["pro_id"] as! Int32
                                     hora.tim_correl = item["tim_correl"] as! Int32
-                                    hora.horasTrabajadas = item["tim_horas"] as! Int
-                                    hora.minutosTrabajados = item["tim_minutos"] as! Int
+                                    hora.total = Hora(horas: (item["tim_horas"] as! Int), minutos: Int(item["tim_minutos"] as! Int))
+                                    //hora.horaFin = Hora(horas: 0, minutos: 0)
                                     hora.asunto = item["tim_asunto"] as! String
                                     hora.modificable = item["nro_folio"] as! Int == 0 ? true : false;
                                     hora.abogadoId = item["abo_id"] as! Int32
@@ -286,8 +286,8 @@ class ApiClient
             pro_id : hora.proyecto.id,
             tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraInicio!),
             tim_asunto : hora.asunto,
-            tim_horas : hora.horasTrabajadas,
-            tim_minutos : hora.minutosTrabajados,
+            tim_horas : hora.inicio.horas,
+            tim_minutos : hora.inicio.minutos,
             abo_id : hora.abogadoId,
             OffLine : hora.offline,
             FechaInsert : Utils.toStringFromDate(hora.fechaInsert!),

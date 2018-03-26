@@ -51,15 +51,13 @@ public class PresenterRegistroHoras
         let fechaHoraInicio = self.mEditViewRegistroHora!.fechaHoraIngreso
         let idAbogado = self.mEditViewRegistroHora!.idAbogado
         let asunto = self.mEditViewRegistroHora!.asunto
-        let cantHoras = self.mEditViewRegistroHora!.horas
-        let cantMinutos = self.mEditViewRegistroHora!.minutos
+        let horaInicio = self.mEditViewRegistroHora!.horaInicio
+        let horaFin = self.mEditViewRegistroHora!.horaFin
         registro.proyecto.id = Int32(proyectoId)
         registro.fechaHoraInicio = fechaHoraInicio
         registro.fechaInsert = Date()
         registro.abogadoId = idAbogado
         registro.asunto = asunto
-        registro.horasTrabajadas = Int(cantHoras)
-        registro.minutosTrabajados = Int(cantMinutos)
         registro.offline = true
         registro.fechaInsert = Date()
         registro.fechaUpdate = Date()

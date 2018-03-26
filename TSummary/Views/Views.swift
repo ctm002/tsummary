@@ -23,8 +23,8 @@ protocol IEditViewHora {
     var proyectoId : Int32 { get set }
     var fechaHoraIngreso : Date { get set }
     var idAbogado : Int32 { get set }
-    var horas : Int { get set }
-    var minutos : Int { get set }
+    var horaInicio : String { get set }
+    var horaFin : String { get set }
     var asunto : String { get set }
     var timCorrelativo : Int32 { get set }
     var response : Response { get set}

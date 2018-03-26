@@ -280,7 +280,7 @@
         <!--Registrar Horas-->
         <scene sceneID="9Hx-Om-1df">
             <objects>
-                <viewController restorationIdentifier="HoraViewController" storyboardIdentifier="HoraViewController" title="Horas" id="znN-7t-mT3" userLabel="Registrar Horas" customClass="EditHoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="HoraViewController" storyboardIdentifier="HoraViewController" title="Horas" id="znN-7t-mT3" userLabel="Registrar Horas" customClass="EditRegistroHoraViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c98-Qw-kIv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -307,7 +307,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79C-Zc-8kH" userLabel="vRow5">
                                                 <rect key="frame" x="20" y="260" width="335" height="40"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dRF-19-Vdh" userLabel="icon">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reloj" translatesAutoresizingMaskIntoConstraints="NO" id="dRF-19-Vdh" userLabel="icon">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="JyF-Ra-WZC"/>
@@ -358,7 +358,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TxH-hK-MWg" userLabel="vRow6">
                                                 <rect key="frame" x="20" y="308" width="335" height="40"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sJe-AR-wGc" userLabel="icon">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reloj" translatesAutoresizingMaskIntoConstraints="NO" id="sJe-AR-wGc" userLabel="icon">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="bVM-m2-ezu"/>
@@ -406,7 +406,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cUW-Cl-bcq" userLabel="vRow7">
                                                 <rect key="frame" x="20" y="356" width="335" height="40"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wjr-Z3-IxO" userLabel="icon">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reloj arena" translatesAutoresizingMaskIntoConstraints="NO" id="Wjr-Z3-IxO" userLabel="icon">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="Y7U-Zg-smK"/>
@@ -418,7 +418,7 @@
                                                             <constraint firstAttribute="width" constant="30" id="28C-Sn-xe6"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Horas" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBH-ta-VqZ" userLabel="lblHorasTrabajadas">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total horas" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBH-ta-VqZ" userLabel="lblHorasTrabajadas">
                                                         <rect key="frame" x="38" y="0.0" width="125.5" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
@@ -454,7 +454,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YND-wz-ime" userLabel="vRow1">
                                                 <rect key="frame" x="20" y="20" width="335" height="40"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2dP-aQ-b4z" userLabel="icon">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trabajo" translatesAutoresizingMaskIntoConstraints="NO" id="2dP-aQ-b4z" userLabel="icon">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="KeH-Nm-fTV"/>
@@ -493,7 +493,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCF-en-dLG" userLabel="vRow3">
                                                 <rect key="frame" x="20" y="116" width="335" height="40"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0FI-0z-tK5" userLabel="icon">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notas" translatesAutoresizingMaskIntoConstraints="NO" id="0FI-0z-tK5" userLabel="icon">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="wJ4-z4-Hda"/>
@@ -639,14 +639,55 @@
                     <connections>
                         <outlet property="btnEliminar" destination="jV0-uq-jEk" id="tPW-aF-pmo"/>
                         <outlet property="btnGuardar" destination="Vgn-v0-re4" id="bYL-gY-q31"/>
+                        <outlet property="lblHoraFin" destination="iZq-8j-DOK" id="j22-5r-f40"/>
+                        <outlet property="lblHoraInicio" destination="yiN-fe-CSV" id="g1N-ug-rcA"/>
+                        <outlet property="lblHoraTotal" destination="N1r-m7-Lyj" id="W3c-ns-0Qj"/>
                         <outlet property="mySearchTextField" destination="Aeb-kW-SeX" id="ahm-4z-Oyi"/>
                         <outlet property="txtAsunto" destination="g4w-FI-Qgq" id="Jcv-3R-Ihc"/>
                         <segue destination="yMH-3P-hXD" kind="show" identifier="irEditarHoraSchedulerSegue" id="aro-B7-O2a"/>
+                        <segue destination="BJf-zb-OpI" kind="show" identifier="irEditarHoraNotas" id="EgA-Gf-OUG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wqs-dc-ufR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="822" y="-846"/>
+            <point key="canvasLocation" x="818" y="-853"/>
+        </scene>
+        <!--Notas-->
+        <scene sceneID="Rbe-EW-G1X">
+            <objects>
+                <viewController title="Notas" id="BJf-zb-OpI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nDg-J6-uAP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFk-I4-Yox">
+                                <rect key="frame" x="16" y="20" width="343" height="609"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyj-BY-Cds">
+                                <rect key="frame" x="16" y="637" width="359" height="30"/>
+                                <state key="normal" title="Aceptar"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sFk-I4-Yox" firstAttribute="leading" secondItem="nDg-J6-uAP" secondAttribute="leadingMargin" id="BlD-dI-kUi"/>
+                            <constraint firstItem="Dyj-BY-Cds" firstAttribute="top" secondItem="sFk-I4-Yox" secondAttribute="bottom" constant="8" symbolic="YES" id="CAa-if-Dk0"/>
+                            <constraint firstItem="qte-bM-aSa" firstAttribute="trailing" secondItem="Dyj-BY-Cds" secondAttribute="trailing" id="GZX-qd-Xxz"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Dyj-BY-Cds" secondAttribute="bottom" id="RqM-M9-TsB"/>
+                            <constraint firstItem="sFk-I4-Yox" firstAttribute="trailing" secondItem="nDg-J6-uAP" secondAttribute="trailingMargin" id="tlO-iS-Tab"/>
+                            <constraint firstItem="Dyj-BY-Cds" firstAttribute="leading" secondItem="nDg-J6-uAP" secondAttribute="leadingMargin" id="w3c-8O-dXM"/>
+                            <constraint firstItem="sFk-I4-Yox" firstAttribute="top" secondItem="nDg-J6-uAP" secondAttribute="topMargin" id="xiK-zd-iQt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qte-bM-aSa"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IGo-60-ems" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1925.5999999999999" y="-846.02698650674665"/>
         </scene>
         <!--Ver Perfil-->
         <scene sceneID="ADk-QW-Dnw">
@@ -838,10 +879,10 @@
             </objects>
             <point key="canvasLocation" x="-2345" y="700"/>
         </scene>
-        <!--Splash Screen View Controller-->
+        <!--Splash Screen-->
         <scene sceneID="pnJ-HY-wSJ">
             <objects>
-                <viewController id="X9M-Ic-Hri" customClass="SplashScreenViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splash Screen" id="X9M-Ic-Hri" customClass="SplashScreenViewController" customModule="tsummary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hdf-k3-g5N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -886,6 +927,10 @@
         <image name="icon usuario" width="20" height="20"/>
         <image name="mas" width="20" height="20"/>
         <image name="menu" width="20" height="20"/>
+        <image name="notas" width="20" height="20"/>
+        <image name="reloj" width="20" height="20"/>
+        <image name="reloj arena" width="20" height="20"/>
+        <image name="trabajo" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="aro-B7-O2a"/>

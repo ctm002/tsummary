@@ -98,3 +98,9 @@ struct ParametrosBusquedaTS: Codable
     let tim_correl: Int32
 }
 
+struct Hora
+{
+    let horas: Int
+    let minutos : Int
+}
+

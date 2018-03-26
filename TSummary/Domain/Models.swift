@@ -239,12 +239,24 @@ enum Estado: Int
 
 public class RegistroHora
 {
+    private let calendar : Calendar =
+    {
+        let locale = Locale(identifier: "es_CL")
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        //calendar.timeZone = TimeZone(identifier: "America/Santiago")!
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        calendar.locale = locale
+        return calendar
+    }()
+    
+    
     init()
     {
         self.mCorrelativo = 0
         self.mAsunto = ""
-        self.mHoras = 0
-        self.mMinutos = 0
+        self.mInicio = Hora(horas: 0, minutos: 0)
+        self.mFin = Hora(horas: 0, minutos: 0)
+        self.mHoraTotal = Hora(horas: 0, minutos: 0)
         self.mAbogadoId = 0
         self.mModificable = false
         self.mOffLine = false
@@ -298,7 +310,7 @@ public class RegistroHora
     }
     
     private var mFechaHoraInicio: Date?
-    var fechaHoraInicio: Date?
+    var fechaHoraInicio: Date?  // 2018-01-01 12:15:00
     {
         get
         {
@@ -309,7 +321,7 @@ public class RegistroHora
             self.mFechaHoraInicio = newValue
         }
     }
-    
+
     var fechaHoraIngresoToHHmm : String
     {
         get
@@ -318,7 +330,6 @@ public class RegistroHora
             return strFechaIng
         }
     }
-    
     
     private var mAsunto: String
     var asunto: String
@@ -333,30 +344,43 @@ public class RegistroHora
         }
     }
     
-    private var mHoras:Int
-    var horasTrabajadas:Int
+    private var mInicio: Hora //02:30
+    var inicio: Hora
     {
         get
         {
-            return self.mHoras
-        }
-        set
-        {
-            self.mHoras=newValue
+            let hour = self.calendar.component(.hour, from: self.fechaHoraInicio!)
+            let minute = self.calendar.component(.minute, from: self.fechaHoraInicio!)
+            return Hora(horas: hour, minutos: minute)
         }
     }
     
-    private var mMinutos:Int
-    var minutosTrabajados: Int
+    private var mFin: Hora
+    var fin: Hora
     {
         get
         {
-            return self.mMinutos
-            
+            var horaInicioTemp : Date = self.fechaHoraInicio!
+            let horaTemp = self.mHoraTotal
+            horaInicioTemp  = self.calendar.date(byAdding: .hour, value: horaTemp.horas , to: horaInicioTemp)!
+            horaInicioTemp  = self.calendar.date(byAdding: .minute, value: horaTemp.minutos , to: horaInicioTemp)!
+            let hour = calendar.component(.hour, from: horaInicioTemp)
+            let minute = calendar.component(.minute, from: horaInicioTemp)
+            return Hora(horas: hour, minutos: minute)
         }
+    }
+    
+    private var mHoraTotal: Hora
+    var total: Hora
+    {
+        get
+        {
+           return self.mHoraTotal
+        }
+        
         set
         {
-            self.mMinutos = newValue
+             self.mHoraTotal = newValue
         }
     }
     
@@ -455,9 +479,9 @@ public class RegistroHora
     {
         if self.mCorrelativo == 0 { return false }
         
-        if self.mHoras == 0  { return false }
+        //if self.mHoraInicio != nil  { return false }
         
-        if self.mMinutos == 0 { return false }
+        //if self.mHoraFin != nil { return false }
         
         if self.asunto == "" { return false }
         

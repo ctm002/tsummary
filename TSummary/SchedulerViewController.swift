@@ -33,16 +33,15 @@ class SchedulerViewController: UIViewController, IViewHora {
     let vCalendario = UIView()
     let vMenu = UIView()
     
-    let containerRegistroHorasView : DetalleHoraView =
+    let containerRegistroHorasView : RegistroHoraView =
     {
-        let view = DetalleHoraView()
+        let view = RegistroHoraView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var containerSemanasView : SemanaView =
     {
-        //let view = SemanaView.init(frame: self.view.frame)
         let view = SemanaView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
@@ -243,7 +242,7 @@ class SchedulerViewController: UIViewController, IViewHora {
                 if let model = sender
                 {
                     let model = model as! ModelController
-                    let controller = segue.destination as! EditHoraViewController
+                    let controller = segue.destination as! EditRegistroHoraViewController
                     controller.model = model
                     controller.indexSemana = self.indexSemana
                 }
@@ -292,6 +291,7 @@ class SchedulerViewController: UIViewController, IViewHora {
         {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "es_CL")
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             dateFormatter.timeStyle = .none
             dateFormatter.dateStyle = .full
             return dateFormatter.string(from: date!)
@@ -311,7 +311,7 @@ class SchedulerViewController: UIViewController, IViewHora {
     
     @IBAction func add(_ sender: Any)
     {
-        let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraIngreso : self.getFechaHoraActual())
+        let model = ModelController(id: 0, abogadoId: self.idAbogado , fechaHoraInicio : self.getFechaHoraActual())
         self.performSegue(withIdentifier: "irSchedulerEditarHoraSegue", sender: model)
     }
     

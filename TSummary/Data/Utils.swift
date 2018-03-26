@@ -5,7 +5,8 @@ public class Utils
     {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "es_CL")
-        formatter.timeZone = TimeZone(identifier: "America/Santiago")
+        //formatter.timeZone = TimeZone(identifier: "America/Santiago")
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         formatter.dateFormat = format
         let date = formatter.date(from: string)
         return date
@@ -15,7 +16,8 @@ public class Utils
     {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "es_CL")
-        formatter.timeZone = TimeZone(identifier: "America/Santiago")
+        //formatter.timeZone = TimeZone(identifier: "America/Santiago")
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         formatter.dateFormat = format
         let strDate = formatter.string(from: date)
         return strDate

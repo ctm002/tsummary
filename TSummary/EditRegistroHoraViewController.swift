@@ -1,16 +1,15 @@
 import UIKit
 import SearchTextField
 
-class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora, UITextFieldDelegate{
+class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEditViewHora, UITextFieldDelegate{
 
     @IBOutlet weak var mySearchTextField: SearchTextField!
     @IBOutlet weak var txtAsunto: UITextView!
     @IBOutlet var btnEliminar: UIButton!
-    @IBOutlet weak var stepper1: UIStepper!
-    @IBOutlet weak var stepper2: UIStepper!
     @IBOutlet var btnGuardar: UIButton!
-    @IBOutlet var datePickerFechaIngreso: UIDatePicker!
-    
+    @IBOutlet weak var lblHoraInicio: UILabel!
+    @IBOutlet weak var lblHoraFin: UILabel!
+    @IBOutlet weak var lblHoraTotal: UILabel!
     var mProyectos = [ClienteProyecto]()
     var presenterProyecto : PresenterProyecto?
     var presenterHora : PresenterRegistroHoras?
@@ -18,19 +17,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     
     private var mModel: ModelController!
     var model : ModelController { get { return self.mModel } set { self.mModel = newValue } }
-    
-    @IBAction func stepper1(_ sender: UIStepper)
-    {
-        let s = Int(sender.value)
-        txtHoras.text = String(format:"%02d", s)
-    }
-    
-    @IBAction func stepper2(_ sender: UIStepper)
-    {
-        let s = Int(sender.value)
-        txtMinutos.text = String(format:"%02d", s)
-    }
-    
+
     func setList(proyectos: [ClienteProyecto])
     {
         self.mProyectos = proyectos
@@ -52,18 +39,18 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        navigationItem.title =  Utils.toStringFromDate(model.fechaHoraIngreso, "dd MMMM yyyy")
+        navigationItem.title =  Utils.toStringFromDate(model.fechaHoraInicio, "dd MMMM yyyy")
         self.presenterProyecto = PresenterProyecto(self)
         self.presenterHora = PresenterRegistroHoras(self)
     
         setupSearchTextField()
         
-        txtHoras.text = "00"
-        txtMinutos.text = "00"
-        txtHoras.delegate = self
-        txtMinutos.delegate = self
-        txtHoras.keyboardType = .numberPad
-        txtMinutos.keyboardType = .numberPad
+//        txtHoras.text = "00"
+//        txtMinutos.text = "00"
+//        txtHoras.delegate = self
+//        txtMinutos.delegate = self
+//        txtHoras.keyboardType = .numberPad
+//        txtMinutos.keyboardType = .numberPad
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -96,12 +83,13 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     func loadData()
     {
         self.idHora = model.id
-        self.horas = model.horas
-        self.minutos = model.minutos
+        self.horaInicio = "\(model.horaInicio)"
+        self.horaFin = "\(model.horaFin)"
+        self.horaTotal = "\(model.horaTotal)"
         self.asunto = model.asunto
         self.proyectoId = model.idProyecto
         self.timCorrelativo = model.correlativo
-        self.fechaHoraIngreso = model.fechaHoraIngreso
+        self.fechaHoraIngreso = model.fechaHoraInicio
         self.idAbogado = model.idAbogado
         self.setNombreProyecto(model)
     }
@@ -143,13 +131,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         
         mySearchTextField.isEnabled = estado
         txtAsunto.isEditable = estado
-        datePickerFechaIngreso.isEnabled = estado
-        
-        txtHoras.isEnabled = estado
-        txtMinutos.isEnabled = estado
-        
-        stepper1.isEnabled = estado
-        stepper2.isEnabled = estado
+        //datePickerFechaIngreso.isEnabled = estado
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int
@@ -293,33 +275,41 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     {
         get
         {
-            return self.datePickerFechaIngreso.date
+            return Date() //self.datePickerFechaIngreso.date
         }
         set
         {
-            self.datePickerFechaIngreso.date = newValue
+            //self.datePickerFechaIngreso.date = newValue
         }
     }
     
-    var horas: Int
+    var horaInicio: String
     {
         get {
-            return Int(self.txtHoras.text!)!
+            return self.lblHoraInicio.text!
         }
         set {
-            self.stepper1.value = Double(newValue)
-            self.txtHoras.text = String(format:"%02d", newValue)
+           self.lblHoraInicio.text = newValue
         }
     }
     
-    var minutos: Int
+    var horaFin: String
     {
         get {
-            return Int(self.txtMinutos.text!)!
+            return self.lblHoraFin.text!
         }
         set {
-            self.stepper2.value = Double(newValue)
-            self.txtMinutos.text = String(format:"%02d", newValue)
+            self.lblHoraFin.text = newValue
+        }
+    }
+    
+    var horaTotal: String
+    {
+        get {
+            return self.lblHoraTotal.text!
+        }
+        set {
+            self.lblHoraTotal.text = newValue
         }
     }
     

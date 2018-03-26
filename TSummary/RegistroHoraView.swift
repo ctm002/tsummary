@@ -1,5 +1,5 @@
 import UIKit
-class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout
+class RegistroHoraView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout
 {
     var objects : [RegistroHora]!
     let cellId1 : String = "cellId1"
@@ -54,10 +54,10 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
             
             cell.lblCliente.text =  registro.proyecto.nombreCliente.uppercased()
             cell.lblProyecto.text = registro.proyecto.nombre.uppercased()
-            cell.lblHora.text =  String(format: "%02d", registro.horasTrabajadas) + ":" + String(format: "%02d",  registro.minutosTrabajados)
+            cell.lblHora.text =  String(format: "%02d", registro.total.horas) + ":" + String(format: "%02d",  registro.total.minutos)
             cell.lblAsunto.text = registro.asunto
             cell.IdHora = registro.id
-            cell.lblFechaIngreso.text = registro.fechaHoraIngresoToHHmm
+            cell.lblFechaIngreso.text = String(format: "%02d", registro.inicio.horas) + ":" + String(format: "%02d",  registro.inicio.minutos)
             cell.imgEstado.image = registro.modificable ?  #imageLiteral(resourceName: "desbloquear") :  #imageLiteral(resourceName: "bloquear")
             cell.imgSinc.image = registro.offline ? #imageLiteral(resourceName: "sincronizar") : nil
             
@@ -76,21 +76,22 @@ class DetalleHoraView: UIView, UICollectionViewDataSource, UICollectionViewDeleg
     @objc func selectedItemTableView(gestureRecognizer: UITapGestureRecognizer)
     {
         if let cell = gestureRecognizer.view as? DetalleHoraCell {
-            if let registroHora = DataStore.horas.getById(cell.IdHora)
+            if let registro = DataStore.horas.getById(cell.IdHora)
             {
                 let model = ModelController(
-                    id: registroHora.id,
-                    abogadoId: registroHora.abogadoId,
-                    fechaHoraIngreso: registroHora.fechaHoraInicio!,
-                    idProyecto: registroHora.proyecto.id,
-                    nombreProyecto: registroHora.proyecto.nombre,
-                    nombreCliente: registroHora.proyecto.nombreCliente,
-                    horas: registroHora.horasTrabajadas,
-                    minutos: registroHora.minutosTrabajados,
-                    asunto: registroHora.asunto,
-                    correlativo: registroHora.tim_correl,
-                    modificable : registroHora.modificable,
-                    offline : registroHora.offline)
+                    id: registro.id,
+                    abogadoId: registro.abogadoId,
+                    fechaHoraInicio: registro.fechaHoraInicio!,
+                    idProyecto: registro.proyecto.id,
+                    nombreProyecto: registro.proyecto.nombre,
+                    nombreCliente: registro.proyecto.nombreCliente,
+                    horaInicio: "\(String(format: "%02d", registro.inicio.horas)):\(String(format: "%02d", registro.inicio.minutos))",
+                    horaFin: "\(String(format: "%02d", registro.fin.horas)):\(String(format: "%02d", registro.fin.minutos))",
+                    horaTotal: "\(String(format: "%02d", registro.total.horas)):\(String(format: "%02d", registro.total.minutos))",
+                    asunto: registro.asunto,
+                    correlativo: registro.tim_correl,
+                    modificable : registro.modificable,
+                    offline : registro.offline)
                 self.delegate?.editViewController(model: model)
             }
         }

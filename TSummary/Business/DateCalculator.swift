@@ -12,6 +12,7 @@ class DateCalculator
         let locale = Locale(identifier: "es_CL")
         var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         calendar.locale = locale
+        //calendar.timeZone = TimeZone(abbreviation: "UTC")!
         return calendar
     }()
     
