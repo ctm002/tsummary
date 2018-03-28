@@ -294,18 +294,6 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
             self.fechaHoraIngreso = dia.fecha
             self.swapSemana()
             delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
- 
-            /*
-            let lastItemIndex = self.collectionView.numberOfItems(inSection: 0) - 1
-            let indexPathLast : IndexPath = IndexPath.init(item: lastItemIndex, section: 0)
-            self.collectionView.scrollToItem(at: indexPathLast, at: UICollectionViewScrollPosition.init(rawValue: 0) , animated: false)
-
-            let indexPath: IndexPath =  IndexPath.init(item: dia.index, section: 0)
-            self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.init(rawValue: 0))
-            //self.current = self.collectionView.visibleCells[(dia.index%7) as Int] as! DetalleDiaCell
-            self.current = self.collectionView.cellForItem(at: IndexPath.init(item:(dia.index%7) as Int, section: 0)) as! DetalleDiaCell
-            print(current)
-             */
         }
     }
     

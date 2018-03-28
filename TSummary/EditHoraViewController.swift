@@ -198,13 +198,12 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     func mostrarMensaje(titulo: String, mensaje: String )
     {
         let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
-        
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { (action: UIAlertAction!) in
             self.performSegue(withIdentifier: "irEditarHoraSchedulerSegue", sender: self.model)
         }))
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     @IBAction func btnGuardar_Click(_ sender: UIButton?)
     {
         btnGuardar.isEnabled = false

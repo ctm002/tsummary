@@ -325,7 +325,6 @@ public class TbHora
                         ?,
                         ?,
                         ?,
-                        ?,
                         ?)
                 """
                 
@@ -567,7 +566,8 @@ public class TbHora
                 p.cli_nom,
                 h.hora_id,
                 h.fecha_ult_mod,
-                h.estado
+                h.estado,
+                h.fecha_hora_inicio
             from
                 Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
             where
