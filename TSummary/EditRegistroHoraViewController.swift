@@ -67,9 +67,7 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
-        /*
         self.viewProyectos.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editarProyectos)))
-        */
         
         self.viewNotas.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editarNotas)))
         self.viewInicio.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(abrirTimePicker1)))
