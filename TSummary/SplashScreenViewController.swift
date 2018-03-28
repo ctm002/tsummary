@@ -113,6 +113,16 @@ class SplashScreenViewController: UIViewController {
             {
                 ControladorLogica.instance.sincronizar(session, self.redireccionar)
             }
+            else
+            {
+                DispatchQueue.main.async
+                {
+                    self.performSegue(
+                        withIdentifier: "irSplashScreenSchedulerSegue",
+                        sender: self.idAbogado
+                    )
+                }
+            }
         }
     }
 

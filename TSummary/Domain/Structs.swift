@@ -40,11 +40,12 @@ class SessionLocal {
     
     func isExpired() -> Bool
     {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(identifier: "America/Santiago")!
-        calendar.locale = Locale(identifier: "es_CL")
-        
-        let now: Date = Date()
+        let calendar = Calendar(identifier: .gregorian)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let strDate = formatter.string(from: Date())
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        let now = formatter.date(from: strDate)!
         let minutes : Int = calendar.dateComponents([.minute], from: now, to: self.expiredAt!).minute ?? 0
         return (minutes <= 1)
     }
