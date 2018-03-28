@@ -381,5 +381,14 @@ public class ControladorLogica
         DataStore.proyectos.dropTable()
         DataStore.usuarios.dropTable()
     }
+
+    func obtCantidadProyectosWithHorasAsignadasAndIdAbogado(_ id: Int32) -> Int32
+    {
+        return DataStore.horas.obtCantidadProyectosWithHorasAsignadasAndIdAbogado(id)
+    }
     
+    func obtCantidadTotalHorasAndIdAbogado(_ id: Int32) -> Hora?
+    {
+        return DataStore.horas.obtCantidadTotalHorasAndIdAbogado(id)
+    }
 }

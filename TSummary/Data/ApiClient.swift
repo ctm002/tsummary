@@ -93,10 +93,15 @@ class ApiClient
                                     usuario.email = email
                                 }
                                 
+                                let cLoginName = jwt.claim(name: "LoginName")
+                                if let loginName = cLoginName.string
+                                {
+                                    usuario.loginName = loginName
+                                }
+                                
                                 usuario.password = password
                                 usuario.imei = imei
-                                usuario.loginName = userName
-                                
+
                                 SessionLocal.shared.expiredAt = jwt.expiresAt
                                 SessionLocal.shared.token = jsonwt.token
                                 SessionLocal.shared.usuario = usuario

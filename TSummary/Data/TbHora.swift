@@ -932,4 +932,102 @@ public class TbHora
         }
         return false
     }
+
+    func obtCantidadProyectosWithHorasAsignadasAndIdAbogado(_ id: Int32) -> Int32
+    {
+        let query : String = """
+            select count(1) as count
+            from
+                Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
+            where h.estado != 2
+                AND h.abo_id=?
+        """
+        do
+        {
+            try open()
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing get count proyectos: \(errmsg)")
+            }
+            
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding abo_id: \(errmsg)")
+            }
+            
+            var count : Int32 = 0
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
+                 count = sqlite3_column_int(statement, 0)
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return count
+        }
+        catch
+        {
+            close()
+            print("Error: obtCantidadProyectosConHorasAsignadasYPorIdAbogado")
+        }
+        return 0
+    }
+
+    func obtCantidadTotalHorasAndIdAbogado(_ id: Int32) -> Hora?
+    {
+        let query : String = """
+            select  sum(h.tim_horas), sum(h.tim_minutos) minutos
+            from
+                Horas h inner join ClienteProyecto p ON h.pro_id = p.pro_id
+            where h.estado != 2 AND h.abo_id=? AND h.modificable=1
+        """
+        do
+        {
+            try open()
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing get count proyectos: \(errmsg)")
+            }
+            
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding abo_id: \(errmsg)")
+            }
+            
+            var hora : Hora!
+            if sqlite3_step(statement) == SQLITE_ROW
+            {
+                let horas = sqlite3_column_int(statement, 0)
+                let minutos = sqlite3_column_int(statement, 1)
+                
+                let suma : Int = Int((horas*60) + minutos)
+                hora = Hora(horas: suma/60 , minutos: suma%60)
+            }
+            
+            if sqlite3_finalize(statement) != SQLITE_OK
+            {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error finalizing prepared statement: \(errmsg)")
+            }
+            close()
+            return hora
+        }
+        catch
+        {
+            close()
+            print("Error: obtCantidadProyectosConHorasAsignadasYPorIdAbogado")
+        }
+        return nil
+    }
+    
 }

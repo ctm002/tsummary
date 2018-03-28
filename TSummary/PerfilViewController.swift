@@ -1,11 +1,17 @@
 import UIKit
 import Foundation
 
-class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PerfilViewController: UIViewController{
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var photoPerfil: UIImageView!
+    
+    @IBOutlet weak var lblNombre: UILabel!
+    @IBOutlet weak var lblTipo: UILabel!
+    @IBOutlet weak var lblGrupo: UILabel!
+    @IBOutlet weak var lblEmail: UILabel!
+    @IBOutlet weak var lblNroProyectos: UILabel!
+    @IBOutlet weak var lblCantHorasTrabajadas: UILabel!
     
     public var idAbogado: Int32 = 0
     var datos = [Int:[String: String]]()
@@ -14,9 +20,6 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
     {
         super.viewDidLoad()
         navigationItem.title = "Perfil"
-        
-        tableView.dataSource = self
-        tableView.delegate = self
         
         photoPerfil.layer.cornerRadius = photoPerfil.frame.height / 2
         photoPerfil.layer.masksToBounds = true
@@ -47,7 +50,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     {
                         DispatchQueue.main.async
                         {
-                            self.photoPerfil.image = #imageLiteral(resourceName: "usuarioDefecto")
+                            self.photoPerfil.image = #imageLiteral(resourceName: "foto por defecto")
                             self.activityIndicator.stopAnimating()
                         }
                     }
@@ -63,29 +66,20 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.activityIndicator.stopAnimating()
                 }
             }
-        
-            self.datos[0] = ["key":"Nombres", "value" : u.nombre!]
-            self.datos[1] = ["key":"Perfil", "value" : u.perfil]
-            self.datos[2] = ["key":"Grupo", "value" : u.grupo!]
-            self.datos[3] = ["key":"Nombre de Usuario", "value" : u.loginName!]
-            self.datos[4] = ["key":"Correo", "value" : u.email]
+            
+            lblNombre.text =  u.nombre!
+            lblTipo.text = u.perfil
+            lblGrupo.text = u.grupo!
+            lblEmail.text = u.email
         }
-    }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for:indexPath)
-        let datos : [String: String] = self.datos[indexPath.row]!
-        cell.textLabel?.text = datos["key"]
-        cell.detailTextLabel?.text = datos["value"]
-        return cell
+        let cantProyectos = ControladorLogica.instance.obtCantidadProyectosWithHorasAsignadasAndIdAbogado(id)
+        lblNroProyectos.text = "\(String(format:"%02d", cantProyectos))"
+        
+        let hora = ControladorLogica.instance.obtCantidadTotalHorasAndIdAbogado(id)!
+        lblCantHorasTrabajadas.text = "\(String(format:"%02d",hora.horas)):\(String(format:"%02d", hora.minutos))"
     }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return datos.count
-    }
-    
+
     @objc func dismissKeyboard()
     {
         view.endEditing(true)

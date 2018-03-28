@@ -448,8 +448,12 @@ public class TbUsuario
                 print("error preparing update: \(errmsg)")
             }
             
+            if sqlite3_bind_text(statement, 1, data, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding data: \(errmsg)")
+            }
 
-            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK {
+            if sqlite3_bind_int(statement, 2, id) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding Id: \(errmsg)")
             }

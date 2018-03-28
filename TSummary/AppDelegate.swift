@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //ControladorLogica.instance.eliminarDatos()
         //ControladorLogica.instance.borrarTablas()
-        
+        TimeZone.ReferenceType.default = TimeZone(identifier: "America/Santiago")!
         do
         {
             Network.reachability = try Reachability(hostname: "docroom.cariola.cl")

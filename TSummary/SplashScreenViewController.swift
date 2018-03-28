@@ -61,7 +61,7 @@ class SplashScreenViewController: UIViewController {
             }
             else
             {
-               self.lblProgress.text = "Generando nuevo token de sesion..."
+                self.lblProgress.text = "Generando nuevo token de sesion..."
                 let user = session.usuario?.loginName
                 let password = session.usuario?.password
                 
@@ -84,12 +84,13 @@ class SplashScreenViewController: UIViewController {
                             {
                                 self.refresh(mensaje: (sessionLocal as! String))
                             }
-                    }
+                        }
                     )
                 }
                 else
                 {
                     self.refresh(mensaje: "Sin conexión a internet")
+                    self.lblProgress.text =  ""
                 }
             }
         }
