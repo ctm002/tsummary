@@ -21,10 +21,10 @@ public class TbUsuario
         do
         {
             fileURL = try! FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
-            
+                    for: .documentDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil, create: true).appendingPathComponent("tsummary.db")
+
             initialize()
         }
         catch
@@ -50,7 +50,7 @@ public class TbUsuario
     func open() throws
     {
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            throw Errores.ErrorConexionDataBase
+           throw Errores.ErrorConexionDataBase
         }
     }
     
@@ -271,7 +271,7 @@ public class TbUsuario
             print("error creating table: \(errmsg)")
         }
     }
-    
+
     func guardar(sessionLocal: SessionLocal) -> Bool
     {
         do
@@ -289,7 +289,7 @@ public class TbUsuario
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("error preparing insert: \(errmsg)")
                 }
-                
+
                 if sqlite3_bind_text(statement, 1, usuario.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding nombre: \(errmsg)")
@@ -432,7 +432,7 @@ public class TbUsuario
         }
         return false
     }
-    
+
     func actualizar(id: Int32, data: String) -> Bool
     {
         do {
@@ -448,12 +448,8 @@ public class TbUsuario
                 print("error preparing update: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 1, data, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding data: \(errmsg)")
-            }
-            
-            if sqlite3_bind_int(statement, 2, id) != SQLITE_OK {
+
+            if sqlite3_bind_int(statement, 1, id) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding Id: \(errmsg)")
             }
@@ -496,7 +492,7 @@ public class TbUsuario
             print("\(error)")
         }
     }
-    
+
     func obtUsuarioById(id: Int) -> Usuario?
     {
         do
@@ -505,9 +501,9 @@ public class TbUsuario
             
             var statement: OpaquePointer?
             let query : String = """
-            select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image, Email
-            from Usuario where Id=\(id)
-            """
+                select Id, Nombre, Grupo, LoginName, IMEI, Perfil, IdUsuario, Image, Email
+                from Usuario where Id=\(id)
+                """
             
             if sqlite3_prepare_v2(db, query, -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -553,7 +549,7 @@ public class TbUsuario
                 
                 let idUsuario : Int32 = sqlite3_column_int(statement, 6)
                 usuario.idUsuario = Int(idUsuario)
-                
+            
                 if let csString = sqlite3_column_text(statement,7)
                 {
                     let image : String = String(cString: csString)
