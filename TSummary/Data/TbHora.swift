@@ -463,14 +463,14 @@ public class TbHora
                     print("failure binding tim_asunto: \(errmsg)")
                 }
                 
-                let horas : Int32 = Int32(hora.inicio.horas)
+                let horas : Int32 = Int32(hora.total.horas)
                 if sqlite3_bind_int(statement, 3, horas) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding tim_horas: \(errmsg)")
                 }
                 
-                let minutos : Int32 = Int32(hora.inicio.minutos)
+                let minutos : Int32 = Int32(hora.total.minutos)
                 if sqlite3_bind_int(statement, 4, minutos) != SQLITE_OK
                 {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -707,7 +707,7 @@ public class TbHora
         
         if let csString = sqlite3_column_text(record, 9)
         {
-            hora.proyecto.nombre = String(cString: csString)
+            hora.proyecto.nombreProyecto = String(cString: csString)
         }
         
         if let csString = sqlite3_column_text(record, 10)

@@ -49,19 +49,34 @@ public class PresenterRegistroHoras
         
         let proyectoId = self.mEditViewRegistroHora!.proyectoId
         let fechaHoraInicio = self.mEditViewRegistroHora!.fechaHoraIngreso
+
         let idAbogado = self.mEditViewRegistroHora!.idAbogado
         let asunto = self.mEditViewRegistroHora!.asunto
+        
         let horaInicio = self.mEditViewRegistroHora!.horaInicio
-        let horaFin = self.mEditViewRegistroHora!.horaFin
+        let aHoraInicio = horaInicio.split(separator: ":")
+        
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: fechaHoraInicio)
+        components.hour = Int(aHoraInicio[0])!
+        components.minute = Int(aHoraInicio[1])!
+        components.second = 00
+        let newDate = calendar.date(from:components)!
+        
+        //let horaFin = self.mEditViewRegistroHora!.horaFin
+        
         registro.proyecto.id = Int32(proyectoId)
-        registro.fechaHoraInicio = fechaHoraInicio
-        registro.fechaInsert = Date()
+        registro.fechaHoraInicio = newDate
         registro.abogadoId = idAbogado
         registro.asunto = asunto
         registro.offline = true
         registro.fechaInsert = Date()
         registro.fechaUpdate = Date()
         
+        let horaTotal  = self.mEditViewRegistroHora.horaTotal
+        let aTotalHora = horaTotal.split(separator: ":")
+        registro.total = Hora(horas: Int(aTotalHora[0])!, minutos: Int(aTotalHora[1])!)
         ControladorLogica.instance.guardar(hora: registro, callback: {(response: Response) in
             self.mEditViewRegistroHora.response = response
         })

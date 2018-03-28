@@ -363,6 +363,11 @@ public class ControladorLogica
         return DataStore.usuarios.obtUsuarioById(id: id)
     }
     
+    func obtListProyectos()  -> [ClienteProyecto]
+    {
+        return DataStore.proyectos.obtListProyectos()!
+    }
+    
     func eliminarDatos()
     {
         DataStore.horas.eliminar()
@@ -376,5 +381,5 @@ public class ControladorLogica
         DataStore.proyectos.dropTable()
         DataStore.usuarios.dropTable()
     }
-
+    
 }

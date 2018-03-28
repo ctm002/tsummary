@@ -1,12 +1,12 @@
 import UIKit
 import SearchTextField
+import ActionSheetPicker_3_0
 
 class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEditViewHora, UITextFieldDelegate{
 
+    @IBOutlet weak var vToolsBar: UIView!
     @IBOutlet weak var mySearchTextField: SearchTextField!
-    @IBOutlet weak var txtAsunto: UITextView!
-    @IBOutlet var btnEliminar: UIButton!
-    @IBOutlet var btnGuardar: UIButton!
+    @IBOutlet weak var lblAsunto: UILabel!
     @IBOutlet weak var lblHoraInicio: UILabel!
     @IBOutlet weak var lblHoraFin: UILabel!
     @IBOutlet weak var lblHoraTotal: UILabel!
@@ -15,15 +15,29 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     var presenterHora : PresenterRegistroHoras?
     var indexSemana : Int = -1
     
+    @IBOutlet weak var viewNotas: UIView!
+    @IBOutlet weak var viewInicio: UIView!
+    @IBOutlet weak var viewFin: UIView!
+    @IBOutlet weak var viewTotal: UIView!
+    @IBOutlet weak var viewProyectos: UIView!
+    @IBOutlet weak var viewRepetir: UIView!
+    
     private var mModel: ModelController!
     var model : ModelController { get { return self.mModel } set { self.mModel = newValue } }
 
+    let calendar : Calendar = {
+        let locale = Locale(identifier: "es_CL")
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        calendar.locale = locale
+        return calendar
+    }()
+    
     func setList(proyectos: [ClienteProyecto])
     {
         self.mProyectos = proyectos
         let proyectosItems: [SearchTextFieldItemExt] = proyectos.map
         {
-            SearchTextFieldItemExt(title: $0.nombreCliente, subtitle:$0.nombre, id: $0.id)
+            SearchTextFieldItemExt(title: $0.nombreCliente, subtitle:$0.nombreProyecto, id: $0.id)
         }
         
         mySearchTextField.filterItems(proyectosItems)
@@ -33,6 +47,10 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
             let itemSelected = filteredResults[itemPosition] as! SearchTextFieldItemExt
             self.mySearchTextField.text = itemSelected.title + " " + itemSelected.subtitle!
             self.proyectoId = itemSelected.Id
+            
+            self.model.idProyecto = self.proyectoId
+            self.model.nombreCliente = itemSelected.title
+            self.model.nombreProyecto = itemSelected.subtitle!
         }
     }
     
@@ -45,16 +63,127 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     
         setupSearchTextField()
         
-//        txtHoras.text = "00"
-//        txtMinutos.text = "00"
-//        txtHoras.delegate = self
-//        txtMinutos.delegate = self
-//        txtHoras.keyboardType = .numberPad
-//        txtMinutos.keyboardType = .numberPad
-        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        /*
+        self.viewProyectos.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editarProyectos)))
+        */
+        
+        self.viewNotas.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editarNotas)))
+        self.viewInicio.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(abrirTimePicker1)))
+        self.viewFin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(abrirTimePicker2)))
+        self.viewTotal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(abrirTimePicker3)))
+        self.viewRepetir.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editarDias)))
+        
+        self.viewRepetir.isHidden = true //(self.model.id != 0)
+    }
+    
+    @objc func editarProyectos()
+    {
+        let model =  self.model
+        self.performSegue(withIdentifier: "irEditarHoraProyectoSegue", sender: model)
+    }
+    
+    @objc func editarDias()
+    {
+        let model =  self.model
+        self.performSegue(withIdentifier: "irEditarHoraDiaSegue", sender: model)
+    }
+    
+    @objc func editarNotas()
+    {
+        let model =  self.model
+        self.performSegue(withIdentifier: "irEditarHoraNotaSegue", sender: model)
+    }
+    
+    @objc func abrirTimePicker1()
+    {
+        let newDate = Date()
+        let datePicker = ActionSheetDatePicker(title: "Hora inicio:\(model.horaInicio)", datePickerMode: UIDatePickerMode.time, selectedDate: newDate, target: self, action: #selector(datePicked1), origin: self.view.superview)
+        datePicker?.minuteInterval = 15
+        datePicker?.show()
+    }
+    
+    @objc func datePicked1(_ obj: Date) {
+        let minutes = (self.calendar.component(.minute, from: obj)/15) * 15
+        let hours = self.calendar.component(.hour, from: obj)
+        lblHoraInicio.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
+        self.calcularTotal()
+    }
+    
+    @objc func abrirTimePicker2()
+    {
+        let newDate = Date()
+        let datePicker = ActionSheetDatePicker(title: "Hora termino: \(model.horaFin)" , datePickerMode: UIDatePickerMode.time, selectedDate: newDate, target: self, action: #selector(datePicked2), origin: self.view.superview)
+        datePicker?.minuteInterval = 15
+        datePicker?.show()
+    }
+    
+    @objc func datePicked2(_ obj: Date)
+    {
+        let minutes = (self.calendar.component(.minute, from: obj)/15) * 15
+        let hours = self.calendar.component(.hour, from: obj)
+        lblHoraFin.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
+        self.calcularTotal()
+    }
+    
+    @objc func abrirTimePicker3()
+    {
+        let datePicker = ActionSheetDatePicker(title:  "Horas total: \(model.horaTotal)", datePickerMode: UIDatePickerMode.countDownTimer, selectedDate: Date(), doneBlock: {
+            picker, value, index in
+            
+            print("value = \(value)")
+            print("index = \(index)")
+            print("picker = \(picker)")
+            
+            let minutesTemp = (value as! Int)/60
+            let hours = minutesTemp/60
+            let minutes = minutesTemp%60
+            self.lblHoraTotal.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
+            
+            
+            let aTimeStart = self.lblHoraInicio.text?.components(separatedBy: ":")
+            let totalMinStart = (Int(aTimeStart![0])!*60) + Int(aTimeStart![1])!
+            
+            let totalHoursEnd = (totalMinStart+minutesTemp) / 60
+            let totalMinutesEnd = (totalMinStart+minutesTemp) % 60
+            self.lblHoraFin.text = "\(String(format: "%02d",totalHoursEnd)):\(String(format: "%02d",totalMinutesEnd))"
+            return
+        }, cancel: { ActionStringCancelBlock in return }, origin:  view.superview)
+        
+        datePicker?.minuteInterval = 15
+        datePicker?.countDownDuration = 10
+        datePicker?.show()
+    }
+    
+    @objc func datePicked3(_ obj: Date)
+    {
+        var minutes = (self.calendar.component(.minute, from: obj)/15) * 15
+        var hours = self.calendar.component(.hour, from: obj)
+        lblHoraTotal.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
+    
+        let aTimeStart = lblHoraInicio.text?.components(separatedBy: ":")
+        let totalMinStart = (Int(aTimeStart![0])!*60) + Int(aTimeStart![1])!
+        
+        let totalMinEnd = ((hours*60)+minutes)+totalMinStart
+        hours = (totalMinEnd/60)
+        minutes = (totalMinEnd%60)
+        lblHoraFin.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
+    }
+    
+    func calcularTotal()
+    {
+        let aTimeStart = lblHoraInicio.text?.components(separatedBy: ":")
+        let aTimeEnd = lblHoraFin.text?.components(separatedBy: ":")
+        
+        let totalMinStart = (Int(aTimeStart![0])!*60) + Int(aTimeStart![1])!
+        let totalMinEnd = (Int(aTimeEnd![0])!*60) + Int(aTimeEnd![1])!
+        
+        let hours = ((totalMinEnd-totalMinStart)/60)
+        let minutes = ((totalMinEnd-totalMinStart)%60)
+        lblHoraTotal.text = "\(String(format: "%02d",hours)):\(String(format: "%02d",minutes))"
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -63,14 +192,14 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
         self.presenterProyecto!.obtListProyectos()
         if self.idHora == 0
         {
-            btnEliminar.isEnabled = false
+            //btnEliminar.isEnabled = false
+            print("test")
         }
         else
         {
             bloquearBotones(model.modificable)
         }
     }
-    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 2
@@ -123,15 +252,13 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     
     func bloquearBotones(_ estado: Bool)
     {
-        btnEliminar.isEnabled = estado
-        btnGuardar.isEnabled = estado
-        
-        btnGuardar.isHidden = !estado
-        btnEliminar.isHidden = !estado
-        
+        vToolsBar.isHidden = !estado
+        viewProyectos.isUserInteractionEnabled = estado
+        viewNotas.isUserInteractionEnabled = estado
+        viewInicio.isUserInteractionEnabled = estado
+        viewFin.isUserInteractionEnabled = estado
+        viewTotal.isUserInteractionEnabled = estado
         mySearchTextField.isEnabled = estado
-        txtAsunto.isEditable = estado
-        //datePickerFechaIngreso.isEnabled = estado
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int
@@ -187,7 +314,7 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     
     @IBAction func btnGuardar_Click(_ sender: UIButton?)
     {
-        btnGuardar.isEnabled = false
+        //self.vToolsBar.isEnabled = false
         let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         self.view.addSubview(activityView)
         activityView.center = self.view.center
@@ -198,7 +325,7 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
         activityView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         activityView.startAnimating()
         presenterHora!.guardar()
-        btnGuardar.isEnabled = true
+        //self.vToolsBar.isEnabled = true
     }
     
     @IBAction func btnEliminar_Click(_ sender: UIButton?)
@@ -237,11 +364,42 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        let controller : SchedulerViewController = segue.destination as! SchedulerViewController
-        controller.idAbogado = self.idAbogado
-        controller.fechaHoraIngreso = Utils.toStringFromDate(self.fechaHoraIngreso, "yyyy-MM-dd")
-        controller.indexSemana = self.indexSemana
-        controller.reloadRegistroHoras()
+        let identifier : String = segue.identifier!
+        if (identifier == "irEditarHoraSchedulerSegue")
+        {
+            let controller : SchedulerViewController = segue.destination as! SchedulerViewController
+            controller.idAbogado = self.idAbogado
+            controller.fechaHoraIngreso = Utils.toStringFromDate(self.fechaHoraIngreso, "yyyy-MM-dd")
+            controller.indexSemana = self.indexSemana
+            controller.reloadRegistroHoras()
+        }
+        else if (identifier == "irEditarHoraNotaSegue")
+        {
+            let notaViewController : NotaViewController = segue.destination as! NotaViewController
+            notaViewController.model = sender as! ModelController
+            let backItem = UIBarButtonItem()
+            backItem.title = "Editar"
+            navigationItem.backBarButtonItem = backItem
+            
+        }
+        else if (identifier == "irEditarHoraProyectoSegue")
+        {
+            let proyectoViewController  = segue.destination as! ProyectoViewController
+            proyectoViewController.model = sender as! ModelController
+            proyectoViewController.objects = ControladorLogica.instance.obtListProyectos()
+            let backItem = UIBarButtonItem()
+            backItem.title = "Editar"
+            navigationItem.backBarButtonItem = backItem
+        }
+        else if (identifier == "irEditarHoraDiaSegue")
+        {
+            let proyectoViewController  = segue.destination as! DiaViewController
+            proyectoViewController.model = sender as! ModelController
+            proyectoViewController.objects = DateCalculator.instance.obtDias()
+            let backItem = UIBarButtonItem()
+            backItem.title = "Editar"
+            navigationItem.backBarButtonItem = backItem
+        }
     }
     
     //Inicio propiedades-------------------------------------------------
@@ -271,15 +429,16 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
         }
     }
     
+    var mFechaHoraIngreso: Date!
     var fechaHoraIngreso: Date
     {
         get
         {
-            return Date() //self.datePickerFechaIngreso.date
+            return self.mFechaHoraIngreso
         }
         set
         {
-            //self.datePickerFechaIngreso.date = newValue
+            self.mFechaHoraIngreso = newValue
         }
     }
     
@@ -317,12 +476,12 @@ class EditRegistroHoraViewController: UIViewController, IListViewProyecto, IEdit
     {
         get
         {
-            return self.txtAsunto.text!
+            return self.lblAsunto.text!
             
         }
         set
         {
-            self.txtAsunto.text = newValue
+            self.lblAsunto.text = newValue
         }
     }
     

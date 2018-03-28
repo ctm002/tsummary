@@ -113,6 +113,10 @@ class SplashScreenViewController: UIViewController {
             {
                 ControladorLogica.instance.sincronizar(session, self.redireccionar)
             }
+            else
+            {
+                performSegue(withIdentifier: "irSplashScreenSchedulerSegue", sender: self.idAbogado)
+            }
         }
     }
 

@@ -53,7 +53,7 @@ class RegistroHoraView: UIView, UICollectionViewDataSource, UICollectionViewDele
             let registro = hrs[indexPath.row]
             
             cell.lblCliente.text =  registro.proyecto.nombreCliente.uppercased()
-            cell.lblProyecto.text = registro.proyecto.nombre.uppercased()
+            cell.lblProyecto.text = registro.proyecto.nombreProyecto.uppercased()
             cell.lblHora.text =  String(format: "%02d", registro.total.horas) + ":" + String(format: "%02d",  registro.total.minutos)
             cell.lblAsunto.text = registro.asunto
             cell.IdHora = registro.id
@@ -83,7 +83,7 @@ class RegistroHoraView: UIView, UICollectionViewDataSource, UICollectionViewDele
                     abogadoId: registro.abogadoId,
                     fechaHoraInicio: registro.fechaHoraInicio!,
                     idProyecto: registro.proyecto.id,
-                    nombreProyecto: registro.proyecto.nombre,
+                    nombreProyecto: registro.proyecto.nombreProyecto,
                     nombreCliente: registro.proyecto.nombreCliente,
                     horaInicio: "\(String(format: "%02d", registro.inicio.horas)):\(String(format: "%02d", registro.inicio.minutos))",
                     horaFin: "\(String(format: "%02d", registro.fin.horas)):\(String(format: "%02d", registro.fin.minutos))",

@@ -107,7 +107,7 @@ public class TbProyecto
                     print("failure binding pro_id: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 2, proyecto.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 2, proyecto.nombreProyecto, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding cli_nom: \(errmsg)")
                 }
@@ -165,7 +165,7 @@ public class TbProyecto
                 print("failure binding pro_id: \(errmsg)")
             }
             
-            if sqlite3_bind_text(statement, 2, proyecto.nombre, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            if sqlite3_bind_text(statement, 2, proyecto.nombreProyecto, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding cli_nom: \(errmsg)")
             }
@@ -238,7 +238,7 @@ public class TbProyecto
                 if let csString = sqlite3_column_text(statement,1)
                 {
                     let nombreProyecto : String = String(cString: csString)
-                    proyecto.nombre = nombreProyecto
+                    proyecto.nombreProyecto = nombreProyecto
                 }
                 
                 if let csString = sqlite3_column_text(statement,2)
@@ -295,7 +295,7 @@ public class TbProyecto
                 if let csString = sqlite3_column_text(statement,1)
                 {
                     let nombreProyecto : String = String(cString: csString)
-                    proyecto.nombre = nombreProyecto
+                    proyecto.nombreProyecto = nombreProyecto
                 }
                 
                 if let csString = sqlite3_column_text(statement,2)
@@ -319,8 +319,8 @@ public class TbProyecto
         }
         return nil
     }
-    
-    func eliminar()
+
+    public func eliminar()
     {
         do
         {

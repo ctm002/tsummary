@@ -248,7 +248,7 @@ class ApiClient
                                     proyecto.id = item["pro_id"] as! Int32
                                     proyecto.codigoCliente = item["cli_cod"] as! Int
                                     proyecto.nombreCliente = item["nombreCliente"] as! String
-                                    proyecto.nombre = item["nombreProyecto"] as! String
+                                    proyecto.nombreProyecto = item["nombreProyecto"] as! String
                                     proyecto.idiomaCliente = item["idioma"] as! String
                                     proyecto.estado = item["estado"] as! Int
                                     proyectos.append(proyecto)
@@ -286,8 +286,8 @@ class ApiClient
             pro_id : hora.proyecto.id,
             tim_fecha_ing : Utils.toStringFromDate(hora.fechaHoraInicio!),
             tim_asunto : hora.asunto,
-            tim_horas : hora.inicio.horas,
-            tim_minutos : hora.inicio.minutos,
+            tim_horas : hora.fin.horas,
+            tim_minutos : hora.fin.minutos,
             abo_id : hora.abogadoId,
             OffLine : hora.offline,
             FechaInsert : Utils.toStringFromDate(hora.fechaInsert!),
@@ -438,4 +438,69 @@ class ApiClient
         task.resume()
     }
 
+    func obtProyectoByNombre(_ session: SessionLocal, callback: @escaping (ClienteProyecto?) -> Void)
+    {
+        if let u = session.usuario
+        {
+            let urlSession: URLSession = URLSession.shared
+            let sURL = "\(self.strURL)api/ClienteProyecto/getUltimosProyectoByAbogadoMob"
+            let url = URL(string: sURL)
+            let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
+            
+            var postData: String = ""
+            postData.append("{\"abo_id\":" + String(u.id) + ",")
+            postData.append("\"nombre\":\"\"}" )
+            request.httpBody = postData.data(using: String.Encoding.utf8);
+            
+            let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                if(error != nil)
+                {
+                    callback(nil)
+                    return
+                }
+                
+                if (data != nil)
+                {
+                    
+                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    if (responseString == "")
+                    {
+                        callback(nil)
+                    }
+                    else
+                    {
+                        do
+                        {
+                            let dataJSON = try JSONSerialization.jsonObject(with: data!, options: []) as AnyObject
+                            let estado = dataJSON["estado"] as? Int
+                            if estado != nil && estado == 1
+                            {
+                                let item = dataJSON["data"] as! AnyObject
+                                let proyecto = ClienteProyecto()
+                                proyecto.id = item["pro_id"] as! Int32
+                                proyecto.codigoCliente = item["cli_cod"] as! Int
+                                proyecto.nombreCliente = item["nombreCliente"] as! String
+                                proyecto.nombreProyecto = item["nombreProyecto"] as! String
+                                proyecto.idiomaCliente = item["idioma"] as! String
+                                proyecto.estado = item["estado"] as! Int
+                                callback(proyecto)
+                            }
+                            else
+                            {
+                                callback(nil)
+                            }
+                        }
+                        catch
+                        {
+                            print("Error:\(error)")
+                        }
+                    }
+                }
+            })
+            task.resume()
+        }
+    }
 }

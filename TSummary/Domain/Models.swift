@@ -190,7 +190,7 @@ public class ClienteProyecto
     }
     
     private var mNombreProyecto: String
-    public var nombre: String
+    public var nombreProyecto: String
     {
         get
         {
@@ -364,8 +364,8 @@ public class RegistroHora
             let horaTemp = self.mHoraTotal
             horaInicioTemp  = self.calendar.date(byAdding: .hour, value: horaTemp.horas , to: horaInicioTemp)!
             horaInicioTemp  = self.calendar.date(byAdding: .minute, value: horaTemp.minutos , to: horaInicioTemp)!
-            let hour = calendar.component(.hour, from: horaInicioTemp)
-            let minute = calendar.component(.minute, from: horaInicioTemp)
+            let hour = self.calendar.component(.hour, from: horaInicioTemp)
+            let minute = self.calendar.component(.minute, from: horaInicioTemp)
             return Hora(horas: hour, minutos: minute)
         }
     }

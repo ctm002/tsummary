@@ -372,7 +372,6 @@ class DetalleDiaCell: UICollectionViewCell
         fatalError("init(coder:) has not been implemented")
     }
 
-
     class DetalleDiaCell: UICollectionViewCell
     {
         var indexPath: Int = -1

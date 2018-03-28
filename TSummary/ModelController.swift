@@ -40,6 +40,24 @@ struct ModelController
         self.nombreCliente = ""
     }
     
+    
+    init(id: Int32, abogadoId: Int32, asunto: String) {
+        self.id = id
+        self.idAbogado = abogadoId
+        self.asunto = asunto
+        self.fechaHoraInicio = Date()
+        self.horaInicio = "00:00"
+        self.horaFin = "00:00"
+        self.horaTotal = "00:00"
+        self.correlativo = 0
+        self.modificable = true
+        self.offline = false
+        self.idProyecto = 0
+        self.nombreProyecto = ""
+        self.nombreCliente = ""
+    }
+    
+    
     init(id: Int32, abogadoId: Int32, fechaHoraInicio: Date,
          idProyecto: Int32, nombreProyecto: String, nombreCliente: String, horaInicio: String, horaFin: String, horaTotal: String,
          asunto: String, correlativo : Int32, modificable: Bool, offline: Bool) {
