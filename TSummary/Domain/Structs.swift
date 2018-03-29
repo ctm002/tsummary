@@ -40,7 +40,7 @@ class SessionLocal {
     
     func isExpired() -> Bool
     {
-        var calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar(identifier: .gregorian)
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let strDate = formatter.string(from: Date())
