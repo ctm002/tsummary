@@ -13,11 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        //ControladorLogica.instance.eliminarDatos()
-        //ControladorLogica.instance.borrarTablas()
-        
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+    {
         do
         {
             Network.reachability = try Reachability(hostname: "docroom.cariola.cl")

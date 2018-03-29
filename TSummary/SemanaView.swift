@@ -258,30 +258,6 @@ extension SemanaView : UICollectionViewDataSource, UICollectionViewDelegate, UIC
                 moveScroll(dia.indexSemana)
                 selectedItem(dia.index)
                 delegate?.selectDay(fecha: dia.fecha, indexSemana: dia.indexSemana)
-                
-                /*
-                let item = dia.index
-                let indexPath : IndexPath = IndexPath.init(item: item, section: 0)
-                if self.indexSemana == 0
-                {
-                    self.collectionView.scrollToItem(
-                        at: IndexPath.init(item: 0, section: 0),
-                        at: UICollectionViewScrollPosition.init(rawValue: 0),
-                        animated: false)
-                }
-                else
-                {
-                    let lastItemIndex = self.collectionView.numberOfItems(inSection: 0) - 1
-                    let indexPathLast : IndexPath = IndexPath.init(item: lastItemIndex, section: 0)
-                    self.collectionView.scrollToItem(
-                        at: indexPathLast,
-                        at: UICollectionViewScrollPosition.init(rawValue: 0) ,
-                        animated: false)
-                }
-                
-                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.init(rawValue: 0))
-                self.collectionView.reloadItems(at: [indexPath])
-                */
             }
         }
     }

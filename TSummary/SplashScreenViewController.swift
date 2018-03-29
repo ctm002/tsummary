@@ -12,16 +12,12 @@ class SplashScreenViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
         statusManager()
-        
-        //DispatchQueue.global().async  {
         self.showNavController()
-        //}
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func showNavController()
@@ -196,5 +192,4 @@ class SplashScreenViewController: UIViewController {
                 print("")
         }
     }
-
 }

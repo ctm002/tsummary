@@ -379,8 +379,6 @@ class ApiClient
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string: self.strURL + "/api/HorasMobile/Sincronizar")
-        
-        //set what ever time you want in seconds 120 mean 2 min , 240 mean 4 min
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -437,5 +435,4 @@ class ApiClient
         })
         task.resume()
     }
-
 }
