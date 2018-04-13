@@ -18,7 +18,6 @@ class LoginViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        //self.activity.center = self.view.center
         navigationItem.title = "TSummary"
         navigationItem.hidesBackButton = true
         
@@ -43,7 +42,6 @@ class LoginViewController: UIViewController
         if !entrar
         {
             btnRegistrar.setTitle("Registrar", for: .normal)
-            //showLoadingScreen()
             self.autentificar(imei: self.getUIDevice(), defecto: 1)
         }
         else
@@ -55,6 +53,8 @@ class LoginViewController: UIViewController
         self.txtIMEI.isHidden = true
         self.lblVerApp.isHidden = false
         self.lblVerApp.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
+        
+        self.lblVerApp.isHidden = false
         self.btnEliminar.isHidden = true
     }
     

@@ -80,7 +80,7 @@ class SplashScreenViewController: UIViewController {
                             {
                                 self.refresh(mensaje: (sessionLocal as! String))
                             }
-                    }
+                        }
                     )
                 }
                 else

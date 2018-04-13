@@ -215,7 +215,6 @@ public class ControladorLogica
     
     private func sincronizarHoras(_ session: SessionLocal,_ retorno: @escaping (Response) -> Void)
     {
-        
         if self.isConnected
         {
             let idAbogado : Int32 = (session.usuario?.id)!

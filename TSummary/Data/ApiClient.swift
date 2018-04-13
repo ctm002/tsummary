@@ -93,15 +93,20 @@ class ApiClient
                                     usuario.email = email
                                 }
                                 
+                                let cLoginName = jwt.claim(name: "LoginName")
+                                if let loginName = cLoginName.string
+                                {
+                                    usuario.loginName = loginName
+                                }
+                                
                                 usuario.password = password
                                 usuario.imei = imei
-                                usuario.loginName = userName
                                 
                                 SessionLocal.shared.expiredAt = jwt.expiresAt
                                 SessionLocal.shared.token = jsonwt.token
                                 SessionLocal.shared.usuario = usuario
-                                
                                 callback(SessionLocal.shared)
+                            
                             }
                             
                         }
@@ -119,7 +124,7 @@ class ApiClient
     func obtListDetalleHorasByCodAbogado(_ session: SessionLocal,_ fechaDesde: String,_ fechaHasta: String, callback: @escaping ([RegistroHora]?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
-        let url = URL(string: self.strURL + "api/Horas/GetHorasByParameters")
+        let url = URL(string: self.strURL + "api/Horas/GethorasByParameters")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
