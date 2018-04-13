@@ -1,11 +1,3 @@
-    //
-//  ModelController.swift
-//  tsummary
-//
-//  Created by OTRO on 05-02-18.
-//  Copyright © 2018 cariola. All rights reserved.
-//
-
 import Foundation
 struct ModelController
 {
