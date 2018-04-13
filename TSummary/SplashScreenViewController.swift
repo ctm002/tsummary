@@ -25,9 +25,9 @@ class SplashScreenViewController: UIViewController {
         self.autentificar(imei: self.getUIDevice(), defecto: 1)
     }
     
-    func getSessionBy(imei: String, userName: String, password: String, defecto: Int = -1) -> SessionLocal?
+    func getSessionBy(imei: String, userName: String, password: String, defecto: Int = 0) -> SessionLocal?
     {
-        return ControladorLogica.instance.obtSessionLocal(userName: userName, password: password, imei: imei, defecto: defecto)
+        return ControladorLogica.instance.obtSessionLocal(userName: userName, password: password, imei: imei, defaults: defecto)
     }
    
     func getUIDevice() -> String
@@ -46,46 +46,36 @@ class SplashScreenViewController: UIViewController {
         }
     }
     
-    func autentificar(imei: String, userName: String = "", password: String="", defecto: Int = -1)
+    func autentificar(imei: String, userName: String = "", password: String="", defecto: Int = 0)
     {
         self.lblProgress.text = "Comprobando sesion..."
         if let session = getSessionBy(imei: imei, userName: userName, password: password, defecto: defecto)
         {
-            if (!session.isExpired())
+            if self.isConnected
             {
-                self.sincronizar(session)
-            }
-            else
-            {
-               self.lblProgress.text = "Generando nuevo token de sesion..."
-                let user = session.usuario?.loginName
-                let password = session.usuario?.password
-                
-                if self.isConnected
+                if (!session.isExpired())
                 {
-                    ApiClient.instance.registrar(
-                        imei: imei,
-                        userName: user,
-                        password: password,
-                        callback: { (sessionLocal : AnyObject?) in
-                            if let session = sessionLocal as? SessionLocal
-                            {
-                                let resp = self.guardar(session)
-                                if resp
-                                {
-                                    self.sincronizar(session)
-                                }
-                            }
-                            else
-                            {
-                                self.refresh(mensaje: (sessionLocal as! String))
-                            }
-                        }
-                    )
+                    self.sincronizar(session)
                 }
                 else
                 {
-                    self.refresh(mensaje: "Sin conexión a internet")
+                    ApiClient.instance.getNewToken(imei: imei, id: session.usuario?.idAbogado, callback: { (sesionLocal : AnyObject?) in
+                        if let nuevaSesionLocal = sesionLocal as? SessionLocal
+                        {
+                            let returnValue = ControladorLogica.instance.actualizarSesionLocal(nuevaSesionLocal)
+                            if (returnValue)
+                            {
+                                self.sincronizar(nuevaSesionLocal)
+                            }
+                        }
+                    })
+                }
+            }
+            else
+            {
+                DispatchQueue.main.async
+                {
+                    self.performSegue(withIdentifier: "irSplashScreenSchedulerSegue", sender: session.usuario?.idAbogado)
                 }
             }
         }
@@ -97,25 +87,15 @@ class SplashScreenViewController: UIViewController {
 
     private func guardar(_ session: SessionLocal) -> Bool
     {
-        return ControladorLogica.instance.guardar(session)
+        return ControladorLogica.instance.guardarSesionLocal(session)
     }
 
     func sincronizar(_ session: SessionLocal)
     {
         if let u = session.usuario
         {
-            self.idAbogado = u.id
-            if self.isConnected
-            {
-                ControladorLogica.instance.sincronizar(session, self.redireccionar)
-            }
-            else
-            {
-                DispatchQueue.main.async
-                {
-                    self.performSegue(withIdentifier: "irSplashScreenSchedulerSegue", sender: self.idAbogado)
-                }
-            }
+            self.idAbogado = u.idAbogado
+            ControladorLogica.instance.sincronizar(session, self.redireccionar)
         }
     }
 

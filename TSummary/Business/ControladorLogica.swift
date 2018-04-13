@@ -217,7 +217,7 @@ public class ControladorLogica
     {
         if self.isConnected
         {
-            let idAbogado : Int32 = (session.usuario?.id)!
+            let idAbogado : Int32 = (session.usuario?.idAbogado)!
             let fDesde : String = Utils.toStringFromDate(DateCalculator.instance.fechaInicio,"yyyyMMdd")
             let fHasta : String = Utils.toStringFromDate(DateCalculator.instance.fechaTermino, "yyyyMMdd")
             
@@ -252,7 +252,7 @@ public class ControladorLogica
                     retorno(Response(estado: 1, mensaje: "Sincronizando horas offline", result: false, redirect:false))
                     ApiClient.instance.sincronizar(session, dataSend)
                     
-                    DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
+                    DataStore.horas.eliminarByIdAbogado((session.usuario?.idAbogado)!)
                     
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback: {(hrsRemotas)->Void in
                         if hrsRemotas != nil
@@ -283,7 +283,7 @@ public class ControladorLogica
                 else
                 {
                     retorno(Response(estado: 1, mensaje: "Eliminado horas localmente", result: false, redirect:false))
-                    DataStore.horas.eliminarByIdAbogado((session.usuario?.id)!)
+                    DataStore.horas.eliminarByIdAbogado((session.usuario?.idAbogado)!)
                     retorno(Response(estado: 1, mensaje: "Obteniendo horas desde el servidor", result: false, redirect:false))
                     ApiClient.instance.obtListDetalleHorasByCodAbogado(session, fDesde, fHasta, callback: {(hrsRemotas)->Void in
                         if hrsRemotas != nil
@@ -315,22 +315,19 @@ public class ControladorLogica
         }
     }
     
-    func obtSessionLocal(userName: String = "", password: String = "", imei: String = "", defecto: Int = -1) -> SessionLocal?
+    func obtSessionLocal(userName: String = "", password: String = "", imei: String = "", defaults: Int = 0) -> SessionLocal?
     {
-        return DataStore.usuarios.obtSessionLocal(imei: imei, userName: userName, password: password)
+        return DataStore.usuarios.obtSessionLocal(imei: imei, userName: userName, password: password, defaults: defaults)
     }
     
-    func guardar(_ session: SessionLocal) -> Bool
+    func guardarSesionLocal(_ session: SessionLocal) -> Bool
     {
-        let exists = DataStore.usuarios.existsSessionLocal(loginName: (session.usuario?.loginName)!)
-        if exists
-        {
-            return DataStore.usuarios.actualizar(sessionLocal: session)
-        }
-        else
-        {
-            return DataStore.usuarios.guardar(sessionLocal: session)
-        }
+        return DataStore.usuarios.guardar(sessionLocal: session)
+    }
+    
+    func actualizarSesionLocal(_ session: SessionLocal) -> Bool
+    {
+        return DataStore.usuarios.actualizar(sessionLocal: session)
     }
     
     func getListDetalleHorasByIdAbogadoAndFecha(_ id: Int32, _ fecha: String) -> [RegistroHora]?

@@ -72,7 +72,111 @@ class ApiClient
                                 
                                 let cIdAbogado = jwt.claim(name: "AboId")
                                 if let idAbogado = cIdAbogado.integer {
-                                    usuario.id = Int32(idAbogado)
+                                    usuario.idAbogado = Int32(idAbogado)
+                                }
+                                
+                                let cGrupo = jwt.claim(name: "Grupo")
+                                if let grupo = cGrupo.string
+                                {
+                                    usuario.grupo = grupo
+                                }
+                                
+                                let cIdUsuario = jwt.claim(name: "IdUsuario")
+                                if let idUsuario = cIdUsuario.integer
+                                {
+                                    usuario.idUsuario = idUsuario
+                                }
+                                
+                                let cEmail = jwt.claim(name: "Email")
+                                if let email = cEmail.string
+                                {
+                                    usuario.email = email
+                                }
+                                
+                                /*
+                                let cLoginName = jwt.claim(name: "LoginName")
+                                if let loginName = cLoginName.string
+                                {
+                                    usuario.loginName = loginName
+                                }
+                                */
+                                usuario.loginName = userName
+                                usuario.password = password
+                                usuario.imei = imei
+                                
+                                SessionLocal.shared.expiredAt = jwt.expiresAt
+                                SessionLocal.shared.token = jsonwt.token
+                                SessionLocal.shared.usuario = usuario
+                                callback(SessionLocal.shared)
+                            
+                            }
+                            
+                        }
+                        catch
+                        {
+                            print("Error:\(error)")
+                        }
+                    }
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    func getNewToken(imei: String?, id : Int32?, callback: @escaping (AnyObject?) -> Void)
+    {
+        let urlSession: URLSession = URLSession.shared
+        let url = URL(string:self.strURL + "TokenIMEI")
+        let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        var postData: String = ""
+        postData.append("{\"imei\":\"\(imei)\",\"abo_id\":\(id)}")
+        
+        request.httpBody = postData.data(using: String.Encoding.utf8);
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            
+            if(error != nil)
+            {
+                callback(error?.localizedDescription as AnyObject)
+            }
+            else
+            {
+                if (data != nil)
+                {
+                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    if (responseString == "")
+                    {
+                        callback("Consulta sin resultados" as AnyObject)
+                    }
+                    else
+                    {
+                        do
+                        {
+                            let usuario: Usuario = Usuario()
+                            let jsonwt = try JSONDecoder().decode(JWT.self, from: data!)
+                            if (jsonwt.estado == 2)
+                            {
+                                callback(jsonwt.mensaje as AnyObject)
+                            }
+                            else
+                            {
+                                let jwt = try decode(jwt: jsonwt.token)
+                                
+                                let cNombre = jwt.claim(name: "Nombre")
+                                if let nombre = cNombre.string{
+                                    usuario.nombre=nombre
+                                }
+                                
+                                let cPerfil = jwt.claim(name: "Perfil")
+                                if let perfil = cPerfil.string{
+                                    usuario.perfil = perfil
+                                }
+                                
+                                let cIdAbogado = jwt.claim(name: "AboId")
+                                if let idAbogado = cIdAbogado.integer {
+                                    usuario.idAbogado = Int32(idAbogado)
                                 }
                                 
                                 let cGrupo = jwt.claim(name: "Grupo")
@@ -99,14 +203,14 @@ class ApiClient
                                     usuario.loginName = loginName
                                 }
                                 
-                                usuario.password = password
+                                //usuario.password = password
                                 usuario.imei = imei
                                 
                                 SessionLocal.shared.expiredAt = jwt.expiresAt
                                 SessionLocal.shared.token = jsonwt.token
                                 SessionLocal.shared.usuario = usuario
                                 callback(SessionLocal.shared)
-                            
+                                
                             }
                             
                         }
@@ -131,7 +235,7 @@ class ApiClient
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parametrosBusquedaTS = ParametrosBusquedaTS(
-            AboId: (session.usuario?.id)!,
+            AboId: (session.usuario?.idAbogado)!,
             FechaI: fechaDesde,
             FechaF: fechaHasta,
             tim_correl : 0
@@ -218,7 +322,7 @@ class ApiClient
             request.setValue("bearer " + session.token!, forHTTPHeaderField: "Authorization")
             
             var postData: String = ""
-            postData.append("{\"abo_id\":" + String(u.id) + ",")
+            postData.append("{\"abo_id\":" + String(u.idAbogado) + ",")
             postData.append("\"nombre\":\"\"}" )
             request.httpBody = postData.data(using: String.Encoding.utf8);
             
@@ -275,7 +379,7 @@ class ApiClient
             task.resume()
         }
     }
-    
+
     func guardar(hora: RegistroHora, responseOK: @escaping (RegistroHora) -> Void,  responseError: @escaping (RegistroHora) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
@@ -414,7 +518,7 @@ class ApiClient
             print("\(error)")
         }
     }
-    
+
     func obtImagePerfilById(id: Int, callback: @escaping (String) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
@@ -440,4 +544,5 @@ class ApiClient
         })
         task.resume()
     }
+
 }

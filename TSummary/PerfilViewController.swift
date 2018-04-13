@@ -22,7 +22,7 @@ class PerfilViewController: UIViewController, UITableViewDelegate, UITableViewDa
         photoPerfil.layer.masksToBounds = true
         self.activityIndicator.hidesWhenStopped = true
         
-        let id : Int32 = (SessionLocal.shared.usuario?.id)!
+        let id : Int32 = (SessionLocal.shared.usuario?.idAbogado)!
         if let u : Usuario = ControladorLogica.instance.obtUsuarioById(id: Int(id))
         {
             if u.data == ""

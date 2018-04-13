@@ -1,4 +1,4 @@
-import UIKit
+	import UIKit
 class LoginViewController: UIViewController
 {
     @IBOutlet weak var txtPassword: UITextField!
@@ -11,6 +11,8 @@ class LoginViewController: UIViewController
 
     var idAbogado: Int32 = 0
     public var entrar: Bool = false
+    private var defaults : Int = 1
+    
     private var isConnected : Bool = false
     public var fDesde : String = ""
     public var fHasta : String = ""
@@ -39,23 +41,17 @@ class LoginViewController: UIViewController
     
     override func viewWillAppear(_ animated: Bool)
     {
-        if !entrar
-        {
-            btnRegistrar.setTitle("Registrar", for: .normal)
-            self.autentificar(imei: self.getUIDevice(), defecto: 1)
-        }
-        else
-        {
-            self.txtIMEI.text = getUIDevice()
-            btnRegistrar.setTitle("Entrar", for: .normal)
-        }
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.txtIMEI.isHidden = true
-        self.lblVerApp.isHidden = false
-        self.lblVerApp.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
+        self.btnEliminar.isHidden = true
         
         self.lblVerApp.isHidden = false
-        self.btnEliminar.isHidden = true
+        self.lblVerApp.text = "Version: \(Bundle.main.releaseVersionNumber!) Build: \(Bundle.main.buildVersionNumber!)"
+        self.lblVerApp.isHidden = false
+        self.txtIMEI.text = getUIDevice()
+        
+        self.defaults = !entrar ? 1 : 0
+        btnRegistrar.setTitle( !entrar ? "Registrar" : "Entrar", for: .normal)
     }
     
     @objc func statusManager()
@@ -82,54 +78,37 @@ class LoginViewController: UIViewController
         self.present(alert, animated: true, completion: nil)
     }
     
-    func getSessionBy(imei: String, userName: String, password: String, defecto: Int = -1) -> SessionLocal?
+    func getSessionBy(imei: String = "", userName: String = "", password: String = "", defecto: Int = 0) -> SessionLocal?
     {
-        return ControladorLogica.instance.obtSessionLocal(userName: userName, password: password, imei: imei, defecto: defecto)
+        return ControladorLogica.instance.obtSessionLocal(userName: userName, password: password, imei: imei, defaults: defecto)
     }
     
-    func autentificar(imei: String, userName: String = "", password: String="", defecto: Int = -1)
+    func autentificar(_ sesionLocal: SessionLocal)
     {
-        if let session = getSessionBy(imei: imei, userName: userName, password: password, defecto: defecto)
+        btnRegistrar.isEnabled = false
+        self.activity.startAnimating()
+        if self.isConnected
         {
-            btnRegistrar.isEnabled = false
-            self.activity.startAnimating()
-            if (!session.isExpired())
+            if (sesionLocal.isExpired())
             {
-                self.sincronizar(session)
+                ApiClient.instance.getNewToken(imei: sesionLocal.usuario?.imei, id: sesionLocal.usuario?.idAbogado, callback: { (sesionLocal : AnyObject?) in
+                    if let nuevaSesionLocal = sesionLocal as? SessionLocal
+                    {
+                        ControladorLogica.instance.actualizarSesionLocal(nuevaSesionLocal)
+                        self.sincronizar(nuevaSesionLocal)
+                    }
+                })
             }
             else
             {
-                let user = session.usuario?.loginName
-                let password = session.usuario?.password
-                
-                if self.isConnected
-                {
-                    ApiClient.instance.registrar(
-                        imei: imei,
-                        userName: user,
-                        password: password,
-                        callback: { (sessionLocal : AnyObject?) in
-                            if let session = sessionLocal as? SessionLocal
-                            {
-                                let resp = self.guardar(session)
-                                if resp
-                                {
-                                    self.sincronizar(session)
-                                }
-                            }
-                            else
-                            {
-                                self.refresh(mensaje: (sessionLocal as! String))
-                            }
-                        }
-                    )
-                }
-                else
-                {
-                    self.refresh(mensaje: "Sin conexión a internet")
-                }
+                self.sincronizar(sesionLocal)
             }
         }
+        else
+        {
+            redireccionar(response: Response(estado: 1, mensaje: "Puede entrar", result: true, redirect: true))
+        }
+        
     }
     
     func refresh(mensaje: String)
@@ -157,37 +136,7 @@ class LoginViewController: UIViewController
     {
         super.didReceiveMemoryWarning()
     }
-    
-    @IBAction func registrar(_ sender: Any)
-    {
-        if (btnRegistrar.titleLabel?.text == "Registrar")
-        {
-            registrar()
-        }
-        else
-        {
-            
-            if isValidInput()
-            {
-                let userName = txtUserName.text!
-                let password = txtPassword.text!
-                let imei = txtIMEI.text!
-                if let s = getSessionBy(imei: imei, userName: userName, password: password)
-                {
-                    self.autentificar(imei: imei, userName: userName, password: password, defecto: (s.usuario?.defaults)!)
-                }
-                else
-                {
-                    registrar()
-                }
-            }
-            else
-            {
-               self.mostrarMensaje(mensaje: "Ingreso incorrecto!")
-            }
-        }
-    }
-    
+ 
     func isValidInput() -> Bool
     {
         var mensaje : String = ""
@@ -225,7 +174,8 @@ class LoginViewController: UIViewController
                     callback: { (sessionLocal: AnyObject?) -> Void in
                         if let session = sessionLocal as? SessionLocal
                         {
-                            let resp = self.guardar(session)
+                            session.usuario?.defaults = self.defaults
+                            let resp = ControladorLogica.instance.guardarSesionLocal(session)
                             if resp
                             {
                                 self.descargar(session)
@@ -245,29 +195,17 @@ class LoginViewController: UIViewController
         }
     }
     
-    private func guardar(_ session: SessionLocal) -> Bool
-    {
-        return ControladorLogica.instance.guardar(session)
-    }
-    
     func descargar(_ session: SessionLocal)
     {
         if let u = session.usuario
         {
-            self.idAbogado = u.id
-            if self.isConnected
-            {
-                ControladorLogica.instance.descargar(
-                    session: session,
-                    fDesde: fDesde,
-                    fHasta: fHasta,
-                    redirect: self.redireccionar
-                )
-            }
-            else
-            {
-                self.mostrarMensaje(mensaje: "Sin acceso a internet")
-            }
+            self.idAbogado = u.idAbogado
+            ControladorLogica.instance.descargar(
+                session: session,
+                fDesde: fDesde,
+                fHasta: fHasta,
+                redirect: self.redireccionar
+            )
         }
     }
     
@@ -275,14 +213,14 @@ class LoginViewController: UIViewController
     {
         if let u = session.usuario
         {
-            self.idAbogado = u.id
+            self.idAbogado = u.idAbogado
             if self.isConnected
             {
                 ControladorLogica.instance.sincronizar(session, self.redireccionar)
             }
             else
             {
-                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion", result: true, redirect: false))
+                redireccionar(response: Response(estado: 1, mensaje: "Sin conexion a internet", result: true, redirect: false))
             }
         }
     }
@@ -312,18 +250,7 @@ class LoginViewController: UIViewController
             }
         }
     }
-    
-    @IBAction func btnDeleteOnClick(_ sender: Any)
-    {
-        self.btnEliminar.isEnabled = false
-        self.activity.startAnimating()
-        DispatchQueue.main.async {
-            ControladorLogica.instance.eliminarDatos()
-            self.activity.stopAnimating()
-            self.btnEliminar.isEnabled = true
-        }
-    }
-    
+
     @objc func dismissKeyboard()
     {
         view.endEditing(true)
@@ -338,4 +265,46 @@ class LoginViewController: UIViewController
         controller.indexSemana = 1
         controller.reloadRegistroHoras()
     }
+    
+    @IBAction func registrar(_ sender: Any)
+    {
+        if isValidInput()
+        {
+            let userName = txtUserName.text!
+            let password = txtPassword.text!
+            let imei = txtIMEI.text!
+            
+            if let sesionLocal = getSessionBy(imei: imei, userName: userName, password: password)
+            {
+                self.autentificar(sesionLocal)
+            }
+            else
+            {
+                if (self.isConnected)
+                {
+                    registrar()
+                }
+                else
+                {
+                    self.mostrarMensaje(mensaje: "Sin acceso a internet para registrar su cuenta!!")
+                }
+            }
+        }
+        else
+        {
+            self.mostrarMensaje(mensaje: "Ingreso incorrecto!")
+        }
+    }
+    
+    @IBAction func btnDeleteOnClick(_ sender: Any)
+    {
+        self.btnEliminar.isEnabled = false
+        self.activity.startAnimating()
+        DispatchQueue.main.async {
+            ControladorLogica.instance.eliminarDatos()
+            self.activity.stopAnimating()
+            self.btnEliminar.isEnabled = true
+        }
+    }
+    
 }

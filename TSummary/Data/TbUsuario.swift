@@ -62,43 +62,50 @@ public class TbUsuario
         db = nil
     }
     
-    func obtSessionLocal(imei:String = "", userName:String = "", password: String = "", defecto: Int = -1) -> SessionLocal?
+    func obtSessionLocal(imei:String = "", userName:String = "", password: String = "", defaults: Int = 0) -> SessionLocal?
     {
         do
         {
-            try open()
             
-            var condicion : String = ""
-            var statement: OpaquePointer?
+            if (imei == "" || userName == "") { return nil }
             
-            var consulta : String = """
+            
+            var strSelect : String = """
                 select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario, Email
                 from Usuario where 1=1
                 """
             
+            var strWhere : String = ""
+            
             if (userName != "")
             {
-                condicion =  condicion + " AND LoginName='" + userName + "'"
-            }
-            
-            if (password != "")
-            {
-                condicion =  condicion + " AND Password='" + password + "'"
+                strWhere =  strWhere + " AND LoginName='" + userName.uppercased() + "'"
             }
             
             if (imei != "")
             {
-                condicion =  condicion + " AND IMEI='" + imei + "'"
+                strWhere =  strWhere + " AND IMEI='" + imei + "'"
             }
             
-            if (defecto != -1)
+            /*
+            if (password != "")
             {
-                condicion =  condicion + " AND [Default] = \(defecto)"
+                condicion =  condicion + " AND Password='" + password + "'"
             }
+            */
             
-            consulta = consulta + condicion
+            /*
+            if (defaults != 0)
+            {
+                condicion =  condicion + " AND [Default] = \(defaults)"
+            }
+            */
             
-            if sqlite3_prepare_v2(db, consulta, -1, &statement, nil) != SQLITE_OK {
+            strSelect = strSelect + strWhere
+            
+            try open()
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(db, strSelect, -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing select: \(errmsg)")
             }
@@ -171,12 +178,12 @@ public class TbUsuario
         }
         return false
     }
-    
+   
     func getSessionLocalFromRecord(_ statement: inout OpaquePointer?)-> SessionLocal
     {
         let usuario = Usuario()
         let id : Int32 = sqlite3_column_int(statement, 0)
-        usuario.id  = id
+        usuario.idAbogado  = id
         
         if let csString = sqlite3_column_text(statement,1)
         {
@@ -283,7 +290,7 @@ public class TbUsuario
                 
                 if sqlite3_prepare_v2(db, """
                 insert into Usuario (Nombre, Grupo, Id, IMEI, LoginName, Password, Token, ExpiredAt, IdUsuario, Perfil, Email, [Default])
-                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """
                     , -1, &statement, nil) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -300,7 +307,7 @@ public class TbUsuario
                     print("failure binding grupo: \(errmsg)")
                 }
                 
-                if sqlite3_bind_int(statement, 3, Int32(usuario.id)) != SQLITE_OK {
+                if sqlite3_bind_int(statement, 3, Int32(usuario.idAbogado)) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding id: \(errmsg)")
                 }
@@ -310,7 +317,7 @@ public class TbUsuario
                     print("failure binding imei: \(errmsg)")
                 }
                 
-                if sqlite3_bind_text(statement, 5, usuario.loginName, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                if sqlite3_bind_text(statement, 5, usuario.loginName?.uppercased(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding username: \(errmsg)")
                 }
@@ -344,6 +351,12 @@ public class TbUsuario
                 if sqlite3_bind_text(statement, 11, usuario.email, -1, SQLITE_TRANSIENT) != SQLITE_OK {
                     let errmsg = String(cString: sqlite3_errmsg(db)!)
                     print("failure binding email: \(errmsg)")
+                }
+                
+                let defaults = Int32(usuario.defaults!)
+                if sqlite3_bind_int(statement, 12, defaults) != SQLITE_OK {
+                    let errmsg = String(cString: sqlite3_errmsg(db)!)
+                    print("failure binding defaults: \(errmsg)")
                 }
                 
                 if sqlite3_step(statement) != SQLITE_DONE{
@@ -408,7 +421,7 @@ public class TbUsuario
                 print("failure binding expiredAt: \(errmsg)")
             }
             
-            if sqlite3_bind_int(statement, 6, (sessionLocal.usuario?.id)!) != SQLITE_OK{
+            if sqlite3_bind_int(statement, 6, (sessionLocal.usuario?.idAbogado)!) != SQLITE_OK{
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("failure binding id: \(errmsg)")
             }
@@ -515,7 +528,7 @@ public class TbUsuario
             {
                 usuario = Usuario()
                 let id : Int32 = sqlite3_column_int(statement, 0)
-                usuario.id  = id
+                usuario.idAbogado  = id
                 
                 if let csString = sqlite3_column_text(statement,1)
                 {

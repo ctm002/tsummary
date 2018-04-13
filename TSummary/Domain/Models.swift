@@ -18,7 +18,7 @@ public class Usuario
     }
     
     private var mId : Int32
-    var id : Int32
+    var idAbogado : Int32
     {
         get{ return self.mId } set{ self.mId=newValue }
     }
@@ -58,8 +58,7 @@ public class Usuario
     private var mDefault:Int?
     var defaults : Int?
     {
-        return self.mDefault
-        
+        get{ return self.mDefault } set {  self.mDefault = newValue}
     }
     
     private var mPerfil: String
