@@ -66,8 +66,7 @@ public class TbUsuario
     {
         do
         {
-            
-            if (imei == "" || userName == "") { return nil }
+            if (imei == "") { return nil }
             
             
             var strSelect : String = """
@@ -87,22 +86,12 @@ public class TbUsuario
                 strWhere =  strWhere + " AND IMEI='" + imei + "'"
             }
             
-            /*
-            if (password != "")
-            {
-                condicion =  condicion + " AND Password='" + password + "'"
-            }
-            */
-            
-            /*
             if (defaults != 0)
             {
-                condicion =  condicion + " AND [Default] = \(defaults)"
+                strWhere =  strWhere + " AND [Default]=\(defaults)"
             }
-            */
             
             strSelect = strSelect + strWhere
-            
             try open()
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(db, strSelect, -1, &statement, nil) != SQLITE_OK {

@@ -116,8 +116,8 @@ class LoginViewController: UIViewController
         DispatchQueue.main.async
         {
             self.activity.stopAnimating()
-            self.mostrarMensaje(mensaje: mensaje)
             self.btnRegistrar.isEnabled = true
+            self.mostrarMensaje(mensaje: mensaje)
         }
     }
     
@@ -155,44 +155,32 @@ class LoginViewController: UIViewController
         return (mensaje == "")
     }
     
-    fileprivate func registrar()
+    fileprivate func registrar(_ _userName: String,_ _password: String,_ _imei: String)
     {
-        if isValidInput()
-        {
-            let user = txtUserName.text!
-            let password = txtPassword.text!
-            let imei = txtIMEI.text!
-            if self.isConnected
-            {
-                self.btnRegistrar.isEnabled = false
-                self.activity.startAnimating()
-                
-                ApiClient.instance.registrar(
-                    imei: imei,
-                    userName: user,
-                    password: password,
-                    callback: { (sessionLocal: AnyObject?) -> Void in
-                        if let session = sessionLocal as? SessionLocal
-                        {
-                            session.usuario?.defaults = self.defaults
-                            let resp = ControladorLogica.instance.guardarSesionLocal(session)
-                            if resp
-                            {
-                                self.descargar(session)
-                            }
-                        }
-                        else
-                        {
-                            self.refresh(mensaje: (sessionLocal as! String))
-                        }
+        let os = ProcessInfo().operatingSystemVersion
+        let strVersionSistemaOperativo : String = "iOS >= (\(os.majorVersion),\(os.minorVersion),\(os.patchVersion))"
+        
+        ApiClient.instance.registrar(
+            imei: _imei,
+            userName: _userName,
+            password: _password,
+            equipo: strVersionSistemaOperativo,
+            callback: { (sessionLocal: AnyObject?) -> Void in
+                if let session = sessionLocal as? SessionLocal
+                {
+                    session.usuario?.defaults = self.defaults
+                    let resp = ControladorLogica.instance.guardarSesionLocal(session)
+                    if resp
+                    {
+                        self.descargar(session)
                     }
-                )
+                }
+                else
+                {
+                    self.refresh(mensaje: (sessionLocal as! String))
+                }
             }
-            else
-            {
-                self.refresh(mensaje: "Sin acceso a internet")
-            }
-        }
+        )
     }
     
     func descargar(_ session: SessionLocal)
@@ -270,6 +258,11 @@ class LoginViewController: UIViewController
     {
         if isValidInput()
         {
+            DispatchQueue.main.async {
+                self.activity.startAnimating()
+                self.btnRegistrar.isEnabled = false
+            }
+            
             let userName = txtUserName.text!
             let password = txtPassword.text!
             let imei = txtIMEI.text!
@@ -282,7 +275,7 @@ class LoginViewController: UIViewController
             {
                 if (self.isConnected)
                 {
-                    registrar()
+                    self.registrar(userName, password, imei)
                 }
                 else
                 {

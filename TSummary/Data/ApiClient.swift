@@ -18,7 +18,7 @@ class ApiClient
     
     init(){}
     
-    func registrar(imei:String?, userName:String?, password:String?, callback: @escaping (AnyObject?) -> Void)
+    func registrar(imei:String?, userName:String?, password:String?, equipo: String?, callback: @escaping (AnyObject?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
         let url = URL(string:self.strURL + "tokenmobile")
@@ -27,9 +27,10 @@ class ApiClient
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var postData: String = ""
-        postData.append("{\"usuario\":\"" + userName! + "\"," );
-        postData.append("\"imei\":\"" + imei! + "\"," );
-        postData.append("\"password\":\"" + password! + "\"}");
+        postData.append("{\"usuario\":\"" + userName! + "\"," )
+        postData.append("\"imei\":\"" + imei! + "\"," )
+        postData.append("\"equipo\":\"" + equipo! + "\"," )
+        postData.append("\"password\":\"" + password! + "\"}")
         request.httpBody = postData.data(using: String.Encoding.utf8);
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
