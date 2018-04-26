@@ -127,13 +127,13 @@ class ApiClient
     func getNewToken(imei: String?, id : Int32?, callback: @escaping (AnyObject?) -> Void)
     {
         let urlSession: URLSession = URLSession.shared
-        let url = URL(string:self.strURL + "TokenIMEI")
+        let url = URL(string:self.strURL + "tokenMobile/TokenIMEI")
         let request = NSMutableURLRequest(url: url!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var postData: String = ""
-        postData.append("{\"imei\":\"\(imei)\",\"abo_id\":\(id)}")
+        postData.append("{\"imei\":\"\(imei!)\",\"abo_id\":\(id!)}")
         
         request.httpBody = postData.data(using: String.Encoding.utf8);
         let task = urlSession.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in

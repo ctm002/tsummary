@@ -452,18 +452,20 @@ public class RegistroHora
     
     public func isValid() -> Bool
     {
-        if self.mCorrelativo == 0 { return false }
+        //if self.mCorrelativo == 0 { return false }
         
-        if self.mHoras == 0  { return false }
+        if (self.mHoras == 0  && self.mMinutos == 0 ) { return false }
         
-        if self.mMinutos == 0 { return false }
+        //if self.mMinutos == 0 { return false }
         
         if self.asunto == "" { return false }
         
-        if self.mFechaHoraInicio  == nil { return false }
+        //if self.mFechaHoraInicio  == nil { return false }
         
-        if self.mProyectoId == 0 { return false }
-        
+        if (mProyecto.id == 0)
+        {
+            return false
+        }
         return true
     }
 }

@@ -17,6 +17,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     var presenterProyecto : PresenterProyecto?
     var presenterHora : PresenterRegistroHoras?
     var indexSemana : Int = -1
+    let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     
     private var mModel: ModelController!
     var model : ModelController { get { return self.mModel } set { self.mModel = newValue } }
@@ -40,14 +41,22 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         {
             SearchTextFieldItemExt(title: $0.nombreCliente, subtitle:$0.nombre, id: $0.id)
         }
-        
         mySearchTextField.filterItems(proyectosItems)
+
         mySearchTextField.itemSelectionHandler =
         {
             filteredResults, itemPosition in
             let itemSelected = filteredResults[itemPosition] as! SearchTextFieldItemExt
             self.mySearchTextField.text = itemSelected.title + " " + itemSelected.subtitle!
-            self.proyectoId = itemSelected.Id
+            
+            if self.mySearchTextField.text == ""
+            {
+                self.proyectoId = 0
+            }
+            else
+            {
+                self.proyectoId = itemSelected.Id
+            }
         }
     }
     
@@ -66,7 +75,9 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         txtMinutos.delegate = self
         txtHoras.keyboardType = .numberPad
         txtMinutos.keyboardType = .numberPad
-        
+        txtHoras.isEnabled  = true
+        txtMinutos.isUserInteractionEnabled = false
+    
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -181,12 +192,16 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
             
             if self.mResponse.result
             {
-                mostrarMensaje(titulo: "TSummary", mensaje: response.mensaje)
+                mostrarMensaje(titulo: "Aviso", mensaje: response.mensaje, self.mResponse.redirect)
             }
             else
             {
-                mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje)
+                mostrarMensaje(titulo: "Advertencia", mensaje: response.mensaje, self.mResponse.redirect)
             }
+            
+            
+            
+            activityView.startAnimating()
         }
         get
         {
@@ -195,11 +210,20 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
 
     }
     
-    func mostrarMensaje(titulo: String, mensaje: String )
+    func mostrarMensaje(titulo: String, mensaje: String, _ salida: Bool = true)
     {
         let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { (action: UIAlertAction!) in
-            self.performSegue(withIdentifier: "irEditarHoraSchedulerSegue", sender: self.model)
+            if salida
+            {
+                self.performSegue(withIdentifier: "irEditarHoraSchedulerSegue", sender: self.model)
+            }
+            else
+            {
+                DispatchQueue.main.async {
+                    self.activityView.stopAnimating()
+                }
+            }
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -207,7 +231,7 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
     @IBAction func btnGuardar_Click(_ sender: UIButton?)
     {
         btnGuardar.isEnabled = false
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        //let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         self.view.addSubview(activityView)
         activityView.center = self.view.center
         activityView.color  = UIColor.blue
@@ -287,6 +311,22 @@ class EditHoraViewController: UIViewController, IListViewProyecto, IEditViewHora
         set
         {
             self.mProyectoId = newValue
+        }
+    }
+
+    var proyectoNombre : String
+    {
+        get
+        {
+            if let text =  self.mySearchTextField.text
+            {
+                return text
+            }
+            return ""
+        }
+        set
+        {
+            self.mySearchTextField.text = newValue
         }
     }
     

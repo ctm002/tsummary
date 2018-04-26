@@ -21,6 +21,7 @@ protocol IEditViewHora {
     
     var idHora : Int32 { get set }
     var proyectoId : Int32 { get set }
+    var proyectoNombre : String { get set }
     var fechaHoraIngreso : Date { get set }
     var idAbogado : Int32 { get set }
     var horas : Int { get set }

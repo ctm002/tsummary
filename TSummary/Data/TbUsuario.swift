@@ -68,7 +68,6 @@ public class TbUsuario
         {
             if (imei == "") { return nil }
             
-            
             var strSelect : String = """
                 select Id, Nombre, Grupo, LoginName, IMEI, Perfil, Token, ExpiredAt, Password, IdUsuario, Email
                 from Usuario where 1=1

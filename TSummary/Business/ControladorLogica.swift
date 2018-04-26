@@ -126,49 +126,57 @@ public class ControladorLogica
     func guardar(hora: RegistroHora, callback: @escaping (Response) -> Void)
     {
         var result: Response!
-
-        if self.isConnected
+        
+        if (!hora.isValid())
         {
-            ApiClient.instance.guardar(hora: hora
-            , responseOK: { (hora) -> Void in
-                hora.estado = .antiguo
-                hora.offline = false
-                let rowAffected = DataStore.horas.guardar(hora)
-                if rowAffected
-                {
-                    result = Response(estado: 0, mensaje: "Se guardo remotamente y localmente", result: true, redirect: true)
-                }
-                else
-                {
-                    result = Response(estado: 0, mensaje: "Se guardo remotamente pero no localmente", result: false, redirect:true)
-                }
-                callback(result)
-                
-            }, responseError: { (hora) -> Void in
-                let rowAffected = DataStore.horas.guardar(hora)
-                if rowAffected
-                {
-                    result = Response(estado: 0, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect: true)
-                }
-                else
-                {
-                    result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect: true)
-                }
-                callback(result)
-            })
+            result = Response(estado: 0, mensaje: "Falta ingresar información", result: true, redirect: false)
+            callback(result)
         }
         else
         {
-            let rowAffected = DataStore.horas.guardar(hora)
-            if rowAffected
+            if self.isConnected
             {
-                result = Response(estado: 1, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect:false)
+                ApiClient.instance.guardar(hora: hora
+                , responseOK: { (hora) -> Void in
+                    hora.estado = .antiguo
+                    hora.offline = false
+                    let rowAffected = DataStore.horas.guardar(hora)
+                    if rowAffected
+                    {
+                        result = Response(estado: 0, mensaje: "Se guardo remotamente y localmente", result: true, redirect: true)
+                    }
+                    else
+                    {
+                        result = Response(estado: 0, mensaje: "Se guardo remotamente pero no localmente", result: false, redirect:true)
+                    }
+                    callback(result)
+                    
+                }, responseError: { (hora) -> Void in
+                    let rowAffected = DataStore.horas.guardar(hora)
+                    if rowAffected
+                    {
+                        result = Response(estado: 0, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect: true)
+                    }
+                    else
+                    {
+                        result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect: true)
+                    }
+                    callback(result)
+                })
             }
             else
             {
-                result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect:false)
+                let rowAffected = DataStore.horas.guardar(hora)
+                if rowAffected
+                {
+                    result = Response(estado: 1, mensaje: "No se guardo remotamente pero si localmente", result: false, redirect:false)
+                }
+                else
+                {
+                    result = Response(estado: 0, mensaje: "No se guardo remotamente ni localmente", result: false, redirect:false)
+                }
+                callback(result)
             }
-           callback(result)
         }
     }
     
